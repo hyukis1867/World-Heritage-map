@@ -1,103 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>地図マーカー with CSV</title>
+  <meta charset="utf-8">
+  <title>世界遺産マップ</title>
   <style>
-    html, body, #map {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
     #map {
-      touch-action: manipulation;
+      height: 100vh;
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <input type="file" id="csvFile" accept=".csv">
   <div id="map"></div>
 
   <script>
     let map;
-    let infoWindow;
-    const markers = [];
-
-    function isMobile() {
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
+    let infoWindow = null;
 
     function initMap() {
-      const savedLat = parseFloat(localStorage.getItem("mapCenterLat"));
-      const savedLng = parseFloat(localStorage.getItem("mapCenterLng"));
-      const savedZoom = parseInt(localStorage.getItem("mapZoom"), 10);
-
-      const defaultLatLng = {
-        lat: savedLat || 35.681236,
-        lng: savedLng || 139.767125,
-      };
-      const defaultZoom = savedZoom || 5;
+      // ローカルストレージから位置を復元
+      const storedLat = parseFloat(localStorage.getItem('mapLat')) || 35.6812;
+      const storedLng = parseFloat(localStorage.getItem('mapLng')) || 139.7671;
+      const storedZoom = parseInt(localStorage.getItem('mapZoom')) || 2;
 
       map = new google.maps.Map(document.getElementById("map"), {
-        center: defaultLatLng,
-        zoom: defaultZoom,
-        gestureHandling: isMobile() ? "greedy" : "auto",
-        fullscreenControl: false,
-        streetViewControl: false,
-        mapTypeControl: false
+        center: { lat: storedLat, lng: storedLng },
+        zoom: storedZoom,
       });
 
-      infoWindow = new google.maps.InfoWindow();
-
+      // 地図移動時に位置を保存
       map.addListener("idle", () => {
         const center = map.getCenter();
-        localStorage.setItem("mapCenterLat", center.lat());
-        localStorage.setItem("mapCenterLng", center.lng());
+        localStorage.setItem("mapLat", center.lat());
+        localStorage.setItem("mapLng", center.lng());
         localStorage.setItem("mapZoom", map.getZoom());
       });
 
-      document.getElementById("csvFile").addEventListener("change", handleFileSelect);
-    }
+      fetch("places.csv")
+        .then(response => response.text())
+        .then(csvText => {
+          const lines = csvText.trim().split("\n");
+          for (const line of lines) {
+            const [name, latStr, lngStr] = line.split(",");
+            const lat = parseFloat(latStr);
+            const lng = parseFloat(lngStr);
 
-    function handleFileSelect(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+            const marker = new google.maps.Marker({
+              position: { lat, lng },
+              map,
+              title: name,
+              icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
+                scaledSize: new google.maps.Size(30, 30),
+              },
+            });
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const text = e.target.result;
-        const lines = text.split(/\r?\n/);
-        for (const line of lines) {
-          const [name, latStr, lngStr] = line.split(",");
-          const lat = parseFloat(latStr);
-          const lng = parseFloat(lngStr);
-          if (!name || isNaN(lat) || isNaN(lng)) continue;
-
-          const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map,
-            title: name,
-          });
-
-          marker.addListener("click", () => {
-            if (infoWindow.getMap()) {
-              infoWindow.close();
-              if (infoWindow.anchor === marker) return;
-            }
-            infoWindow.setContent(name);
-            infoWindow.open(map, marker);
-          });
-
-          markers.push(marker);
-        }
-      };
-      reader.readAsText(file, "UTF-8");
+            marker.addListener("click", () => {
+              if (infoWindow && infoWindow.anchor === marker) {
+                infoWindow.close();
+                infoWindow = null;
+              } else {
+                if (infoWindow) infoWindow.close();
+                infoWindow = new google.maps.InfoWindow({
+                  content: `<div style="font-size:14px;">${name}</div>`
+                });
+                infoWindow.open(map, marker);
+              }
+            });
+          }
+        });
     }
   </script>
 
-  <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
-  </script>
+  <!-- あなたのAPIキーを以下に挿入 -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"
+    async defer></script>
 </body>
 </html>
 
