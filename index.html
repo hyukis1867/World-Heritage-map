@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>世界遺産マップ</title>
   <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* ← スクロールバーをなくす */
-  }
-
-  #map {
-    height: 100vh;
-    width: 100%;
-  }
-
-  .gm-ui-hover-effect {
-    display: none !important; /* Closeボタン非表示 */
-  }
-
-  .custom-marker {
-    background-color: orange;
-    color: white;
-    font-size: 10px;
-    border-radius: 50%;
-    padding: 4px;
-    border: 1px solid white;
-    text-align: center;
-    width: 24px;
-    height: 24px;
-    line-height: 16px;
-    font-weight: bold;
-  }
-</style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    .gm-ui-hover-effect {
+      display: none !important; /* Closeボタン非表示 */
+    }
+    .custom-marker {
+      color: white;
+      font-size: 10px;
+      border-radius: 50%;
+      padding: 4px;
+      border: 1px solid white;
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      line-height: 16px;
+      font-weight: bold;
+      user-select: none;
+      cursor: pointer;
+    }
+  </style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap" async defer></script>
 </head>
 <body>
@@ -43,6 +41,16 @@
     let openInfoWindow = null;
     const lastCenterKey = "mapCenter";
     const lastZoomKey = "mapZoom";
+
+    // タイプに応じたマーカー色を返す関数
+    function getColorByType(type) {
+      switch(type) {
+        case "文化遺産": return "#FFA500"; // オレンジ
+        case "自然遺産": return "#4CAF50"; // 緑
+        case "複合遺産": return "#00BFFF"; // 水色
+        default: return "#FFA500"; // デフォルトはオレンジ
+      }
+    }
 
     function initMap() {
       const savedCenter = JSON.parse(localStorage.getItem(lastCenterKey));
@@ -63,11 +71,12 @@
         .then(response => response.text())
         .then(text => {
           const rows = text.trim().split("\n");
-          rows.shift(); // skip header
+          const header = rows.shift(); // ヘッダー削除
           const countryCounters = {};
+          const markers = [];
 
           rows.forEach(row => {
-            const [country, name, latStr, lngStr] = row.split(",");
+            const [country, name, latStr, lngStr, type] = row.split(",");
             const lat = parseFloat(latStr);
             const lng = parseFloat(lngStr);
             if (isNaN(lat) || isNaN(lng)) return;
@@ -79,50 +88,35 @@
             }
             const number = countryCounters[country];
 
-            // カスタムマーカーを画像として作成
-            const canvas = document.createElement("canvas");
-            canvas.width = 30;
-            canvas.height = 30;
-            const ctx = canvas.getContext("2d");
-            ctx.beginPath();
-            ctx.arc(15, 15, 12, 0, 2 * Math.PI);
-            ctx.fillStyle = "orange";
-            ctx.fill();
-            ctx.strokeStyle = "white";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.fillStyle = "white";
-            ctx.font = "bold 12px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(number, 15, 15);
-            const markerIcon = {
-              url: canvas.toDataURL(),
-              scaledSize: new google.maps.Size(24, 24)
-            };
+            // マーカー用のdiv生成
+            const div = document.createElement("div");
+            div.className = "custom-marker";
+            div.innerText = number;
+            div.style.backgroundColor = getColorByType(type.trim());
 
-            const marker = new google.maps.Marker({
+            const marker = new google.maps.marker.AdvancedMarkerView({
               position: { lat, lng },
               map,
-              icon: markerIcon,
+              content: div
             });
 
             const infoWindow = new google.maps.InfoWindow({
               content: name.trim()
             });
 
-            marker.addListener("click", () => {
-  if (openInfoWindow === infoWindow) {
-    infoWindow.close();
-    openInfoWindow = null;
-  } else {
-    if (openInfoWindow) {
-      openInfoWindow.close();
-    }
-    infoWindow.open({ anchor: marker, map });
-    openInfoWindow = infoWindow;
-  }
+            marker.addListener("gmp-click", () => {
+              if (openInfoWindow) {
+                openInfoWindow.close();
+                if (openInfoWindow === infoWindow) {
+                  openInfoWindow = null;
+                  return;
+                }
+              }
+              infoWindow.open({ anchor: marker, map });
+              openInfoWindow = infoWindow;
             });
+
+            markers.push(marker);
           });
         });
     }
