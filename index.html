@@ -25,7 +25,7 @@
       font-weight: bold;
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&libraries=marker&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap" async defer></script>
 </head>
 <body>
   <div id="map"></div>
@@ -54,9 +54,8 @@
         .then(response => response.text())
         .then(text => {
           const rows = text.trim().split("\n");
-          const header = rows.shift(); // skip header
+          rows.shift(); // skip header
           const countryCounters = {};
-          const markers = [];
 
           rows.forEach(row => {
             const [country, name, latStr, lngStr] = row.split(",");
@@ -69,39 +68,52 @@
             } else {
               countryCounters[country]++;
             }
-
             const number = countryCounters[country];
-            const div = document.createElement("div");
-            div.className = "custom-marker";
-            div.innerText = number;
 
-            const marker = new google.maps.marker.AdvancedMarkerView({
+            // カスタムマーカーを画像として作成
+            const canvas = document.createElement("canvas");
+            canvas.width = 30;
+            canvas.height = 30;
+            const ctx = canvas.getContext("2d");
+            ctx.beginPath();
+            ctx.arc(15, 15, 12, 0, 2 * Math.PI);
+            ctx.fillStyle = "orange";
+            ctx.fill();
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = "white";
+            ctx.font = "bold 12px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(number, 15, 15);
+            const markerIcon = {
+              url: canvas.toDataURL(),
+              scaledSize: new google.maps.Size(24, 24)
+            };
+
+            const marker = new google.maps.Marker({
               position: { lat, lng },
               map,
-              content: div
+              icon: markerIcon,
             });
 
             const infoWindow = new google.maps.InfoWindow({
               content: name.trim()
             });
 
-            marker.addListener("gmp-click", () => {
+            marker.addListener("click", () => {
               if (openInfoWindow) {
                 openInfoWindow.close();
-                if (openInfoWindow === infoWindow) {
-                  openInfoWindow = null;
-                  return;
-                }
               }
-              infoWindow.open({ anchor: marker, map });
+              infoWindow.open(map, marker);
               openInfoWindow = infoWindow;
             });
-
-            markers.push(marker);
           });
         });
     }
   </script>
 </body>
 </html>
+
 
