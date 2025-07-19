@@ -22,6 +22,9 @@
     let markers = [];
     let infoWindow = null;
 
+    const lastCenterKey = "mapCenter";
+    const lastZoomKey = "mapZoom";
+
     // アイコンの色をタイプに応じて指定
     const iconColors = {
       "文化遺産": "orange",
@@ -30,9 +33,22 @@
     };
 
     function initMap() {
+      // ローカルストレージから保存位置を取得、なければローマ中心に
+      const savedCenter = JSON.parse(localStorage.getItem(lastCenterKey));
+      const savedZoom = parseInt(localStorage.getItem(lastZoomKey));
+
+      const defaultCenter = { lat: 41.8902, lng: 12.4922 }; // ローマ
+
       map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 35.0, lng: 135.0},
-        zoom: 4
+        center: savedCenter || defaultCenter,
+        zoom: savedZoom || 6
+      });
+
+      // 地図のidleイベントで現在位置とズームを保存
+      map.addListener("idle", () => {
+        const center = map.getCenter();
+        localStorage.setItem(lastCenterKey, JSON.stringify({ lat: center.lat(), lng: center.lng() }));
+        localStorage.setItem(lastZoomKey, map.getZoom());
       });
 
       fetch('places.csv')
@@ -44,15 +60,12 @@
           rows.forEach(row => {
             const [country, place, lat, lng, type] = row.split(',');
 
-            // 国ごとの通し番号をカウント
             if (!countryCounts[country]) countryCounts[country] = 1;
             else countryCounts[country]++;
 
             const label = countryCounts[country].toString();
 
-            // マーカー色の決定
             const color = iconColors[type.trim()] || "gray";
-            // 透明度をタイプで変更。自然遺産は0.6に設定
             const fillOpacity = (type.trim() === "自然遺産") ? 0.6 : 1;
 
             const marker = new google.maps.Marker({
@@ -70,7 +83,6 @@
               title: place
             });
 
-            // 吹き出しの切り替え
             marker.addListener("click", () => {
               if (infoWindow && infoWindow.anchor === marker) {
                 infoWindow.close();
@@ -92,4 +104,5 @@
   </script>
 </body>
 </html>
+
 
