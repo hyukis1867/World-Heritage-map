@@ -50,7 +50,7 @@
         localStorage.setItem(lastZoomKey, map.getZoom());
       });
 
-      fetch("./places.csv")
+      fetch(location.pathname.replace(/\/[^\/]*$/, '/') + 'places.csv')
         .then(response => response.text())
         .then(text => {
           const rows = text.trim().split("\n");
