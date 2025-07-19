@@ -50,7 +50,7 @@
         localStorage.setItem(lastZoomKey, map.getZoom());
       });
 
-      fetch("places.csv")
+      fetch("./places.csv")
         .then(response => response.text())
         .then(text => {
           const rows = text.trim().split("\n");
