@@ -2,98 +2,106 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>世界遺産</title>
+  <title>世界遺産マップ</title>
   <style>
     #map {
       height: 100vh;
       width: 100%;
     }
+    .gm-ui-hover-effect {
+      display: none !important; /* Closeボタン非表示 */
+    }
+    .custom-marker {
+      background-color: orange;
+      color: white;
+      font-size: 10px;
+      border-radius: 50%;
+      padding: 4px;
+      border: 1px solid white;
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      line-height: 16px;
+      font-weight: bold;
+    }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap" async defer></script>
 </head>
 <body>
   <div id="map"></div>
-
   <script>
     let map;
-    const markers = [];
-    const infoWindows = [];
+    let openInfoWindow = null;
+    const lastCenterKey = "mapCenter";
+    const lastZoomKey = "mapZoom";
 
     function initMap() {
-      // 前回の中心座標を localStorage から読み込む
-      const savedLat = parseFloat(localStorage.getItem("mapLat"));
-      const savedLng = parseFloat(localStorage.getItem("mapLng"));
-      const savedZoom = parseInt(localStorage.getItem("mapZoom"), 10);
+      const savedCenter = JSON.parse(localStorage.getItem(lastCenterKey));
+      const savedZoom = parseInt(localStorage.getItem(lastZoomKey));
 
       map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: savedLat || 48.8566, lng: savedLng || 2.3522 },
-        zoom: savedZoom || 2,
-        mapTypeId: 'roadmap'
+        zoom: savedZoom || 3,
+        center: savedCenter || { lat: 20, lng: 0 },
       });
 
-      // 座標保存
       map.addListener("idle", () => {
         const center = map.getCenter();
-        localStorage.setItem("mapLat", center.lat());
-        localStorage.setItem("mapLng", center.lng());
-        localStorage.setItem("mapZoom", map.getZoom());
+        localStorage.setItem(lastCenterKey, JSON.stringify({ lat: center.lat(), lng: center.lng() }));
+        localStorage.setItem(lastZoomKey, map.getZoom());
       });
 
       fetch("places.csv")
         .then(response => response.text())
-        .then(data => {
-          const lines = data.trim().split("\n");
-          lines.forEach((line, index) => {
-            const [place, latStr, lngStr] = line.split(",");
+        .then(text => {
+          const rows = text.trim().split("\n");
+          const header = rows.shift(); // skip header
+          const countryCounters = {};
+          const markers = [];
+
+          rows.forEach(row => {
+            const [country, name, latStr, lngStr] = row.split(",");
             const lat = parseFloat(latStr);
             const lng = parseFloat(lngStr);
+            if (isNaN(lat) || isNaN(lng)) return;
 
-            if (!isNaN(lat) && !isNaN(lng)) {
-              const position = { lat, lng };
-
-              // オレンジ色のマーカーアイコン（番号付き）
-              const label = String.fromCharCode(65 + (index % 26)); // A, B, C...
-              const marker = new google.maps.Marker({
-                position,
-                map,
-                icon: {
-                  url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
-                  scaledSize: new google.maps.Size(32, 32)
-                },
-                label: {
-                  text: label,
-                  color: "white",
-                  fontSize: "12px",
-                  fontWeight: "bold"
-                }
-              });
-
-              const infoWindow = new google.maps.InfoWindow({
-                content: `<div style="font-size:14px;">${place}</div>`,
-                disableAutoPan: false
-              });
-
-              // 吹き出しトグル表示
-              marker.addListener("click", () => {
-                if (infoWindow.getMap()) {
-                  infoWindow.close();
-                } else {
-                  infoWindows.forEach(iw => iw.close());
-                  infoWindow.open(map, marker);
-                }
-              });
-
-              markers.push(marker);
-              infoWindows.push(infoWindow);
+            if (!countryCounters[country]) {
+              countryCounters[country] = 1;
+            } else {
+              countryCounters[country]++;
             }
+
+            const number = countryCounters[country];
+            const div = document.createElement("div");
+            div.className = "custom-marker";
+            div.innerText = number;
+
+            const marker = new google.maps.marker.AdvancedMarkerView({
+              position: { lat, lng },
+              map,
+              content: div
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+              content: name.trim()
+            });
+
+            marker.addListener("gmp-click", () => {
+              if (openInfoWindow) {
+                openInfoWindow.close();
+                if (openInfoWindow === infoWindow) {
+                  openInfoWindow = null;
+                  return;
+                }
+              }
+              infoWindow.open({ anchor: marker, map });
+              openInfoWindow = infoWindow;
+            });
+
+            markers.push(marker);
           });
         });
     }
   </script>
-
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
-  </script>
 </body>
 </html>
-
 
