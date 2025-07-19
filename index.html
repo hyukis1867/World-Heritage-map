@@ -11,8 +11,8 @@
       overflow: hidden;
     }
     .gm-ui-hover-effect {
-    display: none !important;
-  }
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -52,6 +52,8 @@
 
             // マーカー色の決定
             const color = iconColors[type.trim()] || "gray";
+            // 透明度をタイプで変更。自然遺産は0.6に設定
+            const fillOpacity = (type.trim() === "自然遺産") ? 0.6 : 1;
 
             const marker = new google.maps.Marker({
               position: {lat: parseFloat(lat), lng: parseFloat(lng)},
@@ -60,7 +62,7 @@
               icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 fillColor: color,
-                fillOpacity: 1,
+                fillOpacity: fillOpacity,
                 strokeColor: "black",
                 strokeWeight: 1,
                 scale: 10
