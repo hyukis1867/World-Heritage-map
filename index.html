@@ -103,11 +103,15 @@
             });
 
             marker.addListener("click", () => {
-              if (openInfoWindow) {
-                openInfoWindow.close();
-              }
-              infoWindow.open(map, marker);
-              openInfoWindow = infoWindow;
+  if (openInfoWindow === infoWindow) {
+    infoWindow.close();
+    openInfoWindow = null;
+  } else {
+    if (openInfoWindow) {
+      openInfoWindow.close();
+    }
+    infoWindow.open(map, marker);
+    openInfoWindow = infoWindow;
             });
           });
         });
