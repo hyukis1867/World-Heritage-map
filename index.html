@@ -4,27 +4,36 @@
   <meta charset="UTF-8">
   <title>世界遺産マップ</title>
   <style>
-    #map {
-      height: 100vh;
-      width: 100%;
-    }
-    .gm-ui-hover-effect {
-      display: none !important; /* Closeボタン非表示 */
-    }
-    .custom-marker {
-      background-color: orange;
-      color: white;
-      font-size: 10px;
-      border-radius: 50%;
-      padding: 4px;
-      border: 1px solid white;
-      text-align: center;
-      width: 24px;
-      height: 24px;
-      line-height: 16px;
-      font-weight: bold;
-    }
-  </style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* ← スクロールバーをなくす */
+  }
+
+  #map {
+    height: 100vh;
+    width: 100%;
+  }
+
+  .gm-ui-hover-effect {
+    display: none !important; /* Closeボタン非表示 */
+  }
+
+  .custom-marker {
+    background-color: orange;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid white;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    line-height: 16px;
+    font-weight: bold;
+  }
+</style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap" async defer></script>
 </head>
 <body>
