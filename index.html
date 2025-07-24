@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>世界遺産マップ</title>
   <style>
     html, body, #map {
@@ -22,51 +22,55 @@
     let markers = [];
     let infoWindow = null;
 
-    const lastCenterKey = "mapCenter";
-    const lastZoomKey = "mapZoom";
-
-    // アイコンの色をタイプに応じて指定
     const iconColors = {
       "文化遺産": "orange",
-      "自然遺産": "green",
+      "自然遺産": "limegreen",
       "複合遺産": "deepskyblue"
     };
 
     function initMap() {
-      // ローカルストレージから保存位置を取得、なければローマ中心に
-      const savedCenter = JSON.parse(localStorage.getItem(lastCenterKey));
-      const savedZoom = parseInt(localStorage.getItem(lastZoomKey));
-
-      const defaultCenter = { lat: 41.8902, lng: 12.4922 }; // ローマ
-
       map = new google.maps.Map(document.getElementById('map'), {
-        center: savedCenter || defaultCenter,
-        zoom: savedZoom || 6
+        center: {lat: 41.9028, lng: 12.4964},
+        zoom: 4
       });
 
-      // 地図のidleイベントで現在位置とズームを保存
-      map.addListener("idle", () => {
-        const center = map.getCenter();
-        localStorage.setItem(lastCenterKey, JSON.stringify({ lat: center.lat(), lng: center.lng() }));
-        localStorage.setItem(lastZoomKey, map.getZoom());
+      const savedCenter = localStorage.getItem('mapCenter');
+      const savedZoom = localStorage.getItem('mapZoom');
+      if (savedCenter && savedZoom) {
+        const center = JSON.parse(savedCenter);
+        map.setCenter(center);
+        map.setZoom(parseInt(savedZoom));
+      }
+
+      map.addListener('center_changed', () => {
+        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
+      });
+      map.addListener('zoom_changed', () => {
+        localStorage.setItem('mapZoom', map.getZoom());
       });
 
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
-          const rows = csv.trim().split('\n').slice(1); // ヘッダー除去
+          const rows = csv.trim().split('\n').slice(1);
           const countryCounts = {};
+          const placeLabels = {};
 
           rows.forEach(row => {
             const [country, place, lat, lng, type] = row.split(',');
 
-            if (!countryCounts[country]) countryCounts[country] = 1;
-            else countryCounts[country]++;
+            const key = country + "-" + place;
 
-            const label = countryCounts[country].toString();
+            if (!(key in placeLabels)) {
+              if (!countryCounts[country]) countryCounts[country] = 1;
+              else countryCounts[country]++;
+              placeLabels[key] = countryCounts[country];
+            }
+            const label = placeLabels[key].toString();
 
-            const color = iconColors[type.trim()] || "gray";
-            const fillOpacity = (type.trim() === "自然遺産") ? 0.6 : 1;
+            const trimmedType = type.trim();
+            const color = iconColors[trimmedType] || "gray";
+            const fillOpacity = 1;
 
             const marker = new google.maps.Marker({
               position: {lat: parseFloat(lat), lng: parseFloat(lng)},
@@ -104,5 +108,3 @@
   </script>
 </body>
 </html>
-
-
