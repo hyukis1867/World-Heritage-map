@@ -56,7 +56,7 @@
       const countryPlaceMap = {};  // { 国名: { "地名": 番号 } }
 
       rows.forEach(row => {
-        const [country, place, lat, lng, type, year] = row.split(',');
+        const [country, place, lat, lng, type, year, desc] = row.split(',');
 
         if (!countryPlaceMap[country]) {
           countryPlaceMap[country] = {};
@@ -87,25 +87,23 @@
         });
 
         marker.addListener("click", () => {
-          if (infoWindow && infoWindow.anchor === marker) {
-            infoWindow.close();
-            infoWindow = null;
-          } else {
-            if (infoWindow) infoWindow.close();
-            infoWindow = new google.maps.InfoWindow({
-              content: `
-                <div>
-                  <strong>${place}</strong><br>
-                  <small>${country} / ${trimmedType} / ${year}年登録</small>
-                </div>
-              `,
-            });
-            infoWindow.open(map, marker);
-          }
-        });
-
-        markers.push(marker);
-      });
+  if (infoWindow && infoWindow.anchor === marker) {
+    infoWindow.close();
+    infoWindow = null;
+  } else {
+    if (infoWindow) infoWindow.close();
+    infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div>
+          <strong>${place}</strong><br>
+          <div style="text-align:right;">${desc || ''}</div>
+          <small>${country} / ${trimmedType} / ${year}年登録</small>
+        </div>
+      `,
+      maxWidth: 250
+    });
+    infoWindow.open(map, marker);
+  }
     });
 }
   </script>
