@@ -53,24 +53,19 @@
         .then(response => response.text())
         .then(csv => {
           const rows = csv.trim().split('\n').slice(1);
-          const countryCounts = {};
-          const placeLabels = {};
+          const placeCounts = {};
 
           rows.forEach(row => {
-            const [country, place, lat, lng, type] = row.split(',');
+            const [country, place, lat, lng, type, year] = row.split(',');
 
-            const key = country + "-" + place;
-
-            if (!(key in placeLabels)) {
-              if (!countryCounts[country]) countryCounts[country] = 1;
-              else countryCounts[country]++;
-              placeLabels[key] = countryCounts[country];
+            const key = `${country}-${place}`;
+            if (!placeCounts[key]) {
+              placeCounts[key] = Object.keys(placeCounts).length + 1;
             }
-            const label = placeLabels[key].toString();
 
+            const label = placeCounts[key].toString();
             const trimmedType = type.trim();
             const color = iconColors[trimmedType] || "gray";
-            const fillOpacity = 1;
 
             const marker = new google.maps.Marker({
               position: {lat: parseFloat(lat), lng: parseFloat(lng)},
@@ -79,7 +74,7 @@
               icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 fillColor: color,
-                fillOpacity: fillOpacity,
+                fillOpacity: 1,
                 strokeColor: "black",
                 strokeWeight: 1,
                 scale: 10
@@ -93,7 +88,15 @@
                 infoWindow = null;
               } else {
                 if (infoWindow) infoWindow.close();
-                infoWindow = new google.maps.InfoWindow({ content: place });
+                infoWindow = new google.maps.InfoWindow({
+                  content: `
+                    <div>
+                      <strong>${place}</strong><br>
+                      <small>${country} / ${trimmedType} / ${year}年登録</small>
+                    </div>
+                  `,
+                  maxWidth: 250
+                });
                 infoWindow.open(map, marker);
               }
             });
