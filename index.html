@@ -63,7 +63,7 @@
             const lng = columns[3];
             const type = columns[4];
             const year = columns[5];
-            const desc = columns.length >= 7 ? columns.slice(6).join(',') : ''; // 7列目以降が説明文（カンマを含む場合も対応）
+            const desc = columns.length >= 7 ? columns.slice(6).join(',') : ''; // 7列目以降が現地名（カンマを含む場合も対応）
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
