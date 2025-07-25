@@ -1,113 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>世界遺産マップ</title>
-  <style>
-    html, body, #map {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    .gm-ui-hover-effect {
-      display: none !important;
-    }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-  <script>
-    let map;
-    let markers = [];
-    let infoWindow = null;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 41.9028, lng: 12.4964},
+    zoom: 4
+  });
 
-    const iconColors = {
-      "文化遺産": "orange",
-      "自然遺産": "limegreen",
-      "複合遺産": "deepskyblue"
-    };
+  const savedCenter = localStorage.getItem('mapCenter');
+  const savedZoom = localStorage.getItem('mapZoom');
+  if (savedCenter && savedZoom) {
+    const center = JSON.parse(savedCenter);
+    map.setCenter(center);
+    map.setZoom(parseInt(savedZoom));
+  }
 
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 41.9028, lng: 12.4964},
-        zoom: 4
-      });
+  map.addListener('center_changed', () => {
+    localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
+  });
+  map.addListener('zoom_changed', () => {
+    localStorage.setItem('mapZoom', map.getZoom());
+  });
 
-      const savedCenter = localStorage.getItem('mapCenter');
-      const savedZoom = localStorage.getItem('mapZoom');
-      if (savedCenter && savedZoom) {
-        const center = JSON.parse(savedCenter);
-        map.setCenter(center);
-        map.setZoom(parseInt(savedZoom));
-      }
+  fetch('places.csv')
+    .then(response => response.text())
+    .then(csv => {
+      const rows = csv.trim().split('\n').slice(1);
+      const countryPlaceMap = {};  // { 国名: { "地名": 番号 } }
 
-      map.addListener('center_changed', () => {
-        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
-      });
-      map.addListener('zoom_changed', () => {
-        localStorage.setItem('mapZoom', map.getZoom());
-      });
+      rows.forEach(row => {
+        const [country, place, lat, lng, type, year] = row.split(',');
 
-      fetch('places.csv')
-        .then(response => response.text())
-        .then(csv => {
-          const rows = csv.trim().split('\n').slice(1);
-          const placeCounts = {};
+        if (!countryPlaceMap[country]) {
+          countryPlaceMap[country] = {};
+        }
 
-          rows.forEach(row => {
-            const [country, place, lat, lng, type, year] = row.split(',');
+        const countryPlaces = countryPlaceMap[country];
+        if (!countryPlaces[place]) {
+          countryPlaces[place] = Object.keys(countryPlaces).length + 1;
+        }
 
-            const key = `${country}-${place}`;
-            if (!placeCounts[key]) {
-              placeCounts[key] = Object.keys(placeCounts).length + 1;
-            }
+        const label = countryPlaces[place].toString();
+        const trimmedType = type.trim();
+        const color = iconColors[trimmedType] || "gray";
 
-            const label = placeCounts[key].toString();
-            const trimmedType = type.trim();
-            const color = iconColors[trimmedType] || "gray";
-
-            const marker = new google.maps.Marker({
-              position: {lat: parseFloat(lat), lng: parseFloat(lng)},
-              map,
-              label,
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: color,
-                fillOpacity: 1,
-                strokeColor: "black",
-                strokeWeight: 1,
-                scale: 10
-              },
-              title: place
-            });
-
-            marker.addListener("click", () => {
-              if (infoWindow && infoWindow.anchor === marker) {
-                infoWindow.close();
-                infoWindow = null;
-              } else {
-                if (infoWindow) infoWindow.close();
-                infoWindow = new google.maps.InfoWindow({
-                  content: `
-                    <div>
-                      <strong>${place}</strong><br>
-                      <small>${country} / ${trimmedType} / ${year}年登録</small>
-                    </div>
-                  `,
-                  maxWidth: 250
-                });
-                infoWindow.open(map, marker);
-              }
-            });
-
-            markers.push(marker);
-          });
+        const marker = new google.maps.Marker({
+          position: {lat: parseFloat(lat), lng: parseFloat(lng)},
+          map,
+          label,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: color,
+            fillOpacity: 1,
+            strokeColor: "black",
+            strokeWeight: 1,
+            scale: 10
+          },
+          title: place
         });
-    }
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
-  </script>
-</body>
-</html>
+
+        marker.addListener("click", () => {
+          if (infoWindow && infoWindow.anchor === marker) {
+            infoWindow.close();
+            infoWindow = null;
+          } else {
+            if (infoWindow) infoWindow.close();
+            infoWindow = new google.maps.InfoWindow({
+              content: `
+                <div>
+                  <strong>${place}</strong><br>
+                  <small>${country} / ${trimmedType} / ${year}年登録</small>
+                </div>
+              `,
+              maxWidth: 250
+            });
+            infoWindow.open(map, marker);
+          }
+        });
+
+        markers.push(marker);
+      });
+    });
+}
