@@ -59,28 +59,26 @@
             const columns = row.split(',');
             const country = columns[0];
             const place = columns[1];
-            const lat = columns[2];
-            const lng = columns[3];
-            const type = columns[4];
+            const lat = parseFloat(columns[2]);
+            const lng = parseFloat(columns[3]);
+            const type = columns[4].trim();
             const year = columns[5];
-            const desc = columns.length >= 7 ? columns[6] : '';
-            const link = columns.length >= 8 ? columns[7] : '';
+            const localName = columns[6]?.trim(); // 7列目：現地名
+            const linkUrl = columns[7]?.trim();   // 8列目：リンクURL
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
             }
-
             const countryPlaces = countryPlaceMap[country];
             if (!countryPlaces[place]) {
               countryPlaces[place] = Object.keys(countryPlaces).length + 1;
             }
 
             const label = countryPlaces[place].toString();
-            const trimmedType = type.trim();
-            const color = iconColors[trimmedType] || "gray";
+            const color = iconColors[type] || "gray";
 
             const marker = new google.maps.Marker({
-              position: {lat: parseFloat(lat), lng: parseFloat(lng)},
+              position: {lat, lng},
               map,
               label,
               icon: {
@@ -95,53 +93,77 @@
             });
 
             marker.addListener("click", (event) => {
-  // Shiftキーが押されている場合はURLをコピー
-  if (event.domEvent && event.domEvent.shiftKey) {
-    const lat = map.getCenter().lat().toFixed(6);
-    const lng = map.getCenter().lng().toFixed(6);
-    const zoom = map.getZoom();
-    const placeParam = encodeURIComponent(place);
-    const params = new URLSearchParams({
-      lat: lat,
-      lng: lng,
-      zoom: zoom,
-      place: placeParam
-    });
-    const url = `${location.origin}${location.pathname}?${params.toString()}`;
-    navigator.clipboard.writeText(url).then(() => {
-      alert(`URLをコピーしました:\n${url}`);
-    });
-    return; // クリック動作は中断
-  }
+              // Shift+クリックでURLコピー
+              if (event.domEvent && event.domEvent.shiftKey) {
+                const params = new URLSearchParams({
+                  lat: lat.toFixed(6),
+                  lng: lng.toFixed(6),
+                  zoom: map.getZoom(),
+                  place: encodeURIComponent(place)
+                });
+                const url = `${location.origin}${location.pathname}?${params.toString()}`;
+                navigator.clipboard.writeText(url).then(() => {
+                  alert(`URLをコピーしました:\n${url}`);
+                });
+                return;
+              }
 
-  // 通常クリック時の吹き出し表示
-  if (infoWindow && infoWindow.anchor === marker) {
-    infoWindow.close();
-    infoWindow = null;
-  } else {
-    if (infoWindow) infoWindow.close();
-    infoWindow = new google.maps.InfoWindow({
-      content: `
-        <div>
-          <strong><a href="${desc}" target="_blank">${place}</a></strong><br>
-          <div style="text-align:right;">${desc}</div>
-          <small>${country} / ${trimmedType} / ${year}年登録</small>
-        </div>
-      `,
-    });
-    infoWindow.open(map, marker);
-  }
-});
+              // 吹き出し用 HTML（地名がある場合のみ表示）
+              let contentHtml = '';
+              if (localName) {
+                const nameHtml = linkUrl
+                  ? `<a href="${linkUrl}" target="_blank">${localName}</a>`
+                  : `${localName}`;
+                contentHtml = `
+                  <div>
+                    <strong>${nameHtml}</strong><br>
+                    <small>${country} / ${type} / ${year}年登録</small>
+                  </div>
+                `;
+              }
+
+              if (infoWindow) infoWindow.close();
+              infoWindow = new google.maps.InfoWindow({
+                content: contentHtml
+              });
+              infoWindow.open(map, marker);
+            });
 
             markers.push(marker);
           });
+
+          // URL指定のマーカー自動表示
+          const urlParams = new URLSearchParams(window.location.search);
+          const urlLat = parseFloat(urlParams.get('lat'));
+          const urlLng = parseFloat(urlParams.get('lng'));
+          const urlZoom = parseInt(urlParams.get('zoom'));
+          const targetPlace = urlParams.get('place');
+
+          if (!isNaN(urlLat) && !isNaN(urlLng) && !isNaN(urlZoom)) {
+            map.setCenter({ lat: urlLat, lng: urlLng });
+            map.setZoom(urlZoom);
+          }
+
+          if (targetPlace) {
+            const decodedPlace = decodeURIComponent(targetPlace);
+            setTimeout(() => {
+              const targetMarker = markers.find(m => m.title === decodedPlace);
+              if (targetMarker) {
+                google.maps.event.trigger(targetMarker, 'click', {
+                  domEvent: { shiftKey: false }
+                });
+              }
+            }, 500);
+          }
         });
     }
   </script>
+
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
   </script>
 </body>
 </html>
+
 
 
