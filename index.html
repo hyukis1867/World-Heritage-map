@@ -4,24 +4,28 @@
   <meta charset="utf-8" />
   <title>世界遺産マップ</title>
   <style>
-    html, body, #map {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    .infowindow-localname {
-      text-align: right;
-      font-size: 90%;
-      color: #555;
-      margin-top: 2px;
-    }
-    .infowindow-sub {
-      font-size: 85%;
-      color: #444;
-      margin-top: 4px;
-    }
-  </style>
+  html, body, #map {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .infowindow-localname {
+    text-align: right;
+    font-size: 90%;
+    color: #555;
+    margin-top: 2px;
+  }
+  .infowindow-sub {
+    font-size: 85%;
+    color: #444;
+    margin-top: 4px;
+  }
+  /* クローズボタン（❌）を非表示にする */
+  .gm-style-iw button.gm-ui-hover-effect {
+    display: none !important;
+  }
+</style>
 </head>
 <body>
   <div id="map"></div>
