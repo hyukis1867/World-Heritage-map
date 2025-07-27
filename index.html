@@ -13,6 +13,11 @@
     .gm-ui-hover-effect {
       display: none !important;
     }
+    .infowindow-localname {
+      text-align: right;
+      font-size: 90%;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -64,8 +69,8 @@
             const lng = parseFloat(columns[3]);
             const type = columns[4].trim();
             const year = columns[5];
-            const localName = columns[6]?.trim(); // 7列目（使わない）
-            const linkUrl = columns[7]?.trim();   // 8列目（URL）
+            const localName = columns[6]?.trim(); // 7列目
+            const linkUrl = columns[7]?.trim();   // 8列目
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
@@ -120,10 +125,13 @@
                 ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
                 : `${heritageName}`;
 
+              const localNameHtml = localName ? `<div class="infowindow-localname">${localName}</div>` : '';
+
               const contentHtml = `
                 <div>
                   <strong>${nameHtml}</strong><br>
                   <small>${country} / ${type} / ${year}年登録</small>
+                  ${localNameHtml}
                 </div>
               `;
 
@@ -170,6 +178,7 @@
   </script>
 </body>
 </html>
+
 
 
 
