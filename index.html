@@ -53,7 +53,7 @@
         .then(response => response.text())
         .then(csv => {
           const rows = csv.trim().split('\n').slice(1);
-          const countryPlaceMap = {};  // { 国名: { "地名": 番号 } }
+          const countryPlaceMap = {};
 
           rows.forEach(row => {
             const columns = row.split(',');
@@ -63,7 +63,8 @@
             const lng = columns[3];
             const type = columns[4];
             const year = columns[5];
-            const desc = columns.length >= 7 ? columns.slice(6).join(',') : ''; // 7列目以降が現地名（カンマを含む場合も対応）
+            const desc = columns.length >= 7 ? columns[6].trim() : '';
+            const link = columns.length >= 8 ? columns[7].trim() : '';
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
@@ -99,12 +100,17 @@
                 infoWindow = null;
               } else {
                 if (infoWindow) infoWindow.close();
+
+                const descHtml = desc ? `<div style="text-align:right;">${desc}</div>` : '';
+                const linkHtml = link ? `<div style="text-align:right;"><a href="${link}" target="_blank">詳細リンク</a></div>` : '';
+
                 infoWindow = new google.maps.InfoWindow({
                   content: `
                     <div>
                       <strong>${place}</strong><br>
-                      <div style="text-align:right;">${desc}</div>
-                      <small>${country} / ${trimmedType} / ${year}年登録</small>
+                      ${descHtml}
+                      ${linkHtml}
+                      <div style="text-align:right;"><small>${country} / ${trimmedType} / ${year}年登録</small></div>
                     </div>
                   `,
                 });
