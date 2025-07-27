@@ -94,30 +94,44 @@
               title: place
             });
 
-            marker.addListener("click", () => {
-              if (infoWindow && infoWindow.anchor === marker) {
-                infoWindow.close();
-                infoWindow = null;
-              } else {
-                if (infoWindow) infoWindow.close();
+            marker.addListener("click", (event) => {
+  // Shiftキーが押されている場合はURLをコピー
+  if (event.domEvent && event.domEvent.shiftKey) {
+    const lat = map.getCenter().lat().toFixed(6);
+    const lng = map.getCenter().lng().toFixed(6);
+    const zoom = map.getZoom();
+    const placeParam = encodeURIComponent(place);
+    const params = new URLSearchParams({
+      lat: lat,
+      lng: lng,
+      zoom: zoom,
+      place: placeParam
+    });
+    const url = `${location.origin}${location.pathname}?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert(`URLをコピーしました:\n${url}`);
+    });
+    return; // クリック動作は中断
+  }
 
-                const descHtml = desc ? `<div style="text-align:right;">${desc}</div>` : '';
-                const placeHtml = link
-                  ? `<strong><a href="${link}" target="_blank">${place}</a></strong>`
-                  : `<strong>${place}</strong>`;
-
-                infoWindow = new google.maps.InfoWindow({
-                  content: `
-                    <div>
-                      ${placeHtml}<br>
-                      ${descHtml}
-                      <div style="text-align:right;"><small>${country} / ${trimmedType} / ${year}年登録</small></div>
-                    </div>
-                  `
-                });
-                infoWindow.open(map, marker);
-              }
-            });
+  // 通常クリック時の吹き出し表示
+  if (infoWindow && infoWindow.anchor === marker) {
+    infoWindow.close();
+    infoWindow = null;
+  } else {
+    if (infoWindow) infoWindow.close();
+    infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div>
+          <strong><a href="${desc}" target="_blank">${place}</a></strong><br>
+          <div style="text-align:right;">${desc}</div>
+          <small>${country} / ${trimmedType} / ${year}年登録</small>
+        </div>
+      `,
+    });
+    infoWindow.open(map, marker);
+  }
+});
 
             markers.push(marker);
           });
