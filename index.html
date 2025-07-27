@@ -63,8 +63,8 @@
             const lng = columns[3];
             const type = columns[4];
             const year = columns[5];
-            const desc = columns.length >= 7 ? columns[6].trim() : '';
-            const link = columns.length >= 8 ? columns[7].trim() : '';
+            const desc = columns.length >= 7 ? columns[6] : '';
+            const link = columns.length >= 8 ? columns[7] : '';
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
@@ -102,17 +102,18 @@
                 if (infoWindow) infoWindow.close();
 
                 const descHtml = desc ? `<div style="text-align:right;">${desc}</div>` : '';
-                const linkHtml = link ? `<div style="text-align:right;"><a href="${link}" target="_blank">詳細リンク</a></div>` : '';
+                const placeHtml = link
+                  ? `<strong><a href="${link}">${place}</a></strong>`
+                  : `<strong>${place}</strong>`;
 
                 infoWindow = new google.maps.InfoWindow({
                   content: `
                     <div>
-                      <strong>${place}</strong><br>
+                      ${placeHtml}<br>
                       ${descHtml}
-                      ${linkHtml}
                       <div style="text-align:right;"><small>${country} / ${trimmedType} / ${year}年登録</small></div>
                     </div>
-                  `,
+                  `
                 });
                 infoWindow.open(map, marker);
               }
@@ -128,4 +129,5 @@
   </script>
 </body>
 </html>
+
 
