@@ -21,6 +21,7 @@
     let map;
     let markers = [];
     let infoWindow = null;
+    let lastOpenedMarker = null;
 
     const iconColors = {
       "文化遺産": "orange",
@@ -58,23 +59,23 @@
           rows.forEach(row => {
             const columns = row.split(',');
             const country = columns[0];
-            const place = columns[1];
+            const heritageName = columns[1];     // 2列目
             const lat = parseFloat(columns[2]);
             const lng = parseFloat(columns[3]);
             const type = columns[4].trim();
             const year = columns[5];
-            const localName = columns[6]?.trim(); // 7列目：現地名
-            const linkUrl = columns[7]?.trim();   // 8列目：リンクURL
+            const localName = columns[6]?.trim(); // 7列目（使わない）
+            const linkUrl = columns[7]?.trim();   // 8列目（URL）
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
             }
             const countryPlaces = countryPlaceMap[country];
-            if (!countryPlaces[place]) {
-              countryPlaces[place] = Object.keys(countryPlaces).length + 1;
+            if (!countryPlaces[heritageName]) {
+              countryPlaces[heritageName] = Object.keys(countryPlaces).length + 1;
             }
 
-            const label = countryPlaces[place].toString();
+            const label = countryPlaces[heritageName].toString();
             const color = iconColors[type] || "gray";
 
             const marker = new google.maps.Marker({
@@ -89,7 +90,7 @@
                 strokeWeight: 1,
                 scale: 10
               },
-              title: place
+              title: heritageName
             });
 
             marker.addListener("click", (event) => {
@@ -99,7 +100,7 @@
                   lat: lat.toFixed(6),
                   lng: lng.toFixed(6),
                   zoom: map.getZoom(),
-                  place: encodeURIComponent(place)
+                  place: encodeURIComponent(heritageName)
                 });
                 const url = `${location.origin}${location.pathname}?${params.toString()}`;
                 navigator.clipboard.writeText(url).then(() => {
@@ -108,25 +109,30 @@
                 return;
               }
 
-              // 吹き出し用 HTML（地名がある場合のみ表示）
-              let contentHtml = '';
-              if (localName) {
-                const nameHtml = linkUrl
-                  ? `<a href="${linkUrl}" target="_blank">${localName}</a>`
-                  : `${localName}`;
-                contentHtml = `
-                  <div>
-                    <strong>${nameHtml}</strong><br>
-                    <small>${country} / ${type} / ${year}年登録</small>
-                  </div>
-                `;
+              // 再クリックで吹き出しを閉じる
+              if (lastOpenedMarker === marker && infoWindow) {
+                infoWindow.close();
+                lastOpenedMarker = null;
+                return;
               }
+
+              const nameHtml = linkUrl
+                ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
+                : `${heritageName}`;
+
+              const contentHtml = `
+                <div>
+                  <strong>${nameHtml}</strong><br>
+                  <small>${country} / ${type} / ${year}年登録</small>
+                </div>
+              `;
 
               if (infoWindow) infoWindow.close();
               infoWindow = new google.maps.InfoWindow({
                 content: contentHtml
               });
               infoWindow.open(map, marker);
+              lastOpenedMarker = marker;
             });
 
             markers.push(marker);
@@ -164,6 +170,7 @@
   </script>
 </body>
 </html>
+
 
 
 
