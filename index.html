@@ -10,13 +10,16 @@
       padding: 0;
       overflow: hidden;
     }
-    .gm-ui-hover-effect {
-      display: none !important;
-    }
     .infowindow-localname {
       text-align: right;
       font-size: 90%;
       color: #555;
+      margin-top: 2px;
+    }
+    .infowindow-sub {
+      font-size: 85%;
+      color: #444;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -64,13 +67,13 @@
           rows.forEach(row => {
             const columns = row.split(',');
             const country = columns[0];
-            const heritageName = columns[1];     // 2列目
+            const heritageName = columns[1];
             const lat = parseFloat(columns[2]);
             const lng = parseFloat(columns[3]);
             const type = columns[4].trim();
             const year = columns[5];
-            const localName = columns[6]?.trim(); // 7列目
-            const linkUrl = columns[7]?.trim();   // 8列目
+            const localName = columns[6]?.trim();
+            const linkUrl = columns[7]?.trim();
 
             if (!countryPlaceMap[country]) {
               countryPlaceMap[country] = {};
@@ -125,13 +128,17 @@
                 ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
                 : `${heritageName}`;
 
-              const localNameHtml = localName ? `<div class="infowindow-localname">${localName}</div>` : '';
+              const localNameHtml = localName
+                ? `<div class="infowindow-localname">${localName}</div>`
+                : '';
+
+              const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
 
               const contentHtml = `
                 <div>
-                  <strong>${nameHtml}</strong><br>
-                  <small>${country} / ${type} / ${year}年登録</small>
+                  <strong>${nameHtml}</strong>
                   ${localNameHtml}
+                  ${subInfo}
                 </div>
               `;
 
@@ -178,6 +185,7 @@
   </script>
 </body>
 </html>
+
 
 
 
