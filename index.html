@@ -200,24 +200,9 @@
           maxZoom: 10
         });
       markerCluster.addListener('clusterclick', (cluster) => {
-  const maxZoom = 10;
-  const targetZoom = Math.min(map.getZoom() + 4, maxZoom);
-  const center = cluster.getCenter();
-  let currentZoom = map.getZoom();
-
-  map.panTo(center); // 先にパンだけしておく（スムーズに）
-
-  function zoomStep() {
-    if (currentZoom < targetZoom) {
-      currentZoom++;
-      map.setZoom(currentZoom);
-      setTimeout(zoomStep, 300);  // 300ms後に次のズーム
-    }
-  }
-
-  zoomStep();
+  // クリック時のズーム動作をキャンセル
+  // ここに処理を書かない＝何もしない
 });
-
 
 
 
