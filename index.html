@@ -199,11 +199,12 @@
           markers,
           maxZoom: 10
         });
-    markerCluster.addListener('clusterclick', (cluster) => {
-  if (cluster && cluster.stopPropagation) {
-    cluster.stopPropagation();
-  }
-  // 何もしないで処理停止
+   markerCluster.addListener('clusterclick', (cluster) => {
+  // クラスタークリック時のデフォルト動作を防止するため、マップのズーム変更を遅延で戻す
+  setTimeout(() => {
+    // 元のズームレベルに戻す
+    map.setZoom(map.getZoom() - 1);
+  }, 10);
 });
 
 
