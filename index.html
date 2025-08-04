@@ -1,70 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>世界遺産マップ</title>
-    <style>
-      #map { height: 100vh; width: 100%; }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw"></script>
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      const csvUrl = "places.csv";
-      const iconUrl = "https://maps.google.com/mapfiles/ms2/micons/red-dot.png";
-      let map;
+<head>
+  <meta charset="utf-8">
+  <title>世界遺産マップ</title>
+  <style>
+    #map { height: 100vh; width: 100%; }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw"></script>
+  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    const csvUrl = "places.csv";
+    const iconUrl = "https://maps.google.com/mapfiles/ms2/micons/red-dot.png";
 
-      fetch(csvUrl)
-        .then(response => response.text())
-        .then(csvText => {
-          const rows = csvText.trim().split("\n");
-          const markers = [];
+    let map;
 
-          rows.forEach((line, i) => {
-            const [country, name, latStr, lngStr, type] = line.split(",");
-            const lat = parseFloat(latStr);
-            const lng = parseFloat(lngStr);
-            if (!isNaN(lat) && !isNaN(lng)) {
-              const marker = new google.maps.Marker({
-                position: { lat, lng },
-                icon: {
-                  url: iconUrl,
-                  scaledSize: new google.maps.Size(32, 32),
-                  labelOrigin: new google.maps.Point(16, 12)
-                },
-                label: {
-                  text: `${i + 1}`,
-                  color: "black",
-                  fontSize: "12px",
-                  fontWeight: "bold"
-                },
-                title: name
-              });
+    fetch(csvUrl)
+      .then(response => response.text())
+      .then(csvText => {
+        const rows = csvText.trim().split("\n");
+        const markers = [];
 
-              const info = new google.maps.InfoWindow({
-                content: `<b>${name}</b><br>${country}`
-              });
-
-              marker.addListener("click", () => {
-                info.open(map, marker);
-              });
-
-              markers.push(marker);
-            }
-          });
-
-          map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 20, lng: 0 },
-            zoom: 2,
-            gestureHandling: 'greedy',
-            disableDefaultUI: false
-          });
-
-          new markerClusterer.MarkerClusterer({ map, markers });
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 20, lng: 0 },
+          zoom: 2,
+          gestureHandling: 'greedy',
+          disableDefaultUI: false
         });
-    </script>
-  </body>
+
+        rows.forEach((line) => {
+          const [country, name, latStr, lngStr, type] = line.split(",");
+          const lat = parseFloat(latStr);
+          const lng = parseFloat(lngStr);
+          if (!isNaN(lat) && !isNaN(lng)) {
+            const marker = new google.maps.Marker({
+              position: { lat, lng },
+              icon: {
+                url: iconUrl,
+                scaledSize: new google.maps.Size(32, 32)
+              },
+              title: name
+            });
+
+            const info = new google.maps.InfoWindow({
+              content: `<b>${name}</b><br>${country}`
+            });
+
+            marker.addListener("click", () => {
+              info.open(map, marker);
+            });
+
+            markers.push(marker);
+          }
+        });
+
+        // クラスタリング適用
+        new markerClusterer.MarkerClusterer({
+          map,
+          markers
+        });
+      });
+  </script>
+</body>
 </html>
 
