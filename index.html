@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>世界遺産マップ</title>
+  <title>世界道徳マップ</title>
   <style>
   html, body, #map {
     height: 100%;
@@ -52,7 +52,7 @@
     </select>
     <br>
     <select id="heritage-select" disabled>
-      <option value="">-- 遺産を選択 --</option>
+      <option value="">-- 道徳を選択 --</option>
     </select>
   </div>
 
@@ -63,9 +63,9 @@
     let lastOpenedMarker = null;
 
     const iconColors = {
-      "文化遺産": "orange",
-      "自然遺産": "limegreen",
-      "複合遺産": "deepskyblue"
+      "文化道徳": "orange",
+      "自然道徳": "limegreen",
+      "複合道徳": "deepskyblue"
     };
 
     function initMap() {
@@ -113,7 +113,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;  // IDを保存
+          countryPlaceMap[country][heritageName] = id;
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -194,17 +194,12 @@
           markers.push(marker);
         });
 
-       const markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers,
-  maxZoom: 10,
-  onClusterClick: () => {
-    // 何もしないことでクリックイベントを無効化
-    return false;
-  }
-});
-
-
+        const markerCluster = new markerClusterer.MarkerClusterer({
+          map,
+          markers,
+          maxZoom: 10,
+          onClusterClick: () => false
+        });
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
@@ -222,7 +217,7 @@
           heritageSelect.innerHTML = '';
           const defaultOption = document.createElement('option');
           defaultOption.value = '';
-          defaultOption.textContent = '-- 遺産を選択 --';
+          defaultOption.textContent = '-- 道徳を選択 --';
           heritageSelect.appendChild(defaultOption);
 
           if (selectedCountry && countryPlaceMap[selectedCountry]) {
@@ -239,11 +234,7 @@
           }
 
           markers.forEach(marker => {
-            if (!selectedCountry) {
-              marker.setVisible(true);
-            } else {
-              marker.setVisible(marker.customCountry === selectedCountry);
-            }
+            marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
           });
 
           heritageSelect.value = '';
@@ -253,10 +244,9 @@
           const selectedHeritage = heritageSelect.value;
           if (!selectedHeritage) return;
 
-          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
+          const targetMarker = markers.find(marker => `${marker.title}` === selectedHeritage);
           if (targetMarker) {
-            map.setCenter(targetMarker.getPosition());
-            map.setZoom(8);
+            map.panTo(targetMarker.getPosition());
             google.maps.event.trigger(targetMarker, 'click', {
               domEvent: { shiftKey: false }
             });
@@ -269,9 +259,9 @@
         const urlZoom = parseInt(urlParams.get('zoom'));
         const targetPlace = urlParams.get('place');
 
-        if (!isNaN(urlLat) && !isNaN(urlLng) && !isNaN(urlZoom)) {
+        if (!isNaN(urlLat) && !isNaN(urlLng)) {
           map.setCenter({ lat: urlLat, lng: urlLng });
-          map.setZoom(urlZoom);
+          if (!isNaN(urlZoom)) map.setZoom(urlZoom);
         }
 
         if (targetPlace) {
@@ -295,5 +285,4 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
 
