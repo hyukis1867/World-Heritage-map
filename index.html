@@ -199,6 +199,22 @@
           markers,
           maxZoom: 10
         });
+        markerCluster.addListener('clusterclick', (cluster) => {
+  const bounds = cluster.getBounds();
+  const mapCenter = bounds.getCenter();
+  const currentZoom = map.getZoom();
+  const maxZoom = 15;  // お好みで最大ズーム値を調整してください
+
+  function zoomInStep(zoomLevel) {
+    if (zoomLevel > maxZoom) return;
+    map.setZoom(zoomLevel);
+    map.panTo(mapCenter);
+    setTimeout(() => zoomInStep(zoomLevel + 1), 300); // 300msごとにズームアップ
+  }
+
+  zoomInStep(currentZoom + 1);
+});
+
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
