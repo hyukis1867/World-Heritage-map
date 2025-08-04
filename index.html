@@ -1,15 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>世界遺産マップ</title>
+  <style>
+  html, body, #map {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .infowindow-localname {
+    text-align: right;
+    font-size: 90%;
+    color: #555;
+    margin-top: 2px;
+  }
+  .infowindow-sub {
+    text-align: right;
+    font-size: 85%;
+    color: #444;
+    margin-top: 4px;
+  }
+  /* クローズボタン（❌）を非表示にする */
+  .gm-style-iw button.gm-ui-hover-effect {
+    display: none !important;
+  }
+</style>
+</head>
 <body>
-  <select id="countryFilter" style="position: absolute; z-index: 5; top: 10px; left: 10px; font-size: 16px;">
-    <option value="ALL">全ての国を表示</option>
-  </select>
   <div id="map"></div>
   <script>
     let map;
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    const countryToMarkers = {};
-    const countrySet = new Set();
 
     const iconColors = {
       "文化遺産": "orange",
@@ -76,7 +101,7 @@
               text: label,
               color: 'black',
               fontSize: '12px',
-              fontWeight: 'normal'
+              fontWeight: 'bold'
             },
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
@@ -88,8 +113,6 @@
             },
             title: heritageName
           });
-
-          marker.country = country;
 
           marker.addListener("click", (event) => {
             if (event.domEvent && event.domEvent.shiftKey) {
@@ -114,7 +137,7 @@
 
             const nameHtml = linkUrl
               ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
-              : heritageName;
+              : `${heritageName}`;
 
             const localNameHtmlJP = localNameJP
               ? `<div class="infowindow-localname">${localNameJP}</div>`
@@ -126,13 +149,14 @@
 
             const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
 
-            const contentHtml = 
-              `<div>
+            const contentHtml = `
+              <div>
                 <strong>${nameHtml}</strong>
                 ${localNameHtmlJP}
                 ${localNameHtmlEN}
                 ${subInfo}
-              </div>`;
+              </div>
+            `;
 
             if (infoWindow) infoWindow.close();
             infoWindow = new google.maps.InfoWindow({
@@ -143,39 +167,16 @@
           });
 
           markers.push(marker);
-
-          // 国別マーカー格納
-          if (!countryToMarkers[country]) countryToMarkers[country] = [];
-          countryToMarkers[country].push(marker);
-          countrySet.add(country);
         });
 
-        // ドロップダウンに国名追加
-        const dropdown = document.getElementById('countryFilter');
-        Array.from(countrySet).sort().forEach(country => {
-          const opt = document.createElement('option');
-          opt.value = country;
-          opt.textContent = country;
-          dropdown.appendChild(opt);
-        });
-
-        dropdown.addEventListener('change', (e) => {
-          const selected = e.target.value;
-          markers.forEach(marker => {
-            if (selected === "ALL" || marker.country === selected) {
-              marker.setMap(map);
-            } else {
-              marker.setMap(null);
-            }
-          });
-        });
-
+        // MarkerClustererの設定（クラスター時は純正アイコンで数字のみ）
         const markerCluster = new markerClusterer.MarkerClusterer({ 
           map, 
           markers,
-          maxZoom: 10
+          maxZoom: 10 // このズームよりズームインしたらクラスタ解除
         });
 
+        // URL指定マーカー自動表示
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
         const urlLng = parseFloat(urlParams.get('lng'));
@@ -200,8 +201,13 @@
         }
       });
     }
-    <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=あなたのAPIキー&callback=initMap">
   </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
+  </script>
+  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+</body>
+</html>
 
 
