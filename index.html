@@ -22,34 +22,48 @@
     color: #444;
     margin-top: 4px;
   }
+  /* クローズボタン（❌）を非表示にする */
   .gm-style-iw button.gm-ui-hover-effect {
     display: none !important;
   }
-
-  /* ▼ プルダウンメニューのスタイルを追加 */
-  #countryFilter {
+  /* ここからプルダウン用スタイル */
+  #dropdown-container {
     position: absolute;
-    top: 10px;
+    top: 60px; /* ここで少し下に調整 */
     left: 10px;
     z-index: 5;
-    padding: 5px;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    font-family: sans-serif;
+  }
+  #dropdown-container select {
+    margin-bottom: 5px;
+    width: 200px;
     font-size: 14px;
   }
   </style>
 </head>
 <body>
-  <!-- ▼ プルダウンメニューを追加 -->
-  <select id="countryFilter">
-    <option value="">すべての国</option>
-  </select>
-
   <div id="map"></div>
+
+  <!-- プルダウン追加 -->
+  <div id="dropdown-container">
+    <select id="country-select">
+      <option value="">-- 国を選択 --</option>
+    </select>
+    <br>
+    <select id="heritage-select" disabled>
+      <option value="">-- 遺産を選択 --</option>
+    </select>
+  </div>
+
   <script>
     let map;
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    let allMarkerData = [];
 
     const iconColors = {
       "文化遺産": "orange",
@@ -85,7 +99,6 @@
       .then(csv => {
         const rows = csv.trim().split('\n').slice(1);
         const countryPlaceMap = {};
-        const countriesSet = new Set();
 
         rows.forEach(row => {
           const columns = row.split(',');
@@ -98,8 +111,6 @@
           const localNameJP = columns[6]?.trim();
           const localNameEN = columns[7]?.trim();
           const linkUrl = columns[8]?.trim();
-
-          countriesSet.add(country);
 
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
@@ -129,7 +140,8 @@
               strokeWeight: 1,
               scale: 10
             },
-            title: heritageName
+            title: heritageName,
+            customCountry: country // マーカーに国情報を保持
           });
 
           marker.addListener("click", (event) => {
@@ -185,32 +197,80 @@
           });
 
           markers.push(marker);
-          allMarkerData.push({ marker, country });
         });
 
-        // ▼ プルダウンに国を追加
-        const select = document.getElementById('countryFilter');
-        Array.from(countriesSet).sort().forEach(country => {
-          const option = document.createElement('option');
-          option.value = country;
-          option.textContent = country;
-          select.appendChild(option);
-        });
-
-        select.addEventListener('change', () => {
-          const selected = select.value;
-          allMarkerData.forEach(({ marker, country }) => {
-            marker.setVisible(selected === "" || selected === country);
-          });
-        });
-
-        // MarkerClustererの設定
+        // MarkerClustererの設定（クラスター時は純正アイコンで数字のみ）
         const markerCluster = new markerClusterer.MarkerClusterer({ 
           map, 
           markers,
-          maxZoom: 10
+          maxZoom: 10 // このズームよりズームインしたらクラスタ解除
         });
 
+        // --- ここからプルダウン機能のスクリプト ---
+
+        const countrySelect = document.getElementById('country-select');
+        const heritageSelect = document.getElementById('heritage-select');
+
+        // 国リストの作成とプルダウン追加
+        const countryList = Object.keys(countryPlaceMap);
+        countryList.forEach(country => {
+          const option = document.createElement('option');
+          option.value = country;
+          option.textContent = country;
+          countrySelect.appendChild(option);
+        });
+
+        // 国選択時の処理
+        countrySelect.addEventListener('change', () => {
+          const selectedCountry = countrySelect.value;
+          heritageSelect.innerHTML = '';
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = '-- 遺産を選択 --';
+          heritageSelect.appendChild(defaultOption);
+
+          if (selectedCountry && countryPlaceMap[selectedCountry]) {
+            Object.keys(countryPlaceMap[selectedCountry]).forEach(heritage => {
+              const option = document.createElement('option');
+              option.value = heritage;
+              option.textContent = heritage;
+              heritageSelect.appendChild(option);
+            });
+            heritageSelect.disabled = false;
+          } else {
+            heritageSelect.disabled = true;
+          }
+
+          // マーカーの表示切替：選択国のみ表示、他は非表示
+          markers.forEach(marker => {
+            if (!selectedCountry) {
+              marker.setVisible(true); // 国未選択ならすべて表示
+            } else {
+              marker.setVisible(marker.customCountry === selectedCountry);
+            }
+          });
+
+          // 遺産セレクトは初期化
+          heritageSelect.value = '';
+        });
+
+        // 遺産選択時の処理
+        heritageSelect.addEventListener('change', () => {
+          const selectedHeritage = heritageSelect.value;
+          if (!selectedHeritage) return;
+
+          // 選択された遺産のマーカーを探す
+          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
+          if (targetMarker) {
+            map.setCenter(targetMarker.getPosition());
+            map.setZoom(13);
+            google.maps.event.trigger(targetMarker, 'click', {
+              domEvent: { shiftKey: false }
+            });
+          }
+        });
+
+        // --- URL指定マーカー自動表示（元コード）---
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
         const urlLng = parseFloat(urlParams.get('lng'));
@@ -243,5 +303,6 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
 
