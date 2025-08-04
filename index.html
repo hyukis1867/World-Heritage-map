@@ -199,22 +199,22 @@
           markers,
           maxZoom: 10
         });
-        markerCluster.addListener('clusterclick', (cluster) => {
+       markerCluster.addListener('clusterclick', (cluster) => {
   const maxZoom = 10;
-  const center = cluster.getCenter();
   const targetZoom = Math.min(map.getZoom() + 4, maxZoom);
+  const center = cluster.getCenter();
   let currentZoom = map.getZoom();
 
-  const zoomStep = () => {
+  const smoothZoom = () => {
     if (currentZoom < targetZoom) {
       currentZoom++;
       map.setZoom(currentZoom);
-      map.panTo(center); // panToを使うことで少し滑らかに
-      setTimeout(zoomStep, 300); // ズーム間隔
+      map.setCenter(center); // センターも一緒に動かすとより自然
+      setTimeout(smoothZoom, 500); // 少し間を空けてズーム
     }
   };
 
-  zoomStep();
+  smoothZoom(); // スタート
 });
 
 
