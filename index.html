@@ -199,9 +199,9 @@
           markers,
           maxZoom: 10
         });
-      markerCluster.addListener('clusterclick', (cluster) => {
-  // クリック時のズーム動作をキャンセル
-  // ここに処理を書かない＝何もしない
+     markerCluster.addListener('clusterclick', (cluster) => {
+  // クリックイベントを停止させるため、return false を返す
+  return false;
 });
 
 
