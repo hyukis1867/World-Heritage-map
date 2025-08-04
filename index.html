@@ -194,13 +194,14 @@
           markers.push(marker);
         });
 
-        const markerCluster = new markerClusterer.MarkerClusterer({ 
-          map, 
-          markers,
-          maxZoom: 10
-        });
-  markerCluster.addListener('clusterclick', (event) => {
-  event.stop();  // これでクラスタクリックのデフォルト動作をキャンセル
+       const markerCluster = new markerClusterer.MarkerClusterer({
+  map,
+  markers,
+  maxZoom: 10,
+  onClusterClick: () => {
+    // 何もしないことでクリックイベントを無効化
+    return false;
+  }
 });
 
 
