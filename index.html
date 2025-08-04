@@ -61,6 +61,7 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
+    let markerCluster = null;
 
     const iconColors = {
       "文化遺産": "orange",
@@ -157,7 +158,26 @@
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
               lastOpenedMarker = null;
+              // クラスタに戻す
+              if (markerCluster && extractedMarkers.length) {
+                markerCluster.addMarkers(extractedMarkers);
+                extractedMarkers = [];
+              }
               return;
+            }
+
+            // クラスタからマーカー抜き出し処理（吹き出し表示用）
+            if (markerCluster) {
+              // クラスタ内にマーカーが含まれていれば
+              // まずクラスタからそのマーカーを外す
+              const cluster = markerCluster.getClusters().find(cl => {
+                return cl.getMarkers().some(m => m === marker);
+              });
+              if (cluster) {
+                // 他のクラスタメンバーを一時的に外す
+                extractedMarkers = cluster.getMarkers().filter(m => m !== marker);
+                markerCluster.removeMarkers(extractedMarkers);
+              }
             }
 
             const nameHtml = linkUrl
@@ -194,17 +214,18 @@
           markers.push(marker);
         });
 
-       const markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers,
-  maxZoom: 10,
-  onClusterClick: () => {
-    // 何もしないことでクリックイベントを無効化
-    return false;
-  }
-});
+        // 抜き出したマーカー一時保管用
+        let extractedMarkers = [];
 
-
+        markerCluster = new markerClusterer.MarkerClusterer({
+          map,
+          markers,
+          maxZoom: 10,
+          onClusterClick: () => {
+            // クラスタクリックは何もしない（無効化）
+            return false;
+          }
+        });
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
@@ -295,5 +316,6 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
 
