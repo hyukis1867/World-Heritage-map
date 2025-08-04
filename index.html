@@ -201,15 +201,23 @@
         });
        markerCluster.addListener('clusterclick', (cluster) => {
   const maxZoom = 10;
-  const targetZoom = Math.min(map.getZoom() + 4, maxZoom);
   const center = cluster.getCenter();
+  let currentZoom = map.getZoom();
+  const targetZoom = Math.min(currentZoom + 4, maxZoom);
 
-  map.panTo(center); // スムーズに移動
+  const smoothZoom = () => {
+    if (currentZoom < targetZoom) {
+      currentZoom++;
+      map.setZoom(currentZoom);
+      map.panTo(center); // 中心を保持
+      setTimeout(smoothZoom, 400); // 徐々にズーム
+    }
+  };
 
-  setTimeout(() => {
-    map.setZoom(targetZoom); // 少し遅れてズーム
-  }, 500);
+  map.panTo(center); // まず中心へ
+  setTimeout(smoothZoom, 200); // 少し遅れてズーム開始
 });
+
 
 
 
