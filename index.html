@@ -199,24 +199,25 @@
           markers,
           maxZoom: 10
         });
-       markerCluster.addListener('clusterclick', (cluster) => {
+      markerCluster.addListener('clusterclick', (cluster) => {
   const maxZoom = 10;
   const center = cluster.getCenter();
   let currentZoom = map.getZoom();
   const targetZoom = Math.min(currentZoom + 4, maxZoom);
 
-  const smoothZoom = () => {
+  function smoothZoom() {
     if (currentZoom < targetZoom) {
       currentZoom++;
       map.setZoom(currentZoom);
-      map.panTo(center); // 中心を保持
-      setTimeout(smoothZoom, 400); // 徐々にズーム
+      map.panTo(center);
+      requestAnimationFrame(smoothZoom);
     }
-  };
+  }
 
-  map.panTo(center); // まず中心へ
-  setTimeout(smoothZoom, 200); // 少し遅れてズーム開始
+  map.panTo(center);
+  requestAnimationFrame(smoothZoom);
 });
+
 
 
 
