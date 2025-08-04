@@ -200,22 +200,21 @@
           maxZoom: 10
         });
         markerCluster.addListener('clusterclick', (cluster) => {
-  const mapZoom = map.getZoom();
   const maxZoom = 10;
-  const targetZoom = Math.min(mapZoom + 4, maxZoom);  // 目的ズームレベル（例：+4）
-
+  const targetZoom = Math.min(map.getZoom() + 4, maxZoom); // ズーム段階を最大10まで
   const center = cluster.getCenter();
-  let currentZoom = mapZoom;
+  let currentZoom = map.getZoom();
 
-  const zoomInterval = setInterval(() => {
+  const zoomStep = () => {
     if (currentZoom < targetZoom) {
       currentZoom++;
       map.setZoom(currentZoom);
       map.setCenter(center);
-    } else {
-      clearInterval(zoomInterval);
+      setTimeout(zoomStep, 300); // 300msごとに1段階ズーム
     }
-  }, 300); // 300msごとに1段階ズーム
+  };
+
+  zoomStep();
 });
 
 
