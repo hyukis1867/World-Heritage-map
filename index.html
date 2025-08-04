@@ -203,18 +203,12 @@
   const maxZoom = 10;
   const targetZoom = Math.min(map.getZoom() + 4, maxZoom);
   const center = cluster.getCenter();
-  let currentZoom = map.getZoom();
 
-  const smoothZoom = () => {
-    if (currentZoom < targetZoom) {
-      currentZoom++;
-      map.setZoom(currentZoom);
-      map.setCenter(center); // センターも一緒に動かすとより自然
-      setTimeout(smoothZoom, 500); // 少し間を空けてズーム
-    }
-  };
+  map.panTo(center); // スムーズに移動
 
-  smoothZoom(); // スタート
+  setTimeout(() => {
+    map.setZoom(targetZoom); // 少し遅れてズーム
+  }, 500);
 });
 
 
