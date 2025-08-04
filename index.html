@@ -199,12 +199,8 @@
           markers,
           maxZoom: 10
         });
-   markerCluster.addListener('clusterclick', (cluster) => {
-  // クラスタークリック時のデフォルト動作を防止するため、マップのズーム変更を遅延で戻す
-  setTimeout(() => {
-    // 元のズームレベルに戻す
-    map.setZoom(map.getZoom() - 1);
-  }, 10);
+  markerCluster.addListener('clusterclick', (event) => {
+  event.stop();  // これでクラスタクリックのデフォルト動作をキャンセル
 });
 
 
