@@ -113,7 +113,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = true;
+          countryPlaceMap[country][heritageName] = id;  // IDを保存
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -220,10 +220,11 @@
           heritageSelect.appendChild(defaultOption);
 
           if (selectedCountry && countryPlaceMap[selectedCountry]) {
-            Object.keys(countryPlaceMap[selectedCountry]).forEach(heritage => {
+            const heritages = countryPlaceMap[selectedCountry];
+            Object.keys(heritages).forEach(heritage => {
               const option = document.createElement('option');
               option.value = heritage;
-              option.textContent = heritage;
+              option.textContent = `${heritages[heritage]}.${heritage}`;
               heritageSelect.appendChild(option);
             });
             heritageSelect.disabled = false;
