@@ -200,20 +200,24 @@
           maxZoom: 10
         });
         markerCluster.addListener('clusterclick', (cluster) => {
-  const bounds = cluster.getBounds();
-  const mapCenter = bounds.getCenter();
-  const currentZoom = map.getZoom();
-  const maxZoom = 15;  // お好みで最大ズーム値を調整してください
+  const mapZoom = map.getZoom();
+  const maxZoom = 10;
+  const targetZoom = Math.min(mapZoom + 4, maxZoom);  // 目的ズームレベル（例：+4）
 
-  function zoomInStep(zoomLevel) {
-    if (zoomLevel > maxZoom) return;
-    map.setZoom(zoomLevel);
-    map.panTo(mapCenter);
-    setTimeout(() => zoomInStep(zoomLevel + 1), 300); // 300msごとにズームアップ
-  }
+  const center = cluster.getCenter();
+  let currentZoom = mapZoom;
 
-  zoomInStep(currentZoom + 1);
+  const zoomInterval = setInterval(() => {
+    if (currentZoom < targetZoom) {
+      currentZoom++;
+      map.setZoom(currentZoom);
+      map.setCenter(center);
+    } else {
+      clearInterval(zoomInterval);
+    }
+  }, 300); // 300msごとに1段階ズーム
 });
+
 
 
         const countrySelect = document.getElementById('country-select');
