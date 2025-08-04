@@ -199,12 +199,12 @@
           markers,
           maxZoom: 10
         });
-     markerCluster.addListener('clusterclick', (cluster) => {
-  // クリックイベントを停止させるため、return false を返す
-  return false;
+    markerCluster.addListener('clusterclick', (cluster) => {
+  if (cluster && cluster.stopPropagation) {
+    cluster.stopPropagation();
+  }
+  // 何もしないで処理停止
 });
-
-
 
 
 
