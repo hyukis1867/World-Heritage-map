@@ -130,7 +130,7 @@
               text: label,
               color: 'black',
               fontSize: '12px',
-              fontWeight: 'bold'
+              fontWeight: 'normal'
             },
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
@@ -263,7 +263,7 @@
           const targetMarker = markers.find(marker => marker.title === selectedHeritage);
           if (targetMarker) {
             map.setCenter(targetMarker.getPosition());
-            map.setZoom(13);
+            map.setZoom(8);
             google.maps.event.trigger(targetMarker, 'click', {
               domEvent: { shiftKey: false }
             });
