@@ -201,16 +201,16 @@
         });
         markerCluster.addListener('clusterclick', (cluster) => {
   const maxZoom = 10;
-  const targetZoom = Math.min(map.getZoom() + 4, maxZoom); // ズーム段階を最大10まで
   const center = cluster.getCenter();
+  const targetZoom = Math.min(map.getZoom() + 4, maxZoom);
   let currentZoom = map.getZoom();
 
   const zoomStep = () => {
     if (currentZoom < targetZoom) {
       currentZoom++;
       map.setZoom(currentZoom);
-      map.setCenter(center);
-      setTimeout(zoomStep, 300); // 300msごとに1段階ズーム
+      map.panTo(center); // panToを使うことで少し滑らかに
+      setTimeout(zoomStep, 300); // ズーム間隔
     }
   };
 
