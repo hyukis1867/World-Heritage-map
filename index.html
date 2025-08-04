@@ -22,14 +22,12 @@
     color: #444;
     margin-top: 4px;
   }
-  /* クローズボタン（❌）を非表示にする */
   .gm-style-iw button.gm-ui-hover-effect {
     display: none !important;
   }
-  /* ここからプルダウン用スタイル */
   #dropdown-container {
     position: absolute;
-    top: 60px; /* ここで少し下に調整 */
+    top: 60px;
     left: 10px;
     z-index: 5;
     background: white;
@@ -48,7 +46,6 @@
 <body>
   <div id="map"></div>
 
-  <!-- プルダウン追加 -->
   <div id="dropdown-container">
     <select id="country-select">
       <option value="">-- 国を選択 --</option>
@@ -102,25 +99,23 @@
 
         rows.forEach(row => {
           const columns = row.split(',');
-          const country = columns[0];
-          const heritageName = columns[1];
-          const lat = parseFloat(columns[2]);
-          const lng = parseFloat(columns[3]);
-          const type = columns[4].trim();
-          const year = columns[5];
-          const localNameJP = columns[6]?.trim();
-          const localNameEN = columns[7]?.trim();
-          const linkUrl = columns[8]?.trim();
+          const id = columns[0];
+          const country = columns[1];
+          const heritageName = columns[2];
+          const lat = parseFloat(columns[3]);
+          const lng = parseFloat(columns[4]);
+          const type = columns[5].trim();
+          const year = columns[6];
+          const localNameJP = columns[7]?.trim();
+          const localNameEN = columns[8]?.trim();
+          const linkUrl = columns[9]?.trim();
 
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          const countryPlaces = countryPlaceMap[country];
-          if (!countryPlaces[heritageName]) {
-            countryPlaces[heritageName] = Object.keys(countryPlaces).length + 1;
-          }
+          countryPlaceMap[country][heritageName] = true;
 
-          const label = countryPlaces[heritageName].toString();
+          const label = id.toString();
           const color = iconColors[type] || "gray";
 
           const marker = new google.maps.Marker({
@@ -141,7 +136,7 @@
               scale: 10
             },
             title: heritageName,
-            customCountry: country // マーカーに国情報を保持
+            customCountry: country
           });
 
           marker.addListener("click", (event) => {
@@ -199,19 +194,15 @@
           markers.push(marker);
         });
 
-        // MarkerClustererの設定（クラスター時は純正アイコンで数字のみ）
         const markerCluster = new markerClusterer.MarkerClusterer({ 
           map, 
           markers,
-          maxZoom: 10 // このズームよりズームインしたらクラスタ解除
+          maxZoom: 10
         });
-
-        // --- ここからプルダウン機能のスクリプト ---
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
-        // 国リストの作成とプルダウン追加
         const countryList = Object.keys(countryPlaceMap);
         countryList.forEach(country => {
           const option = document.createElement('option');
@@ -220,7 +211,6 @@
           countrySelect.appendChild(option);
         });
 
-        // 国選択時の処理
         countrySelect.addEventListener('change', () => {
           const selectedCountry = countrySelect.value;
           heritageSelect.innerHTML = '';
@@ -241,25 +231,21 @@
             heritageSelect.disabled = true;
           }
 
-          // マーカーの表示切替：選択国のみ表示、他は非表示
           markers.forEach(marker => {
             if (!selectedCountry) {
-              marker.setVisible(true); // 国未選択ならすべて表示
+              marker.setVisible(true);
             } else {
               marker.setVisible(marker.customCountry === selectedCountry);
             }
           });
 
-          // 遺産セレクトは初期化
           heritageSelect.value = '';
         });
 
-        // 遺産選択時の処理
         heritageSelect.addEventListener('change', () => {
           const selectedHeritage = heritageSelect.value;
           if (!selectedHeritage) return;
 
-          // 選択された遺産のマーカーを探す
           const targetMarker = markers.find(marker => marker.title === selectedHeritage);
           if (targetMarker) {
             map.setCenter(targetMarker.getPosition());
@@ -270,7 +256,6 @@
           }
         });
 
-        // --- URL指定マーカー自動表示（元コード）---
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
         const urlLng = parseFloat(urlParams.get('lng'));
