@@ -140,59 +140,70 @@
           });
 
           marker.addListener("click", (event) => {
-            if (event.domEvent && event.domEvent.shiftKey) {
-              const params = new URLSearchParams({
-                lat: lat.toFixed(6),
-                lng: lng.toFixed(6),
-                zoom: map.getZoom(),
-                place: encodeURIComponent(heritageName)
-              });
-              const url = `${location.origin}${location.pathname}?${params.toString()}`;
-              navigator.clipboard.writeText(url).then(() => {
-                alert(`URLをコピーしました:\n${url}`);
-              });
-              return;
-            }
+  if (event.domEvent && event.domEvent.shiftKey) {
+    const params = new URLSearchParams({
+      lat: lat.toFixed(6),
+      lng: lng.toFixed(6),
+      zoom: map.getZoom(),
+      place: encodeURIComponent(heritageName)
+    });
+    const url = `${location.origin}${location.pathname}?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert(`URLをコピーしました:\n${url}`);
+    });
+    return;
+  }
 
-            if (lastOpenedMarker === marker && infoWindow) {
-              infoWindow.close();
-              lastOpenedMarker = null;
-              return;
-            }
+  if (lastOpenedMarker === marker && infoWindow) {
+    infoWindow.close();
+    lastOpenedMarker = null;
+    return;
+  }
 
-            const nameHtml = linkUrl
-              ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
-              : `${heritageName}`;
+  const nameHtml = linkUrl
+    ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
+    : `${heritageName}`;
 
-            const localNameHtmlJP = localNameJP
-              ? `<div class="infowindow-localname">${localNameJP}</div>`
-              : '';
+  const localNameHtmlJP = localNameJP
+    ? `<div class="infowindow-localname">${localNameJP}</div>`
+    : '';
 
-            const localNameHtmlEN = localNameEN
-              ? `<div class="infowindow-localname">${localNameEN}</div>`
-              : '';
+  const localNameHtmlEN = localNameEN
+    ? `<div class="infowindow-localname">${localNameEN}</div>`
+    : '';
 
-            const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
+  const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
 
-            const contentHtml = `
-              <div>
-                <strong>${nameHtml}</strong>
-                ${localNameHtmlJP}
-                ${localNameHtmlEN}
-                ${subInfo}
-              </div>
-            `;
+  const contentHtml = `
+    <div>
+      <strong>${nameHtml}</strong>
+      ${localNameHtmlJP}
+      ${localNameHtmlEN}
+      ${subInfo}
+    </div>
+  `;
 
-            if (infoWindow) infoWindow.close();
-            infoWindow = new google.maps.InfoWindow({
-              content: contentHtml
-            });
-            infoWindow.open(map, marker);
-            lastOpenedMarker = marker;
-          });
+  // --- クラスタから一時的に除外する ---
+  if (markerCluster) {
+    markerCluster.removeMarker(marker);
+  }
 
-          markers.push(marker);
-        });
+  if (infoWindow) infoWindow.close();
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml
+  });
+
+  // --- 閉じたらクラスタに戻す ---
+  infoWindow.addListener('closeclick', () => {
+    if (markerCluster) {
+      markerCluster.addMarker(marker);
+    }
+  });
+
+  infoWindow.open(map, marker);
+  lastOpenedMarker = marker;
+});
+
 
        const markerCluster = new markerClusterer.MarkerClusterer({
   map,
