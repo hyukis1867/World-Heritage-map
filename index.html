@@ -159,7 +159,11 @@
         });
 
         // マーカークラスタリング追加
-        const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+        const markerCluster = new markerClusterer.MarkerClusterer({
+  map,
+  markers,
+  maxZoom: 10
+});
 
         // URL指定マーカー自動表示
         const urlParams = new URLSearchParams(window.location.search);
