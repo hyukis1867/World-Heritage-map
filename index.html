@@ -61,12 +61,47 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
+    let heritageData = [];  // 全遺産データ保持用
 
     const iconColors = {
       "文化遺産": "orange",
       "自然遺産": "limegreen",
       "複合遺産": "deepskyblue"
     };
+
+    function showInfo(marker) {
+      if (infoWindow) infoWindow.close();
+
+      const data = heritageData.find(h => h.heritageName === marker.title);
+      if (!data) return;
+
+      const nameHtml = data.linkUrl
+        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
+        : data.heritageName;
+
+      const localNameHtmlJP = data.localNameJP
+        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
+        : '';
+
+      const localNameHtmlEN = data.localNameEN
+        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
+        : '';
+
+      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
+
+      const contentHtml = `
+        <div>
+          <strong>${nameHtml}</strong>
+          ${localNameHtmlJP}
+          ${localNameHtmlEN}
+          ${subInfo}
+        </div>
+      `;
+
+      infoWindow = new google.maps.InfoWindow({content: contentHtml});
+      infoWindow.open(map, marker);
+      lastOpenedMarker = marker;
+    }
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -110,10 +145,12 @@
           const localNameEN = columns[8]?.trim();
           const linkUrl = columns[9]?.trim();
 
+          heritageData.push({id, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
+
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;  // IDを保存
+          countryPlaceMap[country][heritageName] = id;
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -136,80 +173,51 @@
               scale: 10
             },
             title: heritageName,
-            customCountry: country
+            customCountry: country,
+            customId: id
           });
 
           marker.addListener("click", (event) => {
-  if (event.domEvent && event.domEvent.shiftKey) {
-    const params = new URLSearchParams({
-      lat: lat.toFixed(6),
-      lng: lng.toFixed(6),
-      zoom: map.getZoom(),
-      place: encodeURIComponent(heritageName)
-    });
-    const url = `${location.origin}${location.pathname}?${params.toString()}`;
-    navigator.clipboard.writeText(url).then(() => {
-      alert(`URLをコピーしました:\n${url}`);
-    });
-    return;
-  }
+            if (event.domEvent && event.domEvent.shiftKey) {
+              const params = new URLSearchParams({
+                lat: lat.toFixed(6),
+                lng: lng.toFixed(6),
+                zoom: map.getZoom(),
+                place: encodeURIComponent(heritageName)
+              });
+              const url = `${location.origin}${location.pathname}?${params.toString()}`;
+              navigator.clipboard.writeText(url).then(() => {
+                alert(`URLをコピーしました:\n${url}`);
+              });
+              return;
+            }
 
-  // すでに開いている吹き出しをクリックしたら閉じる
-  if (lastOpenedMarker === marker && infoWindow) {
-    infoWindow.close();
-    lastOpenedMarker = null;
-    return;
-  }
+            // すでに開いている吹き出しをクリックしたら閉じる
+            if (lastOpenedMarker === marker && infoWindow) {
+              infoWindow.close();
+              lastOpenedMarker = null;
+              return;
+            }
 
-  const nameHtml = linkUrl
-    ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
-    : `${heritageName}`;
-
-  const localNameHtmlJP = localNameJP
-    ? `<div class="infowindow-localname">${localNameJP}</div>`
-    : '';
-
-  const localNameHtmlEN = localNameEN
-    ? `<div class="infowindow-localname">${localNameEN}</div>`
-    : '';
-
-  const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
-
-  const contentHtml = `
-    <div>
-      <strong>${nameHtml}</strong>
-      ${localNameHtmlJP}
-      ${localNameHtmlEN}
-      ${subInfo}
-    </div>
-  `;
-
-  if (infoWindow) infoWindow.close();
-  infoWindow = new google.maps.InfoWindow({
-    content: contentHtml
-  });
-  infoWindow.open(map, marker);
-  lastOpenedMarker = marker;
-});
+            showInfo(marker);
+          });
 
           markers.push(marker);
         });
 
-       const markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers,
-  maxZoom: 10,
-  onClusterClick: () => {
-    // 何もしないことでクリックイベントを無効化
-    return false;
-  }
-});
-
-
+        const markerCluster = new markerClusterer.MarkerClusterer({
+          map,
+          markers,
+          maxZoom: 10,
+          onClusterClick: () => {
+            return false;  // クラスタクリック無効化
+          }
+        });
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
+        // 国セレクト初期化
         const countryList = Object.keys(countryPlaceMap);
         countryList.forEach(country => {
           const option = document.createElement('option');
@@ -230,7 +238,7 @@
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
               const option = document.createElement('option');
-              option.value = heritage;
+              option.value = `${heritages[heritage]}.${heritage}`; // ID.遺産名
               option.textContent = `${heritages[heritage]}.${heritage}`;
               heritageSelect.appendChild(option);
             });
@@ -254,13 +262,13 @@
           const selectedHeritage = heritageSelect.value;
           if (!selectedHeritage) return;
 
-          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
+          // ID.遺産名 からIDを抽出
+          const id = selectedHeritage.split('.')[0];
+          const targetMarker = markers.find(marker => marker.customId === id);
           if (targetMarker) {
             map.setCenter(targetMarker.getPosition());
-            map.setZoom(8);
-            google.maps.event.trigger(targetMarker, 'click', {
-              domEvent: { shiftKey: false }
-            });
+            map.setZoom(10);
+            showInfo(targetMarker);
           }
         });
 
@@ -280,9 +288,9 @@
           setTimeout(() => {
             const targetMarker = markers.find(m => m.title === decodedPlace);
             if (targetMarker) {
-              google.maps.event.trigger(targetMarker, 'click', {
-                domEvent: { shiftKey: false }
-              });
+              map.setCenter(targetMarker.getPosition());
+              map.setZoom(10);
+              showInfo(targetMarker);
             }
           }, 500);
         }
@@ -296,5 +304,6 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
 
