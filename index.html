@@ -61,75 +61,12 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    let markerCluster = null;
-    let extractedMarkers = []; // クラスタから外したマーカーのリスト
 
     const iconColors = {
       "文化遺産": "orange",
       "自然遺産": "limegreen",
       "複合遺産": "deepskyblue"
     };
-
-    function createInfoWindowContent(marker) {
-      return `
-        <div>
-          <strong>${marker.linkUrl ? `<a href="${marker.linkUrl}" target="_blank">${marker.title}</a>` : marker.title}</strong>
-          ${marker.localNameJP ? `<div class="infowindow-localname">${marker.localNameJP}</div>` : ''}
-          ${marker.localNameEN ? `<div class="infowindow-localname">${marker.localNameEN}</div>` : ''}
-          <div class="infowindow-sub">${marker.customCountry} / ${marker.type} / ${marker.year}年登録</div>
-        </div>
-      `;
-    }
-
-    function showInfoWindow(marker) {
-      // 既に開いている吹き出しを閉じる
-      if (infoWindow) infoWindow.close();
-
-      // クラスタ内の他のマーカーをクラスタに戻す
-      if (markerCluster && extractedMarkers.length > 0) {
-        markerCluster.addMarkers(extractedMarkers);
-        extractedMarkers = [];
-      }
-
-      // マーカーがクラスタにいる場合は外す
-      if (markerCluster) {
-        const clusters = markerCluster.getClusters();
-        for (const cl of clusters) {
-          const clusterMarkers = cl.getMarkers();
-          if (clusterMarkers.includes(marker)) {
-            extractedMarkers = clusterMarkers.filter(m => m !== marker);
-            if (extractedMarkers.length > 0) {
-              markerCluster.removeMarkers(extractedMarkers);
-            }
-            break;
-          }
-        }
-      }
-
-      // 吹き出し表示
-      infoWindow = new google.maps.InfoWindow({
-        content: createInfoWindowContent(marker)
-      });
-      infoWindow.open(map, marker);
-
-      lastOpenedMarker = marker;
-    }
-
-    function toggleInfoWindow(marker) {
-      if (lastOpenedMarker === marker) {
-        // 同じマーカーをクリックした場合は閉じる
-        if (infoWindow) infoWindow.close();
-        lastOpenedMarker = null;
-
-        // クラスタに戻す
-        if (markerCluster && extractedMarkers.length > 0) {
-          markerCluster.addMarkers(extractedMarkers);
-          extractedMarkers = [];
-        }
-      } else {
-        showInfoWindow(marker);
-      }
-    }
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -176,7 +113,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;
+          countryPlaceMap[country][heritageName] = id;  // IDを保存
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -199,20 +136,11 @@
               scale: 10
             },
             title: heritageName,
-            customCountry: country,
+            customCountry: country
           });
 
-          // 追加情報を保持
-          marker.localNameJP = localNameJP;
-          marker.localNameEN = localNameEN;
-          marker.type = type;
-          marker.year = year;
-          marker.linkUrl = linkUrl;
-
-          // マーカークリックイベント
           marker.addListener("click", (event) => {
             if (event.domEvent && event.domEvent.shiftKey) {
-              // Shift+クリックでURLコピー
               const params = new URLSearchParams({
                 lat: lat.toFixed(6),
                 lng: lng.toFixed(6),
@@ -226,24 +154,61 @@
               return;
             }
 
-            toggleInfoWindow(marker);
+            if (lastOpenedMarker === marker && infoWindow) {
+              infoWindow.close();
+              lastOpenedMarker = null;
+              return;
+            }
+
+            const nameHtml = linkUrl
+              ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>`
+              : `${heritageName}`;
+
+            const localNameHtmlJP = localNameJP
+              ? `<div class="infowindow-localname">${localNameJP}</div>`
+              : '';
+
+            const localNameHtmlEN = localNameEN
+              ? `<div class="infowindow-localname">${localNameEN}</div>`
+              : '';
+
+            const subInfo = `<div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>`;
+
+            const contentHtml = `
+              <div>
+                <strong>${nameHtml}</strong>
+                ${localNameHtmlJP}
+                ${localNameHtmlEN}
+                ${subInfo}
+              </div>
+            `;
+
+            if (infoWindow) infoWindow.close();
+            infoWindow = new google.maps.InfoWindow({
+              content: contentHtml
+            });
+            infoWindow.open(map, marker);
+            lastOpenedMarker = marker;
           });
 
           markers.push(marker);
         });
 
-        // クラスタ作成
-        markerCluster = new markerClusterer.MarkerClusterer({
-          map,
-          markers,
-          maxZoom: 10,
-          onClusterClick: () => false
-        });
+       const markerCluster = new markerClusterer.MarkerClusterer({
+  map,
+  markers,
+  maxZoom: 10,
+  onClusterClick: () => {
+    // 何もしないことでクリックイベントを無効化
+    return false;
+  }
+});
+
+
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
-        // 国プルダウン作成
         const countryList = Object.keys(countryPlaceMap);
         countryList.forEach(country => {
           const option = document.createElement('option');
@@ -252,7 +217,6 @@
           countrySelect.appendChild(option);
         });
 
-        // 国選択時
         countrySelect.addEventListener('change', () => {
           const selectedCountry = countrySelect.value;
           heritageSelect.innerHTML = '';
@@ -275,34 +239,30 @@
           }
 
           markers.forEach(marker => {
-            marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+            if (!selectedCountry) {
+              marker.setVisible(true);
+            } else {
+              marker.setVisible(marker.customCountry === selectedCountry);
+            }
           });
 
           heritageSelect.value = '';
         });
 
-        // 遺産選択時
         heritageSelect.addEventListener('change', () => {
           const selectedHeritage = heritageSelect.value;
           if (!selectedHeritage) return;
 
-          const targetMarker = markers.find(m => m.title === selectedHeritage);
+          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
           if (targetMarker) {
             map.setCenter(targetMarker.getPosition());
             map.setZoom(8);
-
-            // すでに開いている吹き出しを閉じてクラスタに戻す
-            if (infoWindow) infoWindow.close();
-            if (markerCluster && extractedMarkers.length > 0) {
-              markerCluster.addMarkers(extractedMarkers);
-              extractedMarkers = [];
-            }
-
-            showInfoWindow(targetMarker);
+            google.maps.event.trigger(targetMarker, 'click', {
+              domEvent: { shiftKey: false }
+            });
           }
         });
 
-        // URLパラメータ処理
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
         const urlLng = parseFloat(urlParams.get('lng'));
@@ -319,14 +279,9 @@
           setTimeout(() => {
             const targetMarker = markers.find(m => m.title === decodedPlace);
             if (targetMarker) {
-              // クラスタに戻すマーカーがあれば戻す
-              if (markerCluster && extractedMarkers.length > 0) {
-                markerCluster.addMarkers(extractedMarkers);
-                extractedMarkers = [];
-              }
-              if (infoWindow) infoWindow.close();
-
-              showInfoWindow(targetMarker);
+              google.maps.event.trigger(targetMarker, 'click', {
+                domEvent: { shiftKey: false }
+              });
             }
           }, 500);
         }
@@ -340,4 +295,5 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
