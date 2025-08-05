@@ -47,18 +47,24 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
+  <div id="region-box">
     <select id="region-select">
       <option value="">-- 地域を選択 --</option>
     </select>
-    <br>
-    <select id="country-select" disabled>
+  </div>
+  <br>
+  <div id="country-box" style="display: none;">
+    <select id="country-select">
       <option value="">-- 国を選択 --</option>
     </select>
-    <br>
-    <select id="heritage-select" disabled>
+  </div>
+  <br>
+  <div id="heritage-box" style="display: none;">
+    <select id="heritage-select">
       <option value="">-- 遺産を選択 --</option>
     </select>
   </div>
+</div>
 
   <script>
     let map;
@@ -244,6 +250,9 @@
 
         // 地域選択時処理
         regionSelect.addEventListener('change', () => {
+          document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+          document.getElementById("heritage-box").style.display = "none";
+
           const selectedRegion = regionSelect.value;
 
           // 国の選択肢リセット＆無効化
@@ -285,6 +294,8 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
 
         // 国選択時処理
         countrySelect.addEventListener('change', () => {
+          document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
           const selectedCountry = countrySelect.value;
 
           // 遺産の選択肢リセット
