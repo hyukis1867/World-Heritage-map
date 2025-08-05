@@ -62,6 +62,7 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let markerCluster = null;
+    let extractedMarkers = [];  // クラスタから一時的に外したマーカー
 
     const iconColors = {
       "文化遺産": "orange",
@@ -114,7 +115,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;  // IDを保存
+          countryPlaceMap[country][heritageName] = id;
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -158,25 +159,27 @@
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
               lastOpenedMarker = null;
-              // クラスタに戻す
-              if (markerCluster && extractedMarkers.length) {
+
+              // クラスタに一時的に外したマーカーを戻す
+              if (markerCluster && extractedMarkers.length > 0) {
                 markerCluster.addMarkers(extractedMarkers);
                 extractedMarkers = [];
               }
               return;
             }
 
-            // クラスタからマーカー抜き出し処理（吹き出し表示用）
+            // クリックしたマーカーがクラスタに含まれていれば一時的に外す
             if (markerCluster) {
-              // クラスタ内にマーカーが含まれていれば
-              // まずクラスタからそのマーカーを外す
-              const cluster = markerCluster.getClusters().find(cl => {
-                return cl.getMarkers().some(m => m === marker);
-              });
-              if (cluster) {
-                // 他のクラスタメンバーを一時的に外す
-                extractedMarkers = cluster.getMarkers().filter(m => m !== marker);
-                markerCluster.removeMarkers(extractedMarkers);
+              const clusters = markerCluster.getClusters();
+              for (const cl of clusters) {
+                const clusterMarkers = cl.getMarkers();
+                if (clusterMarkers.includes(marker)) {
+                  extractedMarkers = clusterMarkers.filter(m => m !== marker);
+                  if (extractedMarkers.length > 0) {
+                    markerCluster.removeMarkers(extractedMarkers);
+                  }
+                  break;
+                }
               }
             }
 
@@ -214,15 +217,12 @@
           markers.push(marker);
         });
 
-        // 抜き出したマーカー一時保管用
-        let extractedMarkers = [];
-
         markerCluster = new markerClusterer.MarkerClusterer({
           map,
           markers,
           maxZoom: 10,
           onClusterClick: () => {
-            // クラスタクリックは何もしない（無効化）
+            // クリックイベント無効化
             return false;
           }
         });
@@ -316,6 +316,5 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
 
 
