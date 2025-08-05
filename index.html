@@ -167,10 +167,6 @@
     content: contentHtml
   });
 
-  infoWindow.open(map, marker);
-  lastOpenedMarker = marker;
-});
-
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
               lastOpenedMarker = null;
