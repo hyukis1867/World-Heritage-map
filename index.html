@@ -62,13 +62,24 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let markerCluster = null;
-    let extractedMarkers = [];  // クラスタから外したマーカーの一時保持用
+    let extractedMarkers = []; // クラスタから外したマーカーを保持
 
     const iconColors = {
       "文化遺産": "orange",
       "自然遺産": "limegreen",
       "複合遺産": "deepskyblue"
     };
+
+    function createInfoWindowContent(marker) {
+      return `
+        <div>
+          <strong>${marker.linkUrl ? `<a href="${marker.linkUrl}" target="_blank">${marker.title}</a>` : marker.title}</strong>
+          ${marker.localNameJP ? `<div class="infowindow-localname">${marker.localNameJP}</div>` : ''}
+          ${marker.localNameEN ? `<div class="infowindow-localname">${marker.localNameEN}</div>` : ''}
+          <div class="infowindow-sub">${marker.customCountry} / ${marker.type} / ${marker.year}年登録</div>
+        </div>
+      `;
+    }
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -115,7 +126,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;  // IDを保存
+          countryPlaceMap[country][heritageName] = id;
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -139,18 +150,17 @@
             },
             title: heritageName,
             customCountry: country,
-            _infoContent: `
-              <div>
-                <strong>${linkUrl ? `<a href="${linkUrl}" target="_blank">${heritageName}</a>` : heritageName}</strong>
-                ${localNameJP ? `<div class="infowindow-localname">${localNameJP}</div>` : ''}
-                ${localNameEN ? `<div class="infowindow-localname">${localNameEN}</div>` : ''}
-                <div class="infowindow-sub">${country} / ${type} / ${year}年登録</div>
-              </div>
-            `
           });
 
+          // プロパティ追加で情報保持
+          marker.localNameJP = localNameJP;
+          marker.localNameEN = localNameEN;
+          marker.type = type;
+          marker.year = year;
+          marker.linkUrl = linkUrl;
+
+          // クリックイベント
           marker.addListener("click", (event) => {
-            // Shift押しクリック時URLコピーは維持
             if (event.domEvent && event.domEvent.shiftKey) {
               const params = new URLSearchParams({
                 lat: lat.toFixed(6),
@@ -165,12 +175,11 @@
               return;
             }
 
-            // クリックマーカーが既に開いていれば閉じる処理
+            // クリックマーカーが既に開いていたら閉じる & クラスタに戻す
             if (lastOpenedMarker === marker) {
               if (infoWindow) infoWindow.close();
               lastOpenedMarker = null;
 
-              // クラスタに外したマーカーを戻す
               if (markerCluster && extractedMarkers.length > 0) {
                 markerCluster.addMarkers(extractedMarkers);
                 extractedMarkers = [];
@@ -178,8 +187,7 @@
               return;
             }
 
-            // クラスタ内のマーカーなら、それ以外のマーカーをクラスタに戻して
-            // クリックされたマーカーだけをクラスタから外す
+            // クリックマーカーをクラスタから外す処理
             if (markerCluster) {
               const clusters = markerCluster.getClusters();
               for (const cl of clusters) {
@@ -194,10 +202,10 @@
               }
             }
 
-            // InfoWindowを作って開く
+            // 吹き出し表示
             if (infoWindow) infoWindow.close();
             infoWindow = new google.maps.InfoWindow({
-              content: marker._infoContent
+              content: createInfoWindowContent(marker)
             });
             infoWindow.open(map, marker);
             lastOpenedMarker = marker;
@@ -206,20 +214,18 @@
           markers.push(marker);
         });
 
+        // クラスタ作成
         markerCluster = new markerClusterer.MarkerClusterer({
           map,
           markers,
           maxZoom: 10,
-          onClusterClick: () => {
-            // クラスタクリックは無効化（ズームや展開を防ぐ）
-            return false;
-          }
+          onClusterClick: () => false // クラスタクリック無効化
         });
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
-        // 国リスト生成
+        // 国プルダウン作成
         const countryList = Object.keys(countryPlaceMap);
         countryList.forEach(country => {
           const option = document.createElement('option');
@@ -228,7 +234,7 @@
           countrySelect.appendChild(option);
         });
 
-        // 国選択時の処理
+        // 国選択時処理
         countrySelect.addEventListener('change', () => {
           const selectedCountry = countrySelect.value;
           heritageSelect.innerHTML = '';
@@ -250,7 +256,7 @@
             heritageSelect.disabled = true;
           }
 
-          // マーカーの表示切替（フィルター）
+          // マーカー表示切替
           markers.forEach(marker => {
             if (!selectedCountry) {
               marker.setVisible(true);
@@ -262,36 +268,33 @@
           heritageSelect.value = '';
         });
 
-        // 遺産選択時の処理
+        // 遺産選択時処理
         heritageSelect.addEventListener('change', () => {
           const selectedHeritage = heritageSelect.value;
           if (!selectedHeritage) return;
 
-          // マーカー取得
-          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
+          // マーカー検索
+          const targetMarker = markers.find(m => m.title === selectedHeritage);
           if (targetMarker) {
-            // マップ移動
             map.setCenter(targetMarker.getPosition());
             map.setZoom(8);
 
-            // InfoWindowを表示（クラスタの状態にかかわらず）
-            if (infoWindow) infoWindow.close();
-
-            // クラスタから外れていないマーカーがあれば一旦戻す
+            // クラスタからマーカー戻す
             if (markerCluster && extractedMarkers.length > 0) {
               markerCluster.addMarkers(extractedMarkers);
               extractedMarkers = [];
             }
 
+            if (infoWindow) infoWindow.close();
             infoWindow = new google.maps.InfoWindow({
-              content: targetMarker._infoContent
+              content: createInfoWindowContent(targetMarker)
             });
             infoWindow.open(map, targetMarker);
             lastOpenedMarker = targetMarker;
           }
         });
 
-        // URLパラメータから初期位置と吹き出し表示
+        // URLパラメータから位置と吹き出し表示
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
         const urlLng = parseFloat(urlParams.get('lng'));
@@ -308,15 +311,13 @@
           setTimeout(() => {
             const targetMarker = markers.find(m => m.title === decodedPlace);
             if (targetMarker) {
-              // クラスタから外れていないマーカーがあれば一旦戻す
               if (markerCluster && extractedMarkers.length > 0) {
                 markerCluster.addMarkers(extractedMarkers);
                 extractedMarkers = [];
               }
-
               if (infoWindow) infoWindow.close();
               infoWindow = new google.maps.InfoWindow({
-                content: targetMarker._infoContent
+                content: createInfoWindowContent(targetMarker)
               });
               infoWindow.open(map, targetMarker);
               lastOpenedMarker = targetMarker;
@@ -333,4 +334,5 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
