@@ -140,8 +140,8 @@
         rows.forEach(row => {
           const columns = row.split(',');
           const id = columns[0];
-          const country = columns[1];
-          const region = columns[2];
+          const region = columns[1];  // ← 修正：地域は2番目列
+          const country = columns[2]; // ← 修正：国は3番目列
           const heritageName = columns[3];
           const lat = parseFloat(columns[4]);
           const lng = parseFloat(columns[5]);
@@ -327,4 +327,5 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
