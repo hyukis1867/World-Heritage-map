@@ -262,9 +262,10 @@
     map.setCenter(targetMarker.getPosition());
     map.setZoom(8);
 
-    if (infoWindow) infoWindow.close();
+    if (infoWindow) {
+      infoWindow.close();
+    }
 
-    // 直接内容を生成（マーカークリックに頼らず）
     const nameHtml = targetMarker.title;
     const contentHtml = `<div>
       <strong>${nameHtml}</strong>
@@ -274,10 +275,16 @@
     infoWindow = new google.maps.InfoWindow({
       content: contentHtml
     });
-    infoWindow.open(map, targetMarker);
+
+    // クラスタの展開後でも正しく表示させる
+    google.maps.event.addListenerOnce(map, 'idle', () => {
+      infoWindow.open(map, targetMarker);
+    });
+
     lastOpenedMarker = targetMarker;
   }
 });
+
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
