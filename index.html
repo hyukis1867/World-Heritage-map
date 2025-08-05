@@ -231,10 +231,11 @@
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
   const option = document.createElement('option');
-  option.value = `${heritage}.${heritages[heritage]}`;
-  option.textContent = `${heritage}.${heritages[heritage]}`;
+  option.value = heritages[heritage]; // ← IDを直接設定
+  option.textContent = `${heritage}.${heritages[heritage]}`; // ← 表示用
   heritageSelect.appendChild(option);
 });
+
             heritageSelect.disabled = false;
           } else {
             heritageSelect.disabled = true;
