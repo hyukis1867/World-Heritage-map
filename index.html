@@ -259,17 +259,29 @@
         });
 
         heritageSelect.addEventListener('change', () => {
-          const selectedHeritage = heritageSelect.value;
-          if (!selectedHeritage) return;
+  const selectedHeritage = heritageSelect.value;
+  if (!selectedHeritage) return;
 
-          // ID.遺産名 からIDを抽出
-          const id = selectedHeritage.split('.')[0];
-          const targetMarker = markers.find(marker => marker.customId === id);
-          if (targetMarker) {
-            map.setCenter(targetMarker.getPosition());
-            map.setZoom(10);
-            showInfo(targetMarker);
-          }
+  // ID.遺産名 からIDを抽出
+  const id = selectedHeritage.split('.')[0];
+  const targetMarker = markers.find(marker => marker.customId === id);
+  if (targetMarker) {
+    // 💡 修正点ここから
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+      lastOpenedMarker = null;
+    }
+
+    map.setCenter(targetMarker.getPosition());
+    map.setZoom(10);
+
+    // マーカークリックイベントを明示的に発火（＝クリックと同じ処理を呼ぶ）
+    google.maps.event.trigger(targetMarker, 'click');
+    // 💡 修正点ここまで
+  }
+});
+
         });
 
         const urlParams = new URLSearchParams(window.location.search);
