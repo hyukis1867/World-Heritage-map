@@ -140,19 +140,36 @@
           });
 
           marker.addListener("click", (event) => {
-            if (event.domEvent && event.domEvent.shiftKey) {
-              const params = new URLSearchParams({
-                lat: lat.toFixed(6),
-                lng: lng.toFixed(6),
-                zoom: map.getZoom(),
-                place: encodeURIComponent(heritageName)
-              });
-              const url = `${location.origin}${location.pathname}?${params.toString()}`;
-              navigator.clipboard.writeText(url).then(() => {
-                alert(`URLをコピーしました:\n${url}`);
-              });
-              return;
-            }
+  if (event.domEvent && event.domEvent.shiftKey) {
+    const params = new URLSearchParams({
+      lat: lat.toFixed(6),
+      lng: lng.toFixed(6),
+      zoom: map.getZoom(),
+      place: encodeURIComponent(heritageName)
+    });
+    const url = `${location.origin}${location.pathname}?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert(`URLをコピーしました:\n${url}`);
+    });
+    return;
+  }
+
+  // ここから通常クリック時の吹き出し処理を入れる（【修正③】）
+  if (infoWindow) infoWindow.close();
+
+  const contentHtml = `
+    <div>
+      <strong>${heritageName}</strong><br>
+      <span style="font-size: small;">（クリック選択）</span>
+    </div>`;
+
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml
+  });
+
+  infoWindow.open(map, marker);
+  lastOpenedMarker = marker;
+});
 
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
