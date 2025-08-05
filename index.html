@@ -61,7 +61,6 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    let markerMap = {}; // ← 追加（IDで検索できるように）
 
     const iconColors = {
       "文化遺産": "orange",
@@ -193,7 +192,6 @@
           });
 
           markers.push(marker);
-          markerMap[id] = marker;
         });
 
        const markerCluster = new markerClusterer.MarkerClusterer({
@@ -230,12 +228,11 @@
           if (selectedCountry && countryPlaceMap[selectedCountry]) {
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
-  const option = document.createElement('option');
-  option.value = heritages[heritage]; // ← IDを直接設定
-  option.textContent = `${heritage}.${heritages[heritage]}`; // ← 表示用
-  heritageSelect.appendChild(option);
-});
-
+              const option = document.createElement('option');
+              option.value = heritage;
+              option.textContent = `${heritages[heritage]}.${heritage}`;
+              heritageSelect.appendChild(option);
+            });
             heritageSelect.disabled = false;
           } else {
             heritageSelect.disabled = true;
@@ -253,38 +250,18 @@
         });
 
         heritageSelect.addEventListener('change', () => {
-  const selectedHeritage = heritageSelect.value;
-  if (!selectedHeritage) return;
+          const selectedHeritage = heritageSelect.value;
+          if (!selectedHeritage) return;
 
-  const selectedId = selectedHeritage.split('.')[0]; // IDを抽出
-  const targetMarker = markerMap[selectedId];
-
-  if (targetMarker) {
-    map.setCenter(targetMarker.getPosition());
-    map.setZoom(8);
-
-    // 以前の InfoWindow を閉じる
-    if (infoWindow) infoWindow.close();
-
-    // 新しい InfoWindow を生成
-    const nameHtml = targetMarker.title;
-    const contentHtml = `<div>
-      <strong>${nameHtml}</strong>
-      <div class="infowindow-sub">（検索選択）</div>
-    </div>`;
-
-    infoWindow = new google.maps.InfoWindow({
-      content: contentHtml,
-      disableAutoPan: false
-    });
-
-    infoWindow.open(map, targetMarker);
-
-    // 吹き出しを閉じる制御のために現在のマーカーを保持
-    lastOpenedMarker = targetMarker;
-  }
-});
-
+          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
+          if (targetMarker) {
+            map.setCenter(targetMarker.getPosition());
+            map.setZoom(8);
+            google.maps.event.trigger(targetMarker, 'click', {
+              domEvent: { shiftKey: false }
+            });
+          }
+        });
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
