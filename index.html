@@ -1,331 +1,148 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title>世界遺産マップ</title>
-  <style>
-  html, body, #map {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  .infowindow-localname {
-    text-align: right;
-    font-size: 90%;
-    color: #555;
-    margin-top: 2px;
-  }
-  .infowindow-sub {
-    text-align: right;
-    font-size: 85%;
-    color: #444;
-    margin-top: 4px;
-  }
-  .gm-style-iw button.gm-ui-hover-effect {
-    display: none !important;
-  }
-  #dropdown-container {
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    z-index: 5;
-    background: white;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    font-family: sans-serif;
-  }
-  #dropdown-container select {
-    margin-bottom: 5px;
-    width: 200px;
-    font-size: 14px;
-  }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-
-  <div id="dropdown-container">
-    <select id="region-select">
-      <option value="">-- 地域を選択 --</option>
-    </select>
-    <br>
-    <select id="country-select">
-      <option value="">-- 国を選択 --</option>
-    </select>
-    <br>
-    <select id="heritage-select" disabled>
-      <option value="">-- 遺産を選択 --</option>
-    </select>
-  </div>
-
-  <script>
-    let map;
-    let markers = [];
-    let infoWindow = null;
-    let lastOpenedMarker = null;
-    let heritageData = [];
-
-    const iconColors = {
-      "文化遺産": "orange",
-      "自然遺産": "limegreen",
-      "複合遺産": "deepskyblue"
-    };
-
-    function showInfo(marker) {
-      if (infoWindow) infoWindow.close();
-
-      const data = heritageData.find(h => h.heritageName === marker.title);
-      if (!data) return;
-
-      const nameHtml = data.linkUrl
-        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
-        : data.heritageName;
-
-      const localNameHtmlJP = data.localNameJP
-        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
-        : '';
-
-      const localNameHtmlEN = data.localNameEN
-        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
-        : '';
-
-      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
-
-      const contentHtml = `
-        <div>
-          <strong>${nameHtml}</strong>
-          ${localNameHtmlJP}
-          ${localNameHtmlEN}
-          ${subInfo}
-        </div>
-      `;
-
-      infoWindow = new google.maps.InfoWindow({content: contentHtml});
-      infoWindow.open(map, marker);
-      lastOpenedMarker = marker;
-    }
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 41.9028, lng: 12.4964},
-        zoom: 4,
-        gestureHandling: 'greedy',
-        tilt: 0
-      });
-
-      const savedCenter = localStorage.getItem('mapCenter');
-      const savedZoom = localStorage.getItem('mapZoom');
-      if (savedCenter && savedZoom) {
-        const center = JSON.parse(savedCenter);
-        map.setCenter(center);
-        map.setZoom(parseInt(savedZoom));
+  <head>
+    <meta charset="utf-8" />
+    <title>世界遺産マップ</title>
+    <style>
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
       }
+      #selectors {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 5;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      }
+      select {
+        display: block;
+        margin: 5px 0;
+        width: 200px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw"></script>
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+  </head>
+  <body>
+    <div id="selectors">
+      <select id="regionSelect">
+        <option value="">地域を選択</option>
+      </select>
+      <select id="countrySelect" style="display:none;">
+        <option value="">国を選択</option>
+      </select>
+      <select id="siteSelect" style="display:none;">
+        <option value="">遺産を選択</option>
+      </select>
+    </div>
+    <div id="map"></div>
 
-      map.addListener('center_changed', () => {
-        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
-      });
-      map.addListener('zoom_changed', () => {
-        localStorage.setItem('mapZoom', map.getZoom());
-      });
+    <script>
+      let map, markers = [], markerMap = {}, clusterer;
+      const regionSelect = document.getElementById("regionSelect");
+      const countrySelect = document.getElementById("countrySelect");
+      const siteSelect = document.getElementById("siteSelect");
 
-      fetch('places.csv')
-      .then(response => response.text())
-      .then(csv => {
-        const rows = csv.trim().split('\n').slice(1);
-        const countryPlaceMap = {};
-        const regionCountryMap = {};
-
-        rows.forEach(row => {
-          const columns = row.split(',');
-          const id = columns[0];
-          const region = columns[1];  // ← 修正：地域は2番目列
-          const country = columns[2]; // ← 修正：国は3番目列
-          const heritageName = columns[3];
-          const lat = parseFloat(columns[4]);
-          const lng = parseFloat(columns[5]);
-          const type = columns[6].trim();
-          const year = columns[7];
-          const localNameJP = columns[8]?.trim();
-          const localNameEN = columns[9]?.trim();
-          const linkUrl = columns[10]?.trim();
-
-          heritageData.push({id, country, region, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
-
-          if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
-          regionCountryMap[region].add(country);
-
-          if (!countryPlaceMap[country]) {
-            countryPlaceMap[country] = {};
-          }
-          countryPlaceMap[country][heritageName] = id;
-
-          const label = id.toString();
-          const color = iconColors[type] || "gray";
-
-          const marker = new google.maps.Marker({
-            position: {lat, lng},
-            map,
-            label: {
-              text: label,
-              color: 'black',
-              fontSize: '12px',
-              fontWeight: 'normal'
-            },
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: color,
-              fillOpacity: 1,
-              strokeColor: 'black',
-              strokeWeight: 1,
-              scale: 10
-            },
-            title: heritageName,
-            customCountry: country,
-            customRegion: region,
-            customId: id
+      fetch("places.csv")
+        .then(response => response.text())
+        .then(csv => {
+          const rows = csv.trim().split("\n").slice(1).map(line => line.split(","));
+          const regions = new Set();
+          const countriesByRegion = {};
+          const sitesByCountry = {};
+          
+          rows.forEach(cols => {
+            const [id, region, country, name, lat, lng, type, year, jp, en, url] = cols;
+            regions.add(region);
+            countriesByRegion[region] = countriesByRegion[region] || new Set();
+            countriesByRegion[region].add(country);
+            sitesByCountry[country] = sitesByCountry[country] || [];
+            sitesByCountry[country].push({ id, name, lat, lng, type, year, jp, en, url });
           });
 
-          marker.addListener("click", (event) => {
-            if (event.domEvent && event.domEvent.shiftKey) {
-              const params = new URLSearchParams({
-                lat: lat.toFixed(6),
-                lng: lng.toFixed(6),
-                zoom: map.getZoom(),
-                place: encodeURIComponent(heritageName)
-              });
-              const url = `${location.origin}${location.pathname}?${params.toString()}`;
-              navigator.clipboard.writeText(url).then(() => {
-                alert(`URLをコピーしました:\n${url}`);
-              });
-              return;
-            }
-
-            if (lastOpenedMarker === marker && infoWindow) {
-              infoWindow.close();
-              lastOpenedMarker = null;
-              return;
-            }
-
-            showInfo(marker);
+          // 地域選択肢追加
+          Array.from(regions).sort().forEach(region => {
+            const opt = document.createElement("option");
+            opt.value = region;
+            opt.textContent = region;
+            regionSelect.appendChild(opt);
           });
 
-          markers.push(marker);
-        });
+          // 地図初期化
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 20, lng: 0 },
+            zoom: 2
+          });
 
-        const markerCluster = new markerClusterer.MarkerClusterer({
-          map,
-          markers,
-          maxZoom: 10,
-          onClusterClick: () => false
-        });
-
-        const regionSelect = document.getElementById('region-select');
-        const countrySelect = document.getElementById('country-select');
-        const heritageSelect = document.getElementById('heritage-select');
-
-        Object.keys(regionCountryMap).forEach(region => {
-          const option = document.createElement('option');
-          option.value = region;
-          option.textContent = region;
-          regionSelect.appendChild(option);
-        });
-
-        regionSelect.addEventListener('change', () => {
-          const selectedRegion = regionSelect.value;
-          countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-          heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-          heritageSelect.disabled = true;
-
-          if (selectedRegion && regionCountryMap[selectedRegion]) {
-            regionCountryMap[selectedRegion].forEach(country => {
-              const option = document.createElement('option');
-              option.value = country;
-              option.textContent = country;
-              countrySelect.appendChild(option);
+          // マーカー生成と保存
+          rows.forEach(cols => {
+            const [id, , , name, lat, lng, type, year, jp, en, url] = cols;
+            const marker = new google.maps.Marker({
+              position: { lat: parseFloat(lat), lng: parseFloat(lng) },
+              label: id,
             });
-            countrySelect.disabled = false;
-          } else {
-            countrySelect.disabled = true;
-          }
-
-          markers.forEach(marker => {
-            marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-          });
-        });
-
-        countrySelect.addEventListener('change', () => {
-          const selectedCountry = countrySelect.value;
-          heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-
-          if (selectedCountry && countryPlaceMap[selectedCountry]) {
-            const heritages = countryPlaceMap[selectedCountry];
-            Object.keys(heritages).forEach(heritage => {
-              const option = document.createElement('option');
-              option.value = `${heritages[heritage]}.${heritage}`;
-              option.textContent = `${heritages[heritage]}.${heritage}`;
-              heritageSelect.appendChild(option);
+            const info = new google.maps.InfoWindow({
+              content: `<strong>${jp}</strong><br>${en}<br>${type} / ${year}<br><a href="${url}" target="_blank">詳細</a>`
             });
-            heritageSelect.disabled = false;
-          } else {
-            heritageSelect.disabled = true;
-          }
+            marker.addListener("click", () => info.open(map, marker));
+            markers.push(marker);
+            markerMap[id] = marker;
+          });
 
-          markers.forEach(marker => {
-            marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+          clusterer = new markerClusterer.MarkerClusterer({ map, markers });
+
+          // イベント設定
+          regionSelect.addEventListener("change", () => {
+            countrySelect.innerHTML = `<option value="">国を選択</option>`;
+            siteSelect.innerHTML = `<option value="">遺産を選択</option>`;
+            siteSelect.style.display = "none";
+
+            const selected = regionSelect.value;
+            if (selected && countriesByRegion[selected]) {
+              Array.from(countriesByRegion[selected]).sort().forEach(country => {
+                const opt = document.createElement("option");
+                opt.value = country;
+                opt.textContent = country;
+                countrySelect.appendChild(opt);
+              });
+              countrySelect.style.display = "block";
+            } else {
+              countrySelect.style.display = "none";
+            }
+          });
+
+          countrySelect.addEventListener("change", () => {
+            siteSelect.innerHTML = `<option value="">遺産を選択</option>`;
+            const selected = countrySelect.value;
+            if (selected && sitesByCountry[selected]) {
+              sitesByCountry[selected].forEach(site => {
+                const opt = document.createElement("option");
+                opt.value = site.id;
+                opt.textContent = site.name;
+                siteSelect.appendChild(opt);
+              });
+              siteSelect.style.display = "block";
+            } else {
+              siteSelect.style.display = "none";
+            }
+          });
+
+          siteSelect.addEventListener("change", () => {
+            const selectedId = siteSelect.value;
+            const marker = markerMap[selectedId];
+            if (marker) {
+              map.setZoom(8);
+              map.panTo(marker.getPosition());
+              google.maps.event.trigger(marker, "click");
+            }
           });
         });
-
-        heritageSelect.addEventListener('change', () => {
-          const selectedHeritage = heritageSelect.value;
-          if (!selectedHeritage) return;
-
-          const id = selectedHeritage.split('.')[0];
-          const targetMarker = markers.find(marker => marker.customId === id);
-          if (targetMarker) {
-            if (infoWindow) {
-              infoWindow.close();
-              infoWindow = null;
-              lastOpenedMarker = null;
-            }
-            map.setCenter(targetMarker.getPosition());
-            map.setZoom(10);
-            setTimeout(() => {
-              google.maps.event.trigger(targetMarker, 'click');
-            }, 400);
-          }
-        });
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlLat = parseFloat(urlParams.get('lat'));
-        const urlLng = parseFloat(urlParams.get('lng'));
-        const urlZoom = parseInt(urlParams.get('zoom'));
-        const targetPlace = urlParams.get('place');
-
-        if (!isNaN(urlLat) && !isNaN(urlLng) && !isNaN(urlZoom)) {
-          map.setCenter({ lat: urlLat, lng: urlLng });
-          map.setZoom(urlZoom);
-        }
-
-        if (targetPlace) {
-          const decodedPlace = decodeURIComponent(targetPlace);
-          setTimeout(() => {
-            const targetMarker = markers.find(m => m.title === decodedPlace);
-            if (targetMarker) {
-              map.setCenter(targetMarker.getPosition());
-              map.setZoom(10);
-              showInfo(targetMarker);
-            }
-          }, 500);
-        }
-      });
-    }
-  </script>
-
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"></script>
-  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-</body>
+    </script>
+  </body>
 </html>
-
 
