@@ -253,13 +253,19 @@
 
           // 地域に紐づく国を追加
           if (selectedRegion && regionCountryMap[selectedRegion]) {
-            regionCountryMap[selectedRegion].forEach(country => {
-              const option = document.createElement('option');
-              option.value = country;
-              option.textContent = country;
-              countrySelect.appendChild(option);
-            });
-          }
+  // Set を配列に変換
+  const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+  
+  // かな順ソート（日本語五十音順）
+  countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
+
+  countriesArray.forEach(country => {
+    const option = document.createElement('option');
+    option.value = country;
+    option.textContent = country;
+    countrySelect.appendChild(option);
+  });
+}
 
           // マーカーの表示切替（地域フィルター）
           markers.forEach(marker => {
