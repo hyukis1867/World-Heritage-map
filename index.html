@@ -231,8 +231,8 @@
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
               const option = document.createElement('option');
-              option.value = heritage;
-              option.textContent = `${heritages[heritage]}.${heritage}`;
+              option.value = `${heritage}.${heritages[heritage]}`; // ← value に ID.地名 を入れる
+              option.textContent = `${heritage}.${heritages[heritage]}`; // ← 表示も同様
               heritageSelect.appendChild(option);
             });
             heritageSelect.disabled = false;
