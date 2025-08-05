@@ -262,10 +262,10 @@
     map.setCenter(targetMarker.getPosition());
     map.setZoom(8);
 
-    if (infoWindow) {
-      infoWindow.close();
-    }
+    // 以前の InfoWindow を閉じる
+    if (infoWindow) infoWindow.close();
 
+    // 新しい InfoWindow を生成
     const nameHtml = targetMarker.title;
     const contentHtml = `<div>
       <strong>${nameHtml}</strong>
@@ -273,14 +273,13 @@
     </div>`;
 
     infoWindow = new google.maps.InfoWindow({
-      content: contentHtml
+      content: contentHtml,
+      disableAutoPan: false
     });
 
-    // クラスタの展開後でも正しく表示させる
-    google.maps.event.addListenerOnce(map, 'idle', () => {
-      infoWindow.open(map, targetMarker);
-    });
+    infoWindow.open(map, targetMarker);
 
+    // 吹き出しを閉じる制御のために現在のマーカーを保持
     lastOpenedMarker = targetMarker;
   }
 });
