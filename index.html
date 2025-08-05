@@ -153,7 +153,21 @@
               });
               return;
             }
+// 🔽 ここからが【修正③】の内容
+  if (infoWindow) infoWindow.close();
 
+  const contentHtml = `<div>
+    <strong>${marker.title}</strong><br>
+    <span style="font-size: small;">（クリック選択）</span>
+  </div>`;
+
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml
+  });
+
+  infoWindow.open(map, marker);
+  lastOpenedMarker = marker;
+});
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
               lastOpenedMarker = null;
