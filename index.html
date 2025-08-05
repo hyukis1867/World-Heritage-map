@@ -113,7 +113,7 @@
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
-          countryPlaceMap[country][heritageName] = id;  // IDを保存
+          countryPlaceMap[country][heritageName] = id;
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -194,17 +194,15 @@
           markers.push(marker);
         });
 
-       const markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers,
-  maxZoom: 10,
-  onClusterClick: () => {
-    // 何もしないことでクリックイベントを無効化
-    return false;
-  }
-});
-
-
+        const markerCluster = new markerClusterer.MarkerClusterer({
+          map,
+          markers,
+          maxZoom: 10,
+          onClusterClick: () => {
+            // 何もしないことでクリックイベントを無効化
+            return false;
+          }
+        });
 
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
@@ -257,6 +255,14 @@
           if (targetMarker) {
             map.setCenter(targetMarker.getPosition());
             map.setZoom(8);
+
+            // ここで吹き出しを開く（消えずに）
+            if (infoWindow) infoWindow.close();
+            const nameHtml = targetMarker.title;
+            // 以下は吹き出し内容を元のmarkerのclickイベントで生成しているので同様に再利用
+            // しかし現状titleだけしか持たないので、
+            // ここは検索時用の吹き出し表示をマーカーclickと同じにするために、内部データを利用したいが
+            // 仕組み簡素化のため、一旦マーカーのclickイベントをトリガー
             google.maps.event.trigger(targetMarker, 'click', {
               domEvent: { shiftKey: false }
             });
@@ -279,6 +285,8 @@
           setTimeout(() => {
             const targetMarker = markers.find(m => m.title === decodedPlace);
             if (targetMarker) {
+              // クラスタ内でも吹き出し消えないようにopenしてlastOpenedMarkerセット
+              if (infoWindow) infoWindow.close();
               google.maps.event.trigger(targetMarker, 'click', {
                 domEvent: { shiftKey: false }
               });
