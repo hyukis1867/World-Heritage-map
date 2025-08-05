@@ -250,18 +250,35 @@
         });
 
         heritageSelect.addEventListener('change', () => {
-          const selectedHeritage = heritageSelect.value;
-          if (!selectedHeritage) return;
+  const selectedHeritage = heritageSelect.value;
+  if (!selectedHeritage) return;
 
-          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
-          if (targetMarker) {
-            map.setCenter(targetMarker.getPosition());
-            map.setZoom(8);
-            google.maps.event.trigger(targetMarker, 'click', {
-              domEvent: { shiftKey: false }
-            });
-          }
-        });
+  const selectedId = selectedHeritage.split('.')[0]; // IDを抽出
+  const targetMarker = markerMap[selectedId];
+
+  if (targetMarker) {
+    if (infoWindow) infoWindow.close();
+
+    const nameHtml = targetMarker.title;
+    const contentHtml = `<div>
+      <strong>${nameHtml}</strong>
+      <div class="infowindow-sub">（検索選択）</div>
+    </div>`;
+
+    // グローバルinfoWindowを再利用
+    infoWindow = new google.maps.InfoWindow({
+      content: contentHtml,
+      disableAutoPan: false // 必要に応じて
+    });
+
+    infoWindow.open(map, targetMarker);
+    lastOpenedMarker = targetMarker;
+
+    // 必ずズームと移動を最後に実行
+    map.setCenter(targetMarker.getPosition());
+    map.setZoom(8);
+  }
+});
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
