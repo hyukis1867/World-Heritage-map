@@ -47,6 +47,11 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
+    <!-- 地域選択を追加 -->
+    <select id="region-select">
+      <option value="">-- 地域を選択 --</option>
+    </select>
+    <br>
     <select id="country-select">
       <option value="">-- 国を選択 --</option>
     </select>
@@ -130,28 +135,39 @@
       .then(response => response.text())
       .then(csv => {
         const rows = csv.trim().split('\n').slice(1);
+        const regionCountryMap = {};
         const countryPlaceMap = {};
+        const regionSet = new Set();
 
         rows.forEach(row => {
           const columns = row.split(',');
           const id = columns[0];
-          const country = columns[1];
-          const heritageName = columns[2];
-          const lat = parseFloat(columns[3]);
-          const lng = parseFloat(columns[4]);
-          const type = columns[5].trim();
-          const year = columns[6];
-          const localNameJP = columns[7]?.trim();
-          const localNameEN = columns[8]?.trim();
-          const linkUrl = columns[9]?.trim();
+          const region = columns[1];
+          const country = columns[2];
+          const heritageName = columns[3];
+          const lat = parseFloat(columns[4]);
+          const lng = parseFloat(columns[5]);
+          const type = columns[6].trim();
+          const year = columns[7];
+          const localNameJP = columns[8]?.trim();
+          const localNameEN = columns[9]?.trim();
+          const linkUrl = columns[10]?.trim();
 
-          heritageData.push({id, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
+          heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
 
+          // 地域と国の紐付け
+          if (!regionCountryMap[region]) {
+            regionCountryMap[region] = new Set();
+          }
+          regionCountryMap[region].add(country);
+
+          // 国と遺産の紐付け
           if (!countryPlaceMap[country]) {
             countryPlaceMap[country] = {};
           }
           countryPlaceMap[country][heritageName] = id;
 
+          // マーカー作成
           const label = id.toString();
           const color = iconColors[type] || "gray";
 
@@ -173,6 +189,7 @@
               scale: 10
             },
             title: heritageName,
+            customRegion: region,
             customCountry: country,
             customId: id
           });
@@ -204,32 +221,70 @@
           markers.push(marker);
         });
 
-        const markerCluster = new markerClusterer.MarkerClusterer({
-          map,
-          markers,
-          maxZoom: 10,
-          onClusterClick: () => {
-            return false;
-          }
-        });
-
+        // 地域リスト
+        const regionSelect = document.getElementById('region-select');
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
-        // 日本語五十音順で国名ソート（空白除去）
-        const countryList = Object.keys(countryPlaceMap)
-          .filter(c => c.trim() !== '')
+        // 地域のセットを配列化、空白除外し五十音順にソート
+        const regionList = Array.from(Object.keys(regionCountryMap))
+          .filter(r => r.trim() !== '')
           .sort((a, b) => a.localeCompare(b, 'ja'));
 
-        countryList.forEach(country => {
+        regionList.forEach(region => {
           const option = document.createElement('option');
-          option.value = country;
-          option.textContent = country;
-          countrySelect.appendChild(option);
+          option.value = region;
+          option.textContent = region;
+          regionSelect.appendChild(option);
         });
 
+        // 地域変更で国を絞り込み
+        regionSelect.addEventListener('change', () => {
+          const selectedRegion = regionSelect.value;
+
+          // 国選択をクリア
+          countrySelect.innerHTML = '';
+          const defaultCountryOption = document.createElement('option');
+          defaultCountryOption.value = '';
+          defaultCountryOption.textContent = '-- 国を選択 --';
+          countrySelect.appendChild(defaultCountryOption);
+          heritageSelect.innerHTML = '';
+          const defaultHeritageOption = document.createElement('option');
+          defaultHeritageOption.value = '';
+          defaultHeritageOption.textContent = '-- 遺産を選択 --';
+          heritageSelect.appendChild(defaultHeritageOption);
+          heritageSelect.disabled = true;
+
+          if (selectedRegion && regionCountryMap[selectedRegion]) {
+            // 選択地域に含まれる国だけ抽出、五十音順にソート
+            const countriesInRegion = Array.from(regionCountryMap[selectedRegion]).filter(c => c.trim() !== '').sort((a,b) => a.localeCompare(b, 'ja'));
+            countriesInRegion.forEach(country => {
+              const option = document.createElement('option');
+              option.value = country;
+              option.textContent = country;
+              countrySelect.appendChild(option);
+            });
+            countrySelect.disabled = false;
+          } else {
+            countrySelect.disabled = true;
+          }
+
+          // マーカーの表示制御
+          markers.forEach(marker => {
+            if (!selectedRegion) {
+              marker.setVisible(true);
+            } else {
+              marker.setVisible(marker.customRegion === selectedRegion);
+            }
+          });
+
+          countrySelect.value = '';
+        });
+
+        // 国選択変更で遺産絞り込み
         countrySelect.addEventListener('change', () => {
           const selectedCountry = countrySelect.value;
+
           heritageSelect.innerHTML = '';
           const defaultOption = document.createElement('option');
           defaultOption.value = '';
@@ -249,9 +304,15 @@
             heritageSelect.disabled = true;
           }
 
+          // マーカー表示制御
           markers.forEach(marker => {
             if (!selectedCountry) {
-              marker.setVisible(true);
+              // 地域選択されているなら地域絞り込み優先
+              if (regionSelect.value) {
+                marker.setVisible(marker.customRegion === regionSelect.value);
+              } else {
+                marker.setVisible(true);
+              }
             } else {
               marker.setVisible(marker.customCountry === selectedCountry);
             }
