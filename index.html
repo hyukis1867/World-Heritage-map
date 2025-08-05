@@ -250,10 +250,9 @@
 
         // 地域選択時処理
         regionSelect.addEventListener('change', () => {
+          const selectedRegion = regionSelect.value;
           document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
           document.getElementById("heritage-box").style.display = "none";
-
-          const selectedRegion = regionSelect.value;
 
           // 国の選択肢リセット＆無効化
           countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
@@ -294,9 +293,8 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
 
         // 国選択時処理
         countrySelect.addEventListener('change', () => {
-          document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
-
           const selectedCountry = countrySelect.value;
+          document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
           // 遺産の選択肢リセット
           heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
