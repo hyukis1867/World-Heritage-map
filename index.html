@@ -251,19 +251,21 @@
           heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
           heritageSelect.disabled = true;
 
-          // 地域に紐づく国を追加
-          if (selectedRegion && regionCountryMap[selectedRegion]) {
+       // 地域に紐づく国を追加
+if (selectedRegion && regionCountryMap[selectedRegion]) {
   // Set を配列に変換
   const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-  
+
   // かな順ソート（日本語五十音順）
   countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
 
   countriesArray.forEach(country => {
-    const option = document.createElement('option');
-    option.value = country;
-    option.textContent = country;
-    countrySelect.appendChild(option);
+    if (country && country.trim() !== '') {  // ← 空白や空文字を除外
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    }
   });
 }
 
