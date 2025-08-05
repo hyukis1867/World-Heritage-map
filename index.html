@@ -139,20 +139,14 @@
             customCountry: country
           });
 
-          marker.addListener('click', () => {
-  if (infoWindow) infoWindow.close();
-
-  const contentHtml = `<div>
-    <strong>${marker.title}</strong>
-    <div class="infowindow-sub">（クリック選択）</div>
-  </div>`;
-
-  infoWindow = new google.maps.InfoWindow({
-    content: contentHtml
-  });
-  infoWindow.open(map, marker);
-  lastOpenedMarker = marker;
-});
+          marker.addListener("click", (event) => {
+            if (event.domEvent && event.domEvent.shiftKey) {
+              const params = new URLSearchParams({
+                lat: lat.toFixed(6),
+                lng: lng.toFixed(6),
+                zoom: map.getZoom(),
+                place: encodeURIComponent(heritageName)
+              });
               const url = `${location.origin}${location.pathname}?${params.toString()}`;
               navigator.clipboard.writeText(url).then(() => {
                 alert(`URLをコピーしました:\n${url}`);
