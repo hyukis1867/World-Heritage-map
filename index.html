@@ -76,27 +76,27 @@
       if (!data) return;
 
       const nameHtml = data.linkUrl
-        ? <a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>
+        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
         : data.heritageName;
 
       const localNameHtmlJP = data.localNameJP
-        ? <div class="infowindow-localname">${data.localNameJP}</div>
+        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
         : '';
 
       const localNameHtmlEN = data.localNameEN
-        ? <div class="infowindow-localname">${data.localNameEN}</div>
+        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
         : '';
 
-      const subInfo = <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>;
+      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
 
-      const contentHtml = 
+      const contentHtml = `
         <div>
           <strong>${nameHtml}</strong>
           ${localNameHtmlJP}
           ${localNameHtmlEN}
           ${subInfo}
         </div>
-      ;
+      `;
 
       infoWindow = new google.maps.InfoWindow({content: contentHtml});
       infoWindow.open(map, marker);
@@ -185,9 +185,9 @@
                 zoom: map.getZoom(),
                 place: encodeURIComponent(heritageName)
               });
-              const url = ${location.origin}${location.pathname}?${params.toString()};
+              const url = `${location.origin}${location.pathname}?${params.toString()}`;
               navigator.clipboard.writeText(url).then(() => {
-                alert(URLをコピーしました:\n${url});
+                alert(`URLをコピーしました:\n${url}`);
               });
               return;
             }
@@ -238,8 +238,8 @@
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
               const option = document.createElement('option');
-              option.value = ${heritages[heritage]}.${heritage}; // ID.遺産名
-              option.textContent = ${heritages[heritage]}.${heritage};
+              option.value = `${heritages[heritage]}.${heritage}`; // ID.遺産名
+              option.textContent = `${heritages[heritage]}.${heritage}`;
               heritageSelect.appendChild(option);
             });
             heritageSelect.disabled = false;
@@ -313,4 +313,6 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
+
 
