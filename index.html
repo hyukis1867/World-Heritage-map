@@ -140,47 +140,19 @@
           });
 
           marker.addListener("click", (event) => {
-  if (event.domEvent && event.domEvent.shiftKey) {
-    const params = new URLSearchParams({
-      lat: lat.toFixed(6),
-      lng: lng.toFixed(6),
-      zoom: map.getZoom(),
-      place: encodeURIComponent(heritageName)
-    });
-    const url = `${location.origin}${location.pathname}?${params.toString()}`;
-    navigator.clipboard.writeText(url).then(() => {
-      alert(`URLをコピーしました:\n${url}`);
-    });
-    return;
-  }
-
-  // 通常クリック処理（吹き出し表示）
-  if (infoWindow) {
-    infoWindow.close();
-  } else {
-    infoWindow = new google.maps.InfoWindow(); // ←★これを追加
-  }
-
-  const contentHtml = `
-    <div>
-      <strong>${heritageName}</strong><br>
-      <span style="font-size: small;">（クリック選択）</span>
-    </div>`;
-
-  infoWindow.setContent(contentHtml);
-  infoWindow.open(map, marker);
-  lastOpenedMarker = marker;
-});
-
-  const contentHtml = `
-    <div>
-      <strong>${heritageName}</strong><br>
-      <span style="font-size: small;">（クリック選択）</span>
-    </div>`;
-
-  infoWindow = new google.maps.InfoWindow({
-    content: contentHtml
-  });
+            if (event.domEvent && event.domEvent.shiftKey) {
+              const params = new URLSearchParams({
+                lat: lat.toFixed(6),
+                lng: lng.toFixed(6),
+                zoom: map.getZoom(),
+                place: encodeURIComponent(heritageName)
+              });
+              const url = `${location.origin}${location.pathname}?${params.toString()}`;
+              navigator.clipboard.writeText(url).then(() => {
+                alert(`URLをコピーしました:\n${url}`);
+              });
+              return;
+            }
 
             if (lastOpenedMarker === marker && infoWindow) {
               infoWindow.close();
