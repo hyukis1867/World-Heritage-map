@@ -26,37 +26,21 @@
     display: none !important;
   }
   #dropdown-container {
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  z-index: 5;
-  background: white;
-  padding: 4px 6px;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  font-family: sans-serif;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    z-index: 5;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    font-family: sans-serif;
   }
   #dropdown-container select {
-    margin-bottom: 1px;
+    margin-bottom: 5px;
     width: 200px;
     font-size: 14px;
   }
-  </style>
-  <style>
-    #dropdown-container {
-      padding: 5px;
-      margin: 0 auto;
-      width: fit-content;
-    }
-
-    #dropdown-container div {
-      margin: 2px 0;
-    }
-
-    #dropdown-container select {
-      padding: 2px 4px;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
@@ -105,27 +89,27 @@
   if (!data) return;
 
   const nameHtml = data.linkUrl
-    ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
+    ? <a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>
     : data.heritageName;
 
   const localNameHtmlJP = data.localNameJP
-    ? `<div class="infowindow-localname">${data.localNameJP}</div>`
+    ? <div class="infowindow-localname">${data.localNameJP}</div>
     : '';
 
   const localNameHtmlEN = data.localNameEN
-    ? `<div class="infowindow-localname">${data.localNameEN}</div>`
+    ? <div class="infowindow-localname">${data.localNameEN}</div>
     : '';
 
-  const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
+  const subInfo = <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>;
 
-  const contentHtml = `
+  const contentHtml = 
     <div>
       <strong>${nameHtml}</strong>
       ${localNameHtmlJP}
       ${localNameHtmlEN}
       ${subInfo}
     </div>
-  `;
+  ;
 
   infoWindow = new google.maps.InfoWindow({content: contentHtml});
   infoWindow.open(map, marker);
@@ -220,9 +204,9 @@
                 zoom: map.getZoom(),
                 place: encodeURIComponent(heritageName)
               });
-              const url = `${location.origin}${location.pathname}?${params.toString()}`;
+              const url = ${location.origin}${location.pathname}?${params.toString()};
               navigator.clipboard.writeText(url).then(() => {
-                alert(`URLをコピーしました:\n${url}`);
+                alert(URLをコピーしました:\n${url});
               });
               return;
             }
@@ -320,8 +304,8 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
             const heritages = countryHeritageMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
               const option = document.createElement('option');
-              option.value = `${selectedCountry}.${heritages[heritage]}`; // 国.ID の組み合わせに変更
-              option.textContent = `${heritages[heritage]}.${heritage}`;  // 表示はID.遺産名のまま
+              option.value = ${selectedCountry}.${heritages[heritage]}; // 国.ID の組み合わせに変更
+              option.textContent = ${heritages[heritage]}.${heritage};  // 表示はID.遺産名のまま
               heritageSelect.appendChild(option);
             });
           }
@@ -397,5 +381,4 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
 
