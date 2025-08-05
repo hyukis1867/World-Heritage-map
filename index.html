@@ -41,6 +41,10 @@
     width: 200px;
     font-size: 14px;
   }
+    #country-select,
+#heritage-select {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -129,6 +133,23 @@
       map.addListener('zoom_changed', () => {
         localStorage.setItem('mapZoom', map.getZoom());
       });
+      regionSelect.addEventListener('change', () => {
+  if (regionSelect.value) {
+    document.getElementById('country-select').style.display = 'inline-block';
+  } else {
+    document.getElementById('country-select').style.display = 'none';
+    document.getElementById('heritage-select').style.display = 'none';
+  }
+});
+
+// 国選択で遺産セレクトを表示
+countrySelect.addEventListener('change', () => {
+  if (countrySelect.value) {
+    document.getElementById('heritage-select').style.display = 'inline-block';
+  } else {
+    document.getElementById('heritage-select').style.display = 'none';
+  }
+});
 
       fetch('places.csv')
       .then(response => response.text())
