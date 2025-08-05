@@ -154,8 +154,23 @@
     return;
   }
 
-  // ここから通常クリック時の吹き出し処理を入れる（【修正③】）
-  if (infoWindow) infoWindow.close();
+  // 通常クリック処理（吹き出し表示）
+  if (infoWindow) {
+    infoWindow.close();
+  } else {
+    infoWindow = new google.maps.InfoWindow(); // ←★これを追加
+  }
+
+  const contentHtml = `
+    <div>
+      <strong>${heritageName}</strong><br>
+      <span style="font-size: small;">（クリック選択）</span>
+    </div>`;
+
+  infoWindow.setContent(contentHtml);
+  infoWindow.open(map, marker);
+  lastOpenedMarker = marker;
+});
 
   const contentHtml = `
     <div>
