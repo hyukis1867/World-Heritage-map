@@ -61,6 +61,7 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
+    let markerMap = {}; // ← 追加（IDで検索できるように）
 
     const iconColors = {
       "文化遺産": "orange",
@@ -192,6 +193,7 @@
           });
 
           markers.push(marker);
+          markerMap[id] = marker;
         });
 
        const markerCluster = new markerClusterer.MarkerClusterer({
@@ -250,18 +252,32 @@
         });
 
         heritageSelect.addEventListener('change', () => {
-          const selectedHeritage = heritageSelect.value;
-          if (!selectedHeritage) return;
+  const selectedHeritage = heritageSelect.value;
+  if (!selectedHeritage) return;
 
-          const targetMarker = markers.find(marker => marker.title === selectedHeritage);
-          if (targetMarker) {
-            map.setCenter(targetMarker.getPosition());
-            map.setZoom(8);
-            google.maps.event.trigger(targetMarker, 'click', {
-              domEvent: { shiftKey: false }
-            });
-          }
-        });
+  const selectedId = selectedHeritage.split('.')[0]; // IDを抽出
+  const targetMarker = markerMap[selectedId];
+
+  if (targetMarker) {
+    map.setCenter(targetMarker.getPosition());
+    map.setZoom(8);
+
+    if (infoWindow) infoWindow.close();
+
+    // 直接内容を生成（マーカークリックに頼らず）
+    const nameHtml = targetMarker.title;
+    const contentHtml = `<div>
+      <strong>${nameHtml}</strong>
+      <div class="infowindow-sub">（検索選択）</div>
+    </div>`;
+
+    infoWindow = new google.maps.InfoWindow({
+      content: contentHtml
+    });
+    infoWindow.open(map, targetMarker);
+    lastOpenedMarker = targetMarker;
+  }
+});
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlLat = parseFloat(urlParams.get('lat'));
