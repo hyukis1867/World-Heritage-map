@@ -74,38 +74,41 @@
     };
 
     function showInfo(marker) {
-      if (infoWindow) infoWindow.close();
+  if (infoWindow) infoWindow.close();
 
-      const data = heritageData.find(h => h.heritageName === marker.title && h.country === marker.customCountry);
-      if (!data) return;
+  const data = heritageData.find(h =>
+    h.lat === marker.getPosition().lat() &&
+    h.lng === marker.getPosition().lng()
+  );
+  if (!data) return;
 
-      const nameHtml = data.linkUrl
-        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
-        : data.heritageName;
+  const nameHtml = data.linkUrl
+    ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
+    : data.heritageName;
 
-      const localNameHtmlJP = data.localNameJP
-        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
-        : '';
+  const localNameHtmlJP = data.localNameJP
+    ? `<div class="infowindow-localname">${data.localNameJP}</div>`
+    : '';
 
-      const localNameHtmlEN = data.localNameEN
-        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
-        : '';
+  const localNameHtmlEN = data.localNameEN
+    ? `<div class="infowindow-localname">${data.localNameEN}</div>`
+    : '';
 
-      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
+  const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
 
-      const contentHtml = `
-        <div>
-          <strong>${nameHtml}</strong>
-          ${localNameHtmlJP}
-          ${localNameHtmlEN}
-          ${subInfo}
-        </div>
-      `;
+  const contentHtml = `
+    <div>
+      <strong>${nameHtml}</strong>
+      ${localNameHtmlJP}
+      ${localNameHtmlEN}
+      ${subInfo}
+    </div>
+  `;
 
-      infoWindow = new google.maps.InfoWindow({content: contentHtml});
-      infoWindow.open(map, marker);
-      lastOpenedMarker = marker;
-    }
+  infoWindow = new google.maps.InfoWindow({content: contentHtml});
+  infoWindow.open(map, marker);
+  lastOpenedMarker = marker;
+}
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
