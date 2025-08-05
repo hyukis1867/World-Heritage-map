@@ -230,11 +230,11 @@
           if (selectedCountry && countryPlaceMap[selectedCountry]) {
             const heritages = countryPlaceMap[selectedCountry];
             Object.keys(heritages).forEach(heritage => {
-              const option = document.createElement('option');
-              option.value = `${heritage}.${heritages[heritage]}`; // ← value に ID.地名 を入れる
-              option.textContent = `${heritage}.${heritages[heritage]}`; // ← 表示も同様
-              heritageSelect.appendChild(option);
-            });
+  const option = document.createElement('option');
+  option.value = `${heritage}.${heritages[heritage]}`;
+  option.textContent = `${heritage}.${heritages[heritage]}`;
+  heritageSelect.appendChild(option);
+});
             heritageSelect.disabled = false;
           } else {
             heritageSelect.disabled = true;
