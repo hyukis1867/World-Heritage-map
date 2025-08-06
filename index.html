@@ -357,49 +357,21 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
           map.setZoom(urlZoom);
         }
 
-   if (targetPlace) {
-  const decodedPlace = decodeURIComponent(targetPlace);
-  setTimeout(() => {
-    const targetMarker = markers.find(m => m.title === decodedPlace);
-    if (targetMarker) {
-      const targetLatLng = targetMarker.getPosition();
-
-      // ゆっくり移動 → ズーム → 吹き出し
-      smoothPanTo(map, targetLatLng, 3000, 90, () => {
-        map.setZoom(8);               // アニメーション後にズーム
-        showInfo(targetMarker);      // 吹き出し表示
-      });
-    }
-  }, 500);
-}
+        if (targetPlace) {
+          const decodedPlace = decodeURIComponent(targetPlace);
+          setTimeout(() => {
+            // titleが遺産名かつ国は問わず（元仕様維持）
+            const targetMarker = markers.find(m => m.title === decodedPlace);
+            if (targetMarker) {
+              map.setCenter(targetMarker.getPosition());
+              map.setZoom(10);
+              showInfo(targetMarker);
+            }
+          }, 500);
+        }
       });
     }
   </script>
-function smoothPanTo(map, targetLatLng, duration = 2000, steps = 60, callback) {
-  const startLatLng = map.getCenter();
-  const startLat = startLatLng.lat();
-  const startLng = startLatLng.lng();
-  const endLat = targetLatLng.lat();
-  const endLng = targetLatLng.lng();
-
-  let stepCount = 0;
-  const deltaLat = (endLat - startLat) / steps;
-  const deltaLng = (endLng - startLng) / steps;
-
-  const interval = duration / steps;
-
-  const timer = setInterval(() => {
-    stepCount++;
-    const nextLat = startLat + deltaLat * stepCount;
-    const nextLng = startLng + deltaLng * stepCount;
-    map.setCenter(new google.maps.LatLng(nextLat, nextLng));
-
-    if (stepCount >= steps) {
-      clearInterval(timer);
-      if (callback) callback();
-    }
-  }, interval);
-}
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
