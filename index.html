@@ -357,17 +357,28 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
           map.setZoom(urlZoom);
         }
 
-      if (targetPlace) {
+    if (targetPlace) {
   const decodedPlace = decodeURIComponent(targetPlace);
   setTimeout(() => {
-    // titleが遺産名かつ国は問わず（元仕様維持）
     const targetMarker = markers.find(m => m.title === decodedPlace);
     if (targetMarker) {
-      map.panTo(targetMarker.getPosition());  // ← 正しく panTo する
-      setTimeout(() => {
-        map.setZoom(8);  // 目的のズームレベルへ（0.8秒後）
-      }, 800);
-      showInfo(targetMarker);
+      const targetLatLng = targetMarker.getPosition();
+
+      // 現在位置と目的地が違う場合にのみパン
+      if (!map.getCenter().equals(targetLatLng)) {
+        // スムーズなズーム付き移動（ズームアウト → パン → ズームイン）
+        const originalZoom = map.getZoom();
+        map.panTo(targetLatLng);  // 通常パン（速いけど一応移動）
+
+        // 少し演出的にズームアウトしてからズームイン
+        map.setZoom(Math.max(4, originalZoom - 2));  // 一旦ズームアウト
+        setTimeout(() => {
+          map.setZoom(8);  // ズームイン
+          showInfo(targetMarker);  // 吹き出し表示
+        }, 1000);  // パン＋ズームのタイミング調整
+      } else {
+        showInfo(targetMarker);  // すでに表示位置なら吹き出しだけ表示
+      }
     }
   }, 500);
 }
