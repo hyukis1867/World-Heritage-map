@@ -357,34 +357,49 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
           map.setZoom(urlZoom);
         }
 
-    if (targetPlace) {
+   if (targetPlace) {
   const decodedPlace = decodeURIComponent(targetPlace);
   setTimeout(() => {
     const targetMarker = markers.find(m => m.title === decodedPlace);
     if (targetMarker) {
       const targetLatLng = targetMarker.getPosition();
 
-      // 現在位置と目的地が違う場合にのみパン
-      if (!map.getCenter().equals(targetLatLng)) {
-        // スムーズなズーム付き移動（ズームアウト → パン → ズームイン）
-        const originalZoom = map.getZoom();
-        map.panTo(targetLatLng);  // 通常パン（速いけど一応移動）
-
-        // 少し演出的にズームアウトしてからズームイン
-        map.setZoom(Math.max(4, originalZoom - 2));  // 一旦ズームアウト
-        setTimeout(() => {
-          map.setZoom(8);  // ズームイン
-          showInfo(targetMarker);  // 吹き出し表示
-        }, 1000);  // パン＋ズームのタイミング調整
-      } else {
-        showInfo(targetMarker);  // すでに表示位置なら吹き出しだけ表示
-      }
+      // ゆっくり移動 → ズーム → 吹き出し
+      smoothPanTo(map, targetLatLng, 3000, 90, () => {
+        map.setZoom(8);               // アニメーション後にズーム
+        showInfo(targetMarker);      // 吹き出し表示
+      });
     }
   }, 500);
 }
       });
     }
   </script>
+function smoothPanTo(map, targetLatLng, duration = 2000, steps = 60, callback) {
+  const startLatLng = map.getCenter();
+  const startLat = startLatLng.lat();
+  const startLng = startLatLng.lng();
+  const endLat = targetLatLng.lat();
+  const endLng = targetLatLng.lng();
+
+  let stepCount = 0;
+  const deltaLat = (endLat - startLat) / steps;
+  const deltaLng = (endLng - startLng) / steps;
+
+  const interval = duration / steps;
+
+  const timer = setInterval(() => {
+    stepCount++;
+    const nextLat = startLat + deltaLat * stepCount;
+    const nextLng = startLng + deltaLng * stepCount;
+    map.setCenter(new google.maps.LatLng(nextLat, nextLng));
+
+    if (stepCount >= steps) {
+      clearInterval(timer);
+      if (callback) callback();
+    }
+  }, interval);
+}
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
