@@ -357,20 +357,20 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
           map.setZoom(urlZoom);
         }
 
-        if (targetPlace) {
-          const decodedPlace = decodeURIComponent(targetPlace);
-          setTimeout(() => {
-            // titleが遺産名かつ国は問わず（元仕様維持）
-            const targetMarker = markers.find(m => m.title === decodedPlace);
-            if (targetMarker) {
-              map.panTo(marker.getPosition());  // なめらかに移動
-setTimeout(() => {
-  map.setZoom(8);  // 目的のズームレベルへ
-}, 800);  // パン移動が終わる頃にズーム（0.8秒後）;
-              showInfo(targetMarker);
-            }
-          }, 500);
-        }
+      if (targetPlace) {
+  const decodedPlace = decodeURIComponent(targetPlace);
+  setTimeout(() => {
+    // titleが遺産名かつ国は問わず（元仕様維持）
+    const targetMarker = markers.find(m => m.title === decodedPlace);
+    if (targetMarker) {
+      map.panTo(targetMarker.getPosition());  // ← 正しく panTo する
+      setTimeout(() => {
+        map.setZoom(8);  // 目的のズームレベルへ（0.8秒後）
+      }, 800);
+      showInfo(targetMarker);
+    }
+  }, 500);
+}
       });
     }
   </script>
