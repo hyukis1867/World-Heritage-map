@@ -252,15 +252,36 @@
           document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
           document.getElementById("heritage-box").style.display = "none";
 
-          // 国の選択肢リセット＆無効化
-          countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-          countrySelect.disabled = !selectedRegion;
+          // 国名 → 国コード変換マップ（必要に応じて追加）
+const countryCodeMap = {
+  "日本": "JP",
+  "中国": "CN",
+  "イタリア": "IT",
+  "フランス": "FR",
+  // 必要になったらここに追加
+};
 
-          // 遺産選択肢リセット＆無効化
-          heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-          heritageSelect.disabled = true;
+// 国コードを国旗絵文字に変換する関数
+function getFlagEmojiFromName(countryName) {
+  const code = countryCodeMap[countryName];
+  if (!code) return ""; // 未登録なら空文字
+  return code
+    .toUpperCase()
+    .split('')
+    .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
+    .map(cp => String.fromCodePoint(cp))
+    .join('');
+}
 
-       // 地域に紐づく国を追加
+// 国の選択肢リセット＆無効化
+countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+countrySelect.disabled = !selectedRegion;
+
+// 遺産選択肢リセット＆無効化
+heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+heritageSelect.disabled = true;
+
+// 地域に紐づく国を追加
 if (selectedRegion && regionCountryMap[selectedRegion]) {
   // Set を配列に変換
   const countriesArray = Array.from(regionCountryMap[selectedRegion]);
@@ -269,10 +290,11 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
   countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
 
   countriesArray.forEach(country => {
-    if (country && country.trim() !== '') {  // ← 空白や空文字を除外
+    if (country && country.trim() !== '') {  // 空白や空文字を除外
       const option = document.createElement('option');
       option.value = country;
-      option.textContent = country;
+      // 国旗＋国名
+      option.textContent = `${getFlagEmojiFromName(country)} ${country}`;
       countrySelect.appendChild(option);
     }
   });
