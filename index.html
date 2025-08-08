@@ -98,7 +98,7 @@
     ? `<div class="infowindow-localname">${data.localNameEN}</div>`
     : '';
 
-  const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}年登録</div>`;
+  const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
   const contentHtml = `
     <div>
@@ -155,7 +155,14 @@
           const lat = parseFloat(columns[4]);
           const lng = parseFloat(columns[5]);
           const type = columns[6].trim();
-          const year = columns[7];
+          const rawYear = columns[7]?.trim() || "";
+          let year = "";
+          const match = rawYear.match(/\d{4}/);  // 4桁の数字だけ抜き出す
+          if (match) {
+          year = match[0] + "年";  // 例: 1990年
+          } else {
+          year = rawYear; // もし数字が取れなければそのまま
+          }
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
           const linkUrl = columns[10]?.trim();
@@ -170,7 +177,7 @@
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
-
+          
           const marker = new google.maps.Marker({
             position: {lat, lng},
             map,
