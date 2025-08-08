@@ -156,17 +156,6 @@
           const lng = parseFloat(columns[5]);
           const type = columns[6].trim();
           const year = columns[7];
-          // 登録年加工
-let year = columns[7] ? columns[7].trim() : "";
-
-// 年だけ取り出す（4桁の数字）
-const match = year.match(/\d{4}/);
-if (match) {
-  year = match[0] + "年";
-} else {
-  year = "";
-}
-
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
           const linkUrl = columns[10]?.trim();
