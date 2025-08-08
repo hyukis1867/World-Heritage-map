@@ -155,7 +155,22 @@
           const lat = parseFloat(columns[4]);
           const lng = parseFloat(columns[5]);
           const type = columns[6].trim();
-          const year = columns[7];
+          // 登録年加工
+let year = columns[7] ? columns[7].trim() : "";
+
+// 「登録」以降を削除
+year = year.replace(/登録.*/, "");
+
+// カッコ書きも削除（例: "2005年（改定2010年）" → "2005年"）
+year = year.replace(/\（.*?\）/g, "").replace(/\(.*?\)/g, "");
+
+// 「年」が付いていない場合は付与
+if (/^\d{4}$/.test(year)) {
+  year += "年";
+}
+
+// 前後の空白削除
+year = year.trim();
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
           const linkUrl = columns[10]?.trim();
