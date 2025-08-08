@@ -158,19 +158,16 @@
           // 登録年加工
 let year = columns[7] ? columns[7].trim() : "";
 
-// 「年登録」や「登録」を削除
-year = year.replace(/年登録/, "年").replace(/登録/, "");
+// 「登録」を削除（"年"は残す）
+year = year.replace(/登録/, "");
 
-// カッコ書き（改定年など）を削除
-year = year.replace(/\（.*?\）/g, "").replace(/\(.*?\)/g, "");
-
-// 「年」が付いていない場合のみ付与
-if (/^\d{4}$/.test(year)) {
+// 「年」が入っていない場合だけ付け足す
+if (!year.includes("年") && /^\d{4}$/.test(year)) {
   year += "年";
 }
 
-// 前後の空白削除
 year = year.trim();
+
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
           const linkUrl = columns[10]?.trim();
