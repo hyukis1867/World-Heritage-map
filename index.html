@@ -158,15 +158,13 @@
           // 登録年加工
 let year = columns[7] ? columns[7].trim() : "";
 
-// 「登録」を削除（"年"は残す）
-year = year.replace(/登録/, "");
-
-// 「年」が入っていない場合だけ付け足す
-if (!year.includes("年") && /^\d{4}$/.test(year)) {
-  year += "年";
+// 年だけ取り出す（4桁の数字）
+const match = year.match(/\d{4}/);
+if (match) {
+  year = match[0] + "年";
+} else {
+  year = "";
 }
-
-year = year.trim();
 
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
