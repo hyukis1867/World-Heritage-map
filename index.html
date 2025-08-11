@@ -176,12 +176,15 @@
           countryHeritageMap[country][heritageName] = id;
          });
 
-const totalCount = heritageData.length;
-const regionSelect = document.getElementById('region-select');
-if (regionSelect && regionSelect.options.length > 0) {
-  regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
-}
 
+    // ✅ ここでカウント表示
+    const totalCount = heritageData.length;
+    const regionSelect = document.getElementById('region-select');
+    if (regionSelect && regionSelect.options.length > 0) {
+      regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
+    }
+
+        
           
           const label = id.toString();
           const color = iconColors[type] || "gray";
