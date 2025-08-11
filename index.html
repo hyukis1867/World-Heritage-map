@@ -137,69 +137,69 @@
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
-      rows.forEach(row => {
-  const columns = row.split(',');
-  const id = columns[0];
-  const region = columns[1];
-  const country = columns[2];
-  const heritageName = columns[3];
-  const lat = parseFloat(columns[4]);
-  const lng = parseFloat(columns[5]);
-  const type = columns[6].trim();
-  const rawYear = columns[7]?.trim() || "";
-  let year = "";
-  const match = rawYear.match(/\d{4}/);
-  if (match) {
-    year = match[0] + "年";
-  } else {
-    year = rawYear;
-  }
-  const localNameJP = columns[8]?.trim();
-  const localNameEN = columns[9]?.trim();
-  const linkUrl = columns[10]?.trim();
+      fetch('places.csv')
+      .then(response => response.text())
+      .then(csv => {
+        const rows = csv.trim().split('\n').slice(1);
 
-  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
+        // 地域→国→遺産 の階層データ構造を作成
+        const regionCountryMap = {}; // {region: Set of countries}
+        const countryHeritageMap = {}; // {country: {heritageName: id}}
 
-  if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
-  regionCountryMap[region].add(country);
+        rows.forEach(row => {
+          const columns = row.split(',');
+          const id = columns[0];
+          const region = columns[1];     // 2列目：地域
+          const country = columns[2];    // 3列目：国
+          const heritageName = columns[3];
+          const lat = parseFloat(columns[4]);
+          const lng = parseFloat(columns[5]);
+          const type = columns[6].trim();
+          const rawYear = columns[7]?.trim() || "";
+          let year = "";
+          const match = rawYear.match(/\d{4}/);  // 4桁の数字だけ抜き出す
+          if (match) {
+          year = match[0] + "年";  // 例: 1990年
+          } else {
+          year = rawYear; // もし数字が取れなければそのまま
+          }
+          const localNameJP = columns[8]?.trim();
+          const localNameEN = columns[9]?.trim();
+          const linkUrl = columns[10]?.trim();
 
-  if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
-  countryHeritageMap[country][heritageName] = id;
+          heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
 
-  // ✅ ここでマーカー作成
-  const label = id.toString();
-  const color = iconColors[type] || "gray";
+          if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
+          regionCountryMap[region].add(country);
 
-  const marker = new google.maps.Marker({
-    position: {lat, lng},
-    map,
-    label: {
-      text: label,
-      color: 'black',
-      fontSize: '12px',
-      fontWeight: 'normal'
-    },
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      fillColor: color,
-      fillOpacity: 1,
-      strokeColor: 'black',
-      strokeWeight: 1,
-      scale: 10
-    },
-    title: heritageName,
-    customRegion: region,
-    customCountry: country,
-    customId: id
-  });
-});
+          if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
+          countryHeritageMap[country][heritageName] = id;
 
-// ✅ forEachが終わったあとでカウント表示
-const totalCount = heritageData.length;
-const regionSelect = document.getElementById('region-select');
-if (regionSelect && regionSelect.options.length > 0) {
-  regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
-}
+          const label = id.toString();
+          const color = iconColors[type] || "gray";
+          
+          const marker = new google.maps.Marker({
+            position: {lat, lng},
+            map,
+            label: {
+              text: label,
+              color: 'black',
+              fontSize: '12px',
+              fontWeight: 'normal'
+            },
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: color,
+              fillOpacity: 1,
+              strokeColor: 'black',
+              strokeWeight: 1,
+              scale: 10
+            },
+            title: heritageName,
+            customRegion: region,
+            customCountry: country,
+            customId: id
+          });
 
           marker.addListener("click", (event) => {
             if (event.domEvent && event.domEvent.shiftKey) {
