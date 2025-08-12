@@ -47,22 +47,22 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
-    <div id="region-box" style="margin-bottom: 2px;">
-      <select id="region-select">
-        <option value="">-- 地域を選択 --</option>
-      </select>
-    </div>
-    <div id="country-box" style="display: none; margin-bottom: 2px;">
-      <select id="country-select">
-        <option value="">-- 国を選択 --</option>
-      </select>
-    </div>
-    <div id="heritage-box" style="display: none;">
-      <select id="heritage-select">
-        <option value="">-- 遺産を選択 --</option>
-      </select>
-    </div>
+  <div id="region-box" style="margin-bottom: 2px;">
+    <select id="region-select">
+      <option value="">-- 地域を選択 --</option>
+    </select>
   </div>
+  <div id="country-box" style="display: none; margin-bottom: 2px;">
+    <select id="country-select">
+      <option value="">-- 国を選択 --</option>
+    </select>
+  </div>
+  <div id="heritage-box" style="display: none;">
+    <select id="heritage-select">
+      <option value="">-- 遺産を選択 --</option>
+    </select>
+  </div>
+</div>
 
   <script>
     let map;
@@ -145,6 +145,10 @@
         const regionCountryMap = {};
         const countryHeritageMap = {};
 
+        // ■ ここから追加 ■
+        const regionHeritageCount = {};  // 地域ごとの遺産数カウント用
+        // ■ ここまで追加 ■
+
         rows.forEach(row => {
           const columns = row.split(',');
           const id = columns[0];
@@ -173,6 +177,11 @@
 
           if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
           countryHeritageMap[country][heritageName] = id;
+
+          // ■ 地域ごとの遺産数をカウント ■
+          if (!regionHeritageCount[region]) regionHeritageCount[region] = 0;
+          regionHeritageCount[region]++;
+          // ■ ここまで ■
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
@@ -207,12 +216,17 @@
           markers.push(marker);
         });
 
-        // ここで総数を地域選択ボックスの先頭に反映
-        const totalCount = heritageData.length;
+        // ■ 総遺産数（全地域内の遺産合計）を地域セレクト一番上に表示 ■
         const regionSelect = document.getElementById('region-select');
         if (regionSelect && regionSelect.options.length > 0) {
-          regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
+          // 地域内の遺産数を全部合計
+          let totalHeritageCount = 0;
+          for (const count of Object.values(regionHeritageCount)) {
+            totalHeritageCount += count;
+          }
+          regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalHeritageCount})`;
         }
+        // ■ ここまで ■
 
         // マーカークラスタ
         const markerCluster = new markerClusterer.MarkerClusterer({
