@@ -227,9 +227,6 @@
             markers.push(marker);
           });
 
-          // 総ユニークID数
-          const totalUniqueHeritageCount = globalUniqueIDs.size;
-
           // 国ごとのユニークID数を単純合計（IDは国ごとにリセットされる想定）
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
@@ -240,10 +237,16 @@
             return sum;
           }
 
-          // 地域セレクト最初のoptionに総ユニークID数表示
+          // すべての地域のID数合計を計算
+          let allRegionsTotalCount = 0;
+          Object.keys(regionCountryIDsMap).forEach(region => {
+            allRegionsTotalCount += countUniqueIDsInRegion(region);
+          });
+
+          // 地域セレクト最初のoptionにすべての地域のID数合計表示
           const regionSelect = document.getElementById('region-select');
           if (regionSelect && regionSelect.options.length > 0) {
-            regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalUniqueHeritageCount})`;
+            regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
           }
 
           // 地域選択肢に地域ごとのユニークID数をセット
