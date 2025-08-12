@@ -145,11 +145,11 @@
           const regionCountryMap = {};
           const countryHeritageMap = {};
 
+          // 地域-国-IDセットの多重Map
+          const regionCountryIDsMap = {}; // { region: { country: Set(ids) } }
+
           // 全体ユニークIDセット
           const globalUniqueIDs = new Set();
-
-          // 地域ごとのユニークIDセットを作るのではなく、地域別に国が持つIDセットを作るため一旦マップを用意
-          const regionCountryIDsMap = {}; // { region: { country: Set(ids) } }
 
           rows.forEach(row => {
             const columns = row.split(',');
@@ -180,10 +180,8 @@
             if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
             countryHeritageMap[country][heritageName] = id;
 
-            // 全体ユニークID管理
             globalUniqueIDs.add(id);
 
-            // 地域-国ごとのIDセットを作成
             if (!regionCountryIDsMap[region]) regionCountryIDsMap[region] = {};
             if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
             regionCountryIDsMap[region][country].add(id);
@@ -215,7 +213,6 @@
             });
 
             marker.addListener('click', () => {
-              // ** ここを修正：同じマーカーが開いていれば閉じる **
               if (lastOpenedMarker === marker) {
                 if (infoWindow) {
                   infoWindow.close();
@@ -230,29 +227,28 @@
             markers.push(marker);
           });
 
-          // 総遺産数（ユニークID数）
+          // 総ユニークID数
           const totalUniqueHeritageCount = globalUniqueIDs.size;
 
-          // 地域ごとのユニークID合計を計算する関数
+          // 地域内すべての国のIDを合算してユニーク数を返す関数（完全修正）
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             const uniqueIDsInRegion = new Set();
-            const countries = Object.keys(regionCountryIDsMap[region]);
-            countries.forEach(country => {
-              regionCountryIDsMap[region][country].forEach(id => {
+            Object.values(regionCountryIDsMap[region]).forEach(countrySet => {
+              countrySet.forEach(id => {
                 uniqueIDsInRegion.add(id);
               });
             });
             return uniqueIDsInRegion.size;
           }
 
-          // 地域セレクト初期optionテキスト更新
+          // 地域セレクト最初のoptionに総ユニークID数表示
           const regionSelect = document.getElementById('region-select');
           if (regionSelect && regionSelect.options.length > 0) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalUniqueHeritageCount})`;
           }
 
-          // 地域選択肢設定（地域名＋その地域内のユニーク遺産数）
+          // 地域選択肢に地域ごとのユニークID数をセット
           Object.keys(regionCountryMap).forEach(region => {
             const option = document.createElement('option');
             option.value = region;
@@ -269,7 +265,7 @@
             onClusterClick: () => false
           });
 
-          // 以下は変更なし（国・遺産選択イベントなど）
+          // 国・遺産セレクトの制御は変更なし
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -387,13 +383,14 @@
           }
 
           if (targetPlace) {
+            // 検索時は吹き出しを表示しないので以下は吹き出し呼び出しを削除
             const decodedPlace = decodeURIComponent(targetPlace);
             setTimeout(() => {
               const targetMarker = markers.find(m => m.title === decodedPlace);
               if (targetMarker) {
                 map.setCenter(targetMarker.getPosition());
                 map.setZoom(10);
-                showInfo(targetMarker);
+                // showInfo(targetMarker);  // これを削除して吹き出し非表示に
               }
             }, 500);
           }
