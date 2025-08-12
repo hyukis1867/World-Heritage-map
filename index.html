@@ -230,7 +230,7 @@
           // 総ユニークID数
           const totalUniqueHeritageCount = globalUniqueIDs.size;
 
-          // 地域内すべての国のIDを合算してユニーク数を返す関数（完全修正）
+          // 地域内すべての国のIDを合算してユニーク数を返す関数
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             const uniqueIDsInRegion = new Set();
@@ -390,7 +390,7 @@
               if (targetMarker) {
                 map.setCenter(targetMarker.getPosition());
                 map.setZoom(10);
-                // showInfo(targetMarker);  // これを削除して吹き出し非表示に
+                // showInfo(targetMarker);  // 削除済み
               }
             }, 500);
           }
@@ -404,4 +404,3 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
