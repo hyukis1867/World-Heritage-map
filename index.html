@@ -65,11 +65,13 @@
 </div>
 
   <script>
-    let map;
-    let markers = [];
-    let infoWindow = null;
-    let lastOpenedMarker = null;
-    let heritageData = [];  // 全遺産データ保持用
+  let map;
+let markers = [];
+let heritageData = [];
+let regionCountryMap = {}; // 全スコープで使えるように
+let countryHeritageMap = {};
+let infoWindow = null;
+let lastOpenedMarker = null;
 
     const iconColors = {
       "文化遺産": "orange",
@@ -114,36 +116,33 @@
   lastOpenedMarker = marker;
 }
 
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 41.9028, lng: 12.4964},
-        zoom: 4,
-        gestureHandling: 'greedy',
-        tilt: 0
-      });
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 41.9028, lng: 12.4964},
+    zoom: 4,
+    gestureHandling: 'greedy',
+    tilt: 0
+  });
 
-      const savedCenter = localStorage.getItem('mapCenter');
-      const savedZoom = localStorage.getItem('mapZoom');
-      if (savedCenter && savedZoom) {
-        const center = JSON.parse(savedCenter);
-        map.setCenter(center);
-        map.setZoom(parseInt(savedZoom));
-      }
+  const savedCenter = localStorage.getItem('mapCenter');
+  const savedZoom = localStorage.getItem('mapZoom');
+  if (savedCenter && savedZoom) {
+    const center = JSON.parse(savedCenter);
+    map.setCenter(center);
+    map.setZoom(parseInt(savedZoom));
+  }
 
-      map.addListener('center_changed', () => {
-        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
-      });
-      map.addListener('zoom_changed', () => {
-        localStorage.setItem('mapZoom', map.getZoom());
-      });
+  map.addListener('center_changed', () => {
+    localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
+  });
+  map.addListener('zoom_changed', () => {
+    localStorage.setItem('mapZoom', map.getZoom());
+  });
 
-fetch('places.csv')
+  fetch('places.csv')
     .then(response => response.text())
     .then(csv => {
       const rows = csv.trim().split('\n').slice(1);
-
-      const regionCountryMap = {};
-      const countryHeritageMap = {};
 
       rows.forEach(row => {
         const columns = row.split(',');
@@ -176,7 +175,7 @@ fetch('places.csv')
 
         const label = id.toString();
         const color = iconColors[type] || "gray";
-
+        
         const marker = new google.maps.Marker({
           position: {lat, lng},
           map,
@@ -200,27 +199,26 @@ fetch('places.csv')
           customId: id
         });
 
-        marker.addListener('click', () => {
-          showInfo(marker);
-        });
+        marker.addListener('click', () => showInfo(marker));
+        markers.push(marker); // ← ここを追加
       });
 
-      // ✅ 総件数を地域セレクトの最初の項目に表示
+      // ✅ 総件数表示
       const totalCount = heritageData.length;
       const regionSelect = document.getElementById('region-select');
       if (regionSelect && regionSelect.options.length > 0) {
         regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
       }
 
+      // ✅ マーカークラスタ生成を最後に
+      new markerClusterer.MarkerClusterer({
+        map,
+        markers,
+        maxZoom: 10,
+        onClusterClick: () => false
+      });
     });
-
-        // マーカークラスタ
-        const markerCluster = new markerClusterer.MarkerClusterer({
-          map,
-          markers,
-          maxZoom: 10,
-          onClusterClick: () => false
-        });
+}
 
         // セレクト要素取得
         const regionSelect = document.getElementById('region-select');
