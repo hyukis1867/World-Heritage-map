@@ -41,6 +41,11 @@
     width: 200px;
     font-size: 14px;
   }
+  #region-count-display {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: bold;
+  }
   </style>
 </head>
 <body>
@@ -51,6 +56,7 @@
     <select id="region-select">
       <option value="">-- 地域を選択 --</option>
     </select>
+    <div id="region-count-display"></div>
   </div>
   <div id="country-box" style="display: none; margin-bottom: 2px;">
     <select id="country-select">
@@ -230,7 +236,7 @@
           // 総ユニークID数
           const totalUniqueHeritageCount = globalUniqueIDs.size;
 
-          // 地域内すべての国のIDを合算してユニーク数を返す関数
+          // 地域内すべての国のIDを合算してユニーク数を返す関数（完全修正）
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             const uniqueIDsInRegion = new Set();
@@ -244,6 +250,7 @@
 
           // 地域セレクト最初のoptionに総ユニークID数表示
           const regionSelect = document.getElementById('region-select');
+          const regionCountDisplay = document.getElementById('region-count-display');
           if (regionSelect && regionSelect.options.length > 0) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalUniqueHeritageCount})`;
           }
@@ -277,6 +284,13 @@
             const selectedRegion = regionSelect.value;
             document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
             document.getElementById("heritage-box").style.display = "none";
+
+            if (selectedRegion) {
+              const count = countUniqueIDsInRegion(selectedRegion);
+              regionCountDisplay.textContent = `選択地域の遺産ユニーク数: ${count}`;
+            } else {
+              regionCountDisplay.textContent = '';
+            }
 
             const countryCodeMap = {
               "日本": "JP",
@@ -383,14 +397,13 @@
           }
 
           if (targetPlace) {
-            // 検索時は吹き出しを表示しないので以下は吹き出し呼び出しを削除
             const decodedPlace = decodeURIComponent(targetPlace);
             setTimeout(() => {
               const targetMarker = markers.find(m => m.title === decodedPlace);
               if (targetMarker) {
                 map.setCenter(targetMarker.getPosition());
                 map.setZoom(10);
-                // showInfo(targetMarker);  // 削除済み
+                // 検索時は吹き出し表示なし
               }
             }, 500);
           }
