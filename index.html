@@ -41,11 +41,6 @@
     width: 200px;
     font-size: 14px;
   }
-  #region-count-display {
-    margin-top: 4px;
-    font-size: 14px;
-    font-weight: bold;
-  }
   </style>
 </head>
 <body>
@@ -56,7 +51,6 @@
     <select id="region-select">
       <option value="">-- 地域を選択 --</option>
     </select>
-    <div id="region-count-display"></div>
   </div>
   <div id="country-box" style="display: none; margin-bottom: 2px;">
     <select id="country-select">
@@ -75,7 +69,7 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    let heritageData = [];  // 全遺産データ保持用
+    let heritageData = [];
 
     const iconColors = {
       "文化遺産": "orange",
@@ -150,11 +144,7 @@
 
           const regionCountryMap = {};
           const countryHeritageMap = {};
-
-          // 地域-国-IDセットの多重Map
-          const regionCountryIDsMap = {}; // { region: { country: Set(ids) } }
-
-          // 全体ユニークIDセット
+          const regionCountryIDsMap = {};
           const globalUniqueIDs = new Set();
 
           rows.forEach(row => {
@@ -233,10 +223,9 @@
             markers.push(marker);
           });
 
-          // 総ユニークID数
           const totalUniqueHeritageCount = globalUniqueIDs.size;
 
-          // 地域内すべての国のIDを合算してユニーク数を返す関数（完全修正）
+          // ユニークIDを地域全体で正しくカウントする関数
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             const uniqueIDsInRegion = new Set();
@@ -250,12 +239,11 @@
 
           // 地域セレクト最初のoptionに総ユニークID数表示
           const regionSelect = document.getElementById('region-select');
-          const regionCountDisplay = document.getElementById('region-count-display');
           if (regionSelect && regionSelect.options.length > 0) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalUniqueHeritageCount})`;
           }
 
-          // 地域選択肢に地域ごとのユニークID数をセット
+          // 地域選択肢に地域ごとのユニークID数をセット（地域内の全国のユニークID数を合算）
           Object.keys(regionCountryMap).forEach(region => {
             const option = document.createElement('option');
             option.value = region;
@@ -264,15 +252,12 @@
             regionSelect.appendChild(option);
           });
 
-          // マーカークラスタ
           const markerCluster = new markerClusterer.MarkerClusterer({
             map,
             markers,
             maxZoom: 10,
             onClusterClick: () => false
           });
-
-          // 国・遺産セレクトの制御は変更なし
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -284,13 +269,6 @@
             const selectedRegion = regionSelect.value;
             document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
             document.getElementById("heritage-box").style.display = "none";
-
-            if (selectedRegion) {
-              const count = countUniqueIDsInRegion(selectedRegion);
-              regionCountDisplay.textContent = `選択地域の遺産ユニーク数: ${count}`;
-            } else {
-              regionCountDisplay.textContent = '';
-            }
 
             const countryCodeMap = {
               "日本": "JP",
@@ -381,7 +359,8 @@
               map.setCenter(targetMarker.getPosition());
               map.setZoom(10);
 
-              google.maps.event.trigger(targetMarker, 'click');
+              // 検索時の吹き出し自動表示は無し
+              // google.maps.event.trigger(targetMarker, 'click');
             }
           });
 
@@ -403,7 +382,7 @@
               if (targetMarker) {
                 map.setCenter(targetMarker.getPosition());
                 map.setZoom(10);
-                // 検索時は吹き出し表示なし
+                // 吹き出し非表示のままに
               }
             }, 500);
           }
@@ -417,3 +396,4 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
