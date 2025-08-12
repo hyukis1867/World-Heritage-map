@@ -307,8 +307,9 @@
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
                   const option = document.createElement('option');
+                  const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
                   option.value = country;
-                  option.textContent = `${getFlagEmojiFromName(country)} ${country}`;
+                  option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
                   countrySelect.appendChild(option);
                 }
               });
@@ -402,4 +403,3 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
