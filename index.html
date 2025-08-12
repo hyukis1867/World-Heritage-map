@@ -145,11 +145,11 @@
           const regionCountryMap = {};
           const countryHeritageMap = {};
 
-          // 重複IDを排除するセット（全体）
+          // 全体ユニークIDセット
           const globalUniqueIDs = new Set();
 
-          // 地域ごとの重複排除IDセット
-          const regionUniqueIDs = {};
+          // 地域ごとのユニークIDセットを作るのではなく、地域別に国が持つIDセットを作るため一旦マップを用意
+          const regionCountryIDsMap = {}; // { region: { country: Set(ids) } }
 
           rows.forEach(row => {
             const columns = row.split(',');
@@ -172,15 +172,6 @@
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
 
-            // 全体のユニークID管理
-            if (!globalUniqueIDs.has(id)) {
-              globalUniqueIDs.add(id);
-
-              // 地域ごとのユニークIDセットを作成
-              if (!regionUniqueIDs[region]) regionUniqueIDs[region] = new Set();
-              regionUniqueIDs[region].add(id);
-            }
-
             heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
 
             if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -188,6 +179,14 @@
 
             if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
             countryHeritageMap[country][heritageName] = id;
+
+            // 全体ユニークID管理
+            globalUniqueIDs.add(id);
+
+            // 地域-国ごとのIDセットを作成
+            if (!regionCountryIDsMap[region]) regionCountryIDsMap[region] = {};
+            if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
+            regionCountryIDsMap[region][country].add(id);
 
             const label = id.toString();
             const color = iconColors[type] || "gray";
@@ -216,30 +215,49 @@
             });
 
             marker.addListener('click', () => {
-              showInfo(marker);
+              // ** ここを修正：同じマーカーが開いていれば閉じる **
+              if (lastOpenedMarker === marker) {
+                if (infoWindow) {
+                  infoWindow.close();
+                  infoWindow = null;
+                  lastOpenedMarker = null;
+                }
+              } else {
+                showInfo(marker);
+              }
             });
 
             markers.push(marker);
           });
 
-          // 総遺産数を計算（全体ユニークID数）
+          // 総遺産数（ユニークID数）
           const totalUniqueHeritageCount = globalUniqueIDs.size;
 
-          // 地域選択の最初のoptionに「-- 地域を選択 --（遺産数）」を表示
+          // 地域ごとのユニークID合計を計算する関数
+          function countUniqueIDsInRegion(region) {
+            if (!regionCountryIDsMap[region]) return 0;
+            const uniqueIDsInRegion = new Set();
+            const countries = Object.keys(regionCountryIDsMap[region]);
+            countries.forEach(country => {
+              regionCountryIDsMap[region][country].forEach(id => {
+                uniqueIDsInRegion.add(id);
+              });
+            });
+            return uniqueIDsInRegion.size;
+          }
+
+          // 地域セレクト初期optionテキスト更新
           const regionSelect = document.getElementById('region-select');
           if (regionSelect && regionSelect.options.length > 0) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalUniqueHeritageCount})`;
           }
 
-          // 地域選択肢設定（地域名のみ）
+          // 地域選択肢設定（地域名＋その地域内のユニーク遺産数）
           Object.keys(regionCountryMap).forEach(region => {
             const option = document.createElement('option');
             option.value = region;
-
-            // 地域ごとのユニーク遺産数も表示（必要なら）
-            const count = regionUniqueIDs[region] ? regionUniqueIDs[region].size : 0;
+            const count = countUniqueIDsInRegion(region);
             option.textContent = `${region} (${count})`;
-
             regionSelect.appendChild(option);
           });
 
@@ -251,33 +269,29 @@
             onClusterClick: () => false
           });
 
-          // セレクト要素取得
+          // 以下は変更なし（国・遺産選択イベントなど）
+
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
-          // 初期状態では国・遺産は選択不可
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-          // 地域選択時処理
           regionSelect.addEventListener('change', () => {
             const selectedRegion = regionSelect.value;
             document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
             document.getElementById("heritage-box").style.display = "none";
 
-            // 国名 → 国コード変換マップ（必要に応じて追加）
             const countryCodeMap = {
               "日本": "JP",
               "中華人民共和国": "CN",
               "イタリア共和国": "IT",
               "フランス共和国": "FR",
-              // 必要になったらここに追加
             };
 
-            // 国コードを国旗絵文字に変換する関数
             function getFlagEmojiFromName(countryName) {
               const code = countryCodeMap[countryName];
-              if (!code) return ""; // 未登録なら空文字
+              if (!code) return "";
               return code
                 .toUpperCase()
                 .split('')
@@ -286,15 +300,12 @@
                 .join('');
             }
 
-            // 国の選択肢リセット＆無効化
             countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
             countrySelect.disabled = !selectedRegion;
 
-            // 遺産選択肢リセット＆無効化
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
 
-            // 地域に紐づく国を追加
             if (selectedRegion && regionCountryMap[selectedRegion]) {
               const countriesArray = Array.from(regionCountryMap[selectedRegion]);
               countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
@@ -308,18 +319,14 @@
               });
             }
 
-            // マーカーの表示切替（地域フィルター）
             markers.forEach(marker => {
               marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
             });
 
-            // 遺産セレクト値クリア
             heritageSelect.value = '';
-            // 国セレクト値クリア
             countrySelect.value = '';
           });
 
-          // 国選択時処理
           countrySelect.addEventListener('change', () => {
             const selectedCountry = countrySelect.value;
             document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
@@ -337,7 +344,6 @@
               });
             }
 
-            // マーカーの表示切替（国フィルター）
             markers.forEach(marker => {
               marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
             });
@@ -345,7 +351,6 @@
             heritageSelect.value = '';
           });
 
-          // 遺産選択時処理
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
             if (!selectedHeritage) return;
@@ -370,7 +375,6 @@
             }
           });
 
-          // URLパラメータ処理
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
           const urlLng = parseFloat(urlParams.get('lng'));
