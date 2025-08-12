@@ -47,22 +47,22 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
-  <div id="region-box" style="margin-bottom: 2px;">
-    <select id="region-select">
-      <option value="">-- 地域を選択 --</option>
-    </select>
+    <div id="region-box" style="margin-bottom: 2px;">
+      <select id="region-select">
+        <option value="">-- 地域を選択 --</option>
+      </select>
+    </div>
+    <div id="country-box" style="display: none; margin-bottom: 2px;">
+      <select id="country-select">
+        <option value="">-- 国を選択 --</option>
+      </select>
+    </div>
+    <div id="heritage-box" style="display: none;">
+      <select id="heritage-select">
+        <option value="">-- 遺産を選択 --</option>
+      </select>
+    </div>
   </div>
-  <div id="country-box" style="display: none; margin-bottom: 2px;">
-    <select id="country-select">
-      <option value="">-- 国を選択 --</option>
-    </select>
-  </div>
-  <div id="heritage-box" style="display: none;">
-    <select id="heritage-select">
-      <option value="">-- 遺産を選択 --</option>
-    </select>
-  </div>
-</div>
 
   <script>
     let map;
@@ -78,41 +78,41 @@
     };
 
     function showInfo(marker) {
-  if (infoWindow) infoWindow.close();
+      if (infoWindow) infoWindow.close();
 
-  const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
-  );
-  if (!data) return;
+      const data = heritageData.find(h =>
+        h.lat === marker.getPosition().lat() &&
+        h.lng === marker.getPosition().lng()
+      );
+      if (!data) return;
 
-  const nameHtml = data.linkUrl
-    ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
-    : data.heritageName;
+      const nameHtml = data.linkUrl
+        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
+        : data.heritageName;
 
-  const localNameHtmlJP = data.localNameJP
-    ? `<div class="infowindow-localname">${data.localNameJP}</div>`
-    : '';
+      const localNameHtmlJP = data.localNameJP
+        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
+        : '';
 
-  const localNameHtmlEN = data.localNameEN
-    ? `<div class="infowindow-localname">${data.localNameEN}</div>`
-    : '';
+      const localNameHtmlEN = data.localNameEN
+        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
+        : '';
 
-  const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
+      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
-  const contentHtml = `
-    <div>
-      <strong>${nameHtml}</strong>
-      ${localNameHtmlJP}
-      ${localNameHtmlEN}
-      ${subInfo}
-    </div>
-  `;
+      const contentHtml = `
+        <div>
+          <strong>${nameHtml}</strong>
+          ${localNameHtmlJP}
+          ${localNameHtmlEN}
+          ${subInfo}
+        </div>
+      `;
 
-  infoWindow = new google.maps.InfoWindow({content: contentHtml});
-  infoWindow.open(map, marker);
-  lastOpenedMarker = marker;
-}
+      infoWindow = new google.maps.InfoWindow({content: contentHtml});
+      infoWindow.open(map, marker);
+      lastOpenedMarker = marker;
+    }
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -142,26 +142,25 @@
       .then(csv => {
         const rows = csv.trim().split('\n').slice(1);
 
-        // 地域→国→遺産 の階層データ構造を作成
-        const regionCountryMap = {}; // {region: Set of countries}
-        const countryHeritageMap = {}; // {country: {heritageName: id}}
+        const regionCountryMap = {};
+        const countryHeritageMap = {};
 
         rows.forEach(row => {
           const columns = row.split(',');
           const id = columns[0];
-          const region = columns[1];     // 2列目：地域
-          const country = columns[2];    // 3列目：国
+          const region = columns[1];
+          const country = columns[2];
           const heritageName = columns[3];
           const lat = parseFloat(columns[4]);
           const lng = parseFloat(columns[5]);
           const type = columns[6].trim();
           const rawYear = columns[7]?.trim() || "";
           let year = "";
-          const match = rawYear.match(/\d{4}/);  // 4桁の数字だけ抜き出す
+          const match = rawYear.match(/\d{4}/);
           if (match) {
-          year = match[0] + "年";  // 例: 1990年
+            year = match[0] + "年";
           } else {
-          year = rawYear; // もし数字が取れなければそのまま
+            year = rawYear;
           }
           const localNameJP = columns[8]?.trim();
           const localNameEN = columns[9]?.trim();
@@ -177,7 +176,7 @@
 
           const label = id.toString();
           const color = iconColors[type] || "gray";
-          
+
           const marker = new google.maps.Marker({
             position: {lat, lng},
             map,
@@ -201,32 +200,19 @@
             customId: id
           });
 
-          marker.addListener("click", (event) => {
-            if (event.domEvent && event.domEvent.shiftKey) {
-              const params = new URLSearchParams({
-                lat: lat.toFixed(6),
-                lng: lng.toFixed(6),
-                zoom: map.getZoom(),
-                place: encodeURIComponent(heritageName)
-              });
-              const url = `${location.origin}${location.pathname}?${params.toString()}`;
-              navigator.clipboard.writeText(url).then(() => {
-                alert(`URLをコピーしました:\n${url}`);
-              });
-              return;
-            }
-
-            if (lastOpenedMarker === marker && infoWindow) {
-              infoWindow.close();
-              lastOpenedMarker = null;
-              return;
-            }
-
+          marker.addListener('click', () => {
             showInfo(marker);
           });
 
           markers.push(marker);
         });
+
+        // ここで総数を地域選択ボックスの先頭に反映
+        const totalCount = heritageData.length;
+        const regionSelect = document.getElementById('region-select');
+        if (regionSelect && regionSelect.options.length > 0) {
+          regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
+        }
 
         // マーカークラスタ
         const markerCluster = new markerClusterer.MarkerClusterer({
@@ -237,7 +223,6 @@
         });
 
         // セレクト要素取得
-        const regionSelect = document.getElementById('region-select');
         const countrySelect = document.getElementById('country-select');
         const heritageSelect = document.getElementById('heritage-select');
 
@@ -260,52 +245,52 @@
           document.getElementById("heritage-box").style.display = "none";
 
           // 国名 → 国コード変換マップ（必要に応じて追加）
-const countryCodeMap = {
-  "日本": "JP",
-  "中華人民共和国": "CN",
-  "イタリア共和国": "IT",
-  "フランス共和国": "FR",
-  // 必要になったらここに追加
-};
+          const countryCodeMap = {
+            "日本": "JP",
+            "中華人民共和国": "CN",
+            "イタリア共和国": "IT",
+            "フランス共和国": "FR",
+            // 必要になったらここに追加
+          };
 
-// 国コードを国旗絵文字に変換する関数
-function getFlagEmojiFromName(countryName) {
-  const code = countryCodeMap[countryName];
-  if (!code) return ""; // 未登録なら空文字
-  return code
-    .toUpperCase()
-    .split('')
-    .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
-    .map(cp => String.fromCodePoint(cp))
-    .join('');
-}
+          // 国コードを国旗絵文字に変換する関数
+          function getFlagEmojiFromName(countryName) {
+            const code = countryCodeMap[countryName];
+            if (!code) return ""; // 未登録なら空文字
+            return code
+              .toUpperCase()
+              .split('')
+              .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
+              .map(cp => String.fromCodePoint(cp))
+              .join('');
+          }
 
-// 国の選択肢リセット＆無効化
-countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-countrySelect.disabled = !selectedRegion;
+          // 国の選択肢リセット＆無効化
+          countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+          countrySelect.disabled = !selectedRegion;
 
-// 遺産選択肢リセット＆無効化
-heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-heritageSelect.disabled = true;
+          // 遺産選択肢リセット＆無効化
+          heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+          heritageSelect.disabled = true;
 
-// 地域に紐づく国を追加
-if (selectedRegion && regionCountryMap[selectedRegion]) {
-  // Set を配列に変換
-  const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+          // 地域に紐づく国を追加
+          if (selectedRegion && regionCountryMap[selectedRegion]) {
+            // Set を配列に変換
+            const countriesArray = Array.from(regionCountryMap[selectedRegion]);
 
-  // かな順ソート（日本語五十音順）
-  countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
+            // かな順ソート（日本語五十音順）
+            countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
 
-  countriesArray.forEach(country => {
-    if (country && country.trim() !== '') {  // 空白や空文字を除外
-      const option = document.createElement('option');
-      option.value = country;
-      // 国旗＋国名
-      option.textContent = `${getFlagEmojiFromName(country)} ${country}`;
-      countrySelect.appendChild(option);
-    }
-  });
-}
+            countriesArray.forEach(country => {
+              if (country && country.trim() !== '') {  // 空白や空文字を除外
+                const option = document.createElement('option');
+                option.value = country;
+                // 国旗＋国名
+                option.textContent = `${getFlagEmojiFromName(country)} ${country}`;
+                countrySelect.appendChild(option);
+              }
+            });
+          }
 
           // マーカーの表示切替（地域フィルター）
           markers.forEach(marker => {
@@ -408,5 +393,4 @@ if (selectedRegion && regionCountryMap[selectedRegion]) {
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
 
