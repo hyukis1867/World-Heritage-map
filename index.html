@@ -41,25 +41,6 @@
     width: 200px;
     font-size: 14px;
   }
-  /* 級ラベル背景色 */
-  .grade-1 {
-    background-color: pink;
-    border-radius: 4px;
-    padding: 1px 4px;
-    margin-left: 4px;
-  }
-  .grade-2 {
-    background-color: #FFDAB9; /* 薄いオレンジ */
-    border-radius: 4px;
-    padding: 1px 4px;
-    margin-left: 4px;
-  }
-  .grade-3 {
-    background-color: #E6E6FA; /* 薄い紫 */
-    border-radius: 4px;
-    padding: 1px 4px;
-    margin-left: 4px;
-  }
   </style>
 </head>
 <body>
@@ -119,8 +100,6 @@
 
       const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
-      // 【級】は吹き出しから削除
-
       const contentHtml = 
         `<div>
           <strong>${nameHtml}</strong>
@@ -179,11 +158,7 @@
             const rawYear = columns[7]?.trim() || "";
             let year = "";
             const match = rawYear.match(/\d{4}/);
-            if (match) {
-              year = match[0] + "年";
-            } else {
-              year = rawYear;
-            }
+            if (match) year = match[0] + "年"; else year = rawYear;
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
@@ -349,22 +324,13 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
 
+                let gradeLabel = '';
                 if (grade) {
-                  // カンマ区切りで複数級対応
-                  const grades = grade.split(',').map(g => g.trim());
-                  const gradeLabels = grades.map(g => {
-                    switch(g) {
-                      case '1': return '<span class="grade-1">【1級】</span>';
-                      case '2': return '<span class="grade-2">【2級】</span>';
-                      case '3': return '<span class="grade-3">【3級】</span>';
-                      default: return '';
-                    }
-                  }).join(' ');
-                  option.innerHTML = `${id}. ${heritage} ${gradeLabels}`;
-                } else {
-                  option.textContent = `${id}. ${heritage}`;
+                  const grades = grade.split(',').map(g => `${g}級`);
+                  gradeLabel = `【${grades.join(',')}】`;
                 }
 
+                option.textContent = `${id}.${heritage} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
@@ -429,4 +395,3 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
