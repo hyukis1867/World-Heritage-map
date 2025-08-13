@@ -148,8 +148,8 @@
 
           rows.forEach(row => {
             const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col =>
-              col.replace(/^"|"$/g, '')
-            );
+  col.replace(/^"|"$/g, '') // 前後のダブルクオート除去
+);
             const id = columns[0];
             const region = columns[1];
             const country = columns[2];
@@ -164,7 +164,7 @@
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
-            const grade = columns[11]?.trim(); // 12列目の級
+            const grade = columns[11]?.trim();
 
             heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
@@ -266,24 +266,6 @@
             document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
             document.getElementById("heritage-box").style.display = "none";
 
-            const countryCodeMap = {
-              "日本": "JP",
-              "中華人民共和国": "CN",
-              "イタリア共和国": "IT",
-              "フランス共和国": "FR",
-            };
-
-            function getFlagEmojiFromName(countryName) {
-              const code = countryCodeMap[countryName];
-              if (!code) return "";
-              return code
-                .toUpperCase()
-                .split('')
-                .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
-                .map(cp => String.fromCodePoint(cp))
-                .join('');
-            }
-
             countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
             countrySelect.disabled = !selectedRegion;
 
@@ -298,7 +280,7 @@
                   const option = document.createElement('option');
                   const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
                   option.value = country;
-                  option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+                  option.textContent = `${country} (${idCount})`;
                   countrySelect.appendChild(option);
                 }
               });
@@ -319,27 +301,23 @@
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = !selectedCountry;
 
-            // 遺産選択プルダウン作成部分
-if (selectedCountry && countryHeritageMap[selectedCountry]) {
-  const heritages = countryHeritageMap[selectedCountry];
-  Object.keys(heritages).forEach(heritage => {
-    const { id, grade } = heritages[heritage];
-    const option = document.createElement('option');
-    option.value = `${selectedCountry}.${id}`;
-
-    // gradeはプルダウンのみ
-    let gradeLabel = '';
-    if (grade) {
-      const grades = grade.split(',')
-                          .map(g => g.replace(/["']/g, '').trim())
-                          .filter(g => g !== "");
-      gradeLabel = grades.map(g => `【${g}級】`).join('');
-    }
-
-    option.textContent = `${id}.${heritage} ${gradeLabel}`;
-    heritageSelect.appendChild(option);
-  });
-}
+            if (selectedCountry && countryHeritageMap[selectedCountry]) {
+              const heritages = countryHeritageMap[selectedCountry];
+              Object.keys(heritages).forEach(heritage => {
+                const { id, grade } = heritages[heritage];
+                const option = document.createElement('option');
+                option.value = `${selectedCountry}.${id}`;
+                let gradeLabel = '';
+                if (grade) {
+                  const grades = grade.split(',')
+                                      .map(g => g.replace(/["']/g, '').trim())
+                                      .filter(g => g !== "");
+                  gradeLabel = grades.map(g => `【${g}級】`).join('');
+                }
+                option.textContent = `${id}.${heritage} ${gradeLabel}`;
+                heritageSelect.appendChild(option);
+              });
+            }
 
             markers.forEach(marker => {
               marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
@@ -370,27 +348,6 @@ if (selectedCountry && countryHeritageMap[selectedCountry]) {
             }
           });
 
-          const urlParams = new URLSearchParams(window.location.search);
-          const urlLat = parseFloat(urlParams.get('lat'));
-          const urlLng = parseFloat(urlParams.get('lng'));
-          const urlZoom = parseInt(urlParams.get('zoom'));
-          const targetPlace = urlParams.get('place');
-
-          if (!isNaN(urlLat) && !isNaN(urlLng) && !isNaN(urlZoom)) {
-            map.setCenter({ lat: urlLat, lng: urlLng });
-            map.setZoom(urlZoom);
-          }
-
-          if (targetPlace) {
-            const decodedPlace = decodeURIComponent(targetPlace);
-            setTimeout(() => {
-              const targetMarker = markers.find(m => m.title === decodedPlace);
-              if (targetMarker) {
-                map.setCenter(targetMarker.getPosition());
-                map.setZoom(10);
-              }
-            }, 500);
-          }
         });
     }
   </script>
@@ -401,4 +358,5 @@ if (selectedCountry && countryHeritageMap[selectedCountry]) {
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
