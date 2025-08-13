@@ -327,13 +327,13 @@
     option.value = `${selectedCountry}.${id}`;
 
     let gradeLabel = '';
-    if (grade) {
-      const grades = grade.split(',')
-                          .map(g => g.replace(/["']/g, '').trim());
-      gradeLabel = `【${grades.map(g => g+'級').join(',')}】`;
-    }
-
-    option.textContent = `${id}.${heritage} ${gradeLabel}`;
+if (grade) {
+  const grades = grade.split(',')
+                      .map(g => g.replace(/["']/g, '').trim())
+                      .filter(g => g !== "");
+  gradeLabel = grades.map(g => `【${g}級】`).join('');
+}
+option.textContent = `${id}.${heritage} ${gradeLabel}`;
     heritageSelect.appendChild(option);
   });
 }
