@@ -148,8 +148,8 @@
 
           rows.forEach(row => {
             const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col =>
-  col.replace(/^"|"$/g, '') // 前後のダブルクオート除去
-);
+              col.replace(/^"|"$/g, '') // 前後のダブルクオート除去
+            );
             const id = columns[0];
             const region = columns[1];
             const country = columns[2];
@@ -319,25 +319,25 @@
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = !selectedCountry;
 
-          if (selectedCountry && countryHeritageMap[selectedCountry]) {
-  const heritages = countryHeritageMap[selectedCountry];
-  Object.keys(heritages).forEach(heritage => {
-    const { id, grade } = heritages[heritage];
-    const option = document.createElement('option');
-    option.value = `${selectedCountry}.${id}`;
+            if (selectedCountry && countryHeritageMap[selectedCountry]) {
+              const heritages = countryHeritageMap[selectedCountry];
+              Object.keys(heritages).forEach(heritage => {
+                const { id, grade } = heritages[heritage];
+                const option = document.createElement('option');
+                option.value = `${selectedCountry}.${id}`;
 
-    let gradeLabel = '';
-if (grade) {
-  const grades = grade.split(',')
-                      .map(g => g.replace(/["']/g, '').trim())
-                      .filter(g => g !== "");
-  gradeLabel = grades.map(g => `【${g}級】`).join('');
-}
-option.textContent = `${id}.${heritage} ${gradeLabel}`;
-    heritageSelect.appendChild(option);
-  });
-}
-
+                // ★ここで級を表示する
+                let gradeLabel = '';
+                if (grade) {
+                  const grades = grade.split(',')
+                                      .map(g => g.replace(/["']/g, '').trim())
+                                      .filter(g => g !== "");
+                  gradeLabel = grades.map(g => `【${g}級】`).join(',');
+                }
+                option.textContent = `${id}.${heritage} ${gradeLabel}`;
+                heritageSelect.appendChild(option);
+              });
+            }
 
             markers.forEach(marker => {
               marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
