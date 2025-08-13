@@ -326,9 +326,9 @@
 
                 // CSVの12列目をダブルクオートで囲み、カンマで複数級を保持
               let gradeLabel = '';
+let gradeLabel = '';
 if (grade) {
-  const cleanGrade = grade.replace(/"/g, ''); // ダブルクオート削除
-  const grades = cleanGrade.split(',');      // カンマで分割
+  const grades = grade.split(',').map(g => g.trim());
   gradeLabel = `【${grades.map(g => g + '級').join(',')}】`;
 }
 
