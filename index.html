@@ -41,6 +41,22 @@
     width: 200px;
     font-size: 14px;
   }
+  .grade-label {
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #000;
+    margin-left: 4px;
+    font-size: 90%;
+  }
+  .grade-1 {
+    background-color: #ffc0cb;
+  }
+  .grade-2 {
+    background-color: #ffd580;
+  }
+  .grade-3 {
+    background-color: #dda0dd;
+  }
   </style>
 </head>
 <body>
@@ -144,11 +160,7 @@
 
           const regionCountryMap = {};
           const countryHeritageMap = {};
-
-          // 地域-国-IDセットの多重Map
-          const regionCountryIDsMap = {}; // { region: { country: Set(ids) } }
-
-          // 全体ユニークIDセット
+          const regionCountryIDsMap = {};
           const globalUniqueIDs = new Set();
 
           rows.forEach(row => {
@@ -171,14 +183,15 @@
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
+            const grade = columns[11]?.trim(); // 12列目: 級
 
-            heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl});
+            heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
             if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
             regionCountryMap[region].add(country);
 
             if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
-            countryHeritageMap[country][heritageName] = id;
+            countryHeritageMap[country][heritageName] = {id, grade};
 
             globalUniqueIDs.add(id);
 
@@ -227,7 +240,6 @@
             markers.push(marker);
           });
 
-          // 国ごとのユニークID数を単純合計（IDは国ごとにリセットされる想定）
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             let sum = 0;
@@ -237,19 +249,16 @@
             return sum;
           }
 
-          // すべての地域のID数合計を計算
           let allRegionsTotalCount = 0;
           Object.keys(regionCountryIDsMap).forEach(region => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          // 地域セレクト最初のoptionにすべての地域のID数合計表示
           const regionSelect = document.getElementById('region-select');
           if (regionSelect && regionSelect.options.length > 0) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
           }
 
-          // 地域選択肢に地域ごとのユニークID数をセット
           Object.keys(regionCountryMap).forEach(region => {
             const option = document.createElement('option');
             option.value = region;
@@ -258,7 +267,6 @@
             regionSelect.appendChild(option);
           });
 
-          // マーカークラスタ
           const markerCluster = new markerClusterer.MarkerClusterer({
             map,
             markers,
@@ -333,9 +341,14 @@
             if (selectedCountry && countryHeritageMap[selectedCountry]) {
               const heritages = countryHeritageMap[selectedCountry];
               Object.keys(heritages).forEach(heritage => {
+                const {id, grade} = heritages[heritage];
                 const option = document.createElement('option');
-                option.value = `${selectedCountry}.${heritages[heritage]}`;
-                option.textContent = `${heritages[heritage]}.${heritage}`;
+                option.value = `${selectedCountry}.${id}`;
+                let gradeHtml = '';
+                if (grade === '1級') gradeHtml = `<span class="grade-label grade-1">【1級】</span>`;
+                else if (grade === '2級') gradeHtml = `<span class="grade-label grade-2">【2級】</span>`;
+                else if (grade === '3級') gradeHtml = `<span class="grade-label grade-3">【3級】</span>`;
+                option.innerHTML = `${id}.${heritage} ${gradeHtml}`;
                 heritageSelect.appendChild(option);
               });
             }
@@ -366,8 +379,6 @@
 
               map.setCenter(targetMarker.getPosition());
               map.setZoom(10);
-
-              google.maps.event.trigger(targetMarker, 'click');
             }
           });
 
@@ -389,7 +400,6 @@
               if (targetMarker) {
                 map.setCenter(targetMarker.getPosition());
                 map.setZoom(10);
-                // 吹き出し表示は検索時には行わない（元仕様維持）
               }
             }, 500);
           }
@@ -403,3 +413,4 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
