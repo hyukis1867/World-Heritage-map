@@ -325,11 +325,13 @@
                 option.value = `${selectedCountry}.${id}`;
 
                 // CSVの12列目をダブルクオートで囲み、カンマで複数級を保持
-                let gradeLabel = '';
-                if (grade) {
-                  const grades = grade.split(','); // 例: "1,2"
-                  gradeLabel = `【${grades.map(g => g + '級').join(',')}】`;
-                }
+              let gradeLabel = '';
+if (grade) {
+  const cleanGrade = grade.replace(/"/g, ''); // ダブルクオート削除
+  const grades = cleanGrade.split(',');      // カンマで分割
+  gradeLabel = `【${grades.map(g => g + '級').join(',')}】`;
+}
+
 
                 option.textContent = `${id}.${heritage} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
