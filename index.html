@@ -326,19 +326,13 @@
 
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
                 let gradeLabel = '';
-                if (grade) {
-                  const grades = grade
-                    .split(/[,，、/]/)
-                    .map(g => g.trim())
-                    .filter(Boolean)
-                    .map(g => g.replace(/級$/,''))
-                    .map(g => `${g}級`);
-                  if (grades.length) {
-                    gradeLabel = `【${grades.join(',')}】`;
-                  }
-                }
+               if (grade) {
+  const gradesArray = grade.split(',');        // "1,2" → ["1","2"]
+  const gradesText = gradesArray.map(g => g + '級').join(','); // ["1","2"] → "1級,2級"
+  gradeLabel = `【${gradesText}】`;             // → "【1級,2級】"
+}
+option.textContent = `${id}.${heritage} ${gradeLabel}`;
 
-                option.textContent = `${id}.${heritage} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
