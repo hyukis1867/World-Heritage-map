@@ -44,12 +44,21 @@
   /* 級ラベル背景色 */
   .grade-1 {
     background-color: pink;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin-left: 4px;
   }
   .grade-2 {
     background-color: #FFDAB9; /* 薄いオレンジ */
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin-left: 4px;
   }
   .grade-3 {
     background-color: #E6E6FA; /* 薄い紫 */
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin-left: 4px;
   }
   </style>
 </head>
@@ -57,22 +66,22 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
-  <div id="region-box" style="margin-bottom: 2px;">
-    <select id="region-select">
-      <option value="">-- 地域を選択 --</option>
-    </select>
+    <div id="region-box" style="margin-bottom: 2px;">
+      <select id="region-select">
+        <option value="">-- 地域を選択 --</option>
+      </select>
+    </div>
+    <div id="country-box" style="display: none; margin-bottom: 2px;">
+      <select id="country-select">
+        <option value="">-- 国を選択 --</option>
+      </select>
+    </div>
+    <div id="heritage-box" style="display: none;">
+      <select id="heritage-select">
+        <option value="">-- 遺産を選択 --</option>
+      </select>
+    </div>
   </div>
-  <div id="country-box" style="display: none; margin-bottom: 2px;">
-    <select id="country-select">
-      <option value="">-- 国を選択 --</option>
-    </select>
-  </div>
-  <div id="heritage-box" style="display: none;">
-    <select id="heritage-select">
-      <option value="">-- 遺産を選択 --</option>
-    </select>
-  </div>
-</div>
 
   <script>
     let map;
@@ -100,17 +109,6 @@
         ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
         : data.heritageName;
 
-      // ここに級を背景色付きで表示（複数も対応）
-      let gradeHtml = '';
-      if (data.grade) {
-        const grades = data.grade.split(/[,、]/).map(g => g.trim());
-        grades.forEach(g => {
-          if (g.includes('1')) gradeHtml += `<span class="grade-1">【1級】</span> `;
-          else if (g.includes('2')) gradeHtml += `<span class="grade-2">【2級】</span> `;
-          else if (g.includes('3')) gradeHtml += `<span class="grade-3">【3級】</span> `;
-        });
-      }
-
       const localNameHtmlJP = data.localNameJP
         ? `<div class="infowindow-localname">${data.localNameJP}</div>`
         : '';
@@ -121,9 +119,11 @@
 
       const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
+      // 【級】は吹き出しから削除
+
       const contentHtml = 
         `<div>
-          <strong>${nameHtml} ${gradeHtml}</strong>
+          <strong>${nameHtml}</strong>
           ${localNameHtmlJP}
           ${localNameHtmlEN}
           ${subInfo}
@@ -187,7 +187,7 @@
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
-            const grade = columns[11]?.trim();
+            const grade = columns[11]?.trim(); // 12列目の級
 
             heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
@@ -349,14 +349,21 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
 
-                // ここは背景色付き不可なのでテキストで級を表示
-                let gradeText = '';
                 if (grade) {
-                  const grades = grade.split(/[,、]/).map(g => g.trim());
-                  gradeText = grades.map(g => `【${g.replace(/[^0-9]/g, '')}級】`).join('');
+                  // カンマ区切りで複数級対応
+                  const grades = grade.split(',').map(g => g.trim());
+                  const gradeLabels = grades.map(g => {
+                    switch(g) {
+                      case '1': return '<span class="grade-1">【1級】</span>';
+                      case '2': return '<span class="grade-2">【2級】</span>';
+                      case '3': return '<span class="grade-3">【3級】</span>';
+                      default: return '';
+                    }
+                  }).join(' ');
+                  option.innerHTML = `${id}. ${heritage} ${gradeLabels}`;
+                } else {
+                  option.textContent = `${id}. ${heritage}`;
                 }
-
-                option.textContent = `${id}.${heritage} ${gradeText}`;
 
                 heritageSelect.appendChild(option);
               });
