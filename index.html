@@ -162,7 +162,7 @@
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
-            const grade = columns[11]?.trim(); // 12列目の級（カンマ区切り対応）
+            const grade = columns[11]?.trim(); // 12列目の級
 
             heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
@@ -324,15 +324,14 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
 
-                // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
+                // CSVの12列目をダブルクオートで囲み、カンマで複数級を保持
                 let gradeLabel = '';
-               if (grade) {
-  const gradesArray = grade.split(',');        // "1,2" → ["1","2"]
-  const gradesText = gradesArray.map(g => g + '級').join(','); // ["1","2"] → "1級,2級"
-  gradeLabel = `【${gradesText}】`;             // → "【1級,2級】"
-}
-option.textContent = `${id}.${heritage} ${gradeLabel}`;
+                if (grade) {
+                  const grades = grade.split(','); // 例: "1,2"
+                  gradeLabel = `【${grades.map(g => g + '級').join(',')}】`;
+                }
 
+                option.textContent = `${id}.${heritage} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
