@@ -258,13 +258,21 @@
             regionSelect.appendChild(option);
           });
 
-          // マーカークラスタ
-          const markerCluster = new markerClusterer.MarkerClusterer({
-            map,
-            markers,
-            maxZoom: 10,
-            onClusterClick: () => false
-          });
+          // マーカークラスタ（ライブラリ読み込み順の揺らぎに耐える）
+function setupClusterer() {
+  if (window.markerClusterer && window.markerClusterer.MarkerClusterer) {
+    new markerClusterer.MarkerClusterer({
+      map,
+      markers,
+      maxZoom: 10,
+      onClusterClick: () => false
+    });
+  } else {
+    // まだ読み込まれていなければ少し待って再試行
+    setTimeout(setupClusterer, 50);
+  }
+}
+setupClusterer();
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
