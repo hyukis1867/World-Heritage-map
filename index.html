@@ -100,6 +100,17 @@
         ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
         : data.heritageName;
 
+      // ここに級を背景色付きで表示（複数も対応）
+      let gradeHtml = '';
+      if (data.grade) {
+        const grades = data.grade.split(/[,、]/).map(g => g.trim());
+        grades.forEach(g => {
+          if (g.includes('1')) gradeHtml += `<span class="grade-1">【1級】</span> `;
+          else if (g.includes('2')) gradeHtml += `<span class="grade-2">【2級】</span> `;
+          else if (g.includes('3')) gradeHtml += `<span class="grade-3">【3級】</span> `;
+        });
+      }
+
       const localNameHtmlJP = data.localNameJP
         ? `<div class="infowindow-localname">${data.localNameJP}</div>`
         : '';
@@ -112,7 +123,7 @@
 
       const contentHtml = 
         `<div>
-          <strong>${nameHtml}</strong>
+          <strong>${nameHtml} ${gradeHtml}</strong>
           ${localNameHtmlJP}
           ${localNameHtmlEN}
           ${subInfo}
@@ -176,7 +187,7 @@
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
-            const grade = columns[11]?.trim(); // 12列目の級
+            const grade = columns[11]?.trim();
 
             heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
@@ -338,16 +349,15 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
 
-                let gradeLabel = '';
-                let gradeClass = '';
+                // ここは背景色付き不可なのでテキストで級を表示
+                let gradeText = '';
                 if (grade) {
-                  if (grade.includes('1')) { gradeLabel = '【1級】'; gradeClass = 'grade-1'; }
-                  else if (grade.includes('2')) { gradeLabel = '【2級】'; gradeClass = 'grade-2'; }
-                  else if (grade.includes('3')) { gradeLabel = '【3級】'; gradeClass = 'grade-3'; }
+                  const grades = grade.split(/[,、]/).map(g => g.trim());
+                  gradeText = grades.map(g => `【${g.replace(/[^0-9]/g, '')}級】`).join('');
                 }
 
-                option.textContent = `${id}.${heritage} ${gradeLabel}`;
-                if (gradeClass) option.classList.add(gradeClass);
+                option.textContent = `${id}.${heritage} ${gradeText}`;
+
                 heritageSelect.appendChild(option);
               });
             }
