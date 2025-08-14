@@ -98,7 +98,6 @@
         ? `<div class="infowindow-localname">${data.localNameEN}</div>`
         : '';
 
-      // ここでは grade は使わない
       const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
       const contentHtml = 
@@ -145,7 +144,6 @@
           const regionCountryMap = {};
           const countryHeritageMap = {};
           const regionCountryIDsMap = {};
-          const globalUniqueIDs = new Set();
 
           rows.forEach(row => {
             const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col =>
@@ -175,24 +173,16 @@
             if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
             countryHeritageMap[country][heritageName] = { id, grade };
 
-            globalUniqueIDs.add(id);
-
             if (!regionCountryIDsMap[region]) regionCountryIDsMap[region] = {};
             if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
             regionCountryIDsMap[region][country].add(id);
 
-            const label = id.toString();
             const color = iconColors[type] || "gray";
 
             const marker = new google.maps.Marker({
               position: {lat, lng},
               map,
-              label: {
-                text: label,
-                color: 'black',
-                fontSize: '12px',
-                fontWeight: 'normal'
-              },
+              label: { text: id, color: 'black', fontSize: '12px', fontWeight: 'normal' },
               icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 fillColor: color,
@@ -249,12 +239,7 @@
             regionSelect.appendChild(option);
           });
 
-          const markerCluster = new markerClusterer.MarkerClusterer({
-            map,
-            markers,
-            maxZoom: 10,
-            onClusterClick: () => false
-          });
+          const markerCluster = new markerClusterer.MarkerClusterer({ map, markers, maxZoom: 10, onClusterClick: () => false });
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -274,12 +259,11 @@
             heritageSelect.disabled = true;
 
             if (selectedRegion && regionCountryMap[selectedRegion]) {
-              const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-              countriesArray.sort((a, b) => a.localeCompare(b, 'ja'));
+              const countriesArray = Array.from(regionCountryMap[selectedRegion]).sort((a,b)=>a.localeCompare(b,'ja'));
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
                   const option = document.createElement('option');
-                  const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+                  const idCount = regionCountryIDsMap[selectedRegion][country]?.size || 0;
                   option.value = country;
                   option.textContent = `${country} (${idCount})`;
                   countrySelect.appendChild(option);
@@ -287,10 +271,7 @@
               });
             }
 
-            markers.forEach(marker => {
-              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-            });
-
+            markers.forEach(marker => marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion));
             heritageSelect.value = '';
             countrySelect.value = '';
           });
@@ -303,27 +284,19 @@
             heritageSelect.disabled = !selectedCountry;
 
             if (selectedCountry && countryHeritageMap[selectedCountry]) {
-              const heritages = countryHeritageMap[selectedCountry];
-              Object.keys(heritages).forEach(heritage => {
-                const { id, grade } = heritages[heritage];
+              Object.entries(countryHeritageMap[selectedCountry]).forEach(([heritageName, {id, grade}]) => {
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
                 let gradeLabel = '';
                 if (grade) {
-                  const grades = grade.split(',')
-                                      .map(g => g.replace(/["']/g, '').trim())
-                                      .filter(g => g !== "");
-                  gradeLabel = grades.map(g => `【${g}級】`).join('');
+                  gradeLabel = grade.split(',').map(g => `【${g.trim()}級】`).join('');
                 }
-                option.textContent = `${id}.${heritage} ${gradeLabel}`;
+                option.textContent = `${id}.${heritageName} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
 
-            markers.forEach(marker => {
-              marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
-            });
-
+            markers.forEach(marker => marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry));
             heritageSelect.value = '';
           });
 
@@ -338,11 +311,7 @@
               marker.customCountry === selectedCountry && marker.customId === id
             );
             if (targetMarker) {
-              if (infoWindow) {
-                infoWindow.close();
-                infoWindow = null;
-                lastOpenedMarker = null;
-              }
+              if (infoWindow) { infoWindow.close(); infoWindow = null; lastOpenedMarker = null; }
               map.setCenter(targetMarker.getPosition());
               map.setZoom(10);
               google.maps.event.trigger(targetMarker, 'click');
