@@ -324,13 +324,13 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
 
-                // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
-                let gradeLabel = '';
-             if (grade) {
-  const gradesArray = grade.replace(/["']/g,'')   // 前後の " を除去
-                           .split(',')           // カンマで分割
-                           .map(g => g.trim())   // 空白除去
-                           .filter(g => g !== ''); // 空文字削除
+              // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
+let gradeLabel = '';
+if (grade) {
+  const gradesArray = grade.replace(/["']/g, '') // 前後の " や ' を除去
+    .split(/[、,／\/]/)                          // カンマ・全角カンマ・読点・スラッシュ対応
+    .map(g => g.trim())                          // 空白除去
+    .filter(g => g !== '');                      // 空文字削除
   gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
 }
 
