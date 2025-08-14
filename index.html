@@ -148,8 +148,8 @@
 
           rows.forEach(row => {
             const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col =>
-  col.replace(/^"|"$/g, '') // 前後のダブルクオート除去
-);
+              col.replace(/^"|"$/g, '')
+            );
             const id = columns[0];
             const region = columns[1];
             const country = columns[2];
@@ -310,11 +310,11 @@
                 let gradeLabel = '';
                 if (grade) {
                   const grades = grade.split(',')
-                                      .map(g => g.replace(/["']/g, '').trim())
-                                      .filter(g => g !== "");
+                    .map(g => g.replace(/["']/g, '').trim())
+                    .filter(g => g !== "");
                   gradeLabel = grades.map(g => `【${g}級】`).join('');
                 }
-                option.textContent = `${id}.${heritage} ${gradeLabel}`;
+                option.textContent = `${id}.${heritage}${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
@@ -358,5 +358,6 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
+
 
 
