@@ -326,23 +326,18 @@
 
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
                 let gradeLabel = '';
-        if (grade) {
-  // 前後の空白・引用符を削除
-  const cleaned = grade.replace(/^"|"$/g, '').trim();
-
-  // カンマ・全角カンマ・読点・スラッシュで分割
-  const gradesArray = cleaned.split(/\s*[,、\/]\s*/).filter(g => g !== '');
-
-  // 各要素を【…級】にして連結
-  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
+       // 修正版：カンマ区切りや空白をすべて区切りとして扱う
+if (grade) {
+  gradeLabel = grade
+    .split(/[,，、\/\s]+/)                  // 区切り文字：半角カンマ、全角カンマ、読点、スラッシュ、空白
+    .map(g => g.replace(/["']/g, '').trim()) // 前後の " や ' を削除
+    .filter(g => g)                         // 空要素除去
+    .map(g => `【${g}級】`)                  // 【n級】形式に変換
+    .join('');
+} else {
+  gradeLabel = '';
 }
-
-
-
-
-
-
-option.textContent = `${id}.${heritage} ${gradeLabel}`;
+opt.textContent = `${id}.${heritage} ${gradeLabel}`;
 
                 heritageSelect.appendChild(option);
               });
