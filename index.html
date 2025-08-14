@@ -86,6 +86,7 @@
       );
       if (!data) return;
 
+      // 修正版: 正しいテンプレート記法に変更
       const nameHtml = data.linkUrl
         ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
         : data.heritageName;
@@ -310,11 +311,11 @@
                 let gradeLabel = '';
                 if (grade) {
                   const grades = grade.split(',')
-                    .map(g => g.replace(/["']/g, '').trim())
-                    .filter(g => g !== "");
+                                      .map(g => g.replace(/["']/g, '').trim())
+                                      .filter(g => g !== "");
                   gradeLabel = grades.map(g => `【${g}級】`).join('');
                 }
-                option.textContent = `${id}.${heritage}${gradeLabel}`;
+                option.textContent = `${id}.${heritage} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
@@ -358,6 +359,5 @@
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
 
 
