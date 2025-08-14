@@ -327,13 +327,11 @@
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
                 let gradeLabel = '';
           if (grade) {
-  // 前後の空白とダブルクオートを除去
-  const cleaned = grade.replace(/^"|"$/g, '').trim();
-  // カンマ・全角カンマ・読点・スラッシュで分割
-  const gradesArray = cleaned.split(/\s*[,、\/]\s*/).filter(g => g !== '');
-  // 各級を個別に【…級】にして結合
-  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
+  const cleaned = grade.replace(/^"|"$/g, '').trim();             // 前後の引用符・空白を除去
+  const gradesArray = cleaned.split(/\s*[,、\/]\s*/).filter(g => g !== ''); // 複数区切り対応
+  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');      // 【1級】【2級】の形に結合
 }
+
 
 
 
