@@ -325,16 +325,16 @@
                 option.value = `${selectedCountry}.${id}`;
 
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
-              let gradeLabel = '';
-if (typeof grade === 'string' && grade.trim()) {
-  gradeLabel = grade
-    .split(/[,，、\/\s]+/)
-    .map(g => g.replace(/["']/g, '').trim())
-    .filter(g => g)
-    .map(g => `【${g}級】`)
-    .join('');
+                let gradeLabel = '';
+             if (grade) {
+  const gradesArray = grade.replace(/["']/g,'')   // 前後の " を除去
+                           .split(',')           // カンマで分割
+                           .map(g => g.trim())   // 空白除去
+                           .filter(g => g !== ''); // 空文字削除
+  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
 }
-opt.textContent = `${id}.${heritage} ${gradeLabel}`;
+
+option.textContent = `${id}.${heritage} ${gradeLabel}`;
 
                 heritageSelect.appendChild(option);
               });
