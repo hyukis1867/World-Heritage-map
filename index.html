@@ -187,14 +187,22 @@
 
   heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
-  if (!countryHeritageMap[country]) countryHeritageMap[country] = [];
-  countryHeritageMap[country].push({id, heritageName, grade});
+  
 
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
   regionCountryMap[region].add(country);
 
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
-  countryHeritageMap[country][heritageName] = { id, grade };
+if (!countryHeritageMap[country][id]) {
+  countryHeritageMap[country][id] = { id, heritageName, grade };   // 初登場
+} else {
+  const prev = countryHeritageMap[country][id];                     // 既存をマージ
+  const merged = new Set([
+    ...(prev.grade ? prev.grade.split(',') : []),
+    ...(grade ? grade.split(',') : [])
+  ]);
+  prev.grade = Array.from(merged).join(',');
+}
 
   globalUniqueIDs.add(id);
 
@@ -331,35 +339,36 @@
           });
 
           countrySelect.addEventListener('change', () => {
-            const selectedCountry = countrySelect.value;
-            document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+  const selectedCountry = countrySelect.value;
+  document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
-            heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-            heritageSelect.disabled = !selectedCountry;
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = !selectedCountry;
 
-            if (selectedCountry && countryHeritageMap[selectedCountry]) {
-  const heritages = countryHeritageMap[selectedCountry];
-  heritages.forEach(({id, heritageName, grade}) => {
-    const option = document.createElement('option');
-    option.value = `${selectedCountry}.${id}`;
+  if (selectedCountry && countryHeritageMap[selectedCountry]) {
+    const heritagesObj = countryHeritageMap[selectedCountry];
+    const list = Object.values(heritagesObj)
+      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
 
-    let gradeLabel = '';
-    if (grade) {
-      gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-    }
+    list.forEach(({ id, heritageName, grade }) => {
+      const option = document.createElement('option');
+      option.value = `${selectedCountry}.${id}`;
 
-    option.textContent = `${id}.${heritageName} ${gradeLabel}`;
-    heritageSelect.appendChild(option);
+      let gradeLabel = '';
+      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+
+      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      heritageSelect.appendChild(option);
+    });
+  }
+
+  markers.forEach(marker => {
+    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
   });
-}
 
+  heritageSelect.value = '';
+});
 
-            markers.forEach(marker => {
-              marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
-            });
-
-            heritageSelect.value = '';
-          });
 
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
