@@ -146,9 +146,7 @@
           const regionCountryIDsMap = {};
 
           rows.forEach(row => {
-            const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col =>
-              col.replace(/^"|"$/g, '')
-            );
+            const columns = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(col => col.replace(/^"|"$/g, ''));
             const id = columns[0];
             const region = columns[1];
             const country = columns[2];
@@ -157,9 +155,7 @@
             const lng = parseFloat(columns[5]);
             const type = columns[6].trim();
             const rawYear = columns[7]?.trim() || "";
-            let year = "";
-            const match = rawYear.match(/\d{4}/);
-            if (match) year = match[0] + "年"; else year = rawYear;
+            let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
             const localNameJP = columns[8]?.trim();
             const localNameEN = columns[9]?.trim();
             const linkUrl = columns[10]?.trim();
@@ -177,15 +173,18 @@
             if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
             regionCountryIDsMap[region][country].add(id);
 
-            const color = iconColors[type] || "gray";
-
             const marker = new google.maps.Marker({
               position: {lat, lng},
               map,
-              label: { text: id, color: 'black', fontSize: '12px', fontWeight: 'normal' },
+              label: {
+                text: id.toString(),
+                color: 'black',
+                fontSize: '12px',
+                fontWeight: 'normal'
+              },
               icon: {
                 path: google.maps.SymbolPath.CIRCLE,
-                fillColor: color,
+                fillColor: iconColors[type] || "gray",
                 fillOpacity: 1,
                 strokeColor: 'black',
                 strokeWeight: 1,
@@ -214,28 +213,19 @@
 
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
-            let sum = 0;
-            Object.values(regionCountryIDsMap[region]).forEach(countrySet => {
-              sum += countrySet.size;
-            });
-            return sum;
+            return Object.values(regionCountryIDsMap[region]).reduce((sum, set) => sum + set.size, 0);
           }
 
-          let allRegionsTotalCount = 0;
-          Object.keys(regionCountryIDsMap).forEach(region => {
-            allRegionsTotalCount += countUniqueIDsInRegion(region);
-          });
-
           const regionSelect = document.getElementById('region-select');
+          let totalCount = Object.keys(regionCountryIDsMap).reduce((sum, r) => sum + countUniqueIDsInRegion(r), 0);
           if (regionSelect && regionSelect.options.length > 0) {
-            regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
+            regionSelect.options[0].textContent = `-- 地域を選択 -- (${totalCount})`;
           }
 
           Object.keys(regionCountryMap).forEach(region => {
             const option = document.createElement('option');
             option.value = region;
-            const count = countUniqueIDsInRegion(region);
-            option.textContent = `${region} (${count})`;
+            option.textContent = `${region} (${countUniqueIDsInRegion(region)})`;
             regionSelect.appendChild(option);
           });
 
@@ -259,19 +249,16 @@
             heritageSelect.disabled = true;
 
             if (selectedRegion && regionCountryMap[selectedRegion]) {
-              const countriesArray = Array.from(regionCountryMap[selectedRegion]).sort((a,b)=>a.localeCompare(b,'ja'));
-              countriesArray.forEach(country => {
-                if (country && country.trim() !== '') {
-                  const option = document.createElement('option');
-                  const idCount = regionCountryIDsMap[selectedRegion][country]?.size || 0;
-                  option.value = country;
-                  option.textContent = `${country} (${idCount})`;
-                  countrySelect.appendChild(option);
-                }
+              Array.from(regionCountryMap[selectedRegion]).sort((a, b) => a.localeCompare(b, 'ja')).forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = `${country} (${regionCountryIDsMap[selectedRegion][country].size})`;
+                countrySelect.appendChild(option);
               });
             }
 
             markers.forEach(marker => marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion));
+
             heritageSelect.value = '';
             countrySelect.value = '';
           });
@@ -288,15 +275,14 @@
                 const option = document.createElement('option');
                 option.value = `${selectedCountry}.${id}`;
                 let gradeLabel = '';
-                if (grade) {
-                  gradeLabel = grade.split(',').map(g => `【${g.trim()}級】`).join('');
-                }
+                if (grade) gradeLabel = grade.split(',').map(g => `【${g.trim()}級】`).join('');
                 option.textContent = `${id}.${heritageName} ${gradeLabel}`;
                 heritageSelect.appendChild(option);
               });
             }
 
             markers.forEach(marker => marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry));
+
             heritageSelect.value = '';
           });
 
@@ -305,11 +291,7 @@
             if (!selectedHeritage) return;
 
             const [selectedCountry, id] = selectedHeritage.split('.');
-            if (!selectedCountry || !id) return;
-
-            const targetMarker = markers.find(marker =>
-              marker.customCountry === selectedCountry && marker.customId === id
-            );
+            const targetMarker = markers.find(marker => marker.customCountry === selectedCountry && marker.customId === id);
             if (targetMarker) {
               if (infoWindow) { infoWindow.close(); infoWindow = null; lastOpenedMarker = null; }
               map.setCenter(targetMarker.getPosition());
@@ -317,14 +299,11 @@
               google.maps.event.trigger(targetMarker, 'click');
             }
           });
-
         });
     }
   </script>
 
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
-  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"></script>
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
