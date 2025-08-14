@@ -326,11 +326,14 @@
 
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
                 let gradeLabel = '';
-               if (grade) {
-  const gradesArray = grade.split(',');        // "1,2" → ["1","2"]
-  const gradesText = gradesArray.map(g => g + '級').join(','); // ["1","2"] → "1級,2級"
-  gradeLabel = `【${gradesText}】`;             // → "【1級,2級】"
+             if (grade) {
+  const gradesArray = grade.replace(/["']/g,'')   // 前後の " を除去
+                           .split(',')           // カンマで分割
+                           .map(g => g.trim())   // 空白除去
+                           .filter(g => g !== ''); // 空文字削除
+  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
 }
+
 option.textContent = `${id}.${heritage} ${gradeLabel}`;
 
                 heritageSelect.appendChild(option);
