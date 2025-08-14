@@ -327,18 +327,19 @@
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
                 let gradeLabel = '';
              if (grade) {
-  // 1. 前後のダブルクオートを除去
-  // 2. カンマで分割
-  // 3. 空白除去
+  // 1. ダブルクオート除去
+  // 2. カンマ、全角カンマ、スラッシュ、読点などで分割
+  // 3. 前後空白除去
   // 4. 空文字削除
-  const gradesArray = grade.replace(/["']/g, '')
-                           .split(',')
+  const gradesArray = grade.replace(/["']/g,'')
+                           .split(/[,、\/]/)
                            .map(g => g.trim())
                            .filter(g => g !== '');
 
-  // 5. 各級に【】をつけて結合
+  // 5. 各級に【】を付けて結合
   gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
 }
+
 option.textContent = `${id}.${heritage} ${gradeLabel}`;
 
                 heritageSelect.appendChild(option);
