@@ -190,8 +190,6 @@
   // countryHeritageMap構築
   if (!countryHeritageMap[country]) countryHeritageMap[country] = [];
   countryHeritageMap[country].push({id, heritageName, grade});
-});
-
 
             if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
             regionCountryMap[region].add(country);
@@ -204,6 +202,7 @@
             if (!regionCountryIDsMap[region]) regionCountryIDsMap[region] = {};
             if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
             regionCountryIDsMap[region][country].add(id);
+            });
 
             const label = id.toString();
             const color = iconColors[type] || "gray";
