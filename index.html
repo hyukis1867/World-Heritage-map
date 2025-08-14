@@ -86,7 +86,6 @@
       );
       if (!data) return;
 
-      // 修正版: 正しいテンプレート記法に変更
       const nameHtml = data.linkUrl
         ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
         : data.heritageName;
@@ -99,6 +98,7 @@
         ? `<div class="infowindow-localname">${data.localNameEN}</div>`
         : '';
 
+      // ここでは grade は使わない
       const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
 
       const contentHtml = 
