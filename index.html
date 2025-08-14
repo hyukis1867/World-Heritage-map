@@ -325,17 +325,14 @@
                 option.value = `${selectedCountry}.${id}`;
 
                 // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
-                let gradeLabel = '';
-       // 修正版：カンマ区切りや空白をすべて区切りとして扱う
-if (grade) {
+              let gradeLabel = '';
+if (typeof grade === 'string' && grade.trim()) {
   gradeLabel = grade
-    .split(/[,，、\/\s]+/)                  // 区切り文字：半角カンマ、全角カンマ、読点、スラッシュ、空白
-    .map(g => g.replace(/["']/g, '').trim()) // 前後の " や ' を削除
-    .filter(g => g)                         // 空要素除去
-    .map(g => `【${g}級】`)                  // 【n級】形式に変換
+    .split(/[,，、\/\s]+/)
+    .map(g => g.replace(/["']/g, '').trim())
+    .filter(g => g)
+    .map(g => `【${g}級】`)
     .join('');
-} else {
-  gradeLabel = '';
 }
 opt.textContent = `${id}.${heritage} ${gradeLabel}`;
 
