@@ -166,24 +166,32 @@
           const globalUniqueIDs = new Set();
 
           rows.forEach(row => {
-            const columns = parseCSVLine(row);
-            const id = columns[0];
-            const region = columns[1];
-            const country = columns[2];
-            const heritageName = columns[3];
-            const lat = parseFloat(columns[4]);
-            const lng = parseFloat(columns[5]);
-            const type = columns[6].trim();
-            const rawYear = columns[7]?.trim() || "";
-            let year = "";
-            const match = rawYear.match(/\d{4}/);
-            if (match) year = match[0] + "年"; else year = rawYear;
-            const localNameJP = columns[8]?.trim();
-            const localNameEN = columns[9]?.trim();
-            const linkUrl = columns[10]?.trim();
-            const grade = columns[11]?.trim(); // 12列目の級（カンマ区切り対応）
+  const columns = parseCSVLine(row);
+  const id = columns[0].trim();
+  const region = columns[1].trim();
+  const country = columns[2].trim();
+  const heritageName = columns[3].trim();
+  const lat = parseFloat(columns[4]);
+  const lng = parseFloat(columns[5]);
+  const type = columns[6].trim();
+  const rawYear = columns[7]?.trim() || "";
+  let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
+  const localNameJP = columns[8]?.trim();
+  const localNameEN = columns[9]?.trim();
+  const linkUrl = columns[10]?.trim();
+  const gradeRaw = columns[11]?.trim() || "";
 
-            heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
+  // 複数級対応
+  const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
+  const grade = gradeArray.join(',');
+
+  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
+
+  // countryHeritageMap構築
+  if (!countryHeritageMap[country]) countryHeritageMap[country] = [];
+  countryHeritageMap[country].push({id, heritageName, grade});
+});
+
 
             if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
             regionCountryMap[region].add(country);
@@ -337,27 +345,21 @@
             heritageSelect.disabled = !selectedCountry;
 
             if (selectedCountry && countryHeritageMap[selectedCountry]) {
-              const heritages = countryHeritageMap[selectedCountry];
-              Object.keys(heritages).forEach(heritage => {
-                const { id, grade } = heritages[heritage];
-                const option = document.createElement('option');
-                option.value = `${selectedCountry}.${id}`;
+  const heritages = countryHeritageMap[selectedCountry];
+  heritages.forEach(({id, heritageName, grade}) => {
+    const option = document.createElement('option');
+    option.value = `${selectedCountry}.${id}`;
 
-              // ▼ プルダウンのみ級を表示（複数対応・区切り: カンマ/全角カンマ/読点/スラッシュ）
-let gradeLabel = '';
-if (grade) {
-  const gradesArray = grade.replace(/["']/g, '') // 前後の " や ' を除去
-    .split(/[、,／\/]/)                          // カンマ・全角カンマ・読点・スラッシュ対応
-    .map(g => g.trim())                          // 空白除去
-    .filter(g => g !== '');                      // 空文字削除
-  gradeLabel = gradesArray.map(g => `【${g}級】`).join('');
+    let gradeLabel = '';
+    if (grade) {
+      gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+    }
+
+    option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+    heritageSelect.appendChild(option);
+  });
 }
 
-option.textContent = `${id}.${heritage} ${gradeLabel}`;
-
-                heritageSelect.appendChild(option);
-              });
-            }
 
             markers.forEach(marker => {
               marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
