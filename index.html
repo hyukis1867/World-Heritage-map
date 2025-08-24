@@ -42,16 +42,26 @@
     font-size: 14px;
   }
   #search-box {
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    width: 240px;
+    height: 32px;
+    margin-top: 10px;
+    padding: 0 12px;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    font-size: 14px;
+    outline: none;
+    text-overflow: ellipsis;
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 5;
-    width: 250px;
   }
   </style>
 </head>
 <body>
-  <input id="search-box" type="text" placeholder="検索…">
+  <input id="search-box" type="text" placeholder="場所を検索">
   <div id="map"></div>
 
   <div id="dropdown-container">
@@ -72,13 +82,14 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
   <script>
     let map;
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let markerCluster;
+    let markerCluster = null;
 
     const iconColors = {
       "文化遺産": "orange",
@@ -126,6 +137,7 @@
       const result = [];
       let current = '';
       let insideQuotes = false;
+
       for (let i = 0; i < text.length; i++) {
         const char = text[i];
         if (char === '"') {
@@ -164,7 +176,7 @@
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
-      // 検索ボックス
+      // ▼ 検索ボックス
       const input = document.getElementById("search-box");
       const searchBox = new google.maps.places.SearchBox(input);
       map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
@@ -175,7 +187,6 @@
         const bounds = new google.maps.LatLngBounds();
         places.forEach(place => {
           if (!place.geometry) return;
-
           if (place.geometry.viewport) bounds.union(place.geometry.viewport);
           else bounds.extend(place.geometry.location);
         });
@@ -186,6 +197,7 @@
         .then(response => response.text())
         .then(csv => {
           const rows = csv.trim().split('\n').slice(1);
+
           const regionCountryMap = {};
           const countryHeritageMap = {};
           const regionCountryIDsMap = {};
@@ -216,9 +228,8 @@
             regionCountryMap[region].add(country);
 
             if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
-            if (!countryHeritageMap[country][id]) {
-              countryHeritageMap[country][id] = { id, heritageName, grade };
-            } else {
+            if (!countryHeritageMap[country][id]) countryHeritageMap[country][id] = { id, heritageName, grade };
+            else {
               const prev = countryHeritageMap[country][id];
               const merged = new Set([
                 ...(prev.grade ? prev.grade.split(',') : []),
@@ -233,6 +244,7 @@
             if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
             regionCountryIDsMap[region][country].add(id);
 
+            // ▼ マーカー生成
             const label = id.toString();
             const color = iconColors[type] || "gray";
             const marker = new google.maps.Marker({
@@ -268,19 +280,119 @@
             markers.push(marker);
           });
 
-          // MarkerClusterer
-          markerCluster = new markerClusterer.MarkerClusterer({ map, markers, maxZoom: 10, onClusterClick: () => false });
+          // ▼ MarkerClusterer
+          markerCluster = new markerClusterer.MarkerClusterer({
+            map,
+            markers,
+            maxZoom: 10,
+            onClusterClick: () => false
+          });
 
-          // 以下、元のプルダウン操作ロジックはそのまま
-          // …（regionSelect, countrySelect, heritageSelect のイベントリスナーなど）
+          // ▼ プルダウン処理
+          const regionSelect = document.getElementById('region-select');
+          const countrySelect = document.getElementById('country-select');
+          const heritageSelect = document.getElementById('heritage-select');
+
+          function countUniqueIDsInRegion(region) {
+            if (!regionCountryIDsMap[region]) return 0;
+            let sum = 0;
+            Object.values(regionCountryIDsMap[region]).forEach(countrySet => sum += countrySet.size);
+            return sum;
+          }
+
+          let allRegionsTotalCount = 0;
+          Object.keys(regionCountryIDsMap).forEach(region => allRegionsTotalCount += countUniqueIDsInRegion(region));
+          if (regionSelect && regionSelect.options.length > 0) {
+            regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
+          }
+
+          Object.keys(regionCountryMap).forEach(region => {
+            const option = document.createElement('option');
+            const count = countUniqueIDsInRegion(region);
+            option.value = region;
+            option.textContent = `${region} (${count})`;
+            regionSelect.appendChild(option);
+          });
+
+          regionSelect.addEventListener('change', () => {
+            const selectedRegion = regionSelect.value;
+            document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+            document.getElementById("heritage-box").style.display = "none";
+
+            countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+            heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+
+            countrySelect.disabled = !selectedRegion;
+            heritageSelect.disabled = true;
+
+            if (selectedRegion && regionCountryMap[selectedRegion]) {
+              const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+              countriesArray.sort((a,b) => a.localeCompare(b,'ja'));
+              countriesArray.forEach(country => {
+                const option = document.createElement('option');
+                const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+                option.value = country;
+                option.textContent = `${country} (${idCount})`;
+                countrySelect.appendChild(option);
+              });
+            }
+
+            markers.forEach(marker => {
+              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+            });
+
+            countrySelect.value = '';
+            heritageSelect.value = '';
+          });
+
+          countrySelect.addEventListener('change', () => {
+            const selectedCountry = countrySelect.value;
+            document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
+            heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+            heritageSelect.disabled = !selectedCountry;
+
+            if (selectedCountry && countryHeritageMap[selectedCountry]) {
+              const list = Object.values(countryHeritageMap[selectedCountry]).sort((a,b) => Number(a.id) - Number(b.id));
+              list.forEach(({id, heritageName, grade}) => {
+                const option = document.createElement('option');
+                option.value = `${selectedCountry}.${id}`;
+                const gradeLabel = grade ? grade.split(',').map(g => `【${g}級】`).join('') : '';
+                option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+                heritageSelect.appendChild(option);
+              });
+            }
+
+            markers.forEach(marker => {
+              marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+            });
+
+            heritageSelect.value = '';
+          });
+
+          heritageSelect.addEventListener('change', () => {
+            const selectedHeritage = heritageSelect.value;
+            if (!selectedHeritage) return;
+            const [selectedCountry, id] = selectedHeritage.split('.');
+            if (!selectedCountry || !id) return;
+            const targetMarker = markers.find(marker =>
+              marker.customCountry === selectedCountry && marker.customId === id
+            );
+            if (targetMarker) {
+              if (infoWindow) { infoWindow.close(); infoWindow = null; lastOpenedMarker = null; }
+              map.setCenter(targetMarker.getPosition());
+              map.setZoom(10);
+              google.maps.event.trigger(targetMarker, 'click');
+            }
+          });
+
         });
     }
   </script>
 
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap&libraries=places">
   </script>
-  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
 
