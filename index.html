@@ -229,29 +229,39 @@
           });
 
           // ▼ MarkerClusterer
-          const markerCluster = new markerClusterer.MarkerClusterer({ map, markers, maxZoom: 10 });
+          <script>
+  // --- fetch('places.csv') 内でマーカー作成後 ---
+  // マーカーが作成された直後にクラスタを初期化
+  const markerCluster = new markerClusterer.MarkerClusterer({ 
+    map, 
+    markers, 
+    maxZoom: 10,
+    onClusterClick: () => false
+  });
 
-          // ▼ 検索ボックス
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.placeholder = '検索...';
-          Object.assign(input.style, { position:'absolute', top:'10px', left:'10px', width:'250px', zIndex:5, padding:'5px 10px', fontSize:'14px' });
-          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-          const searchBox = new google.maps.places.SearchBox(input);
-          searchBox.addListener('places_changed', () => {
-            const places = searchBox.getPlaces();
-            if (!places || places.length === 0) return;
-            const place = places[0];
-            if (!place.geometry || !place.geometry.location) return;
-            map.setCenter(place.geometry.location);
-            map.setZoom(10);
-          });
+  // --- 検索ボックスの復活 ---
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = '遺産名で検索';
+  input.style.cssText = 'position:absolute;top:10px;left:10px;width:200px;z-index:10;padding:4px;';
+  document.body.appendChild(input);
 
-          // ▼ 以下、プルダウン選択・URLパラメータ処理などは元のコードそのまま
-          // ... ここに regionSelect, countrySelect, heritageSelect のイベント処理を配置可能
-        });
+  const searchBox = new google.maps.places.SearchBox(input);
+
+  searchBox.addListener('places_changed', () => {
+    const places = searchBox.getPlaces();
+    if (!places || places.length === 0) return;
+
+    const place = places[0];
+    const targetMarker = markers.find(m => m.title === place.name);
+    if (targetMarker) {
+      map.setCenter(targetMarker.getPosition());
+      map.setZoom(10);
+      google.maps.event.trigger(targetMarker, 'click');
     }
-  </script>
+  });
+</script>
+
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap&libraries=places">
