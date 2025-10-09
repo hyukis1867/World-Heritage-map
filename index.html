@@ -336,9 +336,15 @@ if (!countryHeritageMap[country][id]) {
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
 
-            if (selectedRegion && regionCountryMap[selectedRegion]) {
-              const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-              countriesArray.sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base', numeric: true }));
+if (selectedRegion && regionCountryMap[selectedRegion]) {
+  const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+  countriesArray.sort((a, b) => {
+    const toHiragana = str =>
+      str.normalize('NFKC')
+         .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
+    return toHiragana(a).localeCompare(toHiragana(b), 'ja');
+  });
+
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
                   const option = document.createElement('option');
