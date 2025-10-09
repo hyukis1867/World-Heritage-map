@@ -158,23 +158,6 @@
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
-
-          // 🔽 CSV読み込み完了直後に追加
-for (const region in regionCountryMap) {
-  if (regionCountryMap.hasOwnProperty(region)) {
-    // Set → Array に変換して五十音ソート
-    const sorted = Array.from(regionCountryMap[region]).sort((a, b) => {
-      const toHiragana = str =>
-        str.normalize('NFKC')
-           .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
-      return toHiragana(a).localeCompare(toHiragana(b), 'ja');
-    });
-    // ソート済み配列を保存（Set上書き）
-    regionCountryMap[region] = new Set(sorted);
-  }
-}
-
-          
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
