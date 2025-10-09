@@ -246,7 +246,18 @@ if (!countryHeritageMap[country][id]) {
   markers.push(marker);
 });
 
-
+for (const region in regionCountryMap) {
+  if (regionCountryMap.hasOwnProperty(region)) {
+    const sorted = Array.from(regionCountryMap[region]).sort((a, b) => {
+      const toHiragana = str =>
+        str.normalize('NFKC')
+           .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
+      return toHiragana(a).localeCompare(toHiragana(b), 'ja');
+    });
+    regionCountryMap[region] = new Set(sorted);
+  }
+}
+          
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             let sum = 0;
