@@ -349,7 +349,7 @@ for (const region in regionCountryMap) {
 
             if (selectedRegion && regionCountryMap[selectedRegion]) {
               const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-              countriesArray.sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base', numeric: true }));
+              
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
                   const option = document.createElement('option');
