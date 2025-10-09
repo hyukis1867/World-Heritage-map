@@ -346,16 +346,7 @@ for (const region in regionCountryMap) {
 
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
-
-if (selectedRegion && regionCountryMap[selectedRegion]) {
-  // Set → 配列 → ソート済み配列を新たに定義
-  const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-  const sortedCountries = countriesArray.sort((a, b) => {
-    const toHiragana = str =>
-      str.normalize('NFKC')
-         .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
-    return toHiragana(a).localeCompare(toHiragana(b), 'ja');
-  });
+);
 
   // ↓ここで sortedCountries を使用
   sortedCountries.forEach(country => {
