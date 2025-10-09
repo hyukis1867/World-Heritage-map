@@ -112,26 +112,28 @@
       infoWindow.open(map, marker);
       lastOpenedMarker = marker;
     }
-// ▼ 安全なCSV1行パーサー（ダブルクオート対応）
-  function parseCSVLine(text) {
-    const result = [];
-    let current = '';
-    let insideQuotes = false;
 
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      if (char === '"') {
-        insideQuotes = !insideQuotes;
-      } else if (char === ',' && !insideQuotes) {
-        result.push(current.trim());
-        current = '';
-      } else {
-        current += char;
+    // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
+    function parseCSVLine(text) {
+      const result = [];
+      let current = '';
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === ',' && !insideQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
       }
+      result.push(current.trim());
+      return result;
     }
-    result.push(current.trim());
-    return result;
-  }
+
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 41.9028, lng: 12.4964},
@@ -165,7 +167,55 @@
           const regionCountryIDsMap = {};
           const globalUniqueIDs = new Set();
 
-         rows.forEach(row => {
+          // --- country -> 読み（ひらがな）マップ。精度高めるため必要ならここへ追加してください ---
+          const countryReadingMap = {
+            "日本": "にほん",
+            "中華人民共和国": "ちゅうかじんみんきょうわこく",
+            "イタリア共和国": "いたりあきょうわこく",
+            "フランス共和国": "ふらんすきょうわこく",
+            "ギリシャ共和国": "ぎりしゃきょうわこく",
+            "トルコ共和国": "とるこきょうわこく",
+            "マルタ共和国": "まるたきょうわこく",
+            "キプロス共和国": "きぷろすきょうわこく",
+            "クロアチア共和国": "くろあちあきょうわこく",
+            "シリア・アラブ共和国": "しりああらぶきょうわこく",
+            "カンボジア王国": "かんぼじあおうこく",
+            "ウクライナ": "うくらいな",
+            "エストニア共和国":"えすとにあきょうわこく",
+            "ラトビア共和国":"らとびあきょうわこく",
+            "リトアニア共和国":"りとあにあきょうわこく",
+            "アイスランド共和国":"あいすらんどきょうわこく",
+            "アイルランド共和国":"あいるらんどきょうわこく",
+            "アルバニア共和国":"あるばにあきょうわこく",
+            "アルメニア共和国":"あるめにあきょうわこく",
+            "アンドラ公国":"あんどらこうこく",
+            "オランダ王国":"おらんだおうこく",
+            "オーストリア共和国":"おーすとりあきょうわこく",
+            "北マケドニア共和国":"きたまけどにあきょうわこく",
+            "ジョージア共和国":"じょーじあきょうわこく"
+            // 必要ならここに追加して下さい（CSVに出てくる国名すべて）
+          };
+
+          // カタカナ→ひらがな変換
+          function katakanaToHiragana(s) {
+            return s.normalize('NFKC').replace(/[ァ-ン]/g, ch =>
+              String.fromCharCode(ch.charCodeAt(0) - 0x60)
+            );
+          }
+
+          // 国名からソートキー（読み）を返す
+          function getReading(countryName) {
+            if (!countryName) return '';
+            if (countryReadingMap[countryName]) return countryReadingMap[countryName];
+            // もしカタカナが混ざっていればひらがな化して返す
+            if (/[ァ-ン]/.test(countryName)) {
+              return katakanaToHiragana(countryName);
+            }
+            // フォールバック：そのまま返す（漢字だけの国はここでは読みが無いので限界あり）
+            return countryName;
+          }
+
+          rows.forEach(row => {
   const columns = parseCSVLine(row);
   const id = columns[0].trim();
   const region = columns[1].trim();
@@ -181,28 +231,28 @@
   const linkUrl = columns[10]?.trim();
   const gradeRaw = columns[11]?.trim() || "";
 
-  // 複数級対応
+  // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
   heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
-  
-
+  // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
   regionCountryMap[region].add(country);
 
+  // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
-if (!countryHeritageMap[country][id]) {
-  countryHeritageMap[country][id] = { id, heritageName, grade };   // 初登場
-} else {
-  const prev = countryHeritageMap[country][id];                     // 既存をマージ
-  const merged = new Set([
-    ...(prev.grade ? prev.grade.split(',') : []),
-    ...(grade ? grade.split(',') : [])
-  ]);
-  prev.grade = Array.from(merged).join(',');
-}
+  if (!countryHeritageMap[country][id]) {
+    countryHeritageMap[country][id] = { id, heritageName, grade };
+  } else {
+    const prev = countryHeritageMap[country][id];
+    const merged = new Set([
+      ...(prev.grade ? prev.grade.split(',') : []),
+      ...(grade ? grade.split(',') : [])
+    ]);
+    prev.grade = Array.from(merged).join(',');
+  }
 
   globalUniqueIDs.add(id);
 
@@ -210,7 +260,7 @@ if (!countryHeritageMap[country][id]) {
   if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
   regionCountryIDsMap[region][country].add(id);
 
-  // ✅ ここにマーカー生成を移動
+  // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
   const marker = new google.maps.Marker({
@@ -244,20 +294,20 @@ if (!countryHeritageMap[country][id]) {
   });
 
   markers.push(marker);
-});
+}); // rows.forEach 終了
 
-for (const region in regionCountryMap) {
-  if (regionCountryMap.hasOwnProperty(region)) {
-    const sorted = Array.from(regionCountryMap[region]).sort((a, b) => {
-      const toHiragana = str =>
-        str.normalize('NFKC')
-           .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
-      return toHiragana(a).localeCompare(toHiragana(b), 'ja');
-    });
-    regionCountryMap[region] = new Set(sorted);
-  }
-}
-          
+          // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
+          for (const region in regionCountryMap) {
+            if (regionCountryMap.hasOwnProperty(region)) {
+              const sorted = Array.from(regionCountryMap[region]).sort((a, b) => {
+                const ra = getReading(a);
+                const rb = getReading(b);
+                return ra.localeCompare(rb, 'ja');
+              });
+              regionCountryMap[region] = new Set(sorted);
+            }
+          }
+
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             let sum = 0;
@@ -348,8 +398,8 @@ for (const region in regionCountryMap) {
             heritageSelect.disabled = true;
 
             if (selectedRegion && regionCountryMap[selectedRegion]) {
+              // 重要：ここでは再ソートしない（上で既にソート済み）
               const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-              
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
                   const option = document.createElement('option');
@@ -399,7 +449,6 @@ for (const region in regionCountryMap) {
 
   heritageSelect.value = '';
 });
-
 
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
@@ -454,4 +503,3 @@ for (const region in regionCountryMap) {
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 </body>
 </html>
-
