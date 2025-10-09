@@ -246,18 +246,7 @@ if (!countryHeritageMap[country][id]) {
   markers.push(marker);
 });
 
-for (const region in regionCountryMap) {
-  if (regionCountryMap.hasOwnProperty(region)) {
-    const sorted = Array.from(regionCountryMap[region]).sort((a, b) => {
-      const toHiragana = str =>
-        str.normalize('NFKC')
-           .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60));
-      return toHiragana(a).localeCompare(toHiragana(b), 'ja');
-    });
-    regionCountryMap[region] = new Set(sorted);
-  }
-}
-          
+
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             let sum = 0;
@@ -346,22 +335,20 @@ for (const region in regionCountryMap) {
 
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
-);
 
-  // ↓ここで sortedCountries を使用
-  sortedCountries.forEach(country => {
-    if (country && country.trim() !== '') {
-      const option = document.createElement('option');
-      const idCount = regionCountryIDsMap[selectedRegion][country]
-        ? regionCountryIDsMap[selectedRegion][country].size
-        : 0;
-      option.value = country;
-      option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
-      countrySelect.appendChild(option);
-    }
-  });
-}
-
+            if (selectedRegion && regionCountryMap[selectedRegion]) {
+              const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+              countriesArray.sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base', numeric: true }));
+              countriesArray.forEach(country => {
+                if (country && country.trim() !== '') {
+                  const option = document.createElement('option');
+                  const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+                  option.value = country;
+                  option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+                  countrySelect.appendChild(option);
+                }
+              });
+            }
 
             markers.forEach(marker => {
               marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
