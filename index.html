@@ -91,6 +91,8 @@
           markers.push(marker);
         });
 
+        console.log("マーカー数:", markers.length);
+
         // クラスタリング
         markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
 
