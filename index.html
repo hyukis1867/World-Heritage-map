@@ -29,14 +29,14 @@
     </div>
     <div id="map"></div>
 
-    <!-- Google Maps API -->
+    <!-- ✅ Google Maps API -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"
       async defer>
     </script>
 
-    <!-- ✅ 新しい MarkerClusterer (Google公式推奨の現行版) -->
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <!-- ✅ 正しいMarkerClusterer（v2旧版：クラスタ画像対応） -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
     <script>
       let map;
@@ -46,11 +46,11 @@
 
       async function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 46.8, lng: 8.2 },
-          zoom: 7,
+          center: { lat: 35.68, lng: 139.76 },
+          zoom: 4,
         });
 
-        // CSVを読み込み
+        // ✅ CSV読み込み
         const response = await fetch("places.csv");
         const csvText = await response.text();
 
@@ -59,7 +59,7 @@
           return { id, country, name, lat: parseFloat(lat), lng: parseFloat(lng), type, year, localJP, localEN, url };
         });
 
-        // 国のリストを作成
+        // ✅ 国一覧作成
         const countries = [...new Set(heritageData.map(d => d.country))].sort();
         const countrySelect = document.getElementById("countrySelect");
         countries.forEach(c => {
@@ -68,7 +68,7 @@
           countrySelect.appendChild(opt);
         });
 
-        // マーカーを作成
+        // ✅ マーカー作成
         heritageData.forEach(data => {
           const marker = new google.maps.Marker({
             position: { lat: data.lat, lng: data.lng },
@@ -80,10 +80,10 @@
               <div style="font-size:14px">
                 <b>${data.name}</b><br>
                 ${data.country}<br>
-                ${data.year}年登録<br>
+                登録年: ${data.year}<br>
                 <a href="${data.url}" target="_blank">詳細を見る</a>
               </div>
-            `,
+            `
           });
 
           marker.addListener("click", () => {
@@ -93,48 +93,31 @@
           markers.push(marker);
         });
 
-        console.log("マーカー数:", markers.length);
-
-        // ✅ 新MarkerClustererでクラスタリング（SuperClusterAlgorithm使用）
-        markerCluster = new markerClusterer.MarkerClusterer({
-          map: map,
-          markers: markers,
-          algorithm: new markerClusterer.SuperClusterAlgorithm({
-            maxZoom: 10,
-          }),
+        // ✅ クラスタリングを有効化
+        markerCluster = new MarkerClusterer(map, markers, {
+          imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+          maxZoom: 10,
         });
 
-        // 国選択
+        console.log("マーカー数:", markers.length);
+
+        // ✅ 国選択時
         countrySelect.addEventListener("change", () => {
           const selectedCountry = countrySelect.value;
           const heritageSelect = document.getElementById("heritageSelect");
           heritageSelect.innerHTML = '<option value="">遺産を選択</option>';
 
-          const filtered = heritageData.filter(d => !selectedCountry || d.country === selectedCountry);
-          markers.forEach(m => m.setMap(null)); // 全て消す
-          markers = [];
-
-          filtered.forEach(d => {
-            const marker = new google.maps.Marker({
-              position: { lat: d.lat, lng: d.lng },
-              label: d.id,
+          heritageData
+            .filter(d => !selectedCountry || d.country === selectedCountry)
+            .forEach(d => {
+              const opt = document.createElement("option");
+              opt.value = d.name;
+              opt.textContent = d.name;
+              heritageSelect.appendChild(opt);
             });
-            markers.push(marker);
-          });
-
-          // クラスタを更新
-          markerCluster.clearMarkers();
-          markerCluster.addMarkers(markers);
-
-          filtered.forEach(d => {
-            const opt = document.createElement("option");
-            opt.value = d.name;
-            opt.textContent = d.name;
-            heritageSelect.appendChild(opt);
-          });
         });
 
-        // 遺産選択
+        // ✅ 遺産選択時
         document.getElementById("heritageSelect").addEventListener("change", e => {
           const name = e.target.value;
           const data = heritageData.find(d => d.name === name);
@@ -147,5 +130,4 @@
     </script>
   </body>
 </html>
-
 
