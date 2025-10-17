@@ -94,7 +94,11 @@
         console.log("マーカー数:", markers.length);
 
         // クラスタリング
-        markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+       markerCluster = new MarkerClusterer(map, markers, {
+  imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+  maxZoom: 10
+});
+
 
         // 国選択
         countrySelect.addEventListener("change", () => {
