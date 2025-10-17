@@ -29,25 +29,14 @@
     </div>
     <div id="map"></div>
 
+    <!-- Google Maps API -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"
       async defer>
     </script>
 
-<!-- 新MarkerClusterer（Google公式推奨の現行版） -->
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-
-<script>
-  // 古い初期化を置き換える
-  markerCluster = new markerClusterer.MarkerClusterer({ 
-    map: map,
-    markers: markers,
-    algorithm: new markerClusterer.SuperClusterAlgorithm({ 
-      maxZoom: 10 
-    })
-  });
-</script>
-
+    <!-- ✅ 新しい MarkerClusterer (Google公式推奨の現行版) -->
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 
     <script>
       let map;
@@ -70,6 +59,7 @@
           return { id, country, name, lat: parseFloat(lat), lng: parseFloat(lng), type, year, localJP, localEN, url };
         });
 
+        // 国のリストを作成
         const countries = [...new Set(heritageData.map(d => d.country))].sort();
         const countrySelect = document.getElementById("countrySelect");
         countries.forEach(c => {
@@ -78,11 +68,11 @@
           countrySelect.appendChild(opt);
         });
 
+        // マーカーを作成
         heritageData.forEach(data => {
           const marker = new google.maps.Marker({
             position: { lat: data.lat, lng: data.lng },
             label: data.id,
-            map,
           });
 
           const infowindow = new google.maps.InfoWindow({
@@ -105,26 +95,43 @@
 
         console.log("マーカー数:", markers.length);
 
-        // クラスタリング
-       markerCluster = new MarkerClusterer(map, markers, {
-  imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-  maxZoom: 10
-});
-
+        // ✅ 新MarkerClustererでクラスタリング（SuperClusterAlgorithm使用）
+        markerCluster = new markerClusterer.MarkerClusterer({
+          map: map,
+          markers: markers,
+          algorithm: new markerClusterer.SuperClusterAlgorithm({
+            maxZoom: 10,
+          }),
+        });
 
         // 国選択
         countrySelect.addEventListener("change", () => {
           const selectedCountry = countrySelect.value;
           const heritageSelect = document.getElementById("heritageSelect");
           heritageSelect.innerHTML = '<option value="">遺産を選択</option>';
-          heritageData
-            .filter(d => !selectedCountry || d.country === selectedCountry)
-            .forEach(d => {
-              const opt = document.createElement("option");
-              opt.value = d.name;
-              opt.textContent = d.name;
-              heritageSelect.appendChild(opt);
+
+          const filtered = heritageData.filter(d => !selectedCountry || d.country === selectedCountry);
+          markers.forEach(m => m.setMap(null)); // 全て消す
+          markers = [];
+
+          filtered.forEach(d => {
+            const marker = new google.maps.Marker({
+              position: { lat: d.lat, lng: d.lng },
+              label: d.id,
             });
+            markers.push(marker);
+          });
+
+          // クラスタを更新
+          markerCluster.clearMarkers();
+          markerCluster.addMarkers(markers);
+
+          filtered.forEach(d => {
+            const opt = document.createElement("option");
+            opt.value = d.name;
+            opt.textContent = d.name;
+            heritageSelect.appendChild(opt);
+          });
         });
 
         // 遺産選択
