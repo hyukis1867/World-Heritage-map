@@ -34,8 +34,20 @@
       async defer>
     </script>
 
-    <!-- MarkerClusterer の最新版（Google公式CDN） -->
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+<!-- 新MarkerClusterer（Google公式推奨の現行版） -->
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+
+<script>
+  // 古い初期化を置き換える
+  markerCluster = new markerClusterer.MarkerClusterer({ 
+    map: map,
+    markers: markers,
+    algorithm: new markerClusterer.SuperClusterAlgorithm({ 
+      maxZoom: 10 
+    })
+  });
+</script>
+
 
     <script>
       let map;
