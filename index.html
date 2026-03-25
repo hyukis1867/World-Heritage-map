@@ -148,10 +148,11 @@ function highlight(marker) {
     map: map,
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
-      scale: 22,
-      fillColor: "white",
-      fillOpacity: 0.3,
-      strokeWeight: 3
+  scale: 22,
+  fillColor: "white",
+  fillOpacity: 0.3,   // 中は薄く
+  strokeColor: "white",
+  strokeWeight: 3     // ← これで縁くっきり
     },
     clickable: false,
     zIndex: 1
