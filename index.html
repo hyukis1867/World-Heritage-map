@@ -166,6 +166,23 @@ function highlight(marker) {
         tilt: 0
       });
 
+function zoomToMarker(marker) {
+  let zoom = map.getZoom();
+  const targetZoom = 16;
+
+  const interval = setInterval(() => {
+    zoom++;
+
+    map.setZoom(zoom);
+    map.setCenter(marker.getPosition());
+
+    if (zoom >= targetZoom) {
+      clearInterval(interval);
+    }
+  }, 100);
+}
+
+      
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');
       if (savedCenter && savedZoom) {
