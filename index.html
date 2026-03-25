@@ -533,7 +533,7 @@ map.addListener('idle', updateMarkers);
   }
 
   map.setCenter(targetMarker.getPosition());
-  map.setZoom(10);
+  zoomToMarker(targetMarker);  
   google.maps.event.trigger(targetMarker, 'click');
 
   // ★ここ追加
