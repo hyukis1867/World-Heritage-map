@@ -557,8 +557,7 @@ map.addListener('idle', updateMarkers);
             setTimeout(() => {
               const targetMarker = markers.find(m => m.title === decodedPlace);
               if (targetMarker) {
-                map.setCenter(targetMarker.getPosition());
-                map.setZoom(10);
+                zoomToMarker(targetMarker);
               }
             }, 500);
           }
