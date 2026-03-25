@@ -269,6 +269,7 @@ function highlight(marker) {
   const marker = new google.maps.Marker({
     position: {lat, lng},
     map,
+    zIndex: 10, // ★追加
     label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
@@ -277,7 +278,6 @@ function highlight(marker) {
       strokeColor: 'white',
       strokeWeight: 1,
       scale: 12
-      zIndex: 10
     },
     title: heritageName,
     customRegion: region,
