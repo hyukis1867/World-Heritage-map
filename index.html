@@ -322,6 +322,27 @@
             onClusterClick: () => false
           });
 
+          function updateMarkers() {
+  const bounds = map.getBounds();
+  if (!bounds) return;
+
+  markers.forEach(marker => {
+    const pos = marker.getPosition();
+
+    if (bounds.contains(pos)) {
+      marker.setVisible(true);
+    } else {
+      marker.setVisible(false);
+    }
+  });
+}
+
+// 初回
+google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
+
+// 地図操作後
+map.addListener('idle', updateMarkers);
+
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
