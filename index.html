@@ -135,30 +135,6 @@
     }
 
     function initMap() {
-
-     let highlightMarker = null;
-
-function highlight(marker) {
-  if (highlightMarker) {
-    highlightMarker.setMap(null);
-  }
-
-  highlightMarker = new google.maps.Marker({
-    position: marker.getPosition(),
-    map: map,
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-  scale: 22,
-  fillColor: "white",
-  fillOpacity: 0.7,   // 中は薄く
-  strokeColor: "white",
-  strokeWeight: 3     // ← これで縁くっきり
-    },
-    clickable: false,
-    zIndex: 1
-  });
-}
-      
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 41.9028, lng: 12.4964},
         zoom: 4,
@@ -166,25 +142,6 @@ function highlight(marker) {
         tilt: 0
       });
 
-function zoomToMarker(marker) {
-  let zoom = 6;
-  const targetZoom = 14;
-
-  map.setCenter(marker.getPosition());
-  map.setZoom(zoom);
-
-  const interval = setInterval(() => {
-    zoom++;
-
-    map.setZoom(zoom);
-
-    if (zoom >= targetZoom) {
-      clearInterval(interval);
-    }
-  }, 80);
-}
-
-      
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');
       if (savedCenter && savedZoom) {
@@ -289,7 +246,6 @@ function zoomToMarker(marker) {
   const marker = new google.maps.Marker({
     position: {lat, lng},
     map,
-    zIndex: 10, // ★追加
     label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
@@ -528,19 +484,15 @@ map.addListener('idle', updateMarkers);
               marker.customCountry === selectedCountry && marker.customId === id
             );
             if (targetMarker) {
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-    lastOpenedMarker = null;
-  }
-
-  map.setCenter(targetMarker.getPosition());
-  zoomToMarker(targetMarker);  
-  google.maps.event.trigger(targetMarker, 'click');
-
-  // ★ここ追加
-  highlight(targetMarker);
-}
+              if (infoWindow) {
+                infoWindow.close();
+                infoWindow = null;
+                lastOpenedMarker = null;
+              }
+              map.setCenter(targetMarker.getPosition());
+              map.setZoom(10);
+              google.maps.event.trigger(targetMarker, 'click');
+            }
           });
 
           const urlParams = new URLSearchParams(window.location.search);
@@ -559,8 +511,8 @@ map.addListener('idle', updateMarkers);
             setTimeout(() => {
               const targetMarker = markers.find(m => m.title === decodedPlace);
               if (targetMarker) {
-              map.setCenter(targetMarker.getPosition());
-              map.setZoom(10);
+                map.setCenter(targetMarker.getPosition());
+                map.setZoom(10);
               }
             }, 500);
           }
