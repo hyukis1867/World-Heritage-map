@@ -167,11 +167,11 @@ function highlight(marker) {
       });
 
 function zoomToMarker(marker) {
-  let zoom = 6;              // ← 強制的にここから開始
-  const targetZoom = 12;
+  let zoom = 6;
+  const targetZoom = 14;
 
-  map.setZoom(zoom);        // ← まず引く
   map.setCenter(marker.getPosition());
+  map.setZoom(zoom);
 
   const interval = setInterval(() => {
     zoom++;
@@ -181,7 +181,7 @@ function zoomToMarker(marker) {
     if (zoom >= targetZoom) {
       clearInterval(interval);
     }
-  }, 100);
+  }, 80);
 }
 
       
