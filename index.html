@@ -135,6 +135,29 @@
     }
 
     function initMap() {
+
+     let highlightMarker = null;
+
+function highlight(marker) {
+  if (highlightMarker) {
+    highlightMarker.setMap(null);
+  }
+
+  highlightMarker = new google.maps.Marker({
+    position: marker.getPosition(),
+    map: map,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 22,
+      fillColor: "white",
+      fillOpacity: 0.4,
+      strokeWeight: 0
+    },
+    clickable: false,
+    zIndex: google.maps.Marker.MAX_ZINDEX + 1
+  });
+}
+      
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 41.9028, lng: 12.4964},
         zoom: 4,
@@ -484,15 +507,19 @@ map.addListener('idle', updateMarkers);
               marker.customCountry === selectedCountry && marker.customId === id
             );
             if (targetMarker) {
-              if (infoWindow) {
-                infoWindow.close();
-                infoWindow = null;
-                lastOpenedMarker = null;
-              }
-              map.setCenter(targetMarker.getPosition());
-              map.setZoom(10);
-              google.maps.event.trigger(targetMarker, 'click');
-            }
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+    lastOpenedMarker = null;
+  }
+
+  map.setCenter(targetMarker.getPosition());
+  map.setZoom(10);
+  google.maps.event.trigger(targetMarker, 'click');
+
+  // ★ここ追加
+  highlight(targetMarker);
+}
           });
 
           const urlParams = new URLSearchParams(window.location.search);
