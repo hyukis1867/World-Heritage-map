@@ -167,14 +167,16 @@ function highlight(marker) {
       });
 
 function zoomToMarker(marker) {
-  let zoom = map.getZoom();
-  const targetZoom = Math.min(zoom + 4, 13);
+  let zoom = 6;              // ← 強制的にここから開始
+  const targetZoom = 12;
+
+  map.setZoom(zoom);        // ← まず引く
+  map.setCenter(marker.getPosition());
 
   const interval = setInterval(() => {
     zoom++;
 
     map.setZoom(zoom);
-    map.setCenter(marker.getPosition());
 
     if (zoom >= targetZoom) {
       clearInterval(interval);
