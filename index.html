@@ -47,13 +47,6 @@
   <div id="map"></div>
 
   <div id="dropdown-container">
-<div id="grade-box" style="position:absolute; top:10px; left:10px; z-index:5; background:white; padding:8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-family:sans-serif;">
-  <select id="grade-select">
-    <option value="">-- 級を選択 --</option>
-  </select>
-</div>
-
-    
     <div id="region-box" style="margin-bottom: 2px;">
       <select id="region-select">
         <option value="">-- 地域を選択 --</option>
@@ -226,8 +219,6 @@
           const regionCountryIDsMap = {};
           const globalUniqueIDs = new Set();
 
-        
-
           // --- country -> 読み（ひらがな）マップ。精度高めるため必要ならここへ追加してください ---
           const countryReadingMap = {
             "日本": "にほん",
@@ -278,31 +269,6 @@
 
   heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
-  // --- 「級プルダウン」生成 ---
-const gradeSelect = document.getElementById('grade-select');
-heritageData.forEach(h=>{
-  const grades = h.grade.split(',');
-  grades.forEach(g=>{
-    const option = document.createElement('option');
-    option.value = h.id;
-    option.textContent = `級 ${g} - ${h.heritageName}`;
-    gradeSelect.appendChild(option);
-  });
-});
-
-// プルダウン変更時の動作
-gradeSelect.addEventListener('change', ()=>{
-  const selectedId = gradeSelect.value;
-  markers.forEach(m => {
-    m.setMap(m.customId === selectedId ? map : null);
-  });
-  const targetMarker = markers.find(m => m.customId === selectedId);
-  if (targetMarker) {
-    map.panTo(targetMarker.getPosition());
-    setTimeout(()=> google.maps.event.trigger(targetMarker,'click'), 500);
-  }
-});
-            
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
   regionCountryMap[region].add(country);
