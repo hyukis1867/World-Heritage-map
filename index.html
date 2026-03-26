@@ -134,60 +134,29 @@
       return result;
     }
 
-function initMap() {
-
-  // ★ 先にマップ生成（これが最重要）
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 41.9028, lng: 12.4964},
-    zoom: 12,
-    gestureHandling: 'greedy',
-    tilt: 0
-  });
-
-  // ★ 保存された状態を復元
-  const savedCenter = localStorage.getItem('mapCenter');
-  const savedZoom = localStorage.getItem('mapZoom');
-
-  if (savedCenter && savedZoom) {
-    const center = JSON.parse(savedCenter);
-    map.setCenter(center);
-    map.setZoom(parseInt(savedZoom));
-  }
-
-  // ★ 保存処理
-  map.addListener('center_changed', () => {
-    localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
-  });
-
-  map.addListener('zoom_changed', () => {
-    localStorage.setItem('mapZoom', map.getZoom());
-  });
-
-  // ★ スムーズ移動（そのままでOK）
- function smoothPanTo(targetLatLng) {
-    const steps = 25;
-    const delay = 20;
-
-    const start = map.getCenter();
-    const latStep = (targetLatLng.lat() - start.lat()) / steps;
-    const lngStep = (targetLatLng.lng() - start.lng()) / steps;
-
-    let i = 0;
-
-    function move() {
-      if (i >= steps) return;
-
-      map.setCenter({
-        lat: start.lat() + latStep * i,
-        lng: start.lng() + lngStep * i
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 41.9028, lng: 12.4964},
+        zoom: 12,
+        gestureHandling: 'greedy',
+        tilt: 0
       });
 
-      i++;
-      setTimeout(move, delay);
-    }
+      const savedCenter = localStorage.getItem('mapCenter');
+      const savedZoom = localStorage.getItem('mapZoom');
+      if (savedCenter && savedZoom) {
+        const center = JSON.parse(savedCenter);
+        map.setCenter(center);
+        map.setZoom(parseInt(savedZoom));
+      }
 
-    move();
-  }
+      map.addListener('center_changed', () => {
+        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
+      });
+      map.addListener('zoom_changed', () => {
+        localStorage.setItem('mapZoom', map.getZoom());
+      });
+
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
@@ -536,16 +505,17 @@ countrySelect.addEventListener('change', () => {
   markerCluster.clearMarkers();
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
-if (targetMarker) {
-  const originalZoom = map.getZoom();
-  const tempZoom = Math.max(originalZoom - 2, 5);
-  map.setZoom(tempZoom);
-  smoothPanTo(targetMarker.getPosition());
-  setTimeout(() => {
-    map.setZoom(originalZoom);
-  }, 400);
-}
+  // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
+  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
+  if (targetMarker) {
+    const originalZoom = map.getZoom();       // 現在のズームを保持
+    const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
+    map.setZoom(tempZoom);                     // 一旦ズームを下げる
+    map.panTo(targetMarker.getPosition());     // アニメーションで移動
+    setTimeout(() => {
+      map.setZoom(originalZoom);               // 元のズームに戻す
+    }, 400); // 400ms後に戻す（アニメーション時間に応じて調整可能）
+  }
 
   heritageSelect.value = '';
 });
