@@ -71,6 +71,22 @@
     let lastOpenedMarker = null;
     let heritageData = [];
 
+function smoothMoveToMarker(marker) {
+  if (!marker) return;
+
+  if (infoWindow) infoWindow.close();
+  lastOpenedMarker = null;
+
+  // 位置だけスムーズ移動（ズームは変えない）
+  map.panTo(marker.getPosition());
+
+  // 少し遅延して吹き出しを開く
+  setTimeout(() => {
+    google.maps.event.trigger(marker, 'click');
+  }, 500); // 500ms遅延
+}
+
+    
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
     const capitals = {    
