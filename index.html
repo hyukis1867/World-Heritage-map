@@ -479,17 +479,26 @@ markerCluster.addMarkers(visibleMarkers);
     });
   }
 
-  // --- ここでマーカーの表示制御 ---
+  // --- マーカーの表示制御 ---
   markers.forEach(marker => {
-  marker.setVisible(marker.customCountry === selectedCountry);
-});
+    marker.setVisible(marker.customCountry === selectedCountry);
+  });
 
-// MarkerClusterer を更新
-markerCluster.clearMarkers();
-const visibleMarkers = markers.filter(marker => marker.getVisible());
-markerCluster.addMarkers(visibleMarkers);
+  // --- MarkerClusterer を更新 ---
+  markerCluster.clearMarkers();
+  const visibleMarkers = markers.filter(marker => marker.getVisible());
+  markerCluster.addMarkers(visibleMarkers);
 
   heritageSelect.value = '';
+
+  // ★首都にスムーズ移動（ズームは変えない）
+  if (selectedCountry) {
+    const capitalCoords = getCapitalLatLng(selectedCountry);
+    if (capitalCoords) {
+      map.panTo(capitalCoords); // ゆっくりスムーズに移動
+      // ズームは変更せず現在のまま
+    }
+  }
 });
 
           heritageSelect.addEventListener('change', () => {
@@ -537,6 +546,24 @@ markerCluster.addMarkers(visibleMarkers);
           }
         });
     }
+
+     // 首都座標取得関数（ここに挿入）
+  function getCapitalLatLng(countryName) {
+    const capitals = {
+      "日本": {lat: 35.6895, lng: 139.6917},          
+      "中華人民共和国": {lat: 39.9042, lng: 116.4074}, 
+      "イタリア共和国": {lat: 41.9028, lng: 12.4964},  
+      "フランス共和国": {lat: 48.8566, lng: 2.3522},   
+      "英国": {lat: 51.5074, lng: -0.1278},            
+    };
+    return capitals[countryName] || null;
+  }
+
+  function initMap() {
+    // 既存の地図初期化コード...
+  }　
+
+    
   </script>
 
   <script async defer
