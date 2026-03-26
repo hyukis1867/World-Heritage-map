@@ -442,27 +442,7 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-          // 地域選択
-regionSelect.addEventListener('change', () => {
-  const selectedRegion = regionSelect.value;
-  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
-  document.getElementById("heritage-box").style.display = "none";
-
-  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-  countrySelect.disabled = !selectedRegion;
-  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-  heritageSelect.disabled = true;
-
-  if (selectedRegion && regionCountryMap[selectedRegion]) {
-    // 国リストセット
-    const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-    countriesArray.forEach(country => {
-      const option = document.createElement('option');
-      const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
-      option.value = country;
-      option.textContent = `${country} (${idCount})`;
-      countrySelect.appendChild(option);
-    });
+          
   }
 
   // マーカー表示：選択地域のみ表示
