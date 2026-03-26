@@ -505,7 +505,6 @@ countrySelect.addEventListener('change', () => {
   markerCluster.clearMarkers();
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-  // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
  const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
 
 if (countryMarkers.length > 0) {
@@ -515,18 +514,18 @@ if (countryMarkers.length > 0) {
     bounds.extend(marker.getPosition());
   });
 
-  // アニメーション付きで全体表示
- map.fitBounds(bounds);
+  map.fitBounds(bounds);
 
-const maxZoom = 10;
+  const maxZoom = 10;
 
-google.maps.event.addListenerOnce(map, 'idle', () => {
-  if (map.getZoom() > maxZoom) {
-    map.setZoom(maxZoom);
-  }
-});
+  google.maps.event.addListenerOnce(map, 'idle', () => {
+    if (map.getZoom() > maxZoom) {
+      map.setZoom(maxZoom);
+    }
+  });
+}
 
-// ← ここに置く
+// ← 外に出す（重要）
 heritageSelect.value = '';
 
           heritageSelect.addEventListener('change', () => {
