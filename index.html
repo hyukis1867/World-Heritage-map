@@ -329,20 +329,22 @@
   const selectedRegion = document.getElementById('region-select').value;
   const selectedCountry = document.getElementById('country-select').value;
 
+  const visibleMarkers = [];
+
   markers.forEach(marker => {
-    const inBounds = bounds.contains(marker.getPosition());
-
-    let visible = inBounds;
-
+    let visible = bounds.contains(marker.getPosition());
     if (selectedRegion && marker.customRegion !== selectedRegion) visible = false;
     if (selectedCountry && marker.customCountry !== selectedCountry) visible = false;
 
     marker.setVisible(visible);
+
+    if (visible) visibleMarkers.push(marker); // 表示マーカーだけをリストに
   });
 
-  // ▼ クラスタを再描画
+  // クラスタを完全更新
   if (markerCluster) {
-    markerCluster.repaint(); // これで非表示マーカーがクラスタから消える
+    markerCluster.clearMarkers();
+    markerCluster.addMarkers(visibleMarkers);
   }
 }
 
