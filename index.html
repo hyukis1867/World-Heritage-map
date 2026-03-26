@@ -326,22 +326,27 @@
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  markers.forEach(marker => {
-    const pos = marker.getPosition();
+  const selectedRegion = document.getElementById('region-select').value;
+  const selectedCountry = document.getElementById('country-select').value;
 
-    if (bounds.contains(pos)) {
-      marker.setVisible(true);
-    } else {
-      marker.setVisible(false);
+  markers.forEach(marker => {
+    const inBounds = bounds.contains(marker.getPosition());
+
+    let visible = inBounds;
+
+    // 地域で絞り込み
+    if (selectedRegion && marker.customRegion !== selectedRegion) {
+      visible = false;
     }
+
+    // 国で絞り込み
+    if (selectedCountry && marker.customCountry !== selectedCountry) {
+      visible = false;
+    }
+
+    marker.setVisible(visible);
   });
 }
-
-// 初回
-google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
-
-// 地図操作後
-map.addListener('idle', updateMarkers);
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
