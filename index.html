@@ -442,8 +442,6 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-          // 地域選択
-regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
   document.getElementById("heritage-box").style.display = "none";
