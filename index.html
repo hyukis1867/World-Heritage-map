@@ -71,6 +71,22 @@
     let lastOpenedMarker = null;
     let heritageData = [];
 
+    // ★ここに置く（initMapの外）
+  function getCapitalLatLng(countryName) {
+    const capitals = {
+      "日本": {lat: 35.6895, lng: 139.6917},          
+      "中華人民共和国": {lat: 39.9042, lng: 116.4074}, 
+      "イタリア共和国": {lat: 41.9028, lng: 12.4964},  
+      "フランス共和国": {lat: 48.8566, lng: 2.3522},   
+      "英国": {lat: 51.5074, lng: -0.1278},            
+    };
+    return capitals[countryName] || null;
+  }
+
+  function initMap() {
+    // ここに既存の地図初期化コードを全て置く
+  }
+
     const iconColors = {
       "文化遺産": "#F9A825",
       "自然遺産": "#2E7D32",
