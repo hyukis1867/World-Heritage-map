@@ -326,37 +326,22 @@
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  const selectedRegion = document.getElementById('region-select').value;
-  const selectedCountry = document.getElementById('country-select').value;
-
-  const visibleMarkers = [];
-
   markers.forEach(marker => {
-    let visible = bounds.contains(marker.getPosition());
-    if (selectedRegion && marker.customRegion !== selectedRegion) visible = false;
-    if (selectedCountry && marker.customCountry !== selectedCountry) visible = false;
+    const pos = marker.getPosition();
 
-    marker.setVisible(visible);
-    if (visible) visibleMarkers.push(marker);
-  });
-
-  // ▼ クラスタ破棄 → 新規作成
-  if (markerCluster) {
-    markerCluster.setMap(null);  // クラスタを地図から削除
-    markerCluster = null;
-
-    if (markerCluster) {
-  markerCluster.setMap(selectedCountry ? null : map);
-}
-
-  // 表示マーカーだけでクラスタを作り直す
-  markerCluster = new markerClusterer.MarkerClusterer({
-    map,
-    markers: visibleMarkers,
-    maxZoom: 10,
-    onClusterClick: () => false
+    if (bounds.contains(pos)) {
+      marker.setVisible(true);
+    } else {
+      marker.setVisible(false);
+    }
   });
 }
+
+// 初回
+google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
+
+// 地図操作後
+map.addListener('idle', updateMarkers);
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -459,37 +444,30 @@
 
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
-
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
-  // 表示マーカーだけ選定
-  const visibleMarkers = markers.filter(marker => {
-    if (!selectedCountry) {
-      return !regionSelect.value || marker.customRegion === regionSelect.value;
-    } else {
-      return marker.customCountry === selectedCountry;
-    }
-  });
+  if (selectedCountry && countryHeritageMap[selectedCountry]) {
+    const heritagesObj = countryHeritageMap[selectedCountry];
+    const list = Object.values(heritagesObj)
+      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
 
-  // マーカー表示更新
-  markers.forEach(marker => {
-    marker.setVisible(visibleMarkers.includes(marker));
-  });
+    list.forEach(({ id, heritageName, grade }) => {
+      const option = document.createElement('option');
+      option.value = `${selectedCountry}.${id}`;
 
-  // 既存クラスタを削除
-  if (markerCluster) {
-    markerCluster.setMap(null);
-    markerCluster = null;
+      let gradeLabel = '';
+      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+
+      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      heritageSelect.appendChild(option);
+    });
   }
 
-  // 新しいクラスタを作る
-  markerCluster = new markerClusterer.MarkerClusterer({
-    map,
-    markers: visibleMarkers,
-    maxZoom: 10,
-    onClusterClick: () => false
+  markers.forEach(marker => {
+    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
   });
 
   heritageSelect.value = '';
