@@ -508,7 +508,7 @@ countrySelect.addEventListener('change', () => {
   // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
   const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
   if (targetMarker) {
-    map.setCenter(targetMarker.getPosition());
+    map.panTo(targetMarker.getPosition());
   }
 
   heritageSelect.value = '';
