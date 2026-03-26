@@ -526,8 +526,8 @@ google.maps.event.addListenerOnce(map, 'idle', () => {
   }
 });
 
-  heritageSelect.value = '';
-});
+// ← ここに置く
+heritageSelect.value = '';
 
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
