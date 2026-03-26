@@ -349,23 +349,26 @@ map.addListener('idle', updateMarkers);
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-         regionSelect.addEventListener('change', () => {
+         // ----- 地域プルダウン変更 -----
+regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
 
-  // 国・遺産プルダウンリセット
+  // 国プルダウン初期化
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
-  heritageSelect.disabled = true;
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+
+  // 遺産プルダウン初期化
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = true;
   document.getElementById("heritage-box").style.display = "none";
 
   // 国リスト更新
   if (selectedRegion && regionCountryMap[selectedRegion]) {
     Array.from(regionCountryMap[selectedRegion]).forEach(country => {
       if (country && country.trim() !== '') {
+        const idCount = regionCountryIDsMap[selectedRegion]?.[country]?.size || 0;
         const option = document.createElement('option');
-        const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
         option.value = country;
         option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
         countrySelect.appendChild(option);
@@ -373,7 +376,7 @@ map.addListener('idle', updateMarkers);
     });
   }
 
-  // マーカーとクラスタ更新
+  // ----- マーカーとクラスタ更新 -----
   let filteredMarkers;
   if (!selectedRegion) {
     // 地域未選択 → 全マーカー表示
@@ -385,11 +388,56 @@ map.addListener('idle', updateMarkers);
     markers.forEach(m => m.setVisible(m.customRegion === selectedRegion));
   }
 
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(filteredMarkers);
+  if (markerCluster) {
+    markerCluster.clearMarkers();
+    markerCluster.addMarkers(filteredMarkers);
+  }
 
-  // 国・遺産プルダウンをリセット
+  // プルダウンリセット
   countrySelect.value = '';
+  heritageSelect.value = '';
+});
+
+// ----- 国プルダウン変更 -----
+countrySelect.addEventListener('change', () => {
+  const selectedCountry = countrySelect.value;
+  document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = !selectedCountry;
+
+  if (selectedCountry && countryHeritageMap[selectedCountry]) {
+    const list = Object.values(countryHeritageMap[selectedCountry])
+      .sort((a,b) => Number(a.id) - Number(b.id));
+
+    list.forEach(({ id, heritageName, grade }) => {
+      const option = document.createElement('option');
+      option.value = `${selectedCountry}.${id}`;
+      let gradeLabel = '';
+      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      heritageSelect.appendChild(option);
+    });
+  }
+
+  // ----- マーカーとクラスタ更新 -----
+  let filteredMarkers;
+  if (!selectedCountry) {
+    // 国未選択 → 地域内すべて表示
+    filteredMarkers = markers.filter(m => !regionSelect.value || m.customRegion === regionSelect.value);
+    markers.forEach(m => m.setVisible(!regionSelect.value || m.customRegion === regionSelect.value));
+  } else {
+    // 選択国のみ表示
+    filteredMarkers = markers.filter(m => m.customCountry === selectedCountry);
+    markers.forEach(m => m.setVisible(m.customCountry === selectedCountry));
+  }
+
+  if (markerCluster) {
+    markerCluster.clearMarkers();
+    markerCluster.addMarkers(filteredMarkers);
+  }
+
+  // 遺産プルダウンリセット
   heritageSelect.value = '';
 });
 
