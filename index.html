@@ -563,31 +563,24 @@ markerCluster.addMarkers(visibleMarkers);
             const targetMarker = markers.find(marker =>
               marker.customCountry === selectedCountry && marker.customId === id
             );
-            if (targetMarker) {
+if (targetMarker) {
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
     lastOpenedMarker = null;
   }
 
-  // スムーズに移動
+  // 現在のズームを保持してパンだけ滑らかに
   map.panTo(targetMarker.getPosition());
 
-  // ズームもアニメーションさせたい場合
+  // 吹き出し表示（既存の click イベントをトリガー）
+  google.maps.event.trigger(targetMarker, 'click');
+
+  // ズームは即時変更（安全）
   const targetZoom = 10;
   if (map.getZoom() !== targetZoom) {
-    let currentZoom = map.getZoom();
-    const zoomStep = targetZoom > currentZoom ? 1 : -1;
-
-    const zoomInterval = setInterval(() => {
-      currentZoom += zoomStep;
-      map.setZoom(currentZoom);
-      if (currentZoom === targetZoom) clearInterval(zoomInterval);
-    }, 50); // 50msごとに1段階ズーム
+    map.setZoom(targetZoom);
   }
-
-  // 吹き出し表示
-  google.maps.event.trigger(targetMarker, 'click');
 }
 
           const urlParams = new URLSearchParams(window.location.search);
