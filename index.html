@@ -63,7 +63,11 @@
       </select>
     </div>
   </div>
-
+<div id="grade-box" style="display: none; margin-bottom: 2px;">
+  <select id="grade-select">
+    <option value="">-- 級を選択 --</option>
+  </select>
+</div>
   <script>
     let map;
     let markers = [];
@@ -269,6 +273,29 @@
 
   heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
 
+  const gradeSelect = document.getElementById('grade-select');
+
+// 「級」プルダウン生成
+function populateGradeSelect() {
+  const gradesSet = new Set();
+  heritageData.forEach(h => {
+    if (h.grade) {
+      h.grade.split(',').forEach(g => gradesSet.add(g));
+    }
+  });
+  const grades = Array.from(gradesSet).sort(); // 昇順
+  gradeSelect.innerHTML = '<option value="">-- 級を選択 --</option>';
+  grades.forEach(g => {
+    const option = document.createElement('option');
+    option.value = g;
+    option.textContent = g;
+    gradeSelect.appendChild(option);
+  });
+}
+
+// 初回生成
+populateGradeSelect();
+            
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
   regionCountryMap[region].add(country);
@@ -512,6 +539,31 @@ markerCluster.addMarkers(visibleMarkers);
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
+  gradeSelect.addEventListener('change', () => {
+  const selectedGrade = gradeSelect.value;
+
+  // グレードボックスは選択時に表示
+  document.getElementById("grade-box").style.display = selectedGrade ? "block" : "none";
+
+  // 五十音順でソート
+  const sortedMarkers = markers
+    .filter(marker => {
+      const h = heritageData.find(d => d.id === marker.customId);
+      return !selectedGrade || (h.grade && h.grade.split(',').includes(selectedGrade));
+    })
+    .sort((a,b) => {
+      const ra = getReading(a.customCountry);
+      const rb = getReading(b.customCountry);
+      return ra.localeCompare(rb,'ja');
+    });
+
+  // すべて非表示にして必要なマーカーのみ表示
+  markers.forEach(marker => marker.setVisible(false));
+  sortedMarkers.forEach(marker => marker.setVisible(true));
+
+  // クラスタリングは不要
+});
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
