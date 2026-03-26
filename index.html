@@ -151,6 +151,9 @@
       }
 
       map.addListener('center_changed', () => {
+        const capitalMap = {
+  "日本": { lat: 35.6895, lng: 139.6917 } // 東京
+};
         localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
       });
       map.addListener('zoom_changed', () => {
@@ -529,17 +532,16 @@ countrySelect.addEventListener('change', () => {
   markerCluster.clearMarkers();
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-  // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
-  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
-  if (targetMarker) {
-    const originalZoom = map.getZoom();       // 現在のズームを保持
-    const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
-    map.setZoom(tempZoom);                     // 一旦ズームを下げる
-    smoothPanTo(targetMarker.getPosition());     // アニメーションで移動
-    setTimeout(() => {
-      map.setZoom(originalZoom);               // 元のズームに戻す
-    }, 500); // 400ms後に戻す（アニメーション時間に応じて調整可能）
-  }
+const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
+if (targetMarker) {
+  const originalZoom = map.getZoom();
+  const tempZoom = Math.max(originalZoom - 2, 5);
+  map.setZoom(tempZoom);
+  smoothPanTo(targetMarker.getPosition());
+  setTimeout(() => {
+    map.setZoom(originalZoom);
+  }, 400);
+}
 
   heritageSelect.value = '';
 });
