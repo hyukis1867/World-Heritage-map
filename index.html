@@ -569,7 +569,7 @@ markerCluster.addMarkers(visibleMarkers);
   }
 });
 
-          heritageSelect.addEventListener('change', () => {
+          hheritageSelect.addEventListener('change', () => {
   const selectedHeritage = heritageSelect.value;
   if (!selectedHeritage) return;
 
@@ -581,8 +581,7 @@ markerCluster.addMarkers(visibleMarkers);
   );
 
   if (targetMarker) {
-    // smoothMoveToMarker 内でパン＋吹き出し表示を行う
-    smoothMoveToMarker(targetMarker);
+    smoothMoveToMarker(targetMarker); // ここだけで吹き出し表示
   }
 });
 
