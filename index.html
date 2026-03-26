@@ -536,33 +536,36 @@ markerCluster.addMarkers(visibleMarkers);
             countrySelect.value = '';
           });
 
-          countrySelect.addEventListener('change', () => {
-  const selectedCountry = countrySelect.value;
-  document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
-
-  gradeSelect.addEventListener('change', () => {
+          // ★ gradeSelect は initMap 内で1回だけ
+const gradeSelect = document.getElementById('grade-select');
+gradeSelect.addEventListener('change', () => {
   const selectedGrade = gradeSelect.value;
+  const selectedCountry = countrySelect.value;
 
-  // グレードボックスは選択時に表示
+  // グレードボックス表示
   document.getElementById("grade-box").style.display = selectedGrade ? "block" : "none";
 
+  // 対象マーカーを country と grade でフィルタ
+  const filteredMarkers = markers.filter(marker => {
+    const h = heritageData.find(d => d.id === marker.customId);
+    if (!h) return false;
+    if (selectedCountry && marker.customCountry !== selectedCountry) return false;
+    if (selectedGrade && (!h.grade || !h.grade.split(',').includes(selectedGrade))) return false;
+    return true;
+  });
+
   // 五十音順でソート
-  const sortedMarkers = markers
-    .filter(marker => {
-      const h = heritageData.find(d => d.id === marker.customId);
-      return !selectedGrade || (h.grade && h.grade.split(',').includes(selectedGrade));
-    })
-    .sort((a,b) => {
-      const ra = getReading(a.customCountry);
-      const rb = getReading(b.customCountry);
-      return ra.localeCompare(rb,'ja');
-    });
+  filteredMarkers.sort((a,b) => {
+    const ra = getReading(a.customCountry);
+    const rb = getReading(b.customCountry);
+    return ra.localeCompare(rb,'ja');
+  });
 
-  // すべて非表示にして必要なマーカーのみ表示
+  // すべて非表示にして必要なマーカーだけ表示
   markers.forEach(marker => marker.setVisible(false));
-  sortedMarkers.forEach(marker => marker.setVisible(true));
+  filteredMarkers.forEach(marker => marker.setVisible(true));
 
-  // クラスタリングは不要
+  // クラスタリング不要なので markerCluster は更新しない
 });
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
