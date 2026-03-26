@@ -461,11 +461,10 @@
   const selectedCountry = countrySelect.value;
 
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
-
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
-  // --- ここで国選択に応じてマーカー表示 & クラスタ再生成 ---
+  // 表示マーカーだけ選定
   const visibleMarkers = markers.filter(marker => {
     if (!selectedCountry) {
       return !regionSelect.value || marker.customRegion === regionSelect.value;
@@ -474,6 +473,7 @@
     }
   });
 
+  // マーカー表示更新
   markers.forEach(marker => {
     marker.setVisible(visibleMarkers.includes(marker));
   });
@@ -484,7 +484,7 @@
     markerCluster = null;
   }
 
-  // 新しいクラスタを作る（表示マーカーだけ）
+  // 新しいクラスタを作る
   markerCluster = new markerClusterer.MarkerClusterer({
     map,
     markers: visibleMarkers,
