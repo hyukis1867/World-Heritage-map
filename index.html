@@ -442,18 +442,50 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-          countrySelect.addEventListener('change', () => {
+          // 地域選択
+regionSelect.addEventListener('change', () => {
+  const selectedRegion = regionSelect.value;
+  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+  document.getElementById("heritage-box").style.display = "none";
+
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  countrySelect.disabled = !selectedRegion;
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = true;
+
+  if (selectedRegion && regionCountryMap[selectedRegion]) {
+    // 国リストセット
+    const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+    countriesArray.forEach(country => {
+      const option = document.createElement('option');
+      const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+      option.value = country;
+      option.textContent = `${country} (${idCount})`;
+      countrySelect.appendChild(option);
+    });
+  }
+
+  // マーカー表示：選択地域のみ表示
+  markers.forEach(marker => {
+    marker.setVisible(selectedRegion ? marker.customRegion === selectedRegion : true);
+  });
+
+  // クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+});
+
+// 国選択
+countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
-  // 選択国の遺産リストをセット
   if (selectedCountry && countryHeritageMap[selectedCountry]) {
     const heritagesObj = countryHeritageMap[selectedCountry];
-    const list = Object.values(heritagesObj)
-      .sort((a,b) => Number(a.id) - Number(b.id));
+    const list = Object.values(heritagesObj).sort((a,b) => Number(a.id)-Number(b.id));
     list.forEach(({ id, heritageName, grade }) => {
       const option = document.createElement('option');
       option.value = `${selectedCountry}.${id}`;
@@ -464,16 +496,19 @@ map.addListener('idle', updateMarkers);
     });
   }
 
-  // --- ここで選択国以外のマーカーは非表示、選択国だけ表示 ---
+  // マーカー表示：選択国のみ
   markers.forEach(marker => {
     marker.setVisible(marker.customCountry === selectedCountry);
   });
 
-  // --- クラスタも選択国のみで再表示 ---
-  markerCluster.clearMarkers(); // まず既存クラスタをクリア
-  if (selectedCountry) {
-    const visibleMarkers = markers.filter(m => m.getVisible());
-    markerCluster.addMarkers(visibleMarkers);
+  // クラスタ更新：選択国のみ
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+
+  // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
+  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
+  if (targetMarker) {
+    map.setCenter(targetMarker.getPosition());
   }
 
   heritageSelect.value = '';
