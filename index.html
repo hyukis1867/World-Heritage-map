@@ -459,39 +459,37 @@
 
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
-　
-　if (markerCluster) markerCluster.setMap(selectedCountry ? null : map);
-            
+
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
-  if (selectedCountry && countryHeritageMap[selectedCountry]) {
-    const heritagesObj = countryHeritageMap[selectedCountry];
-    const list = Object.values(heritagesObj)
-      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
-
-    list.forEach(({ id, heritageName, grade }) => {
-      const option = document.createElement('option');
-      option.value = `${selectedCountry}.${id}`;
-
-      let gradeLabel = '';
-      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-
-      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
-      heritageSelect.appendChild(option);
-    });
-  }
+  // --- ここで国選択に応じてマーカー表示 & クラスタ再生成 ---
+  const visibleMarkers = markers.filter(marker => {
+    if (!selectedCountry) {
+      return !regionSelect.value || marker.customRegion === regionSelect.value;
+    } else {
+      return marker.customCountry === selectedCountry;
+    }
+  });
 
   markers.forEach(marker => {
-    if (!selectedCountry) {
-      // 国未選択なら地域選択に従う（または全表示）
-      marker.setVisible(!regionSelect.value || marker.customRegion === regionSelect.value);
-    } else {
-      // 選択国以外は非表示
-      marker.setVisible(marker.customCountry === selectedCountry);
-    }
+    marker.setVisible(visibleMarkers.includes(marker));
+  });
+
+  // 既存クラスタを削除
+  if (markerCluster) {
+    markerCluster.setMap(null);
+    markerCluster = null;
+  }
+
+  // 新しいクラスタを作る（表示マーカーだけ）
+  markerCluster = new markerClusterer.MarkerClusterer({
+    map,
+    markers: visibleMarkers,
+    maxZoom: 10,
+    onClusterClick: () => false
   });
 
   heritageSelect.value = '';
