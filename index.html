@@ -349,42 +349,10 @@ map.addListener('idle', updateMarkers);
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-         regionSelect.addEventListener('change', () => {
-  const selectedRegion = regionSelect.value;
-
-  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
-  document.getElementById("heritage-box").style.display = "none";
-
-  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-  countrySelect.disabled = !selectedRegion;
-
-  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-  heritageSelect.disabled = true;
-
-  if (selectedRegion && regionCountryMap[selectedRegion]) {
-    const countriesArray = Array.from(regionCountryMap[selectedRegion]);
-
-    countriesArray.forEach(country => {
-      const option = document.createElement('option');
-      const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
-      option.value = country;
-      option.textContent = `${country} (${idCount})`;
-      countrySelect.appendChild(option);
-    });
-  }
-
-  // マーカー制御
-  markers.forEach(marker => {
-    marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-  });
-
-  // クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-
-  heritageSelect.value = '';
-  countrySelect.value = '';
-});
+          regionSelect.addEventListener('change', () => {
+            const selectedRegion = regionSelect.value;
+            document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+            document.getElementById("heritage-box").style.display = "none";
 
             const countryCodeMap = {
               "日本": "JP",
@@ -474,7 +442,36 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-      
+          countrySelect.addEventListener('change', () => {
+  const selectedCountry = countrySelect.value;
+  document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = !selectedCountry;
+
+  if (selectedCountry && countryHeritageMap[selectedCountry]) {
+    const heritagesObj = countryHeritageMap[selectedCountry];
+    const list = Object.values(heritagesObj)
+      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
+
+    list.forEach(({ id, heritageName, grade }) => {
+      const option = document.createElement('option');
+      option.value = `${selectedCountry}.${id}`;
+
+      let gradeLabel = '';
+      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+
+      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      heritageSelect.appendChild(option);
+    });
+  }
+
+  markers.forEach(marker => {
+    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+  });
+
+  heritageSelect.value = '';
+});
 
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
