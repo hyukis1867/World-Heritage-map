@@ -136,7 +136,7 @@
 
 function initMap() {
 
-  // ① まず map を作る（最優先）
+  // ★ 先にマップ生成（これが最重要）
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 41.9028, lng: 12.4964},
     zoom: 12,
@@ -144,16 +144,17 @@ function initMap() {
     tilt: 0
   });
 
-  // ② 保存データ復元
+  // ★ 保存された状態を復元
   const savedCenter = localStorage.getItem('mapCenter');
   const savedZoom = localStorage.getItem('mapZoom');
+
   if (savedCenter && savedZoom) {
     const center = JSON.parse(savedCenter);
     map.setCenter(center);
     map.setZoom(parseInt(savedZoom));
   }
 
-  // ③ イベント登録
+  // ★ 保存処理
   map.addListener('center_changed', () => {
     localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
   });
@@ -161,37 +162,32 @@ function initMap() {
   map.addListener('zoom_changed', () => {
     localStorage.setItem('mapZoom', map.getZoom());
   });
-map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: 41.9028, lng: 12.4964},
-  zoom: 12,
-  gestureHandling: 'greedy',
-  tilt: 0
-});
 
-function smoothPanTo(targetLatLng) {
-  const steps = 25;
-  const delay = 20;
+  // ★ スムーズ移動（そのままでOK）
+  function smoothPanTo(targetLatLng) {
+    const steps = 25;
+    const delay = 20;
 
-  const start = map.getCenter();
-  const latStep = (targetLatLng.lat() - start.lat()) / steps;
-  const lngStep = (targetLatLng.lng() - start.lng()) / steps;
+    const start = map.getCenter();
+    const latStep = (targetLatLng.lat() - start.lat()) / steps;
+    const lngStep = (targetLatLng.lng() - start.lng()) / steps;
 
-  let i = 0;
+    let i = 0;
 
-  function move() {
-    if (i >= steps) return;
+    function move() {
+      if (i >= steps) return;
 
-    map.setCenter({
-      lat: start.lat() + latStep * i,
-      lng: start.lng() + lngStep * i
-    });
+      map.setCenter({
+        lat: start.lat() + latStep * i,
+        lng: start.lng() + lngStep * i
+      });
 
-    i++;
-    setTimeout(move, delay);
+      i++;
+      setTimeout(move, delay);
+    }
+
+    move();
   }
-
-  move();
-}
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
