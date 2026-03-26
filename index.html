@@ -340,13 +340,19 @@
     if (visible) visibleMarkers.push(marker);
   });
 
-  // クラスタを完全更新
+  // ▼ クラスタ破棄 → 新規作成
   if (markerCluster) {
-    // まず全マーカーをクラスタから削除
-    markerCluster.clearMarkers();
-    // 表示するマーカーだけ再追加
-    markerCluster.addMarkers(visibleMarkers);
+    markerCluster.setMap(null);  // クラスタを地図から削除
+    markerCluster = null;
   }
+
+  // 表示マーカーだけでクラスタを作り直す
+  markerCluster = new markerClusterer.MarkerClusterer({
+    map,
+    markers: visibleMarkers,
+    maxZoom: 10,
+    onClusterClick: () => false
+  });
 }
 
           const countrySelect = document.getElementById('country-select');
