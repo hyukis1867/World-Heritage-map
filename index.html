@@ -504,8 +504,9 @@ markers.forEach(marker => {
 
 // クラスタ更新：選択国のみ
 markerCluster.clearMarkers();
-const visibleMarkers = markers.filter(m => m.getVisible());
-markerCluster.addMarkers(visibleMarkers);
+markerCluster.addMarkers(
+  markers.filter(m => m.customCountry === selectedCountry)
+);
 
 // ===== ここから重要（完全版） =====
 const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
