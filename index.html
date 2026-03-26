@@ -71,22 +71,6 @@
     let lastOpenedMarker = null;
     let heritageData = [];
 
-function smoothMoveToMarker(marker) {
-  if (!marker) return;
-
-  if (infoWindow) infoWindow.close();
-  lastOpenedMarker = null;
-
-  // 位置だけスムーズ移動（ズームは変えない）
-  map.panTo(marker.getPosition());
-
-  // 少し遅延して吹き出しを開く
-  setTimeout(() => {
-    google.maps.event.trigger(marker, 'click');
-  }, 500); // 500ms遅延
-}
-
-    
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -569,31 +553,27 @@ markerCluster.addMarkers(visibleMarkers);
   }
 });
 
-          hheritageSelect.addEventListener('change', () => {
-  const selectedHeritage = heritageSelect.value;
-  if (!selectedHeritage) return;
+          heritageSelect.addEventListener('change', () => {
+            const selectedHeritage = heritageSelect.value;
+            if (!selectedHeritage) return;
 
-  const [selectedCountry, id] = selectedHeritage.split('.');
-  if (!selectedCountry || !id) return;
+            const [selectedCountry, id] = selectedHeritage.split('.');
+            if (!selectedCountry || !id) return;
 
-  const targetMarker = markers.find(marker =>
-    marker.customCountry === selectedCountry && marker.customId === id
-  );
-
-  if (targetMarker) {
-    smoothMoveToMarker(targetMarker); // ここだけで吹き出し表示
-  }
-});
-
-  // 吹き出し表示（既存の click イベントをトリガー）
-  google.maps.event.trigger(targetMarker, 'click');
-
-  // ズームは即時変更（安全）
-  const targetZoom = 10;
-  if (map.getZoom() !== targetZoom) {
-    map.setZoom(targetZoom);
-  }
-}
+            const targetMarker = markers.find(marker =>
+              marker.customCountry === selectedCountry && marker.customId === id
+            );
+            if (targetMarker) {
+              if (infoWindow) {
+                infoWindow.close();
+                infoWindow = null;
+                lastOpenedMarker = null;
+              }
+              map.setCenter(targetMarker.getPosition());
+              map.setZoom(10);
+              google.maps.event.trigger(targetMarker, 'click');
+            }
+          });
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
