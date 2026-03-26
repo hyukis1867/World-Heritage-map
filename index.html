@@ -334,18 +334,16 @@
 
     let visible = inBounds;
 
-    // 地域で絞り込み
-    if (selectedRegion && marker.customRegion !== selectedRegion) {
-      visible = false;
-    }
-
-    // 国で絞り込み
-    if (selectedCountry && marker.customCountry !== selectedCountry) {
-      visible = false;
-    }
+    if (selectedRegion && marker.customRegion !== selectedRegion) visible = false;
+    if (selectedCountry && marker.customCountry !== selectedCountry) visible = false;
 
     marker.setVisible(visible);
   });
+
+  // ▼ クラスタを再描画
+  if (markerCluster) {
+    markerCluster.repaint(); // これで非表示マーカーがクラスタから消える
+  }
 }
 
           const countrySelect = document.getElementById('country-select');
