@@ -156,10 +156,12 @@
 };
         localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
       });
-      map.addListener('zoom_changed', () => {
-        function smoothPanTo(targetLatLng) {
-  const steps = 25;   // ←多いほどなめらか（重くなる）
-  const delay = 20;   // ←小さいほど速い
+   map = new google.maps.Map(...);
+
+// 👇ここに追加
+function smoothPanTo(targetLatLng) {
+  const steps = 25;   // なめらかさ
+  const delay = 20;   // 速度
 
   const start = map.getCenter();
   const latStep = (targetLatLng.lat() - start.lat()) / steps;
