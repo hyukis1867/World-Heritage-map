@@ -349,10 +349,48 @@ map.addListener('idle', updateMarkers);
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-          regionSelect.addEventListener('change', () => {
-            const selectedRegion = regionSelect.value;
-            document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
-            document.getElementById("heritage-box").style.display = "none";
+         countrySelect.addEventListener('change', () => {
+  const selectedCountry = countrySelect.value;
+  document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = !selectedCountry;
+
+  if (selectedCountry && countryHeritageMap[selectedCountry]) {
+    const heritagesObj = countryHeritageMap[selectedCountry];
+    const list = Object.values(heritagesObj).sort((a,b) => Number(a.id)-Number(b.id));
+
+    list.forEach(({ id, heritageName, grade }) => {
+      const option = document.createElement('option');
+      option.value = `${selectedCountry}.${id}`;
+
+      let gradeLabel = '';
+      if (grade) {
+        gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
+      }
+
+      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      heritageSelect.appendChild(option);
+    });
+  }
+
+  // マーカー表示：選択国のみ
+  markers.forEach(marker => {
+    marker.setVisible(marker.customCountry === selectedCountry);
+  });
+
+  // クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+
+  // 中心移動（ズーム維持）
+  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
+  if (targetMarker) {
+    map.panTo(targetMarker.getPosition());
+  }
+
+  heritageSelect.value = '';
+});
 
             const countryCodeMap = {
               "日本": "JP",
