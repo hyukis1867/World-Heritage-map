@@ -154,6 +154,30 @@
         localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
       });
       map.addListener('zoom_changed', () => {
+        function smoothPanTo(targetLatLng) {
+  const steps = 25;   // ←多いほどなめらか（重くなる）
+  const delay = 20;   // ←小さいほど速い
+
+  const start = map.getCenter();
+  const latStep = (targetLatLng.lat() - start.lat()) / steps;
+  const lngStep = (targetLatLng.lng() - start.lng()) / steps;
+
+  let i = 0;
+
+  function move() {
+    if (i >= steps) return;
+
+    map.setCenter({
+      lat: start.lat() + latStep * i,
+      lng: start.lng() + lngStep * i
+    });
+
+    i++;
+    setTimeout(move, delay);
+  }
+
+  move();
+}
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
@@ -511,10 +535,10 @@ countrySelect.addEventListener('change', () => {
     const originalZoom = map.getZoom();       // 現在のズームを保持
     const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
     map.setZoom(tempZoom);                     // 一旦ズームを下げる
-    map.panTo(targetMarker.getPosition());     // アニメーションで移動
+    smoothPanTo(targetMarker.getPosition());     // アニメーションで移動
     setTimeout(() => {
       map.setZoom(originalZoom);               // 元のズームに戻す
-    }, 400); // 400ms後に戻す（アニメーション時間に応じて調整可能）
+    }, 500); // 400ms後に戻す（アニメーション時間に応じて調整可能）
   }
 
   heritageSelect.value = '';
