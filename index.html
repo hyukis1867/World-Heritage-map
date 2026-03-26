@@ -344,7 +344,10 @@
   if (markerCluster) {
     markerCluster.setMap(null);  // クラスタを地図から削除
     markerCluster = null;
-  }
+
+    if (markerCluster) {
+  markerCluster.setMap(selectedCountry ? null : map);
+}
 
   // 表示マーカーだけでクラスタを作り直す
   markerCluster = new markerClusterer.MarkerClusterer({
