@@ -315,7 +315,7 @@
             regionSelect.appendChild(option);
           });
 
-          let markerCluster = new markerClusterer.MarkerClusterer({
+          const markerCluster = new markerClusterer.MarkerClusterer({
             map,
             markers,
             maxZoom: 10,
@@ -443,6 +443,7 @@ map.addListener('idle', updateMarkers);
           });
 
           // 地域選択
+regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
   document.getElementById("heritage-box").style.display = "none";
@@ -496,53 +497,28 @@ countrySelect.addEventListener('change', () => {
   }
 
   // マーカー表示：選択国のみ
- // マーカー表示：選択国のみ
-markers.forEach(marker => {
-  marker.setVisible(marker.customCountry === selectedCountry);
-});
-
-// クラスタ更新：選択国のみ
-if (markerCluster) {
-  markerCluster.setMap(null); // ← いったん削除
-}
-
-// 新しく作り直す（これが一番安全）
-markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers: markers.filter(m => m.customCountry === selectedCountry),
-  maxZoom: 10,
-  onClusterClick: () => false
-});
-
-// ===== ここから重要（完全版） =====
-const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
-
-if (countryMarkers.length > 0) {
-  const bounds = new google.maps.LatLngBounds();
-
-  countryMarkers.forEach(marker => {
-    bounds.extend(marker.getPosition());
+  markers.forEach(marker => {
+    marker.setVisible(marker.customCountry === selectedCountry);
   });
 
-  // 安全に実行
-  try {
-    map.fitBounds(bounds);
+  // クラスタ更新：選択国のみ
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-    const maxZoom = 10;
-
-    google.maps.event.addListenerOnce(map, 'idle', () => {
-      if (map.getZoom() > maxZoom) {
-        map.setZoom(maxZoom);
-      }
-    });
-
-  } catch (e) {
-    console.error("fitBoundsエラー:", e);
+  // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
+  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
+  if (targetMarker) {
+    const originalZoom = map.getZoom();       // 現在のズームを保持
+    const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
+    map.setZoom(tempZoom);                     // 一旦ズームを下げる
+    map.panTo(targetMarker.getPosition());     // アニメーションで移動
+    setTimeout(() => {
+      map.setZoom(originalZoom);               // 元のズームに戻す
+    }, 400); // 400ms後に戻す（アニメーション時間に応じて調整可能）
   }
-}
 
-// UIリセット（外に置く！）
-heritageSelect.value = '';
+  heritageSelect.value = '';
+});
 
           heritageSelect.addEventListener('change', () => {
             const selectedHeritage = heritageSelect.value;
