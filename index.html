@@ -467,7 +467,13 @@ map.addListener('idle', updateMarkers);
   }
 
   markers.forEach(marker => {
-    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+    if (!selectedCountry) {
+      // 国未選択なら地域選択に従う（または全表示）
+      marker.setVisible(!regionSelect.value || marker.customRegion === regionSelect.value);
+    } else {
+      // 選択国以外は非表示
+      marker.setVisible(marker.customCountry === selectedCountry);
+    }
   });
 
   heritageSelect.value = '';
