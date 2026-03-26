@@ -503,10 +503,17 @@ markers.forEach(marker => {
 });
 
 // クラスタ更新：選択国のみ
-markerCluster.clearMarkers();
-markerCluster.addMarkers(
-  markers.filter(m => m.customCountry === selectedCountry)
-);
+if (markerCluster) {
+  markerCluster.setMap(null); // ← いったん削除
+}
+
+// 新しく作り直す（これが一番安全）
+markerCluster = new markerClusterer.MarkerClusterer({
+  map,
+  markers: markers.filter(m => m.customCountry === selectedCountry),
+  maxZoom: 10,
+  onClusterClick: () => false
+});
 
 // ===== ここから重要（完全版） =====
 const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
