@@ -564,16 +564,31 @@ markerCluster.addMarkers(visibleMarkers);
               marker.customCountry === selectedCountry && marker.customId === id
             );
             if (targetMarker) {
-              if (infoWindow) {
-                infoWindow.close();
-                infoWindow = null;
-                lastOpenedMarker = null;
-              }
-              map.setCenter(targetMarker.getPosition());
-              map.setZoom(10);
-              google.maps.event.trigger(targetMarker, 'click');
-            }
-          });
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+    lastOpenedMarker = null;
+  }
+
+  // スムーズに移動
+  map.panTo(targetMarker.getPosition());
+
+  // ズームもアニメーションさせたい場合
+  const targetZoom = 10;
+  if (map.getZoom() !== targetZoom) {
+    let currentZoom = map.getZoom();
+    const zoomStep = targetZoom > currentZoom ? 1 : -1;
+
+    const zoomInterval = setInterval(() => {
+      currentZoom += zoomStep;
+      map.setZoom(currentZoom);
+      if (currentZoom === targetZoom) clearInterval(zoomInterval);
+    }, 50); // 50msごとに1段階ズーム
+  }
+
+  // 吹き出し表示
+  google.maps.event.trigger(targetMarker, 'click');
+}
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
