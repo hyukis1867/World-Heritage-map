@@ -581,13 +581,9 @@ markerCluster.addMarkers(visibleMarkers);
   );
 
   if (targetMarker) {
-    // ここを smoothMoveToMarker で置き換え
     smoothMoveToMarker(targetMarker);
   }
 });
-
-  // 現在のズームを保持してパンだけ滑らかに
-  map.panTo(targetMarker.getPosition());
 
   // 吹き出し表示（既存の click イベントをトリガー）
   google.maps.event.trigger(targetMarker, 'click');
