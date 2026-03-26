@@ -463,17 +463,15 @@ regionSelect.addEventListener('change', () => {
       option.textContent = `${country} (${idCount})`;
       countrySelect.appendChild(option);
     });
-  }
-
-  // マーカー表示：選択地域のみ表示
-  markers.forEach(marker => {
-    marker.setVisible(selectedRegion ? marker.customRegion === selectedRegion : true);
-  });
-
-  // クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+    // マーカー表示：選択地域のみ表示
+markers.forEach(marker => {
+  marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
 });
+
+// クラスタ更新
+markerCluster.clearMarkers();
+markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+  }
 
 // 国選択
 countrySelect.addEventListener('change', () => {
