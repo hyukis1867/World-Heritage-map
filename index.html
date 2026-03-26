@@ -350,9 +350,14 @@ map.addListener('idle', updateMarkers);
           heritageSelect.disabled = true;
 
           regionSelect.addEventListener('change', () => {
-            const selectedRegion = regionSelect.value;
-            document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
-            document.getElementById("heritage-box").style.display = "none";
+  const selectedRegion = regionSelect.value;
+
+  // ★これ追加
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  countrySelect.disabled = !selectedRegion;
+
+  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+  document.getElementById("heritage-box").style.display = "none";
 
             const countryCodeMap = {
               "日本": "JP",
