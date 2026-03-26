@@ -337,13 +337,14 @@
     if (selectedCountry && marker.customCountry !== selectedCountry) visible = false;
 
     marker.setVisible(visible);
-
-    if (visible) visibleMarkers.push(marker); // 表示マーカーだけをリストに
+    if (visible) visibleMarkers.push(marker);
   });
 
   // クラスタを完全更新
   if (markerCluster) {
+    // まず全マーカーをクラスタから削除
     markerCluster.clearMarkers();
+    // 表示するマーカーだけ再追加
     markerCluster.addMarkers(visibleMarkers);
   }
 }
