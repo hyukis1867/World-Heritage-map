@@ -516,8 +516,14 @@ if (countryMarkers.length > 0) {
   });
 
   // アニメーション付きで全体表示
-  map.fitBounds(bounds);
-}
+ map.fitBounds(bounds);
+
+const maxZoom = 10;
+
+google.maps.event.addListenerOnce(map, 'idle', () => {
+  if (map.getZoom() > maxZoom) {
+    map.setZoom(maxZoom);
+  }
 
   heritageSelect.value = '';
 });
