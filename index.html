@@ -497,15 +497,18 @@ countrySelect.addEventListener('change', () => {
   }
 
   // マーカー表示：選択国のみ
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+ // マーカー表示：選択国のみ
+markers.forEach(marker => {
+  marker.setVisible(marker.customCountry === selectedCountry);
+});
 
-  // クラスタ更新：選択国のみ
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+// クラスタ更新：選択国のみ
+markerCluster.clearMarkers();
+const visibleMarkers = markers.filter(m => m.getVisible());
+markerCluster.addMarkers(visibleMarkers);
 
- const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
+// ===== ここから重要（完全版） =====
+const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
 
 if (countryMarkers.length > 0) {
   const bounds = new google.maps.LatLngBounds();
@@ -514,18 +517,24 @@ if (countryMarkers.length > 0) {
     bounds.extend(marker.getPosition());
   });
 
-  map.fitBounds(bounds);
+  // 安全に実行
+  try {
+    map.fitBounds(bounds);
 
-  const maxZoom = 10;
+    const maxZoom = 10;
 
-  google.maps.event.addListenerOnce(map, 'idle', () => {
-    if (map.getZoom() > maxZoom) {
-      map.setZoom(maxZoom);
-    }
-  });
+    google.maps.event.addListenerOnce(map, 'idle', () => {
+      if (map.getZoom() > maxZoom) {
+        map.setZoom(maxZoom);
+      }
+    });
+
+  } catch (e) {
+    console.error("fitBoundsエラー:", e);
+  }
 }
 
-// ← 外に出す（重要）
+// UIリセット（外に置く！）
 heritageSelect.value = '';
 
           heritageSelect.addEventListener('change', () => {
