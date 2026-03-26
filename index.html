@@ -454,23 +454,27 @@ map.addListener('idle', updateMarkers);
   if (selectedCountry && countryHeritageMap[selectedCountry]) {
     const heritagesObj = countryHeritageMap[selectedCountry];
     const list = Object.values(heritagesObj)
-      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
+      .sort((a,b) => Number(a.id) - Number(b.id));
 
     list.forEach(({ id, heritageName, grade }) => {
       const option = document.createElement('option');
       option.value = `${selectedCountry}.${id}`;
-
       let gradeLabel = '';
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-
       option.textContent = `${id}.${heritageName} ${gradeLabel}`;
       heritageSelect.appendChild(option);
     });
   }
 
+  // --- ここでマーカーの表示制御 ---
   markers.forEach(marker => {
-    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+    marker.setVisible(marker.customCountry === selectedCountry);
   });
+
+  // --- MarkerClustererを更新 ---
+  markerCluster.clearMarkers(); // 既存のクラスタをクリア
+  const visibleMarkers = markers.filter(marker => marker.getVisible());
+  markerCluster.addMarkers(visibleMarkers);
 
   heritageSelect.value = '';
 });
