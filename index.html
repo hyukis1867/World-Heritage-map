@@ -449,26 +449,32 @@ map.addListener('idle', updateMarkers);
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
+  // 選択国の遺産リストをセット
   if (selectedCountry && countryHeritageMap[selectedCountry]) {
     const heritagesObj = countryHeritageMap[selectedCountry];
     const list = Object.values(heritagesObj)
-      .sort((a,b) => Number(a.id) - Number(b.id)); // お好みで並び替え
-
+      .sort((a,b) => Number(a.id) - Number(b.id));
     list.forEach(({ id, heritageName, grade }) => {
       const option = document.createElement('option');
       option.value = `${selectedCountry}.${id}`;
-
       let gradeLabel = '';
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-
       option.textContent = `${id}.${heritageName} ${gradeLabel}`;
       heritageSelect.appendChild(option);
     });
   }
 
+  // --- ここで選択国以外のマーカーは非表示、選択国だけ表示 ---
   markers.forEach(marker => {
-    marker.setVisible(!selectedCountry || marker.customCountry === selectedCountry);
+    marker.setVisible(marker.customCountry === selectedCountry);
   });
+
+  // --- クラスタも選択国のみで再表示 ---
+  markerCluster.clearMarkers(); // まず既存クラスタをクリア
+  if (selectedCountry) {
+    const visibleMarkers = markers.filter(m => m.getVisible());
+    markerCluster.addMarkers(visibleMarkers);
+  }
 
   heritageSelect.value = '';
 });
