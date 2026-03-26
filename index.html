@@ -352,12 +352,50 @@ map.addListener('idle', updateMarkers);
           regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
 
-  // ★これ追加
+  // 国プルダウン初期化
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
 
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
   document.getElementById("heritage-box").style.display = "none";
+
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = true;
+
+  // マーカー表示制御
+  markers.forEach(marker => {
+    if (!selectedRegion) {
+      // 未選択時は全表示
+      marker.setVisible(true);
+    } else {
+      // 選択された地域のみ表示
+      marker.setVisible(marker.customRegion === selectedRegion);
+    }
+  });
+
+  // MarkerClusterer 更新
+  markerCluster.clearMarkers();
+  const visibleMarkers = markers.filter(marker => marker.getVisible());
+  markerCluster.addMarkers(visibleMarkers);
+
+  // 国プルダウン再構築（地域選択時のみ）
+  if (selectedRegion && regionCountryMap[selectedRegion]) {
+    const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+    countriesArray.forEach(country => {
+      if (country && country.trim() !== '') {
+        const option = document.createElement('option');
+        const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+        option.value = country;
+        option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+        countrySelect.appendChild(option);
+      }
+    });
+  }
+
+  // 国・遺産プルダウンはリセット
+  countrySelect.value = '';
+  heritageSelect.value = '';
+});
 
             const countryCodeMap = {
               "日本": "JP",
