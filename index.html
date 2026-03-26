@@ -506,16 +506,18 @@ countrySelect.addEventListener('change', () => {
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
-  const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
-  if (targetMarker) {
-    const originalZoom = map.getZoom();       // 現在のズームを保持
-    const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
-    map.setZoom(tempZoom);                     // 一旦ズームを下げる
-    map.panTo(targetMarker.getPosition());     // アニメーションで移動
-    setTimeout(() => {
-      map.setZoom(originalZoom);               // 元のズームに戻す
-    }, 400); // 400ms後に戻す（アニメーション時間に応じて調整可能）
-  }
+ const countryMarkers = markers.filter(m => m.customCountry === selectedCountry);
+
+if (countryMarkers.length > 0) {
+  const bounds = new google.maps.LatLngBounds();
+
+  countryMarkers.forEach(marker => {
+    bounds.extend(marker.getPosition());
+  });
+
+  // アニメーション付きで全体表示
+  map.fitBounds(bounds);
+}
 
   heritageSelect.value = '';
 });
