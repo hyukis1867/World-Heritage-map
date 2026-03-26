@@ -352,6 +352,19 @@ map.addListener('idle', updateMarkers);
           regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
 
+markers.forEach(marker => {
+  if (!selectedRegion) {
+    marker.setVisible(true);   // 地域未選択なら全表示
+  } else {
+    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
+  }
+});
+
+// MarkerClusterer を更新
+markerCluster.clearMarkers();
+const visibleMarkers = markers.filter(marker => marker.getVisible());
+markerCluster.addMarkers(visibleMarkers);
+            
   // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
@@ -468,13 +481,13 @@ map.addListener('idle', updateMarkers);
 
   // --- ここでマーカーの表示制御 ---
   markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+  marker.setVisible(marker.customCountry === selectedCountry);
+});
 
-  // --- MarkerClustererを更新 ---
-  markerCluster.clearMarkers(); // 既存のクラスタをクリア
-  const visibleMarkers = markers.filter(marker => marker.getVisible());
-  markerCluster.addMarkers(visibleMarkers);
+// MarkerClusterer を更新
+markerCluster.clearMarkers();
+const visibleMarkers = markers.filter(marker => marker.getVisible());
+markerCluster.addMarkers(visibleMarkers);
 
   heritageSelect.value = '';
 });
