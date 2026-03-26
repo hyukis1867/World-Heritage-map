@@ -164,7 +164,7 @@ function initMap() {
   });
 
   // ★ スムーズ移動（そのままでOK）
-  function smoothPanTo(targetLatLng) {
+ function smoothPanTo(targetLatLng) {
     const steps = 25;
     const delay = 20;
 
@@ -188,9 +188,6 @@ function initMap() {
 
     move();
   }
-        localStorage.setItem('mapZoom', map.getZoom());
-      });
-
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
