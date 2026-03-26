@@ -570,21 +570,21 @@ markerCluster.addMarkers(visibleMarkers);
 });
 
           heritageSelect.addEventListener('change', () => {
-            const selectedHeritage = heritageSelect.value;
-            if (!selectedHeritage) return;
+  const selectedHeritage = heritageSelect.value;
+  if (!selectedHeritage) return;
 
-            const [selectedCountry, id] = selectedHeritage.split('.');
-            if (!selectedCountry || !id) return;
+  const [selectedCountry, id] = selectedHeritage.split('.');
+  if (!selectedCountry || !id) return;
 
-            const targetMarker = markers.find(marker =>
-              marker.customCountry === selectedCountry && marker.customId === id
-            );
-if (targetMarker) {
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-    lastOpenedMarker = null;
+  const targetMarker = markers.find(marker =>
+    marker.customCountry === selectedCountry && marker.customId === id
+  );
+
+  if (targetMarker) {
+    // ここを smoothMoveToMarker で置き換え
+    smoothMoveToMarker(targetMarker);
   }
+});
 
   // 現在のズームを保持してパンだけ滑らかに
   map.panTo(targetMarker.getPosition());
