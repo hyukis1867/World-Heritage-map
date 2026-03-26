@@ -442,7 +442,27 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-          
+          // 地域選択
+regionSelect.addEventListener('change', () => {
+  const selectedRegion = regionSelect.value;
+  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+  document.getElementById("heritage-box").style.display = "none";
+
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  countrySelect.disabled = !selectedRegion;
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  heritageSelect.disabled = true;
+
+  if (selectedRegion && regionCountryMap[selectedRegion]) {
+    // 国リストセット
+    const countriesArray = Array.from(regionCountryMap[selectedRegion]);
+    countriesArray.forEach(country => {
+      const option = document.createElement('option');
+      const idCount = regionCountryIDsMap[selectedRegion][country] ? regionCountryIDsMap[selectedRegion][country].size : 0;
+      option.value = country;
+      option.textContent = `${country} (${idCount})`;
+      countrySelect.appendChild(option);
+    });
   }
 
   // マーカー表示：選択地域のみ表示
@@ -488,13 +508,7 @@ countrySelect.addEventListener('change', () => {
   // 選択国のID=1マーカーを中心に移動（ズーム変更なし）
   const targetMarker = markers.find(m => m.customCountry === selectedCountry && m.customId === "1");
   if (targetMarker) {
-    const originalZoom = map.getZoom();       // 現在のズームを保持
-    const tempZoom = Math.max(originalZoom - 2, 5); // 少し下げる（5以下は避ける）
-    map.setZoom(tempZoom);                     // 一旦ズームを下げる
-    map.panTo(targetMarker.getPosition());     // アニメーションで移動
-    setTimeout(() => {
-      map.setZoom(originalZoom);               // 元のズームに戻す
-    }, 400); // 400ms後に戻す（アニメーション時間に応じて調整可能）
+    map.panTo(targetMarker.getPosition());
   }
 
   heritageSelect.value = '';
