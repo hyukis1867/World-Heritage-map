@@ -459,6 +459,9 @@
 
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
+　
+　if (markerCluster) markerCluster.setMap(selectedCountry ? null : map);
+            
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
