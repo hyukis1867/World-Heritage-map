@@ -151,13 +151,10 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  // ★ここが全て
-  infoWindow = new google.maps.InfoWindow({
+infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
-  position: {
-    lat: marker.getPosition().lat() + 0.002, // ←ここ調整
-    lng: marker.getPosition().lng()
-  }
+  position: marker.getPosition(),
+  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
 });
 
   infoWindow.open(map); // ← markerに紐付けない
