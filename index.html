@@ -136,6 +136,21 @@ function showInfo(marker) {
     infoWindow.close();
     infoWindow = null;
   }
+  function blinkMarker(marker) {
+  let visible = true;
+  let count = 0;
+
+  const interval = setInterval(() => {
+    marker.setVisible(visible);
+    visible = !visible;
+    count++;
+
+    if (count > 6) {
+      clearInterval(interval);
+      marker.setVisible(true);
+    }
+  }, 300);
+}
 
   const data = heritageData.find(h =>
     h.lat === marker.getPosition().lat() &&
@@ -587,9 +602,9 @@ markerCluster.addMarkers(visibleMarkers);
 
   // ★最後に表示
   setTimeout(() => {
-    showInfo(targetMarker);
-  }, 200);
-});
+  showInfo(targetMarker);
+  blinkMarker(targetMarker); // ←追加
+}, 200);
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
