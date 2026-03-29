@@ -136,6 +136,7 @@ function showInfo(marker) {
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
+    setHighlight(marker);
   }
 
   // ★前のリング削除（ここ1回だけでいい）
@@ -652,6 +653,55 @@ markerCluster.addMarkers(visibleMarkers);
           }
         });
     }
+let highlightedMarker = null;
+
+function setHighlight(marker) {
+
+  // 前のを戻す
+  if (highlightedMarker) {
+    resetMarker(highlightedMarker);
+  }
+
+  // 白リング付きSVG
+  marker.setIcon({
+    url: createRingIcon(marker.customId, marker),
+    scaledSize: new google.maps.Size(40, 40),
+    labelOrigin: new google.maps.Point(20, 20)
+  });
+
+  highlightedMarker = marker;
+}
+
+function resetMarker(marker) {
+  const color = iconColors[heritageData.find(h => h.id === marker.customId).type] || "gray";
+
+  marker.setIcon({
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: color,
+    fillOpacity: 1,
+    strokeColor: 'white',
+    strokeWeight: 1,
+    scale: 14
+  });
+}
+
+function createRingIcon(id, marker) {
+  const color = iconColors[heritageData.find(h => h.id === marker.customId).type] || "gray";
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+    <!-- ぼんやり -->
+    <circle cx="20" cy="20" r="18" fill="white" opacity="0.2"/>
+    <!-- 外枠 -->
+    <circle cx="20" cy="20" r="18" fill="none" stroke="white" stroke-width="2"/>
+    <!-- 本体 -->
+    <circle cx="20" cy="20" r="12" fill="${color}" stroke="white" stroke-width="1"/>
+    <text x="20" y="24" font-size="12" text-anchor="middle" fill="white">${id}</text>
+  </svg>
+  `;
+
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
     
   </script>
 
