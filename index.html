@@ -151,17 +151,15 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  infoWindow = new google.maps.InfoWindow({
-    content: contentHtml,
-    position: marker.getPosition(),
-    pixelOffset: new google.maps.Size(0, -16)
-  });
+infoWindow = new google.maps.InfoWindow({
+  content: contentHtml,
+  position: marker.getPosition(),
+  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
+});
 
-  infoWindow.open(map);
+  infoWindow.open(map); // ← markerに紐付けない
+
   lastOpenedMarker = marker;
-}
-   function blinkMarker(marker) {
- 
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
@@ -588,10 +586,10 @@ markerCluster.addMarkers(visibleMarkers);
   map.panTo(targetMarker.getPosition());
 
   // ★最後に表示
-setTimeout(() => {
-  showInfo(targetMarker);
-  blinkMarker(targetMarker);
-}, 200);
+  setTimeout(() => {
+    showInfo(targetMarker);
+  }, 200);
+});
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
