@@ -158,17 +158,41 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  // ★白いぼんやりリング
-  highlightCircle = new google.maps.Circle({
-    strokeColor: "#FFFFFF",
-    strokeOpacity: 1,
-    strokeWeight: 2,
-    fillColor: "#FFFFFF",
-    fillOpacity: 0.25,
-    map: map,
-    center: marker.getPosition(),
-    radius: 25000   // ←ここでサイズ調整（小さくするなら10000とか）
-  });
+  if (highlightCircle) {
+  highlightCircle.outer.setMap(null);
+  highlightCircle.inner.setMap(null);
+  highlightCircle = null;
+}
+
+// ★2重リング作成
+const center = marker.getPosition();
+
+// 外枠（くっきり白）
+const outerCircle = new google.maps.Circle({
+  strokeColor: "#FFFFFF",
+  strokeOpacity: 1,
+  strokeWeight: 3,
+  fillOpacity: 0,
+  map: map,
+  center: center,
+  radius: 22000
+});
+
+// 内側（ぼんやり）
+const innerCircle = new google.maps.Circle({
+  strokeOpacity: 0,
+  fillColor: "#FFFFFF",
+  fillOpacity: 0.25,
+  map: map,
+  center: center,
+  radius: 22000
+});
+
+// セットで保持
+highlightCircle = {
+  outer: outerCircle,
+  inner: innerCircle
+};
 
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
