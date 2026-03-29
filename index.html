@@ -368,11 +368,14 @@
           });
 
           const markerCluster = new markerClusterer.MarkerClusterer({
-            map,
-            markers,
-            maxZoom: 10,
-            onClusterClick: () => false
-          });
+  map,
+  markers,
+  maxZoom: 10,
+  onClusterClick: (event) => {
+    // ★クラスタクリック完全無効化
+    event.stop();
+  }
+});
 
           function updateMarkers() {
   const bounds = map.getBounds();
