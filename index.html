@@ -565,27 +565,26 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // ★① 吹き出し完全リセット
+  // ★先にクラスタ更新（順番が重要）
+  markers.forEach(marker => {
+    marker.setVisible(marker.customCountry === selectedCountry);
+  });
+
+  markerCluster.clearMarkers();
+  const visibleMarkers = markers.filter(m => m.getVisible());
+  markerCluster.addMarkers(visibleMarkers);
+
+  // ★その後に完全破棄
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
   }
   lastOpenedMarker = null;
 
-  // ★② 「その国のマーカーは全部表示」←ここが重要
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
-
-  // ★③ クラスタを正しく再構築
-  markerCluster.clearMarkers();
-  const visibleMarkers = markers.filter(marker => marker.getVisible());
-  markerCluster.addMarkers(visibleMarkers);
-
-  // ★④ 移動（ズームなし）
+  // ★移動
   map.panTo(targetMarker.getPosition());
 
-  // ★⑤ 吹き出し表示
+  // ★最後に表示（ここが重要）
   showInfo(targetMarker);
 });
 
