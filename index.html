@@ -69,7 +69,6 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
-    let highlightCircle = null;
     let heritageData = [];
 
     // ★ここに置く（initMapの外）
@@ -133,16 +132,9 @@
     };
 
 function showInfo(marker) {
-  // ① 吹き出し閉じる
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
-  }
-
-  // ② 前のハイライト戻す
-  if (highlightedMarker) {
-    resetMarker(highlightedMarker);
-    highlightedMarker = null;
   }
 
   const data = heritageData.find(h =>
@@ -159,17 +151,13 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  // ③ 吹き出し表示
-  infoWindow = new google.maps.InfoWindow({
-    content: contentHtml,
-    position: marker.getPosition(),
-    pixelOffset: new google.maps.Size(0, -16)
-  });
+infoWindow = new google.maps.InfoWindow({
+  content: contentHtml,
+  position: marker.getPosition(),
+  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
+});
 
-  infoWindow.open(map);
-
-  // ④ ★ここでハイライト（←これが超重要）
-  setHighlight(marker);
+  infoWindow.open(map); // ← markerに紐付けない
 
   lastOpenedMarker = marker;
 }
@@ -626,59 +614,6 @@ markerCluster.addMarkers(visibleMarkers);
           }
         });
     }
-let highlightedMarker = null;
-
-function setHighlight(marker) {
-
-  if (highlightedMarker) {
-    resetMarker(highlightedMarker);
-  }
-
-  marker.setIcon({
-    url: createRingIcon(marker.customId, marker),
-    scaledSize: new google.maps.Size(28, 28),
-    anchor: new google.maps.Point(14, 14),
-    labelOrigin: new google.maps.Point(14, 14)
-  });
-
-  highlightedMarker = marker;
-}
-
-function resetMarker(marker) {
-  const color = iconColors[heritageData.find(h => h.id === marker.customId).type] || "gray";
-
-  marker.setIcon({
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: color,
-    fillOpacity: 1,
-    strokeColor: 'white',
-    strokeWeight: 1,
-    scale: 14
-  });
-}
-
-function createRingIcon(id, marker) {
-  const color = iconColors[
-    heritageData.find(h => h.id === marker.customId).type
-  ] || "gray";
-
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    
-    <!-- 外ぼかし（完全に外側） -->
-    <circle cx="18" cy="18" r="16" fill="white" opacity="0.15"/>
-    
-    <!-- 外枠リング -->
-    <circle cx="18" cy="18" r="16" fill="none" stroke="white" stroke-width="2"/>
-    
-    <!-- 本体（元サイズ維持） -->
-    <circle cx="18" cy="18" r="10" fill="${color}" stroke="white" stroke-width="1"/>
-    
-  </svg>
-  `;
-
-  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
-}
     
   </script>
 
