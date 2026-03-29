@@ -565,17 +565,28 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // ★必ず前の吹き出しを消す
+  // ★① クラスタを一旦解除（これが超重要）
+  markerCluster.clearMarkers();
+
+  // ★② 吹き出し完全リセット
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
-    lastOpenedMarker = null;
   }
+  lastOpenedMarker = null;
 
-  // ★即移動（ここはシンプルに）
+  // ★③ 必要なマーカーだけ再表示
+  markers.forEach(marker => {
+    marker.setVisible(marker === targetMarker);
+  });
+
+  // ★④ 再クラスタリング（1個だけなので実質なし）
+  markerCluster.addMarkers([targetMarker]);
+
+  // ★⑤ 移動
   map.panTo(targetMarker.getPosition());
 
-  // ★イベントを使わず直接表示（ズレ防止）
+  // ★⑥ 吹き出し表示
   showInfo(targetMarker);
 });
 
