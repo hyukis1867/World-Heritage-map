@@ -138,9 +138,10 @@ function showInfo(marker) {
     infoWindow = null;
   }
 
-  // ★前の輪を削除
+  // ★前のリング削除（ここ1回だけでいい）
   if (highlightCircle) {
-    highlightCircle.setMap(null);
+    highlightCircle.outer.setMap(null);
+    highlightCircle.inner.setMap(null);
     highlightCircle = null;
   }
 
@@ -158,42 +159,7 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  if (highlightCircle) {
-  highlightCircle.outer.setMap(null);
-  highlightCircle.inner.setMap(null);
-  highlightCircle = null;
-}
-
-// ★2重リング作成
-const center = marker.getPosition();
-
-// 外枠（くっきり白）
-const outerCircle = new google.maps.Circle({
-  strokeColor: "#FFFFFF",
-  strokeOpacity: 1,
-  strokeWeight: 3,
-  fillOpacity: 0,
-  map: map,
-  center: center,
-  radius: 22000
-});
-
-// 内側（ぼんやり）
-const innerCircle = new google.maps.Circle({
-  strokeOpacity: 0,
-  fillColor: "#FFFFFF",
-  fillOpacity: 0.25,
-  map: map,
-  center: center,
-  radius: 22000
-});
-
-// セットで保持
-highlightCircle = {
-  outer: outerCircle,
-  inner: innerCircle
-};
-
+  // ★InfoWindow（先に出す）
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
     position: marker.getPosition(),
@@ -201,6 +167,36 @@ highlightCircle = {
   });
 
   infoWindow.open(map);
+
+  // ★リング（あとから作る）
+  const center = marker.getPosition();
+
+  const outerCircle = new google.maps.Circle({
+    strokeColor: "#FFFFFF",
+    strokeOpacity: 1,
+    strokeWeight: 3,
+    fillOpacity: 0,
+    map: map,
+    center: center,
+    radius: 22000,
+    zIndex: 0
+  });
+
+  const innerCircle = new google.maps.Circle({
+    strokeOpacity: 0,
+    fillColor: "#FFFFFF",
+    fillOpacity: 0.25,
+    map: map,
+    center: center,
+    radius: 22000,
+    zIndex: 0
+  });
+
+  highlightCircle = {
+    outer: outerCircle,
+    inner: innerCircle
+  };
+
   lastOpenedMarker = marker;
 }
 
