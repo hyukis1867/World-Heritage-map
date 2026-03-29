@@ -129,41 +129,36 @@
       "複合遺産": "deepskyblue"
     };
 
-    function showInfo(marker) {
-      if (infoWindow) infoWindow.close();
+function showInfo(marker) {
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
 
-      const data = heritageData.find(h =>
-        h.lat === marker.getPosition().lat() &&
-        h.lng === marker.getPosition().lng()
-      );
-      if (!data) return;
+  const data = heritageData.find(h =>
+    h.lat === marker.getPosition().lat() &&
+    h.lng === marker.getPosition().lng()
+  );
+  if (!data) return;
 
-      const nameHtml = data.linkUrl
-        ? `<a href="${data.linkUrl}" target="_blank">${data.heritageName}</a>`
-        : data.heritageName;
+  const contentHtml = `
+    <div>
+      <strong>${data.heritageName}</strong>
+      ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
+      ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
+      <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+    </div>`;
 
-      const localNameHtmlJP = data.localNameJP
-        ? `<div class="infowindow-localname">${data.localNameJP}</div>`
-        : '';
+  // ★ここが全て
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml,
+    position: marker.getPosition() // ← anchor使わない
+  });
 
-      const localNameHtmlEN = data.localNameEN
-        ? `<div class="infowindow-localname">${data.localNameEN}</div>`
-        : '';
+  infoWindow.open(map); // ← markerに紐付けない
 
-      const subInfo = `<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>`;
-
-      const contentHtml = 
-        `<div>
-          <strong>${nameHtml}</strong>
-          ${localNameHtmlJP}
-          ${localNameHtmlEN}
-          ${subInfo}
-        </div>`;
-
-      infoWindow = new google.maps.InfoWindow({content: contentHtml});
-      infoWindow.open(map, marker);
-      lastOpenedMarker = marker;
-    }
+  lastOpenedMarker = marker;
+}
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
     function parseCSVLine(text) {
@@ -586,35 +581,29 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // ★① イベント抑制ON
-  suppressInfo = true;
-
-  // ★② InfoWindowを完全切り離し
+  // ★完全削除
   if (infoWindow) {
     infoWindow.close();
-    infoWindow.setMap(null); // ←これが効く
     infoWindow = null;
   }
   lastOpenedMarker = null;
 
-  // ★③ マーカー表示（国単位）
+  // ★国のマーカーだけ表示
   markers.forEach(marker => {
     marker.setVisible(marker.customCountry === selectedCountry);
   });
 
-  // ★④ クラスタ更新
+  // ★クラスタ再構築
   markerCluster.clearMarkers();
-  const visibleMarkers = markers.filter(m => m.getVisible());
-  markerCluster.addMarkers(visibleMarkers);
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-  // ★⑤ 移動
+  // ★移動
   map.panTo(targetMarker.getPosition());
 
-  // ★⑥ 少し待ってから表示＆解除
+  // ★最後に表示
   setTimeout(() => {
     showInfo(targetMarker);
-    suppressInfo = false; // ★解除
-  }, 300);
+  }, 200);
 });
 
           const urlParams = new URLSearchParams(window.location.search);
