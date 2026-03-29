@@ -565,19 +565,19 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // 吹き出しリセット
+  // ★前の吹き出しを完全に閉じる
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
-    lastOpenedMarker = null;
   }
+  lastOpenedMarker = null;
 
-  // ★ズーム変更なし・スムーズ移動
+  // スムーズ移動
   map.panTo(targetMarker.getPosition());
 
-  // 少し待ってから吹き出し表示（アニメーション後）
+  // ★移動後に新しい吹き出しだけ表示
   setTimeout(() => {
-    google.maps.event.trigger(targetMarker, 'click');
+    showInfo(targetMarker);   // ← clickじゃなく直接呼ぶ
   }, 400);
 });
 
