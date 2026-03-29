@@ -657,16 +657,15 @@ let highlightedMarker = null;
 
 function setHighlight(marker) {
 
-  // 前のを戻す
   if (highlightedMarker) {
     resetMarker(highlightedMarker);
   }
 
-  // 白リング付きSVG
   marker.setIcon({
     url: createRingIcon(marker.customId, marker),
-    scaledSize: new google.maps.Size(40, 40),
-    labelOrigin: new google.maps.Point(20, 20)
+    scaledSize: new google.maps.Size(28, 28),
+    anchor: new google.maps.Point(14, 14),
+    labelOrigin: new google.maps.Point(14, 14)
   });
 
   highlightedMarker = marker;
@@ -686,17 +685,23 @@ function resetMarker(marker) {
 }
 
 function createRingIcon(id, marker) {
-  const color = iconColors[heritageData.find(h => h.id === marker.customId).type] || "gray";
+  const color = iconColors[
+    heritageData.find(h => h.id === marker.customId).type
+  ] || "gray";
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-    <!-- ぼんやり -->
-    <circle cx="20" cy="20" r="18" fill="white" opacity="0.2"/>
-    <!-- 外枠 -->
-    <circle cx="20" cy="20" r="18" fill="none" stroke="white" stroke-width="2"/>
-    <!-- 本体 -->
-    <circle cx="20" cy="20" r="12" fill="${color}" stroke="white" stroke-width="1"/>
-    <text x="20" y="24" font-size="12" text-anchor="middle" fill="white">${id}</text>
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <!-- ぼんやり（少しだけ外） -->
+    <circle cx="14" cy="14" r="13" fill="white" opacity="0.2"/>
+    
+    <!-- 外枠（細いリング） -->
+    <circle cx="14" cy="14" r="13" fill="none" stroke="white" stroke-width="2"/>
+    
+    <!-- 本体（元サイズ） -->
+    <circle cx="14" cy="14" r="10" fill="${color}" stroke="white" stroke-width="1"/>
+    
+    <!-- 数字 -->
+    <text x="14" y="18" font-size="12" text-anchor="middle" fill="white">${id}</text>
   </svg>
   `;
 
