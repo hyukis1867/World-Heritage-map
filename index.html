@@ -160,20 +160,23 @@ function showInfo(marker) {
   infoWindow.open(map);
   lastOpenedMarker = marker;
 }
-    function blinkMarker(marker) {
-  let visible = true;
+   function blinkMarker(marker) {
   let count = 0;
 
-  marker.setOpacity(1); // 初期化（これ重要）
-
   const interval = setInterval(() => {
-    marker.setOpacity(visible ? 0 : 1);
-    visible = !visible;
+    marker.setIcon({
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: count % 2 === 0 ? "#FFFFFF" : "#FF0000",
+      fillOpacity: 1,
+      strokeColor: 'white',
+      strokeWeight: 1,
+      scale: 14
+    });
+
     count++;
 
     if (count > 6) {
       clearInterval(interval);
-      marker.setOpacity(1);
     }
   }, 300);
 }
