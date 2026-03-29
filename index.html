@@ -565,26 +565,18 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // ★選択トークン更新
-  const token = ++currentSelectionToken;
-
-  // ★吹き出し完全リセット
+  // ★必ず前の吹き出しを消す
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
+    lastOpenedMarker = null;
   }
-  lastOpenedMarker = null;
 
-  // 移動
+  // ★即移動（ここはシンプルに）
   map.panTo(targetMarker.getPosition());
 
-  // ★遅延処理にガードをかける
-  setTimeout(() => {
-    // 古い処理は無効化
-    if (token !== currentSelectionToken) return;
-
-    showInfo(targetMarker);
-  }, 400);
+  // ★イベントを使わず直接表示（ズレ防止）
+  showInfo(targetMarker);
 });
 
           const urlParams = new URLSearchParams(window.location.search);
