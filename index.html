@@ -133,17 +133,16 @@
     };
 
 function showInfo(marker) {
+  // ① 吹き出し閉じる
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
-    setHighlight(marker);
   }
 
-  // ★前のリング削除（ここ1回だけでいい）
-  if (highlightCircle) {
-    highlightCircle.outer.setMap(null);
-    highlightCircle.inner.setMap(null);
-    highlightCircle = null;
+  // ② 前のハイライト戻す
+  if (highlightedMarker) {
+    resetMarker(highlightedMarker);
+    highlightedMarker = null;
   }
 
   const data = heritageData.find(h =>
@@ -160,7 +159,7 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-  // ★InfoWindow（先に出す）
+  // ③ 吹き出し表示
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
     position: marker.getPosition(),
@@ -169,34 +168,8 @@ function showInfo(marker) {
 
   infoWindow.open(map);
 
-  // ★リング（あとから作る）
-  const center = marker.getPosition();
-
-  const outerCircle = new google.maps.Circle({
-    strokeColor: "#FFFFFF",
-    strokeOpacity: 1,
-    strokeWeight: 3,
-    fillOpacity: 0,
-    map: map,
-    center: center,
-    radius: 22000,
-    zIndex: 0
-  });
-
-  const innerCircle = new google.maps.Circle({
-    strokeOpacity: 0,
-    fillColor: "#FFFFFF",
-    fillOpacity: 0.25,
-    map: map,
-    center: center,
-    radius: 22000,
-    zIndex: 0
-  });
-
-  highlightCircle = {
-    outer: outerCircle,
-    inner: innerCircle
-  };
+  // ④ ★ここでハイライト（←これが超重要）
+  setHighlight(marker);
 
   lastOpenedMarker = marker;
 }
