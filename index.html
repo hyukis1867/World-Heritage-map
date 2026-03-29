@@ -605,10 +605,10 @@ markerCluster.addMarkers(visibleMarkers);
   map.panTo(targetMarker.getPosition());
 
   // ★最後に表示
- setTimeout(() => {
+setTimeout(() => {
   showInfo(targetMarker);
   blinkMarker(targetMarker);
-}, 300);
+}, 200);
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
