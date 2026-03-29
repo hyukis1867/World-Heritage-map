@@ -161,24 +161,7 @@ function showInfo(marker) {
   lastOpenedMarker = marker;
 }
    function blinkMarker(marker) {
-  let count = 0;
-
-  const interval = setInterval(() => {
-    marker.setIcon({
-      path: google.maps.SymbolPath.CIRCLE,
-      fillColor: count % 2 === 0 ? "#FFFFFF" : "#FF0000",
-      fillOpacity: 1,
-      strokeColor: 'white',
-      strokeWeight: 1,
-      scale: 14
-    });
-
-    count++;
-
-    if (count > 6) {
-      clearInterval(interval);
-    }
-  }, 300);
+ 
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
