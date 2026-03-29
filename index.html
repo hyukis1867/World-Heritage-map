@@ -161,15 +161,19 @@ function showInfo(marker) {
   lastOpenedMarker = marker;
 }
     function blinkMarker(marker) {
+  let visible = true;
   let count = 0;
 
+  marker.setOpacity(1); // 初期化（これ重要）
+
   const interval = setInterval(() => {
-    marker.setOpacity(marker.getOpacity() === 0 ? 1 : 0); // ←ここ変更
+    marker.setOpacity(visible ? 0 : 1);
+    visible = !visible;
     count++;
 
     if (count > 6) {
       clearInterval(interval);
-      marker.setOpacity(1); // 元に戻す
+      marker.setOpacity(1);
     }
   }, 300);
 }
@@ -598,10 +602,10 @@ markerCluster.addMarkers(visibleMarkers);
   map.panTo(targetMarker.getPosition());
 
   // ★最後に表示
-  setTimeout(() => {
+ setTimeout(() => {
   showInfo(targetMarker);
-  blinkMarker(targetMarker); // ←追加
-}, 200);
+  blinkMarker(targetMarker);
+}, 300);
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
