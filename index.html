@@ -153,9 +153,12 @@ function showInfo(marker) {
 
   // ★ここが全て
   infoWindow = new google.maps.InfoWindow({
-    content: contentHtml,
-    position: marker.getPosition() // ← anchor使わない
-  });
+  content: contentHtml,
+  position: {
+    lat: marker.getPosition().lat() + 0.002, // ←ここ調整
+    lng: marker.getPosition().lng()
+  }
+});
 
   infoWindow.open(map); // ← markerに紐付けない
 
