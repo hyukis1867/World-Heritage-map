@@ -663,15 +663,16 @@ function createRingIcon(id, marker) {
   ] || "gray";
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <!-- ぼんやり（少しだけ外） -->
-    <circle cx="14" cy="14" r="13" fill="white" opacity="0.2"/>
+  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36">
     
-    <!-- 外枠（細いリング） -->
-    <circle cx="14" cy="14" r="13" fill="none" stroke="white" stroke-width="2"/>
+    <!-- 外ぼかし（完全に外側） -->
+    <circle cx="18" cy="18" r="16" fill="white" opacity="0.15"/>
     
-    <!-- 本体（元サイズ） -->
-    <circle cx="14" cy="14" r="10" fill="${color}" stroke="white" stroke-width="1"/>
+    <!-- 外枠リング -->
+    <circle cx="18" cy="18" r="16" fill="none" stroke="white" stroke-width="2"/>
+    
+    <!-- 本体（元サイズ維持） -->
+    <circle cx="18" cy="18" r="10" fill="${color}" stroke="white" stroke-width="1"/>
     
   </svg>
   `;
