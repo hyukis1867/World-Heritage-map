@@ -69,6 +69,7 @@
     let markers = [];
     let infoWindow = null;
     let lastOpenedMarker = null;
+    let highlightCircle = null;
     let heritageData = [];
 
     // ★ここに置く（initMapの外）
@@ -137,6 +138,12 @@ function showInfo(marker) {
     infoWindow = null;
   }
 
+  // ★前の輪を削除
+  if (highlightCircle) {
+    highlightCircle.setMap(null);
+    highlightCircle = null;
+  }
+
   const data = heritageData.find(h =>
     h.lat === marker.getPosition().lat() &&
     h.lng === marker.getPosition().lng()
@@ -151,14 +158,25 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-infoWindow = new google.maps.InfoWindow({
-  content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
-});
+  // ★白いぼんやりリング
+  highlightCircle = new google.maps.Circle({
+    strokeColor: "#FFFFFF",
+    strokeOpacity: 1,
+    strokeWeight: 2,
+    fillColor: "#FFFFFF",
+    fillOpacity: 0.25,
+    map: map,
+    center: marker.getPosition(),
+    radius: 25000   // ←ここでサイズ調整（小さくするなら10000とか）
+  });
 
-  infoWindow.open(map); // ← markerに紐付けない
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml,
+    position: marker.getPosition(),
+    pixelOffset: new google.maps.Size(0, -16)
+  });
 
+  infoWindow.open(map);
   lastOpenedMarker = marker;
 }
 
