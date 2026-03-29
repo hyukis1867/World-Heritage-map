@@ -554,26 +554,32 @@ markerCluster.addMarkers(visibleMarkers);
 });
 
           heritageSelect.addEventListener('change', () => {
-            const selectedHeritage = heritageSelect.value;
-            if (!selectedHeritage) return;
+  const selectedHeritage = heritageSelect.value;
+  if (!selectedHeritage) return;
 
-            const [selectedCountry, id] = selectedHeritage.split('.');
-            if (!selectedCountry || !id) return;
+  const [selectedCountry, id] = selectedHeritage.split('.');
+  if (!selectedCountry || !id) return;
 
-            const targetMarker = markers.find(marker =>
-              marker.customCountry === selectedCountry && marker.customId === id
-            );
-            if (targetMarker) {
-              if (infoWindow) {
-                infoWindow.close();
-                infoWindow = null;
-                lastOpenedMarker = null;
-              }
-              map.setCenter(targetMarker.getPosition());
-              map.setZoom(10);
-              google.maps.event.trigger(targetMarker, 'click');
-            }
-          });
+  const targetMarker = markers.find(marker =>
+    marker.customCountry === selectedCountry && marker.customId === id
+  );
+  if (!targetMarker) return;
+
+  // 吹き出しリセット
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+    lastOpenedMarker = null;
+  }
+
+  // ★ズーム変更なし・スムーズ移動
+  map.panTo(targetMarker.getPosition());
+
+  // 少し待ってから吹き出し表示（アニメーション後）
+  setTimeout(() => {
+    google.maps.event.trigger(targetMarker, 'click');
+  }, 400);
+});
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
