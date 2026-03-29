@@ -161,17 +161,15 @@ function showInfo(marker) {
   lastOpenedMarker = marker;
 }
     function blinkMarker(marker) {
-  let visible = true;
   let count = 0;
 
   const interval = setInterval(() => {
-    marker.setVisible(visible);
-    visible = !visible;
+    marker.setOpacity(marker.getOpacity() === 0 ? 1 : 0); // ←ここ変更
     count++;
 
     if (count > 6) {
       clearInterval(interval);
-      marker.setVisible(true);
+      marker.setOpacity(1); // 元に戻す
     }
   }, 300);
 }
