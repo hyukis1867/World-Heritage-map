@@ -136,21 +136,6 @@ function showInfo(marker) {
     infoWindow.close();
     infoWindow = null;
   }
-  function blinkMarker(marker) {
-  let visible = true;
-  let count = 0;
-
-  const interval = setInterval(() => {
-    marker.setVisible(visible);
-    visible = !visible;
-    count++;
-
-    if (count > 6) {
-      clearInterval(interval);
-      marker.setVisible(true);
-    }
-  }, 300);
-}
 
   const data = heritageData.find(h =>
     h.lat === marker.getPosition().lat() &&
@@ -166,15 +151,29 @@ function showInfo(marker) {
       <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
     </div>`;
 
-infoWindow = new google.maps.InfoWindow({
-  content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
-});
+  infoWindow = new google.maps.InfoWindow({
+    content: contentHtml,
+    position: marker.getPosition(),
+    pixelOffset: new google.maps.Size(0, -16)
+  });
 
-  infoWindow.open(map); // ← markerに紐付けない
-
+  infoWindow.open(map);
   lastOpenedMarker = marker;
+}
+    function blinkMarker(marker) {
+  let visible = true;
+  let count = 0;
+
+  const interval = setInterval(() => {
+    marker.setVisible(visible);
+    visible = !visible;
+    count++;
+
+    if (count > 6) {
+      clearInterval(interval);
+      marker.setVisible(true);
+    }
+  }, 300);
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
