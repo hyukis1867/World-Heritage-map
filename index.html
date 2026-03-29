@@ -565,19 +565,25 @@ markerCluster.addMarkers(visibleMarkers);
   );
   if (!targetMarker) return;
 
-  // ★前の吹き出しを完全に閉じる
+  // ★選択トークン更新
+  const token = ++currentSelectionToken;
+
+  // ★吹き出し完全リセット
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
   }
   lastOpenedMarker = null;
 
-  // スムーズ移動
+  // 移動
   map.panTo(targetMarker.getPosition());
 
-  // ★移動後に新しい吹き出しだけ表示
+  // ★遅延処理にガードをかける
   setTimeout(() => {
-    showInfo(targetMarker);   // ← clickじゃなく直接呼ぶ
+    // 古い処理は無効化
+    if (token !== currentSelectionToken) return;
+
+    showInfo(targetMarker);
   }, 400);
 });
 
