@@ -155,9 +155,9 @@ function showInfo(marker) {
 
     ${data.imageUrl ? `
       <div style="margin:6px 0; text-align:center;">
-       <img src="${data.imageUrl}"
-     style="width:200px; height:auto; border-radius:6px; cursor:pointer;"
-     onclick="openImageModal('${data.imageUrl}')">
+      <img src="${data.imageUrl}"
+  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+  onclick="openImageModal('${data.imageUrl}')">
       </div>
     ` : ''}
      <!-- ★ここ追加 -->
@@ -170,10 +170,11 @@ function showInfo(marker) {
   <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>`;
 
-infoWindow = new google.maps.InfoWindow({
+const infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
   position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
+  pixelOffset: new google.maps.Size(0, -16),
+  maxWidth: 280 // ← これで吹き出しの最大幅を設定
 });
 
   infoWindow.open(map); // ← markerに紐付けない
