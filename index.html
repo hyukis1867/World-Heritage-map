@@ -167,7 +167,7 @@ infoWindow = new google.maps.InfoWindow({
   pixelOffset: new google.maps.Size(0, -16)
 });
 
-infoWindow.open(map, marker); // ★これが重要
+infoWindow.open(map); // ← 紐付けない
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
