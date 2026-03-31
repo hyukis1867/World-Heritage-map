@@ -158,7 +158,7 @@ ${data.imageUrl ? `
     <div style="position:relative; display:inline-block;">
       <img src="${data.imageUrl}"
         style="width:200px; height:auto; border-radius:6px; cursor:pointer;"
-        onclick="openImageModal('${data.imageUrl}')">
+        onclick="openImageModal('${data.imageUrl}', '${data.credit || ""}')"
 
       ${data.credit ? `
         <div style="
