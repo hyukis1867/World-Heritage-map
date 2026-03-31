@@ -164,13 +164,10 @@ function showInfo(marker) {
 
 infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16) // ←ここだけ調整
+  pixelOffset: new google.maps.Size(0, -16)
 });
 
-  infoWindow.open(map); // ← markerに紐付けない
-
-  lastOpenedMarker = marker;
+infoWindow.open(map, marker); // ★これが重要
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
