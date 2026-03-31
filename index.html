@@ -146,12 +146,21 @@ function showInfo(marker) {
   if (!data) return;
 
   const contentHtml = `
-    <div>
-      <strong>${data.heritageName}</strong>
-      ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-      ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-      <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-    </div>`;
+  <div>
+    <strong>${data.heritageName}</strong>
+
+    ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
+
+    ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
+
+    ${data.imageUrl ? `
+      <div style="margin:6px 0; text-align:center;">
+        <img src="${data.imageUrl}" style="width:200px; height:auto; border-radius:6px;">
+      </div>
+    ` : ''}
+
+    <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+  </div>`;
 
 infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
@@ -261,12 +270,13 @@ infoWindow = new google.maps.InfoWindow({
   const localNameEN = columns[9]?.trim();
   const linkUrl = columns[10]?.trim();
   const gradeRaw = columns[11]?.trim() || "";
+  const imageUrl = columns[12]?.trim(); // ★追加
 
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade});
+  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade,imageUrl});
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
