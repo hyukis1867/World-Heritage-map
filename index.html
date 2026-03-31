@@ -647,14 +647,16 @@ markerCluster.addMarkers(visibleMarkers);
       }
     });
 
-    
+  document.getElementById("modal-close").onclick = () => {
+  document.getElementById("image-modal").style.display = "none";
+  };
   </script>
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
   </script>
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-  <div id="image-modal" style="
+<div id="image-modal" style="
   display:none;
   position:fixed;
   top:0; left:0;
@@ -665,6 +667,16 @@ markerCluster.addMarkers(visibleMarkers);
   justify-content:center;
   align-items:center;
 ">
+  <!-- ★これ追加 -->
+  <span id="modal-close" style="
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+  ">×</span>
+
   <img id="modal-img" style="
     max-width:90%;
     max-height:90%;
