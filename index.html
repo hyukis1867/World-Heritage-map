@@ -605,18 +605,25 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-  const pos = targetMarker.getPosition();
+ const pos = targetMarker.getPosition();
+
+// 対象データ取得
+const data = heritageData.find(h =>
+  h.lat === pos.lat() && h.lng === pos.lng()
+);
 
 const isMobile = window.innerWidth <= 768;
 
-// 画面サイズに応じてオフセット調整
-const offsetY = isMobile ? 0.002 : 0.001;
+// 画像ありなら強め、なしなら弱め
+const offsetY = isMobile
+  ? (data && data.imageUrl ? 0.003 : 0.0015)
+  : 0.001;
 
+// 中央ではなく少し下に表示
 map.panTo({
   lat: pos.lat() + offsetY,
   lng: pos.lng()
 });
-
   // ★最後に表示
   setTimeout(() => {
     showInfo(targetMarker);
