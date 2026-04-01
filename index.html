@@ -147,24 +147,20 @@ function showInfo(marker) {
 
   const contentHtml = `...`; // 既存のHTML
 
-  let infoLat = marker.getPosition().lat();
-  let infoLng = marker.getPosition().lng();
-
-  // スマホ判定
-  const isMobile = window.innerWidth <= 768;
-
-  if (isMobile) {
-    // 吹き出し分だけ緯度を少し下げる（0.001~0.003くらいで調整）
-    infoLat -= 0.002;
-  }
-
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
-    position: { lat: infoLat, lng: infoLng },
+    position: marker.getPosition(),  // ←ここは元の座標
     pixelOffset: new google.maps.Size(0, -16)
   });
 
   infoWindow.open(map);
+
+  // スマホの場合だけマップを少し下にスクロール
+  if (window.innerWidth <= 768) {
+    const yOffset = 150; // px単位。吹き出しの高さに応じて調整
+    map.panBy(0, yOffset);
+  }
+
   lastOpenedMarker = marker;
 }
 
