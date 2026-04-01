@@ -140,45 +140,18 @@ function showInfo(marker) {
   }
 
   const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
+    h.lat === marker.originalLat && h.lng === marker.getPosition().lng()
   );
   if (!data) return;
 
-  const contentHtml = `
-  <div>
-    <strong>${data.heritageName}</strong>
-
-    ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-
-    ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-
-    ${data.imageUrl ? `
-      <div style="margin:6px 0; text-align:center;">
-      <img src="${data.imageUrl}"
-  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-  onclick="openImageModal('${data.imageUrl}')">
-      </div>
-    ` : ''}
-     <!-- ★ここ追加 -->
-  ${data.credit ? `
-    <div class="infowindow-sub" style="font-size:75%; color:#777;">
-      ${data.credit}
-    </div>
-  ` : ''}
-
-  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-</div>`;
-
   infoWindow = new google.maps.InfoWindow({
-  content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16),
-  maxWidth: 280 // ← これで吹き出しの最大幅を設定
-});
+    content: `<div>${data.heritageName}</div>`, 
+    position: marker.getPosition(), // ←マーカー位置に追従
+    pixelOffset: new google.maps.Size(0, -16),
+    maxWidth: 280
+  });
 
-  infoWindow.open(map); // ← markerに紐付けない
-
+  infoWindow.open(map);
   lastOpenedMarker = marker;
 }
 
@@ -314,18 +287,13 @@ function showInfo(marker) {
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const isMobile = window.innerWidth <= 768; // スマホ判定
-const adjustedLat = isMobile ? lat - 0.00015 : lat; // スマホだけ緯度を微調整
+ const isMobile = window.innerWidth <= 768;
+const adjustedLat = isMobile ? lat - 0.00015 : lat;
 
 const marker = new google.maps.Marker({
-  position: { lat: adjustedLat, lng: lng },
+  position: { lat: adjustedLat, lng: lng }, // ←ここで下げる
   map,
-  label: { 
-    text: id.toString(), 
-    color: 'white', 
-    fontSize: '12px', 
-    fontWeight: 'normal'
-  },
+  label: { text: id.toString(), color: 'white', fontSize: '12px', fontWeight: 'normal' },
   icon: {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: iconColors[type] || 'gray',
@@ -337,7 +305,8 @@ const marker = new google.maps.Marker({
   title: heritageName,
   customRegion: region,
   customCountry: country,
-  customId: id
+  customId: id,
+  originalLat: lat // ←元の緯度を保存
 });
 
   marker.addListener('click', () => {
