@@ -160,7 +160,12 @@ function showInfo(marker) {
   </div>`;
 
   const isMobile = window.innerWidth <= 768;
-  const offsetY = isMobile ? -80 : -16;
+  let offsetY = -16; // 通常
+  if (isMobile) {
+    // マーカーを緯度0.0005下げた分に応じて、吹き出しオフセットも調整
+    // 0.0005 ≈ 50px程度（ズームや位置で微調整が必要）
+    offsetY = -66; // 以前の -80 より少し上げた
+  }
 
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
