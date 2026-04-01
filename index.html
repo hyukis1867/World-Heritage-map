@@ -315,7 +315,7 @@ function showInfo(marker) {
   const label = id.toString();
   const color = iconColors[type] || "gray";
   const isMobile = window.innerWidth <= 768; // 768px以下はスマホと判定
-const anchorY = isMobile ? -8 : -14; // スマホは少し下に
+const iconAnchorY = isMobile ? 10 : 0; // スマホは下に10pxずらす
 
 const marker = new google.maps.Marker({
   position: {lat, lng},
@@ -327,9 +327,9 @@ const marker = new google.maps.Marker({
     fillOpacity: 1,
     strokeColor: 'white',
     strokeWeight: 1,
-    scale: 14
+    scale: 14,
+    anchor: new google.maps.Point(0, iconAnchorY) // ← ここが描画位置調整
   },
-  anchorPoint: new google.maps.Point(0, anchorY),
   title: heritageName,
   customRegion: region,
   customCountry: country,
