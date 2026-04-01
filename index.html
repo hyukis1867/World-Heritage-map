@@ -605,7 +605,17 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-  map.panTo(targetMarker.getPosition());
+  const pos = targetMarker.getPosition();
+
+const isMobile = window.innerWidth <= 768;
+
+// 画面サイズに応じてオフセット調整
+const offsetY = isMobile ? 0.002 : 0.001;
+
+map.panTo({
+  lat: pos.lat() + offsetY,
+  lng: pos.lng()
+});
 
   // ★最後に表示
   setTimeout(() => {
