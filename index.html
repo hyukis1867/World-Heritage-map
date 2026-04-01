@@ -148,37 +148,31 @@ function showInfo(marker) {
   const contentHtml = `
   <div>
     <strong>${data.heritageName}</strong>
-
     ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-
     ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-
     ${data.imageUrl ? `
       <div style="margin:6px 0; text-align:center;">
       <img src="${data.imageUrl}"
-  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-  onclick="openImageModal('${data.imageUrl}')">
+      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+      onclick="openImageModal('${data.imageUrl}')">
       </div>
     ` : ''}
-     <!-- ★ここ追加 -->
-  ${data.credit ? `
-    <div class="infowindow-sub" style="font-size:75%; color:#777;">
-      ${data.credit}
-    </div>
-  ` : ''}
+    ${data.credit ? `<div class="infowindow-sub" style="font-size:75%; color:#777;">${data.credit}</div>` : ''}
+    <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+  </div>`;
 
-  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-</div>`;
+  // スマホかどうか判定
+  const isMobile = window.innerWidth <= 768; // 画面幅768px以下をスマホと判定
+  const offsetY = isMobile ? -50 : -16;      // スマホは少し下にずらす
 
   infoWindow = new google.maps.InfoWindow({
-  content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16),
-  maxWidth: 280 // ← これで吹き出しの最大幅を設定
-});
+    content: contentHtml,
+    position: marker.getPosition(),
+    pixelOffset: new google.maps.Size(0, offsetY),
+    maxWidth: 280
+  });
 
-  infoWindow.open(map); // ← markerに紐付けない
-
+  infoWindow.open(map); // markerに紐付けない
   lastOpenedMarker = marker;
 }
 
