@@ -266,6 +266,10 @@ function showInfo(marker) {
   const heritageName = columns[3].trim();
   const lat = parseFloat(columns[4]);
   const lng = parseFloat(columns[5]);
+  // ★スマホ版だけ少し下にずらす
+  if (window.innerWidth <= 768) {  // 幅768px以下をスマホ判定
+  lat -= 0.0003; // 下にずらす（微調整値）
+} 
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
