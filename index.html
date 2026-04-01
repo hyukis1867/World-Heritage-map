@@ -145,21 +145,39 @@ function showInfo(marker) {
   );
   if (!data) return;
 
-  const contentHtml = `...`; // 既存のHTML
+  const contentHtml = `
+  <div>
+    <strong>${data.heritageName}</strong>
+
+    ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
+
+    ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
+
+    ${data.imageUrl ? `
+      <div style="margin:6px 0; text-align:center;">
+      <img src="${data.imageUrl}"
+  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+  onclick="openImageModal('${data.imageUrl}')">
+      </div>
+    ` : ''}
+     <!-- ★ここ追加 -->
+  ${data.credit ? `
+    <div class="infowindow-sub" style="font-size:75%; color:#777;">
+      ${data.credit}
+    </div>
+  ` : ''}
+
+  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+</div>`;
 
   infoWindow = new google.maps.InfoWindow({
-    content: contentHtml,
-    position: marker.getPosition(),  // ←ここは元の座標
-    pixelOffset: new google.maps.Size(0, -16)
-  });
+  content: contentHtml,
+  position: marker.getPosition(),
+  pixelOffset: new google.maps.Size(0, -16),
+  maxWidth: 280 // ← これで吹き出しの最大幅を設定
+});
 
-  infoWindow.open(map);
-
-  // スマホの場合だけマップを少し下にスクロール
-  if (window.innerWidth <= 768) {
-    const yOffset = 150; // px単位。吹き出しの高さに応じて調整
-    map.panBy(0, yOffset);
-  }
+  infoWindow.open(map); // ← markerに紐付けない
 
   lastOpenedMarker = marker;
 }
