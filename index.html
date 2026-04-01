@@ -314,8 +314,10 @@ function showInfo(marker) {
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
+  const isMobile = window.innerWidth <= 768; // スマホ判定
+  const adjustedLat = (isMobile && imageUrl) ? lat - 0.0002 : lat;       
   const marker = new google.maps.Marker({
-  position: {lat, lng},
+  position: { lat: adjustedLat, lng },
   map,
   label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
   icon: {
