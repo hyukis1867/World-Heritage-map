@@ -134,38 +134,25 @@
     };
 
 function showInfo(marker) {
-  if (!marker || !marker.heritageData) return;
-
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
+  if (infoWindow) infoWindow.close();
 
   const data = marker.heritageData;
+  if (!data) return;
 
   const contentHtml = `
-  <div>
-    <strong>${data.heritageName}</strong>
-    ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-    ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-    ${data.imageUrl ? `
-      <div style="margin:6px 0; text-align:center;">
-      <img src="${data.imageUrl}"
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('${data.imageUrl}')">
-      </div>
-    ` : ''}
-    ${data.credit ? `<div class="infowindow-sub" style="font-size:75%; color:#777;">${data.credit}</div>` : ''}
-    <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-  </div>`;
+    <div>
+      <strong>${data.heritageName}</strong>
+      ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
+      ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
+      ${data.imageUrl ? `<div style="margin:6px 0; text-align:center;">
+        <img src="${data.imageUrl}" style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;" onclick="openImageModal('${data.imageUrl}')">
+      </div>` : ''}
+      ${data.credit ? `<div class="infowindow-sub" style="font-size:75%; color:#777;">${data.credit}</div>` : ''}
+      <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+    </div>`;
 
   const isMobile = window.innerWidth <= 768;
-  let offsetY = -16; // 通常
-  if (isMobile) {
-    // マーカーを緯度0.0005下げた分に応じて、吹き出しオフセットも調整
-    // 0.0005 ≈ 50px程度（ズームや位置で微調整が必要）
-    offsetY = -66; // 以前の -80 より少し上げた
-  }
+  const offsetY = isMobile ? -66 : -16;
 
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
@@ -268,10 +255,6 @@ function showInfo(marker) {
   const heritageName = columns[3].trim();
   const lat = parseFloat(columns[4]);
   const lng = parseFloat(columns[5]);
- let adjustedLat = lat;
-if (window.innerWidth <= 768) {  
-  adjustedLat -= 0.0005; // 下にずらす
-}
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
@@ -315,9 +298,9 @@ if (window.innerWidth <= 768) {
   const label = id.toString();
   const color = iconColors[type] || "gray";
 const marker = new google.maps.Marker({
-  position: {lat: adjustedLat, lng},
+  position: { lat: lat, lng: lng }, // 緯度はそのまま
   map,
-  label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
+  label: { text: id.toString(), color: 'white', fontSize: '12px', fontWeight: 'normal' },
   icon: {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: color,
@@ -330,25 +313,14 @@ const marker = new google.maps.Marker({
   customRegion: region,
   customCountry: country,
   customId: id,
+  heritageData: { id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit }
 });
-
-// ★ここでマーカーに直接データを紐付け
-marker.heritageData = {id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit};
 
 marker.addListener('click', () => {
-  if (lastOpenedMarker === marker) {
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-      lastOpenedMarker = null;
-    }
-  } else {
-    showInfo(marker);
-  }
+  showInfo(marker);
 });
 
-  markers.push(marker);
-}); // rows.forEach 終了
+markers.push(marker);// rows.forEach 終了
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
