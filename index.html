@@ -134,16 +134,14 @@
     };
 
 function showInfo(marker) {
+  if (!marker || !marker.heritageData) return;
+
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
   }
 
-  const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
-  );
-  if (!data) return;
+  const data = marker.heritageData;
 
   const contentHtml = `
   <div>
@@ -161,9 +159,8 @@ function showInfo(marker) {
     <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
   </div>`;
 
-  // スマホかどうか判定
-  const isMobile = window.innerWidth <= 768; // 画面幅768px以下をスマホと判定
-  const offsetY = isMobile ? -80 : -16;      // スマホは少し下にずらす
+  const isMobile = window.innerWidth <= 768;
+  const offsetY = isMobile ? -80 : -16;
 
   infoWindow = new google.maps.InfoWindow({
     content: contentHtml,
@@ -172,7 +169,7 @@ function showInfo(marker) {
     maxWidth: 280
   });
 
-  infoWindow.open(map); // markerに紐付けない
+  infoWindow.open(map);
   lastOpenedMarker = marker;
 }
 
@@ -312,7 +309,7 @@ if (window.innerWidth <= 768) {
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const marker = new google.maps.Marker({
+const marker = new google.maps.Marker({
   position: {lat: adjustedLat, lng},
   map,
   label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
@@ -325,21 +322,25 @@ if (window.innerWidth <= 768) {
     scale: 14
   },
   title: heritageName,
-  customRegion: region,   // ★ここは変更しない
-  customCountry: country, // ★ここも変更しない
-  customId: id
+  customRegion: region,
+  customCountry: country,
+  customId: id,
 });
-  marker.addListener('click', () => {
-    if (lastOpenedMarker === marker) {
-      if (infoWindow) {
-        infoWindow.close();
-        infoWindow = null;
-        lastOpenedMarker = null;
-      }
-    } else {
-      showInfo(marker);
+
+// ★ここでマーカーに直接データを紐付け
+marker.heritageData = {id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit};
+
+marker.addListener('click', () => {
+  if (lastOpenedMarker === marker) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+      lastOpenedMarker = null;
     }
-  });
+  } else {
+    showInfo(marker);
+  }
+});
 
   markers.push(marker);
 }); // rows.forEach 終了
