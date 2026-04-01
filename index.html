@@ -314,21 +314,25 @@ function showInfo(marker) {
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const isMobile = window.innerWidth <= 768; // 768px以下はスマホと判定
-const iconAnchorY = isMobile ? 10 : 0; // スマホは下に10pxずらす
+  const isMobile = window.innerWidth <= 768; // スマホ判定
+const adjustedLat = isMobile ? lat - 0.00015 : lat; // スマホだけ緯度を微調整
 
 const marker = new google.maps.Marker({
-  position: {lat, lng},
+  position: { lat: adjustedLat, lng: lng },
   map,
-  label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
+  label: { 
+    text: id.toString(), 
+    color: 'white', 
+    fontSize: '12px', 
+    fontWeight: 'normal'
+  },
   icon: {
     path: google.maps.SymbolPath.CIRCLE,
-    fillColor: color,
+    fillColor: iconColors[type] || 'gray',
     fillOpacity: 1,
     strokeColor: 'white',
     strokeWeight: 1,
-    scale: 14,
-    anchor: new google.maps.Point(0, iconAnchorY) // ← ここが描画位置調整
+    scale: 14
   },
   title: heritageName,
   customRegion: region,
