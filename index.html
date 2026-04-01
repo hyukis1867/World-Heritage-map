@@ -314,7 +314,10 @@ function showInfo(marker) {
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const marker = new google.maps.Marker({
+  const isMobile = window.innerWidth <= 768; // 768px以下はスマホと判定
+const anchorY = isMobile ? -8 : -14; // スマホは少し下に
+
+const marker = new google.maps.Marker({
   position: {lat, lng},
   map,
   label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
@@ -326,7 +329,7 @@ function showInfo(marker) {
     strokeWeight: 1,
     scale: 14
   },
-  anchorPoint: new google.maps.Point(0, -14), // ← ★ここに追加
+  anchorPoint: new google.maps.Point(0, anchorY),
   title: heritageName,
   customRegion: region,
   customCountry: country,
