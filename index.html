@@ -139,10 +139,10 @@ function showInfo(marker) {
     infoWindow = null;
   }
 
-const data = heritageData.find(h =>
-  h.lat === (marker.adjustedLat ?? marker.getPosition().lat()) &&
-  h.lng === marker.getPosition().lng()
-);
+  const data = heritageData.find(h =>
+    h.lat === marker.getPosition().lat() &&
+    h.lng === marker.getPosition().lng()
+  );
   if (!data) return;
 
   const contentHtml = `
@@ -314,10 +314,8 @@ const data = heritageData.find(h =>
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const isMobile = window.innerWidth <= 768; // スマホ判定
-  const adjustedLat = (isMobile && imageUrl) ? lat - 0.0002 : lat;       
   const marker = new google.maps.Marker({
-  position: { lat: adjustedLat, lng },
+  position: {lat, lng},
   map,
   label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
   icon: {
@@ -333,10 +331,7 @@ const data = heritageData.find(h =>
   customRegion: region,
   customCountry: country,
   customId: id
-})
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-marker.adjustedLat = isMobile && imageUrl ? lat - 0.00015 : lat; // 写真がある場合だけ微調整 
-    ;
+});
 
   marker.addListener('click', () => {
     if (lastOpenedMarker === marker) {
