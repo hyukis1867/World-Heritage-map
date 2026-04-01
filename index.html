@@ -605,7 +605,7 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
- const pos = targetMarker.getPosition();
+const pos = targetMarker.getPosition();
 
 // 対象データ取得
 const data = heritageData.find(h =>
@@ -614,12 +614,23 @@ const data = heritageData.find(h =>
 
 const isMobile = window.innerWidth <= 768;
 
-// 画像ありなら強め、なしなら弱め
-const offsetY = isMobile
-  ? (data && data.imageUrl ? 0.003 : 0.0015)
-  : 0.001;
+// ズーム取得
+const zoom = map.getZoom();
 
-// 中央ではなく少し下に表示
+// ズームに応じた補正（これが超重要）
+let baseOffset;
+
+// ズームが大きいほど小さくズラす
+if (zoom >= 15) baseOffset = 0.0008;
+else if (zoom >= 13) baseOffset = 0.0015;
+else baseOffset = 0.003;
+
+// 画像ありなら強め
+const offsetY = isMobile
+  ? (data && data.imageUrl ? baseOffset * 2 : baseOffset)
+  : baseOffset * 0.5;
+
+// 移動
 map.panTo({
   lat: pos.lat() + offsetY,
   lng: pos.lng()
