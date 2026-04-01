@@ -133,52 +133,26 @@
       "複合遺産": "deepskyblue"
     };
 
-function showInfo(marker) {
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
+const contentHtml = `...`; // 既存のHTML
+
+  let infoLat = marker.getPosition().lat();
+  let infoLng = marker.getPosition().lng();
+
+  // スマホ判定
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    // 吹き出し分だけ緯度を少し下げる（0.001~0.003くらいで調整）
+    infoLat -= 0.002;
   }
 
-  const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
-  );
-  if (!data) return;
-
-  const contentHtml = `
-  <div>
-    <strong>${data.heritageName}</strong>
-
-    ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-
-    ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-
-    ${data.imageUrl ? `
-      <div style="margin:6px 0; text-align:center;">
-      <img src="${data.imageUrl}"
-  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-  onclick="openImageModal('${data.imageUrl}')">
-      </div>
-    ` : ''}
-     <!-- ★ここ追加 -->
-  ${data.credit ? `
-    <div class="infowindow-sub" style="font-size:75%; color:#777;">
-      ${data.credit}
-    </div>
-  ` : ''}
-
-  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-</div>`;
-
   infoWindow = new google.maps.InfoWindow({
-  content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16),
-  maxWidth: 280 // ← これで吹き出しの最大幅を設定
-});
+    content: contentHtml,
+    position: { lat: infoLat, lng: infoLng },
+    pixelOffset: new google.maps.Size(0, -16)
+  });
 
-  infoWindow.open(map); // ← markerに紐付けない
-
+  infoWindow.open(map);
   lastOpenedMarker = marker;
 }
 
