@@ -139,10 +139,10 @@ function showInfo(marker) {
     infoWindow = null;
   }
 
-  const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
-  );
+const data = heritageData.find(h =>
+  h.lat === (marker.adjustedLat ?? marker.getPosition().lat()) &&
+  h.lng === marker.getPosition().lng()
+);
   if (!data) return;
 
   const contentHtml = `
@@ -333,7 +333,10 @@ function showInfo(marker) {
   customRegion: region,
   customCountry: country,
   customId: id
-});
+})
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+marker.adjustedLat = isMobile && imageUrl ? lat - 0.00015 : lat; // 写真がある場合だけ微調整 
+    ;
 
   marker.addListener('click', () => {
     if (lastOpenedMarker === marker) {
