@@ -605,20 +605,19 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
- const pos = targetMarker.getPosition();
+const pos = targetMarker.getPosition();
 const offsetLat = 0.002;
 
-// ① 先にInfoWindow表示
+// 先に表示
 showInfo(targetMarker);
 
-// ② その後にズラす（これが効く）
+// 後からズラす
 setTimeout(() => {
   map.panTo({
     lat: pos.lat() + offsetLat,
     lng: pos.lng()
   });
 }, 50);
-
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
           const urlLng = parseFloat(urlParams.get('lng'));
