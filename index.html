@@ -606,11 +606,9 @@ markerCluster.addMarkers(visibleMarkers);
 
   // ★移動
   const pos = targetMarker.getPosition();
-
-// 下にずらす量（ここだけ調整すればOK）
 const offsetLat = 0.002;
 
-map.panTo({
+map.setCenter({
   lat: pos.lat() + offsetLat,
   lng: pos.lng()
 });
