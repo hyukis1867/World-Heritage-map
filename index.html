@@ -618,6 +618,7 @@ setTimeout(() => {
     lng: pos.lng()
   });
 }, 50);
+}); // ← ★これを追加（超重要）
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
           const urlLng = parseFloat(urlParams.get('lng'));
