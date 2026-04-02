@@ -170,11 +170,14 @@ function showInfo(marker) {
   <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>`;
 
-  infoWindow = new google.maps.InfoWindow({
+ infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
-  position: marker.getPosition(),
-  pixelOffset: new google.maps.Size(0, -16),
-  maxWidth: 280 // ← これで吹き出しの最大幅を設定
+  maxWidth: 280
+});
+
+infoWindow.open({
+  map,
+  anchor: marker
 });
 
   infoWindow.open(map); // ← markerに紐付けない
