@@ -614,10 +614,12 @@ map.setCenter({
 });
 
   // ★最後に表示
-  setTimeout(() => {
-    showInfo(targetMarker);
-  }, 200);
-});
+setTimeout(() => {
+  map.setCenter({
+    lat: pos.lat() + offsetLat,
+    lng: pos.lng()
+  });
+}, 100);
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
