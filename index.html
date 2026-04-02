@@ -604,22 +604,24 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.clearMarkers();
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
-  // ★移動
-  const pos = targetMarker.getPosition();
+// ★移動（確実にズラす）
+const pos = targetMarker.getPosition();
 const offsetLat = 0.002;
 
-map.setCenter({
-  lat: pos.lat() + offsetLat,
-  lng: pos.lng()
-});
+// 一旦中央へ
+map.panTo(pos);
 
-  // ★最後に表示
+// 少し遅らせてズラす（←これが重要）
 setTimeout(() => {
-  map.setCenter({
+  map.panTo({
     lat: pos.lat() + offsetLat,
     lng: pos.lng()
   });
-}, 100);
+
+  // 吹き出し表示（←これも重要）
+  showInfo(targetMarker);
+
+}, 150);
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
