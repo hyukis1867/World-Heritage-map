@@ -71,7 +71,7 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-
+    let isSelectingHeritage = false;
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -397,18 +397,15 @@ function showInfo(marker) {
   }
 });
 
-          function updateMarkers() {
+         function updateMarkers() {
+  if (isSelectingHeritage) return; // ★追加
+
   const bounds = map.getBounds();
   if (!bounds) return;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
-
-    if (bounds.contains(pos)) {
-      marker.setVisible(true);
-    } else {
-      marker.setVisible(false);
-    }
+    marker.setVisible(bounds.contains(pos));
   });
 }
 
@@ -605,19 +602,22 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-const pos = targetMarker.getPosition();
-const offsetLat = 0.002;
+isSelectingHeritage = true; // ★追加
 
-// ★先に移動
+const pos = targetMarker.getPosition();
+const offsetLat = 0.004; // 少し強め推奨
+
+// 先に移動
 map.panTo({
   lat: pos.lat() + offsetLat,
   lng: pos.lng()
 });
 
-// ★移動完了後に表示（重要）
+// 移動後に表示
 setTimeout(() => {
   showInfo(targetMarker);
-}, 200);
+  isSelectingHeritage = false; // ★戻す
+}, 300);
 }); // ← ★これを追加（超重要）
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
