@@ -605,7 +605,15 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-  map.panTo(targetMarker.getPosition());
+  const pos = targetMarker.getPosition();
+
+// 下にずらす量（ここだけ調整すればOK）
+const offsetLat = 0.002;
+
+map.panTo({
+  lat: pos.lat() + offsetLat,
+  lng: pos.lng()
+});
 
   // ★最後に表示
   setTimeout(() => {
