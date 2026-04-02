@@ -71,7 +71,7 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let isSelectingHeritage = false;
+
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -170,14 +170,11 @@ function showInfo(marker) {
   <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>`;
 
- infoWindow = new google.maps.InfoWindow({
+  infoWindow = new google.maps.InfoWindow({
   content: contentHtml,
-  maxWidth: 280
-});
-
-infoWindow.open({
-  map,
-  anchor: marker
+  position: marker.getPosition(),
+  pixelOffset: new google.maps.Size(0, -16),
+  maxWidth: 280 // ← これで吹き出しの最大幅を設定
 });
 
   infoWindow.open(map); // ← markerに紐付けない
@@ -400,15 +397,18 @@ infoWindow.open({
   }
 });
 
-         function updateMarkers() {
-  if (isSelectingHeritage) return; // ★追加
-
+          function updateMarkers() {
   const bounds = map.getBounds();
   if (!bounds) return;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
-    marker.setVisible(bounds.contains(pos));
+
+    if (bounds.contains(pos)) {
+      marker.setVisible(true);
+    } else {
+      marker.setVisible(false);
+    }
   });
 }
 
@@ -605,23 +605,14 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-isSelectingHeritage = true; // ★追加
+  map.panTo(targetMarker.getPosition());
 
-const pos = targetMarker.getPosition();
-const offsetLat = 0.03; // 少し強め推奨
-
-// 先に移動
-map.panTo({
-  lat: pos.lat() + offsetLat,
-  lng: pos.lng()
+  // ★最後に表示
+  setTimeout(() => {
+    showInfo(targetMarker);
+  }, 200);
 });
 
-// 移動後に表示
-setTimeout(() => {
-  showInfo(targetMarker);
-  isSelectingHeritage = false; // ★戻す
-}, 300);
-}); // ← ★これを追加（超重要）
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
           const urlLng = parseFloat(urlParams.get('lng'));
