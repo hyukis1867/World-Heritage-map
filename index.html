@@ -608,10 +608,11 @@ markerCluster.addMarkers(visibleMarkers);
 const pos = targetMarker.getPosition();
 const offsetLat = 0.1;
 // 後からズラす
-showInfo(targetMarker);
-
 setTimeout(() => {
-  map.panBy(0, -150);
+  map.panTo({
+    lat: pos.lat() + offsetLat,
+    lng: pos.lng()
+  });
 }, 50);
 }); // ← ★これを追加（超重要）
           const urlParams = new URLSearchParams(window.location.search);
