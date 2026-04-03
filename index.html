@@ -145,9 +145,8 @@ function showInfo(marker) {
   );
   if (!data) return;
 
-const thumbUrl = data.thumbUrl;
-const fullUrl = data.fullUrl;
-
+  // ★ここに書く（これが正解）
+  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
 
 const thumbUrl = fileName
   ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
