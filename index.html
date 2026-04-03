@@ -172,12 +172,13 @@ const contentHtml = `
     </div>
   ` : ''}
 
-  ${data.credit ? ` ... ` : ''}
-    <div class="infowindow-sub" style="font-size:75%; color:#777;">
-  ${data.credit}
-    </div>
- 
-  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+  ${data.credit ? `
+  <div class="infowindow-sub" style="font-size:75%; color:#777;">
+    ${data.credit}
+  </div>
+` : ''}
+
+<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>
 `;
 
