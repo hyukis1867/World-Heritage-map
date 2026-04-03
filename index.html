@@ -145,31 +145,35 @@ function showInfo(marker) {
   );
   if (!data) return;
 
+  // ★ここに書く（これが正解）
+  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
+  const fullUrl = fileName
+    ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
+    : '';
+
   const contentHtml = `
   <div>
     <strong>${data.heritageName}</strong>
 
-    const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
-const fullUrl = fileName
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
-  : '';
-
     ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-
     ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
     ${data.imageUrl ? `
-  <div style="margin:6px 0; text-align:center;">
-    <img src="${data.imageUrl}"
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${data.imageUrl.split('/').pop()}')">
-  </div>
-` : ''}
-     <!-- ★ここ追加 -->
-  ${data.credit ? `
-    <div class="infowindow-sub" style="font-size:75%; color:#777;">
-      ${data.credit}
-    </div>
+      <div style="margin:6px 0; text-align:center;">
+        <img src="${data.imageUrl}"
+          style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+          onclick="openImageModal('${fullUrl}')">
+      </div>
+    ` : ''}
+
+    ${data.credit ? `
+      <div class="infowindow-sub" style="font-size:75%; color:#777;">
+        ${data.credit}
+      </div>
+    ` : ''}
+
+    <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+  </div>`;
   ` : ''}
 
   <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
