@@ -163,13 +163,6 @@ const contentHtml = `
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
   ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
-const contentHtml = `
-<div>
-  <strong>${data.heritageName}</strong>
-
-  ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-  ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
-
   ${data.imageUrl ? `
     <div style="margin:6px 0; text-align:center;">
       <img src="${thumbUrl}"
@@ -181,7 +174,7 @@ const contentHtml = `
 
   ${data.credit ? `
     <div class="infowindow-sub" style="font-size:75%; color:#777;">
-      ${data.credit}
+  ${data.credit}
     </div>
   ` : ''}
 
