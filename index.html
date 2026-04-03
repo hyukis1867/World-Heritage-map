@@ -147,9 +147,14 @@ function showInfo(marker) {
 
   // ★ここに書く（これが正解）
   const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
-  const fullUrl = fileName
-    ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
-    : '';
+
+const thumbUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
+  : '';
+
+const fullUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
+  : '';
 
 const contentHtml = `
 <div>
