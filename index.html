@@ -651,12 +651,19 @@ markerCluster.addMarkers(visibleMarkers);
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
-      const modal = document.getElementById("image-modal");
-      const img = document.getElementById("modal-img");
+  const modal = document.getElementById("image-modal");
+  const img = document.getElementById("modal-img");
 
-      img.src = src;
-      modal.style.display = "flex";
-    }
+  // モーダルを非表示にして、ロード完了後に表示
+  modal.style.display = "none";
+
+  const tempImg = new Image();
+  tempImg.onload = () => {
+    img.src = src;
+    modal.style.display = "flex";
+  };
+  tempImg.src = src;
+}
 
     document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("image-modal");
