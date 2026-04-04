@@ -292,7 +292,7 @@ const contentHtml = `
   const linkUrl = columns[10]?.trim();
   const gradeRaw = columns[11]?.trim() || "";
   const imageUrl = columns[12]?.trim(); // ★追加
-  const credit = columns[15]?.trim();
+  const credit = columns[14]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
