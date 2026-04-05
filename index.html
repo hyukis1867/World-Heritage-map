@@ -72,6 +72,7 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
+    let favorites = new Set();
 
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
@@ -156,6 +157,12 @@ const fullUrl = fileName
 
 const contentHtml = `
 <div>
+  
+<div style="text-align:right; cursor:pointer;"
+    onclick="toggleFavorite('${data.country}_${data.id}')">
+    ★
+  </div>
+
   <strong>${data.heritageName}</strong>
 
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
