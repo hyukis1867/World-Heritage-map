@@ -53,6 +53,15 @@
         <option value="">-- 地域を選択 --</option>
       </select>
     </div>
+    <div id="subregion-box" style="display:none; margin-bottom:2px;">
+  <select id="subregion-select">
+    <option value="">-- サブ地域を選択 --</option>
+    <option value="北ヨーロッパ">北ヨーロッパ</option>
+    <option value="西ヨーロッパ">西ヨーロッパ</option>
+    <option value="東ヨーロッパ">東ヨーロッパ</option>
+    <option value="南ヨーロッパ">南ヨーロッパ</option>
+  </select>
+</div>
     <div id="country-box" style="display: none; margin-bottom: 2px;">
       <select id="country-select">
         <option value="">-- 国を選択 --</option>
@@ -241,6 +250,15 @@ const contentHtml = `
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
+          
+        // region === "欧州" のときサブ地域でフィルタ
+const subRegionCountryMap = {
+  "北ヨーロッパ": ["アイスランド共和国","スウェーデン王国","ノルウェー王国","デンマーク王国","フィンランド共和国","エストニア共和国","ラトビア共和国","リトアニア共和国"],
+  "西ヨーロッパ": ["英国","フランス共和国","ベルギー王国","オランダ王国","ルクセンブルク大公国","アイルランド共和国","アンドラ公国"],
+  "東ヨーロッパ": ["ロシア連邦","ウクライナ","ポーランド共和国","チェコ共和国","スロバキア共和国","ハンガリー","ベラルーシ共和国","ブルガリア共和国","モルドバ共和国","北マケドニア共和国","ルーマニア","セルビア共和国","ボスニア・ヘルツェゴビナ","クロアチア共和国","スロベニア共和国","モンテネグロ"],
+  "南ヨーロッパ": ["イタリア共和国","ギリシャ共和国","トルコ共和国","マルタ共和国","キプロス共和国","スペイン王国","ポルトガル共和国"]
+};          
+          
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
@@ -436,21 +454,13 @@ map.addListener('idle', updateMarkers);
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-          regionSelect.addEventListener('change', () => {
-  const selectedRegion = regionSelect.value;
-
-markers.forEach(marker => {
-  if (!selectedRegion) {
-    marker.setVisible(true);   // 地域未選択なら全表示
-  } else {
-    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
-  }
-});
-
-// MarkerClusterer を更新
-markerCluster.clearMarkers();
-const visibleMarkers = markers.filter(marker => marker.getVisible());
-markerCluster.addMarkers(visibleMarkers);
+// region === "欧州" のときサブ地域でフィルタ
+const subRegionCountryMap = {
+  "北ヨーロッパ": ["アイスランド共和国","スウェーデン王国","ノルウェー王国","デンマーク王国","フィンランド共和国","エストニア共和国","ラトビア共和国","リトアニア共和国"],
+  "西ヨーロッパ": ["英国","フランス共和国","ベルギー王国","オランダ王国","ルクセンブルク大公国","アイルランド共和国","アンドラ公国"],
+  "東ヨーロッパ": ["ロシア連邦","ウクライナ","ポーランド共和国","チェコ共和国","スロバキア共和国","ハンガリー","ベラルーシ共和国","ブルガリア共和国","モルドバ共和国","北マケドニア共和国","ルーマニア","セルビア共和国","ボスニア・ヘルツェゴビナ","クロアチア共和国","スロベニア共和国","モンテネグロ"],
+  "南ヨーロッパ": ["イタリア共和国","ギリシャ共和国","トルコ共和国","マルタ共和国","キプロス共和国","スペイン王国","ポルトガル共和国"]
+};
             
   // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
@@ -544,6 +554,9 @@ markerCluster.addMarkers(visibleMarkers);
             countrySelect.value = '';
           });
 
+
+
+      
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
