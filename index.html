@@ -593,9 +593,12 @@ subregionSelect.addEventListener('change', () => {
   });
 
   // マーカー制御
-  markers.forEach(marker => {
-    marker.setVisible(countries.includes(marker.customCountry));
-  });
+markers.forEach(marker => {
+marker.setVisible(
+marker.customRegion === "欧州" &&
+countries.includes(marker.customCountry)
+);
+});
 
   // クラスタ更新
   markerCluster.clearMarkers();
