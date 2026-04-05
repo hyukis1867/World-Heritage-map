@@ -453,14 +453,6 @@ map.addListener('idle', updateMarkers);
 
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
-
-// region === "欧州" のときサブ地域でフィルタ
-const subRegionCountryMap = {
-  "北ヨーロッパ": ["アイスランド共和国","スウェーデン王国","ノルウェー王国","デンマーク王国","フィンランド共和国","エストニア共和国","ラトビア共和国","リトアニア共和国"],
-  "西ヨーロッパ": ["英国","フランス共和国","ベルギー王国","オランダ王国","ルクセンブルク大公国","アイルランド共和国","アンドラ公国"],
-  "東ヨーロッパ": ["ロシア連邦","ウクライナ","ポーランド共和国","チェコ共和国","スロバキア共和国","ハンガリー","ベラルーシ共和国","ブルガリア共和国","モルドバ共和国","北マケドニア共和国","ルーマニア","セルビア共和国","ボスニア・ヘルツェゴビナ","クロアチア共和国","スロベニア共和国","モンテネグロ"],
-  "南ヨーロッパ": ["イタリア共和国","ギリシャ共和国","トルコ共和国","マルタ共和国","キプロス共和国","スペイン王国","ポルトガル共和国"]
-};
             
   // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
@@ -554,7 +546,67 @@ const subRegionCountryMap = {
             countrySelect.value = '';
           });
 
+const subregionSelect = document.getElementById("subregion-select");
 
+regionSelect.addEventListener('change', () => {
+  const selectedRegion = regionSelect.value;
+
+  // ★サブ地域の表示制御
+  document.getElementById("subregion-box").style.display =
+    (selectedRegion === "欧州") ? "block" : "none";
+
+  // 初期化
+  subregionSelect.value = "";
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+
+  countrySelect.disabled = true;
+  heritageSelect.disabled = true;
+
+  document.getElementById("country-box").style.display = "none";
+  document.getElementById("heritage-box").style.display = "none";
+
+  // マーカー表示（従来通り）
+  markers.forEach(marker => {
+    marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+  });
+
+  // クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+});
+
+subregionSelect.addEventListener('change', () => {
+  const selectedSub = subregionSelect.value;
+  const countries = subRegionCountryMap[selectedSub] || [];
+
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  countrySelect.disabled = !selectedSub;
+
+  document.getElementById("country-box").style.display =
+    selectedSub ? "block" : "none";
+
+  countries.forEach(country => {
+    const option = document.createElement('option');
+    option.value = country;
+
+    const idCount = countryHeritageMap[country]
+      ? Object.keys(countryHeritageMap[country]).length
+      : 0;
+
+    option.textContent = `${country} (${idCount})`;
+    countrySelect.appendChild(option);
+  });
+
+  // マーカー制御
+  markers.forEach(marker => {
+    marker.setVisible(countries.includes(marker.customCountry));
+  });
+
+  // クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+});
 
       
           countrySelect.addEventListener('change', () => {
