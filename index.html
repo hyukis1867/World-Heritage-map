@@ -463,28 +463,7 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
-// ★吹き出しリセット
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
-  lastOpenedMarker = null;
 
-  // ★全マーカー表示（邪魔されないように）
-  markers.forEach(m => m.setVisible(true));
-
-  // ★クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers);
-
-  // ★移動
-  map.panTo(marker.getPosition());
-
-  // ★表示
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
-});
 
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
@@ -688,18 +667,20 @@ markerCluster.addMarkers(visibleMarkers);
           }
 
           if (targetPlace) {
-            const decodedPlace = decodeURIComponent(targetPlace);
-            setTimeout(() => {
-              const targetMarker = markers.find(m => m.title === decodedPlace);
-              if (targetMarker) {
-                map.setCenter(targetMarker.getPosition());
-                map.setZoom(10);
-              }
-            }, 500);
-          }
-        });
+  const decodedPlace = decodeURIComponent(targetPlace);
+  setTimeout(() => {
+    const targetMarker = markers.find(m => m.title === decodedPlace);
+    if (targetMarker) {
+      map.setCenter(targetMarker.getPosition());
+      map.setZoom(10);
     }
-    updateFavoriteDropdown();
+  }, 500);
+}
+
+// 👇ここ！！
+updateFavoriteDropdown();
+
+});
 
 // 👇ここ！！！！（これが「外」）
 
