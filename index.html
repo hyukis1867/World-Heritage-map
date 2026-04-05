@@ -155,15 +155,21 @@ const fullUrl = fileName
   ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
   : '';
 
+const key = `${data.country}_${data.id}`;
+const isFav = favorites.has(key);
+
 const contentHtml = `
 <div>
-  
-<div style="text-align:right; cursor:pointer;"
-    onclick="toggleFavorite('${data.country}_${data.id}')">
-    ★
-  </div>
 
-  <strong>${data.heritageName}</strong>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <strong>${data.heritageName}</strong>
+
+    <span
+      style="cursor:pointer; font-size:18px; color:${isFav ? 'gold' : 'white'}; text-shadow:0 0 2px black;"
+      onclick="toggleFavorite('${key}')">
+      ★
+    </span>
+  </div>
 
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
   ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
