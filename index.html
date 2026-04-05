@@ -77,6 +77,9 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
+    let currentRegion = null;
+    let currentSubregion = null;
+    let currentCountry = null;
 
     const subregionMap = {
   "欧州": {
@@ -437,7 +440,11 @@ if (!markerIndex.has(key)) {
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
-    marker.setVisible(bounds.contains(pos));
+
+    // ★ここが重要：元の表示条件を維持
+    if (marker.getVisible()) {
+      marker.setVisible(bounds.contains(pos));
+    }
   });
 }
 
