@@ -53,6 +53,11 @@
         <option value="">-- 地域を選択 --</option>
       </select>
     </div>
+    <div id="subregion-box" style="display: none; margin-bottom: 2px;">
+  <select id="subregion-select">
+    <option value="">-- サブ地域を選択 --</option>
+  </select>
+</div>
     <div id="country-box" style="display: none; margin-bottom: 2px;">
       <select id="country-select">
         <option value="">-- 国を選択 --</option>
@@ -73,6 +78,14 @@
     let lastOpenedMarker = null;
     let heritageData = [];
 
+    const subregionMap = {
+  "欧州": {
+    "北ヨーロッパ": ["ノルウェー王国","スウェーデン王国","フィンランド共和国","デンマーク王国","アイスランド共和国"],
+    "西ヨーロッパ": ["フランス共和国","ベルギー王国","オランダ王国","ルクセンブルク大公国","ドイツ連邦共和国"],
+    "南ヨーロッパ": ["イタリア共和国","スペイン王国","ポルトガル共和国","ギリシャ共和国","マルタ共和国","キプロス共和国"],
+    "東ヨーロッパ": ["ポーランド共和国","チェコ共和国","スロバキア共和国","ハンガリー","ルーマニア","ブルガリア共和国","ウクライナ","ベラルーシ共和国","ロシア連邦"]
+  }
+};
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -437,6 +450,8 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
+          const subregionSelect = document.getElementById('subregion-select');
+
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
@@ -451,6 +466,26 @@ markers.forEach(marker => {
   }
 });
 
+// ★ここに入れる（⑤）
+subregionSelect.addEventListener('change', () => {
+  const selectedSubregion = subregionSelect.value;
+
+  markers.forEach(marker => {
+    if (!selectedSubregion) {
+      marker.setVisible(marker.customRegion === "欧州");
+    } else {
+      marker.setVisible(
+        marker.customRegion === "欧州" &&
+        subregionMap[marker.customCountry] === selectedSubregion
+      );
+    }
+  });
+
+  // クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+});
+
 // MarkerClusterer を更新
 markerCluster.clearMarkers();
 const visibleMarkers = markers.filter(marker => marker.getVisible());
@@ -462,6 +497,21 @@ markerCluster.addMarkers(visibleMarkers);
 
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
   document.getElementById("heritage-box").style.display = "none";
+
+   // ★ここにサブ地域処理を追加
+  subregionSelect.innerHTML = '<option value="">-- サブ地域を選択 --</option>';
+  document.getElementById("subregion-box").style.display = "none";
+
+  if (subregionMap[selectedRegion]) {
+    document.getElementById("subregion-box").style.display = "block";
+
+    Object.keys(subregionMap[selectedRegion]).forEach(sub => {
+      const option = document.createElement('option');
+      option.value = sub;
+      option.textContent = sub;
+      subregionSelect.appendChild(option);
+    });
+  }
 
             const countryCodeMap = {
               "日本": "JP",
