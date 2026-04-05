@@ -53,15 +53,6 @@
         <option value="">-- 地域を選択 --</option>
       </select>
     </div>
-    <div id="subregion-box" style="display:none; margin-bottom:2px;">
-  <select id="subregion-select">
-    <option value="">-- サブ地域を選択 --</option>
-    <option value="北ヨーロッパ">北ヨーロッパ</option>
-    <option value="西ヨーロッパ">西ヨーロッパ</option>
-    <option value="東ヨーロッパ">東ヨーロッパ</option>
-    <option value="南ヨーロッパ">南ヨーロッパ</option>
-  </select>
-</div>
     <div id="country-box" style="display: none; margin-bottom: 2px;">
       <select id="country-select">
         <option value="">-- 国を選択 --</option>
@@ -250,15 +241,6 @@ const contentHtml = `
       fetch('places.csv')
         .then(response => response.text())
         .then(csv => {
-          
-        // region === "欧州" のときサブ地域でフィルタ
-const subRegionCountryMap = {
-  "北ヨーロッパ": ["アイスランド共和国","スウェーデン王国","ノルウェー王国","デンマーク王国","フィンランド共和国","エストニア共和国","ラトビア共和国","リトアニア共和国"],
-  "西ヨーロッパ": ["英国","フランス共和国","ベルギー王国","オランダ王国","ルクセンブルク大公国","アイルランド共和国","アンドラ公国"],
-  "東ヨーロッパ": ["ロシア連邦","ウクライナ","ポーランド共和国","チェコ共和国","スロバキア共和国","ハンガリー","ベラルーシ共和国","ブルガリア共和国","モルドバ共和国","北マケドニア共和国","ルーマニア","セルビア共和国","ボスニア・ヘルツェゴビナ","クロアチア共和国","スロベニア共和国","モンテネグロ"],
-  "南ヨーロッパ": ["イタリア共和国","ギリシャ共和国","トルコ共和国","マルタ共和国","キプロス共和国","スペイン王国","ポルトガル共和国"]
-};          
-          
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
@@ -448,38 +430,34 @@ google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 // 地図操作後
 map.addListener('idle', updateMarkers);
 
- const regionSelect = document.getElementById('region-select');
-const countrySelect = document.getElementById('country-select');
-const heritageSelect = document.getElementById('heritage-select');
-const subregionSelect = document.getElementById("subregion-select");
+          const countrySelect = document.getElementById('country-select');
+          const heritageSelect = document.getElementById('heritage-select');
 
-regionSelect.addEventListener('change', () => {
+          countrySelect.disabled = true;
+          heritageSelect.disabled = true;
 
-// サブ地域表示
-document.getElementById("subregion-box").style.display =
-(selectedRegion === "欧州") ? "block" : "none";
+          regionSelect.addEventListener('change', () => {
+  const selectedRegion = regionSelect.value;
 
-// 初期化
-subregionSelect.value = "";
-countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-
-countrySelect.disabled = true;
-heritageSelect.disabled = true;
-
-document.getElementById("country-box").style.display = "none";
-document.getElementById("heritage-box").style.display = "none";
-
-// マーカー制御
 markers.forEach(marker => {
-marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+  if (!selectedRegion) {
+    marker.setVisible(true);   // 地域未選択なら全表示
+  } else {
+    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
+  }
 });
 
-// クラスタ更新
+// MarkerClusterer を更新
 markerCluster.clearMarkers();
-markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-});    
+const visibleMarkers = markers.filter(marker => marker.getVisible());
+markerCluster.addMarkers(visibleMarkers);
             
+  // ★これ追加
+  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+  countrySelect.disabled = !selectedRegion;
+
+  document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
+  document.getElementById("heritage-box").style.display = "none";
 
             const countryCodeMap = {
               "日本": "JP",
@@ -544,6 +522,8 @@ markerCluster.addMarkers(markers.filter(m => m.getVisible()));
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
 
+            if (selectedRegion && regionCountryMap[selectedRegion]) {
+              // 重要：ここでは再ソートしない（上で既にソート済み）
               const countriesArray = Array.from(regionCountryMap[selectedRegion]);
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
@@ -564,70 +544,6 @@ markerCluster.addMarkers(markers.filter(m => m.getVisible()));
             countrySelect.value = '';
           });
 
-
-  const selectedRegion = regionSelect.value;
-
-  // ★サブ地域の表示制御
-  document.getElementById("subregion-box").style.display =
-    (selectedRegion === "欧州") ? "block" : "none";
-
-  // 初期化
-  subregionSelect.value = "";
-  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-
-  countrySelect.disabled = true;
-  heritageSelect.disabled = true;
-
-  document.getElementById("country-box").style.display = "none";
-  document.getElementById("heritage-box").style.display = "none";
-
-  // マーカー表示（従来通り）
-  markers.forEach(marker => {
-    marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-  });
-
-  // クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-});
-
-subregionSelect.addEventListener('change', () => {
-  const selectedSub = subregionSelect.value;
-  const countries = subRegionCountryMap[selectedSub] || [];
-
-  countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-  countrySelect.disabled = !selectedSub;
-
-  document.getElementById("country-box").style.display =
-    selectedSub ? "block" : "none";
-
-  countries.forEach(country => {
-    const option = document.createElement('option');
-    option.value = country;
-
-    const idCount = countryHeritageMap[country]
-      ? Object.keys(countryHeritageMap[country]).length
-      : 0;
-
-    option.textContent = `${country} (${idCount})`;
-    countrySelect.appendChild(option);
-  });
-
-  // マーカー制御
-markers.forEach(marker => {
-marker.setVisible(
-marker.customRegion === "欧州" &&
-countries.includes(marker.customCountry)
-);
-});
-
-  // クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-});
-
-      
           countrySelect.addEventListener('change', () => {
   const selectedCountry = countrySelect.value;
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
