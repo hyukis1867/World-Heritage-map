@@ -63,14 +63,6 @@
         <option value="">-- 遺産を選択 --</option>
       </select>
     </div>
-
-<div id="favorite-box" style="margin-top:6px;">
-  <select id="favorite-select">
-    <option value="">-- お気に入り --</option>
-  </select>
-</div>
-
-
   </div>
 
   <script>
@@ -80,7 +72,6 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let favorites = new Set();
 
     // ★ここに置く（initMapの外）
   function getCapitalLatLng(countryName) {
@@ -163,21 +154,9 @@ const fullUrl = fileName
   ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
   : '';
 
-const key = `${data.country}_${data.id}`;
-const isFav = favorites.has(key);
-
 const contentHtml = `
 <div>
-
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <strong>${data.heritageName}</strong>
-
-    <span
-      style="cursor:pointer; font-size:14px; color:${isFav ? 'gold' : 'white'}; text-shadow:0 0 2px black;"
-      onclick="toggleFavorite('${key}')">
-      ★
-    </span>
-  </div>
+  <strong>${data.heritageName}</strong>
 
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
   ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
@@ -241,11 +220,6 @@ const contentHtml = `
         gestureHandling: 'greedy',
         tilt: 0
       });
-
- const saved = localStorage.getItem('favorites');
-  if (saved) {
-    favorites = new Set(JSON.parse(saved));
-  }
 
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');
@@ -463,8 +437,6 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
-
-
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
@@ -667,82 +639,20 @@ markerCluster.addMarkers(visibleMarkers);
           }
 
           if (targetPlace) {
-  const decodedPlace = decodeURIComponent(targetPlace);
-  setTimeout(() => {
-    const targetMarker = markers.find(m => m.title === decodedPlace);
-    if (targetMarker) {
-      map.setCenter(targetMarker.getPosition());
-      map.setZoom(10);
+            const decodedPlace = decodeURIComponent(targetPlace);
+            setTimeout(() => {
+              const targetMarker = markers.find(m => m.title === decodedPlace);
+              if (targetMarker) {
+                map.setCenter(targetMarker.getPosition());
+                map.setZoom(10);
+              }
+            }, 500);
+          }
+        });
     }
-  }, 500);
-}
-
-// 👇ここ！！
-updateFavoriteDropdown();
-
-});
 
 // 👇ここ！！！！（これが「外」）
-
-function updateFavoriteDropdown() {
-  const select = document.getElementById('favorite-select');
-  if (!select) return;
-
-  select.innerHTML = '<option value="">-- お気に入り --</option>';
-
-  favorites.forEach(key => {
-    const marker = markerIndex.get(key);
-    if (!marker) return;
-
-    const option = document.createElement('option');
-    option.value = key;
-    option.textContent = marker.customData.heritageName;
-    select.appendChild(option);
-  });
-}
-
-function toggleFavorite(key) {
-  if (favorites.has(key)) {
-    favorites.delete(key);
-  } else {
-    favorites.add(key);
-  }
-
-  localStorage.setItem('favorites', JSON.stringify([...favorites]));
-
-  updateFavoriteDropdown(); // ★これ追加（超重要）
-
-  if (lastOpenedMarker) {
-    showInfo(lastOpenedMarker);
-  }
-}
-
     function openImageModal(src) {
-  const modal = document.getElementById("image-modal");
-  const img = document.getElementById("modal-img");
-
-  modal.style.display = "none";
-
-  const tempImg = new Image();
-  tempImg.onload = () => {
-    img.src = src;
-    modal.style.display = "flex";
-  };
-  tempImg.src = src;
-}
-
-     
-
-
-
-  localStorage.setItem('favorites', JSON.stringify([...favorites]));
-
-  // ★これ重要（色更新）
-  if (lastOpenedMarker) {
-    showInfo(lastOpenedMarker);
-  }
-}
-
   const modal = document.getElementById("image-modal");
   const img = document.getElementById("modal-img");
 
