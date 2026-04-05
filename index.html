@@ -68,6 +68,7 @@
   <script>
     let map;
     let markers = [];
+    let markerIndex = new Map();
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
@@ -139,11 +140,8 @@ function showInfo(marker) {
     infoWindow = null;
   }
 
-  const data = heritageData.find(h =>
-    h.lat === marker.getPosition().lat() &&
-    h.lng === marker.getPosition().lng()
-  );
-  if (!data) return;
+  const data = marker.customData;
+if (!data) return;
 
   // ★ここに書く（これが正解）
   const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
@@ -343,7 +341,12 @@ const contentHtml = `
   customRegion: region,
   customCountry: country,
   customId: id
-});
+}); 
+marker.customData = {
+  id, region, country, heritageName, lat, lng,
+  type, year, localNameJP, localNameEN,
+  linkUrl, grade, imageUrl, credit
+};
 
   marker.addListener('click', () => {
     if (lastOpenedMarker === marker) {
@@ -358,7 +361,11 @@ const contentHtml = `
   });
 
   markers.push(marker);
-}); // rows.forEach 終了
+
+const key = `${country}_${id}`;
+if (!markerIndex.has(key)) {
+  markerIndex.set(key, marker);
+}; // rows.forEach 終了
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
@@ -416,10 +423,10 @@ const contentHtml = `
   markers.forEach(marker => {
     const pos = marker.getPosition();
 
-    if (marker.getVisible()) {
+   markers.forEach(marker => {
+  const pos = marker.getPosition();
   marker.setVisible(bounds.contains(pos));
-}
-  });
+});
 }
 
 // 初回
@@ -593,9 +600,7 @@ markerCluster.addMarkers(visibleMarkers);
   const [selectedCountry, id] = selectedHeritage.split('.');
   if (!selectedCountry || !id) return;
 
-  const targetMarker = markers.find(marker =>
-    marker.customCountry === selectedCountry && marker.customId === id
-  );
+  const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
   if (!targetMarker) return;
 
   // ★完全削除
