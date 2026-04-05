@@ -448,13 +448,37 @@ google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 // 地図操作後
 map.addListener('idle', updateMarkers);
 
-          const countrySelect = document.getElementById('country-select');
-          const heritageSelect = document.getElementById('heritage-select');
-          const subregionSelect = document.getElementById("subregion-select");
+ const regionSelect = document.getElementById('region-select');
+const countrySelect = document.getElementById('country-select');
+const heritageSelect = document.getElementById('heritage-select');
+const subregionSelect = document.getElementById("subregion-select");
+
 regionSelect.addEventListener('change', () => {
 
-          countrySelect.disabled = true;
-          heritageSelect.disabled = true;
+// サブ地域表示
+document.getElementById("subregion-box").style.display =
+(selectedRegion === "欧州") ? "block" : "none";
+
+// 初期化
+subregionSelect.value = "";
+countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
+heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+
+countrySelect.disabled = true;
+heritageSelect.disabled = true;
+
+document.getElementById("country-box").style.display = "none";
+document.getElementById("heritage-box").style.display = "none";
+
+// マーカー制御
+markers.forEach(marker => {
+marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+});
+
+// クラスタ更新
+markerCluster.clearMarkers();
+markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+});    
             
 
             const countryCodeMap = {
