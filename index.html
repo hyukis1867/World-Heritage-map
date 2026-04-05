@@ -699,11 +699,11 @@ markerCluster.addMarkers(visibleMarkers);
           }
         });
     }
+    updateFavoriteDropdown();
 
 // 👇ここ！！！！（これが「外」）
-    function openImageModal(src) {
 
-      function updateFavoriteDropdown() {
+function updateFavoriteDropdown() {
   const select = document.getElementById('favorite-select');
   if (!select) return;
 
@@ -726,6 +726,33 @@ function toggleFavorite(key) {
   } else {
     favorites.add(key);
   }
+
+  localStorage.setItem('favorites', JSON.stringify([...favorites]));
+
+  updateFavoriteDropdown(); // ★これ追加（超重要）
+
+  if (lastOpenedMarker) {
+    showInfo(lastOpenedMarker);
+  }
+}
+
+    function openImageModal(src) {
+  const modal = document.getElementById("image-modal");
+  const img = document.getElementById("modal-img");
+
+  modal.style.display = "none";
+
+  const tempImg = new Image();
+  tempImg.onload = () => {
+    img.src = src;
+    modal.style.display = "flex";
+  };
+  tempImg.src = src;
+}
+
+     
+
+
 
   localStorage.setItem('favorites', JSON.stringify([...favorites]));
 
