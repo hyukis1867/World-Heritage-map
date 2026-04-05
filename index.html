@@ -360,12 +360,14 @@ marker.customData = {
     }
   });
 
-  markers.push(marker);
+ markers.push(marker);
 
+// ★ここに入れる
 const key = `${country}_${id}`;
 if (!markerIndex.has(key)) {
   markerIndex.set(key, marker);
-}; // rows.forEach 終了
+}
+}); // rows.forEach
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
@@ -416,17 +418,14 @@ if (!markerIndex.has(key)) {
   }
 });
 
-          function updateMarkers() {
+  function updateMarkers() {
   const bounds = map.getBounds();
   if (!bounds) return;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
-
-   markers.forEach(marker => {
-  const pos = marker.getPosition();
-  marker.setVisible(bounds.contains(pos));
-});
+    marker.setVisible(bounds.contains(pos));
+  });
 }
 
 // 初回
