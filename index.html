@@ -63,6 +63,14 @@
         <option value="">-- 遺産を選択 --</option>
       </select>
     </div>
+
+<div id="favorite-box" style="margin-top:6px;">
+  <select id="favorite-select">
+    <option value="">-- お気に入り --</option>
+  </select>
+</div>
+
+
   </div>
 
   <script>
@@ -165,7 +173,7 @@ const contentHtml = `
     <strong>${data.heritageName}</strong>
 
     <span
-      style="cursor:pointer; font-size:18px; color:${isFav ? 'gold' : 'white'}; text-shadow:0 0 2px black;"
+      style="cursor:pointer; font-size:14px; color:${isFav ? 'gold' : 'white'}; text-shadow:0 0 2px black;"
       onclick="toggleFavorite('${key}')">
       ★
     </span>
@@ -233,6 +241,11 @@ const contentHtml = `
         gestureHandling: 'greedy',
         tilt: 0
       });
+
+ const saved = localStorage.getItem('favorites');
+  if (saved) {
+    favorites = new Set(JSON.parse(saved));
+  }
 
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');
@@ -450,6 +463,29 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
+// ★吹き出しリセット
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
+  lastOpenedMarker = null;
+
+  // ★全マーカー表示（邪魔されないように）
+  markers.forEach(m => m.setVisible(true));
+
+  // ★クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers);
+
+  // ★移動
+  map.panTo(marker.getPosition());
+
+  // ★表示
+  setTimeout(() => {
+    showInfo(marker);
+  }, 200);
+});
+
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
@@ -666,6 +702,39 @@ markerCluster.addMarkers(visibleMarkers);
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
+
+      function updateFavoriteDropdown() {
+  const select = document.getElementById('favorite-select');
+  if (!select) return;
+
+  select.innerHTML = '<option value="">-- お気に入り --</option>';
+
+  favorites.forEach(key => {
+    const marker = markerIndex.get(key);
+    if (!marker) return;
+
+    const option = document.createElement('option');
+    option.value = key;
+    option.textContent = marker.customData.heritageName;
+    select.appendChild(option);
+  });
+}
+
+function toggleFavorite(key) {
+  if (favorites.has(key)) {
+    favorites.delete(key);
+  } else {
+    favorites.add(key);
+  }
+
+  localStorage.setItem('favorites', JSON.stringify([...favorites]));
+
+  // ★これ重要（色更新）
+  if (lastOpenedMarker) {
+    showInfo(lastOpenedMarker);
+  }
+}
+
   const modal = document.getElementById("image-modal");
   const img = document.getElementById("modal-img");
 
