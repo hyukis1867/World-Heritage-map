@@ -450,6 +450,8 @@ map.addListener('idle', updateMarkers);
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
+          const subregionSelect = document.getElementById("subregion-select");
+regionSelect.addEventListener('change', () => {
 
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
@@ -518,8 +520,6 @@ map.addListener('idle', updateMarkers);
             heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
             heritageSelect.disabled = true;
 
-            if (selectedRegion && regionCountryMap[selectedRegion]) {
-              // 重要：ここでは再ソートしない（上で既にソート済み）
               const countriesArray = Array.from(regionCountryMap[selectedRegion]);
               countriesArray.forEach(country => {
                 if (country && country.trim() !== '') {
@@ -540,9 +540,7 @@ map.addListener('idle', updateMarkers);
             countrySelect.value = '';
           });
 
-const subregionSelect = document.getElementById("subregion-select");
 
-regionSelect.addEventListener('change', () => {
   const selectedRegion = regionSelect.value;
 
   // ★サブ地域の表示制御
