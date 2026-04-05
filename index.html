@@ -416,11 +416,9 @@ const contentHtml = `
   markers.forEach(marker => {
     const pos = marker.getPosition();
 
-    if (bounds.contains(pos)) {
-      marker.setVisible(true);
-    } else {
-      marker.setVisible(false);
-    }
+    if (marker.getVisible()) {
+  marker.setVisible(bounds.contains(pos));
+}
   });
 }
 
