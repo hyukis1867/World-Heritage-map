@@ -621,7 +621,23 @@ markerCluster.addMarkers(visibleMarkers);
   markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
-  map.panTo(targetMarker.getPosition());
+  const latLng = targetMarker.getPosition();
+
+// 画面の縦方向に少しずらす（px指定）
+const offsetY = 150; // ← 調整ポイント（スマホなら100〜200が目安）
+
+const scale = Math.pow(2, map.getZoom());
+const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+const pixelOffset = new google.maps.Point(0, offsetY / scale);
+
+const newCenter = map.getProjection().fromPointToLatLng(
+  new google.maps.Point(
+    worldCoordinateCenter.x,
+    worldCoordinateCenter.y + pixelOffset.y
+  )
+);
+
+map.panTo(newCenter);
 
   // ★最後に表示
   setTimeout(() => {
