@@ -624,7 +624,7 @@ markerCluster.addMarkers(visibleMarkers);
   const latLng = targetMarker.getPosition();
 
 // 画面の縦方向に少しずらす（px指定）
-const offsetY = 150; // ← 調整ポイント（スマホなら100〜200が目安）
+const offsetY = 200; // ← 調整ポイント（スマホなら100〜200が目安）
 
 const scale = Math.pow(2, map.getZoom());
 const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
