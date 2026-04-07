@@ -442,6 +442,13 @@ map.addListener('idle', updateMarkers);
           heritageSelect.disabled = true;
 
           regionSelect.addEventListener('change', () => {
+
+if (infoWindow) {
+  infoWindow.close();
+  infoWindow = null;
+}
+lastOpenedMarker = null;
+
   const selectedRegion = regionSelect.value;
 
 markers.forEach(marker => {
@@ -551,6 +558,15 @@ markerCluster.addMarkers(visibleMarkers);
           });
 
           countrySelect.addEventListener('change', () => {
+
+// ★吹き出しを強制的に閉じる
+if (infoWindow) {
+  infoWindow.close();
+  infoWindow = null;
+}
+lastOpenedMarker = null;
+
+
   const selectedCountry = countrySelect.value;
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
