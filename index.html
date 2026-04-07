@@ -123,7 +123,8 @@
     "中華人民共和国": {lat: 39.9042, lng: 116.4074} ,
     "カンボジア王国": {lat: 11.5564, lng: 104.9282} ,
     "トルコ共和国": {lat: 39.9334, lng: 32.8597},
-    "シリア・アラブ共和国": {lat: 33.5138, lng: 36.2765}
+    "シリア・アラブ共和国": {lat: 33.5138, lng: 36.2765},
+    "バチカン市国": {lat: 41.9029, lng: 12.4534}
   };
   return capitals[countryName] || null;
 }
@@ -510,6 +511,7 @@ markerCluster.addMarkers(visibleMarkers);
               "ルーマニア":"RO",
               "ロシア連邦":"RU",
               "ルクセンブルク大公国":"LU",
+              "バチカン市国（教皇領）":"VA",
             };
 
             function getFlagEmojiFromName(countryName) {
