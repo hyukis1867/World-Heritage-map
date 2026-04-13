@@ -96,6 +96,20 @@
   style="width:100%; font-size:14px; box-sizing:border-box;">
   </div>
 
+<div id="suggest-box" style="
+  position:absolute;
+  top:120px;
+  left:10px;
+  width:200px;
+  max-height:200px;
+  overflow-y:auto;
+  background:rgba(255,255,255,0.95);
+  border:1px solid rgba(0,0,0,0.1);
+  border-radius:4px;
+  z-index:10;
+  display:none;
+"></div>
+
   <script>
     let map;
     let markers = [];
@@ -114,6 +128,16 @@ function refreshCluster() {
   markerCluster.clearMarkers();
   markerCluster.addMarkers(visibleMarkers);
 }
+
+function normalizeText(str) {
+  if (!str) return '';
+  return str
+    .toLowerCase()
+    .normalize('NFKC')
+    .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60)); // カタカナ→ひらがな
+}
+
+
 
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -733,68 +757,70 @@ refreshCluster();
 // 🔍 検索機能（ここに入れる）
 const searchInput = document.getElementById('search-input');
 
+const suggestBox = document.getElementById('suggest-box');
+
 searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
+  const keyword = normalizeText(searchInput.value.trim());
 
- if (!keyword) {
+  suggestBox.innerHTML = '';
+  suggestBox.style.display = 'none';
 
-    // 吹き出し閉じる
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    // 全マーカー表示
+  if (!keyword) {
     markers.forEach(m => m.setVisible(true));
-
-    refreshCluster(); 
-
-    // ★プルダウンもリセット（重要）
-    document.getElementById('region-select').value = '';
-    document.getElementById('country-select').value = '';
-    document.getElementById('heritage-select').value = '';
-
-    document.getElementById("country-box").style.display = "none";
-    document.getElementById("heritage-box").style.display = "none";
-
+    refreshCluster();
     return;
   }
 
+  // 候補抽出
+  const results = heritageData.filter(d => {
+    return (
+      normalizeText(d.heritageName).includes(keyword) ||
+      normalizeText(d.localNameJP).includes(keyword) ||
+      normalizeText(d.localNameEN).includes(keyword)
+    );
+  }).slice(0, 30); // 最大30件
 
-  if (!keyword) return;
+  if (results.length === 0) return;
 
-const found = heritageData.find(d =>
-  d.heritageName.toLowerCase().includes(keyword) ||
-  (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-  (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-);
+  suggestBox.style.display = 'block';
 
-if (!found) return;
+  results.forEach(d => {
+    const div = document.createElement('div');
+    div.style.padding = '4px';
+    div.style.cursor = 'pointer';
+    div.textContent = `${d.id}. ${d.heritageName}`;
 
-// ★ここ重要：完全一致の1点を特定
-const marker = markerIndex.get(`${found.country}_${found.id}`);
+    div.addEventListener('click', () => {
+      suggestBox.style.display = 'none';
 
-if (!marker) return;
+      // ★同一国＋同一IDのマーカー全部取得
+      const targetMarkers = markers.filter(m =>
+        m.customData.country === d.country &&
+        m.customData.id === d.id
+      );
 
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
+      if (targetMarkers.length === 0) return;
+
+      // 全非表示
+      markers.forEach(m => m.setVisible(false));
+
+      // 対象だけ表示
+      targetMarkers.forEach(m => m.setVisible(true));
+
+      refreshCluster();
+
+      // 移動（最初の1つ）
+      const first = targetMarkers[0];
+      map.panTo(first.getPosition());
+
+      setTimeout(() => {
+        showInfo(first);
+      }, 200);
+    });
+
+    suggestBox.appendChild(div);
+  });
 });
-
-// ★この1点だけ表示
-marker.setVisible(true);
-
-
-// 移動
-map.panTo(marker.getPosition());
-
-setTimeout(() => {
-  showInfo(marker);
-}, 200);
-});
-
-        });
     }
 
 // 👇ここ！！！！（これが「外」）
