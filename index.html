@@ -105,6 +105,14 @@
     let heritageData = [];
 
     // ★ここに置く（initMapの外）
+function refreshCluster() {
+  if (!markerCluster) return;
+
+  const visibleMarkers = markers.filter(m => m.getVisible());
+
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
+}
   function getCapitalLatLng(countryName) {
     const capitals = {    
     "アイスランド共和国": {lat: 64.1355, lng: -21.8954},
@@ -497,10 +505,7 @@ markers.forEach(marker => {
   }
 });
 
-// MarkerClusterer を更新
-markerCluster.clearMarkers();
-const visibleMarkers = markers.filter(marker => marker.getVisible());
-markerCluster.addMarkers(visibleMarkers);
+
             
   // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
@@ -595,6 +600,8 @@ markerCluster.addMarkers(visibleMarkers);
             countrySelect.value = '';
           });
 
+refreshCluster();
+
           countrySelect.addEventListener('change', () => {
 
 // ★吹き出しを強制的に閉じる
@@ -631,10 +638,7 @@ lastOpenedMarker = null;
     marker.setVisible(marker.customCountry === selectedCountry);
   });
 
-  // --- MarkerClusterer を更新 ---
-  markerCluster.clearMarkers();
-  const visibleMarkers = markers.filter(marker => marker.getVisible());
-  markerCluster.addMarkers(visibleMarkers);
+  
 
   heritageSelect.value = '';
 
@@ -646,6 +650,7 @@ lastOpenedMarker = null;
       // ズームは変更せず現在のまま
     }
   }
+   refreshCluster();
 });
 
           heritageSelect.addEventListener('change', () => {
@@ -670,9 +675,6 @@ lastOpenedMarker = null;
     marker.setVisible(marker.customCountry === selectedCountry);
   });
 
-  // ★クラスタ再構築
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
 
   // ★移動
   const latLng = targetMarker.getPosition();
@@ -697,6 +699,9 @@ map.panTo(newCenter);
   setTimeout(() => {
     showInfo(targetMarker);
   }, 200);
+
+refreshCluster();  
+
 });
 
           const urlParams = new URLSearchParams(window.location.search);
@@ -738,9 +743,7 @@ searchInput.addEventListener('input', () => {
     // 全マーカー表示
     markers.forEach(m => m.setVisible(true));
 
-    // クラスタ再構築
-    markerCluster.clearMarkers();
-    markerCluster.addMarkers(markers);
+    refreshCluster(); 
 
     // ★プルダウンもリセット（重要）
     document.getElementById('region-select').value = '';
@@ -780,9 +783,6 @@ markers.forEach(m => {
 // ★この1点だけ表示
 marker.setVisible(true);
 
-// クラスタ更新
-markerCluster.clearMarkers();
-markerCluster.addMarkers([marker]);
 
 // 移動
 map.panTo(marker.getPosition());
