@@ -713,36 +713,40 @@ searchInput.addEventListener('input', () => {
 
   if (!keyword) return;
 
-  const found = heritageData.find(d =>
-    d.heritageName.toLowerCase().includes(keyword) ||
-    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-  );
+const found = heritageData.find(d =>
+  d.heritageName.toLowerCase().includes(keyword) ||
+  (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
+  (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
+);
 
-  if (!found) return;
+if (!found) return;
 
-  const key = `${found.country}_${found.id}`;
-  const marker = markerIndex.get(key);
-  if (!marker) return;
+// ★ここ重要：完全一致の1点を特定
+const marker = markers.find(m =>
+  m.customData.lat === found.lat &&
+  m.customData.lng === found.lng
+);
 
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
-  lastOpenedMarker = null;
+if (!marker) return;
 
-  markers.forEach(m => {
-    m.setVisible(m.customCountry === found.country);
-  });
+// ★全マーカー非表示
+markers.forEach(m => {
+  m.setVisible(false);
+});
 
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+// ★この1点だけ表示
+marker.setVisible(true);
 
-  map.panTo(marker.getPosition());
+// クラスタ更新
+markerCluster.clearMarkers();
+markerCluster.addMarkers([marker]);
 
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
+// 移動
+map.panTo(marker.getPosition());
+
+setTimeout(() => {
+  showInfo(marker);
+}, 200);
 });
 
         });
