@@ -774,26 +774,24 @@ const matchedMarkers = markers.filter(m =>
   m.customId === found.id
 );
 
-if (!marker) return;
-
 // 全部非表示
 markers.forEach(m => m.setVisible(false));
 
-// ヒットしたもの全部表示
+// ヒットしたものだけ表示
 matchedMarkers.forEach(m => m.setVisible(true));
 
 // クラスタ更新
 markerCluster.clearMarkers();
 markerCluster.addMarkers(matchedMarkers);
 
-// 移動
+// 移動＆吹き出し
 if (matchedMarkers.length > 0) {
   const first = matchedMarkers[0];
 
   map.panTo(first.getPosition());
 
   setTimeout(() => {
-    showInfo(first); // ← ここはそのまま1個だけ
+    showInfo(first);
   }, 200);
 }
 
