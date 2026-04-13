@@ -773,10 +773,7 @@ const found = heritageData.find(d =>
 if (!found) return;
 
 // ★ここ重要：完全一致の1点を特定
-const marker = markers.find(m =>
-  m.customData.id === found.id &&
-  m.customData.lng === found.lng
-);
+const marker = markerIndex.get(`${found.country}_${found.id}`);
 
 if (!marker) return;
 
