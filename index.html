@@ -103,10 +103,11 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
+    let markerCluster; // ★これを一番上に追加
 
     // ★ここに置く（initMapの外）
-function refreshCluster() {
-  if (!markerCluster) return;
+  markerCluster = new markerClusterer.MarkerClusterer({
+
 
   const visibleMarkers = markers.filter(m => m.getVisible());
 
@@ -598,9 +599,12 @@ markers.forEach(marker => {
 
             heritageSelect.value = '';
             countrySelect.value = '';
-          });
 
 refreshCluster();
+
+          });
+
+
 
           countrySelect.addEventListener('change', () => {
 
