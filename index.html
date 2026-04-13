@@ -14,35 +14,23 @@ html, body, #map {
 }
 
 #dropdown-container {
-  position: absolute;
-  top: 40px;
-  left: 10px;
-  z-index: 5;
-  font-family: sans-serif;
+  position:absolute;
+  top:40px;
+  left:10px;
+  z-index:5;
+  font-family:sans-serif;
 }
 
 select, input {
-  width: 200px;
-  font-size: 14px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 4px;
-}
-
-.infowindow-localname {
-  text-align: right;
-  font-size: 90%;
-  color: #555;
-}
-
-.infowindow-sub {
-  text-align: right;
-  font-size: 85%;
-  color: #444;
+  width:200px;
+  font-size:14px;
+  background:rgba(255,255,255,0.9);
+  border:1px solid rgba(0,0,0,0.1);
+  border-radius:4px;
 }
 
 .gm-style-iw button.gm-ui-hover-effect {
-  display: none !important;
+  display:none !important;
 }
 
 .gm-style .gm-style-mtc {
@@ -62,142 +50,7 @@ select, input {
   <input id="search-input" placeholder="検索">
 </div>
 
-<!-- modal -->
 <div id="image-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;justify-content:center;align-items:center;">
   <span id="modal-close" style="position:absolute;top:20px;right:30px;font-size:30px;color:white;cursor:pointer;">×</span>
   <img id="modal-img" style="max-width:90%;max-height:90%;">
 </div>
-
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap"></script>
-
-<script>
-let map;
-let markers = [];
-let markerIndex = new Map();
-let infoWindow = null;
-let heritageData = [];
-let markerCluster;
-
-const iconColors = {
-  "文化遺産":"#F9A825",
-  "自然遺産":"#2E7D32",
-  "複合遺産":"deepskyblue"
-};
-
-const capitals = {
-  "日本": {lat:35.6895,lng:139.6917},
-  "フランス共和国": {lat:48.8566,lng:2.3522}
-};
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center:{lat:41.9,lng:12.4},
-    zoom:3,
-    gestureHandling:"greedy"
-  });
-
-  setupUI();
-  loadCSV();
-}
-
-function setupUI() {
-  document.getElementById("search-input").addEventListener("input", onSearch);
-  document.getElementById("modal-close").onclick = closeModal;
-}
-
-function loadCSV() {
-  fetch("places.csv")
-    .then(r => r.text())
-    .then(text => {
-      const rows = text.trim().split("\n").slice(1);
-      rows.forEach(parseRow);
-      renderMarkers();
-      initCluster();
-    });
-}
-
-function parseRow(row) {
-  const c = row.split(",");
-  const id = c[0];
-  const region = c[1];
-  const country = c[2];
-  const name = c[3];
-  const lat = parseFloat(c[4]);
-  const lng = parseFloat(c[5]);
-  const type = c[6];
-
-  const marker = new google.maps.Marker({
-    position:{lat,lng},
-    map,
-    label:id,
-    icon:{
-      path:google.maps.SymbolPath.CIRCLE,
-      fillColor:iconColors[type]||"gray",
-      fillOpacity:1,
-      strokeColor:"#fff",
-      strokeWeight:1,
-      scale:12
-    }
-  });
-
-  marker.data = {id,region,country,name,lat,lng,type};
-
-  marker.addListener("click",()=>showInfo(marker));
-
-  markers.push(marker);
-  markerIndex.set(country+"_"+id, marker);
-  heritageData.push(marker.data);
-}
-
-function showInfo(marker) {
-  if(infoWindow) infoWindow.close();
-
-  infoWindow = new google.maps.InfoWindow({
-    content:`<b>${marker.data.name}</b>`
-  });
-
-  infoWindow.open(map, marker);
-}
-
-function renderMarkers() {
-  markers.forEach(m=>m.setMap(map));
-}
-
-function initCluster() {
-  markerCluster = new markerClusterer.MarkerClusterer({
-    map,
-    markers
-  });
-}
-
-function onSearch(e) {
-  const k = e.target.value.toLowerCase();
-
-  if(!k){
-    markers.forEach(m=>m.setVisible(true));
-    markerCluster.clearMarkers();
-    markerCluster.addMarkers(markers);
-    return;
-  }
-
-  const m = markers.find(x=>x.data.name.toLowerCase().includes(k));
-  if(!m) return;
-
-  markers.forEach(x=>x.setVisible(false));
-  m.setVisible(true);
-
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers([m]);
-
-  map.panTo(m.getPosition());
-  showInfo(m);
-}
-
-function closeModal(){
-  document.getElementById("image-modal").style.display="none";
-}
-</script>
-
-</body>
-</html>
