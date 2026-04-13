@@ -706,43 +706,43 @@ map.panTo(newCenter);
             }, 500);
           }
 // 🔍 検索機能（ここに入れる）
-const searchInput = document.getElementById('search-input');
-
 searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
+const keyword = searchInput.value.trim().toLowerCase();
 
-  if (!keyword) return;
+const words = keyword.split(/\s+/).filter(w => w); // ★複数条件
 
-  const found = heritageData.find(d =>
-    d.heritageName.toLowerCase().includes(keyword) ||
-    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-  );
+const options = Array.from(heritageSelect.options).slice(1);
 
-  if (!found) return;
+const matched = [];
 
-  const key = `${found.country}_${found.id}`;
-  const marker = markerIndex.get(key);
-  if (!marker) return;
+options.forEach(option => {
+const text = option.textContent.toLowerCase();
 
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
-  lastOpenedMarker = null;
+// ★AND条件（全部含む）
+const isMatch = words.every(word => text.includes(word));
 
-  markers.forEach(m => {
-    m.setVisible(m.customCountry === found.country);
-  });
+if (isMatch) {
+matched.push(option);
+}
+});
 
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+// ★ここが「先頭一致優先」
+matched.sort((a, b) => {
+const aText = a.textContent.toLowerCase();
+const bText = b.textContent.toLowerCase();
 
-  map.panTo(marker.getPosition());
+const aStarts = words.some(word => aText.startsWith(word));
+const bStarts = words.some(word => bText.startsWith(word));
 
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
+if (aStarts && !bStarts) return -1;
+if (!aStarts && bStarts) return 1;
+
+return aText.localeCompare(bText);
+});
+
+// 再構築
+heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+matched.forEach(option => heritageSelect.appendChild(option));
 });
 
         });
