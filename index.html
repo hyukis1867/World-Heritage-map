@@ -81,7 +81,7 @@
        type="text"
   id="search-input"
   placeholder="🔍 遺産名で検索"
-  style="width:100%; font-size:14px; box-sizing:border-box;">
+  style="width:100%; font-size:14px; box-sizing:border-box;"
   </div>
 
   <script>
@@ -708,50 +708,45 @@ map.panTo(newCenter);
 // 🔍 検索機能（ここに入れる）
 const searchInput = document.getElementById('search-input');
 
-if (searchInput) {
-  searchInput.addEventListener('input', () => {
-    const keyword = searchInput.value.trim().toLowerCase();
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.toLowerCase().trim();
 
-    if (!keyword) return;
+  if (!keyword) return;
 
-    const words = keyword.split(/\s+/).filter(w => w);
+  const found = heritageData.find(d =>
+    d.heritageName.toLowerCase().includes(keyword) ||
+    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
+    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
+  );
 
-    const found = heritageData.find(d => {
-      const text = (
-        d.heritageName + ' ' +
-        (d.localNameJP || '') + ' ' +
-        (d.localNameEN || '')
-      ).toLowerCase();
+  if (!found) return;
 
-      return words.every(word => text.includes(word));
-    });
+  const key = `${found.country}_${found.id}`;
+  const marker = markerIndex.get(key);
+  if (!marker) return;
 
-    if (!found) return;
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
+  lastOpenedMarker = null;
 
-    const key = `${found.country}_${found.id}`;
-    const marker = markerIndex.get(key);
-    if (!marker) return;
-
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    markers.forEach(m => {
-      m.setVisible(m.customCountry === found.country);
-    });
-
-    markerCluster.clearMarkers();
-    markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-
-    map.panTo(marker.getPosition());
-
-    setTimeout(() => {
-      showInfo(marker);
-    }, 200);
+  markers.forEach(m => {
+    m.setVisible(m.customCountry === found.country);
   });
-}
+
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+
+  map.panTo(marker.getPosition());
+
+  setTimeout(() => {
+    showInfo(marker);
+  }, 200);
+});
+
+        });
+    }
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
@@ -770,29 +765,23 @@ if (searchInput) {
 }
 
     document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("image-modal");
-  if (modal) {
-    modal.addEventListener("click", () => {
-      modal.style.display = "none";
+      const modal = document.getElementById("image-modal");
+      if (modal) {
+        modal.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+      }
     });
-  }
 
-  // ★これ追加
-  const closeBtn = document.getElementById("modal-close");
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      document.getElementById("image-modal").style.display = "none";
-    };
-  }
-});
+  document.getElementById("modal-close").onclick = () => {
+  document.getElementById("image-modal").style.display = "none";
+  };
   </script>
 
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
+  </script>
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-
-<!-- ② 後にこれ -->
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
-</script>
 <div id="image-modal" style="
   display:none;
   position:fixed;
