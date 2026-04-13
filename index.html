@@ -77,12 +77,13 @@
       </select>
     </div>
 <div id="search-box" style="margin-top:6px;">
-    <input
-       type="text"
-  id="search-input"
-  placeholder="🔍 遺産名で検索"
-  style="width:100%; font-size:14px; box-sizing:border-box;"
-  </div>
+  <input
+    type="text"
+    id="search-input"
+    placeholder="🔍 遺産名で検索"
+    style="width:100%; font-size:14px; box-sizing:border-box;"
+  >
+</div>
 
   <script>
     let map;
@@ -747,7 +748,9 @@ searchInput.addEventListener('input', () => {
   matched.forEach(option => heritageSelect.appendChild(option));
 });
 
-  if (!keyword) return;
+  if (!keyword) {
+  return; // ←今はそのままでOK（あとで改善も可）
+}
 
   const found = heritageData.find(d =>
     d.heritageName.toLowerCase().includes(keyword) ||
