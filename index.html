@@ -64,14 +64,10 @@
   .gm-style .gm-style-mtc {
   transform: scale(0.85);
   transform-origin: left bottom;
-  bottom: 20px !important;   /* ← 数値を小さくすると上に行く */
+  bottom: 40px !important;   /* ← 数値を小さくすると上に行く */
   left: 10px !important;
 }
 
-body {
-  transform: translateY(-20px);
-}
-    
 
   </style>
 </head>
@@ -772,33 +768,34 @@ const found = heritageData.find(d =>
 
 if (!found) return;
 
-// ★ここ重要：完全一致の1点を特定
-const marker = markers.find(m =>
-  m.customData.lat === found.lat &&
-  m.customData.lng === found.lng
+const matchedMarkers = markers.filter(m =>
+  m.customData.heritageName === found.heritageName &&
+  m.customCountry === found.country &&
+  m.customId === found.id
 );
 
 if (!marker) return;
 
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
-});
+// 全部非表示
+markers.forEach(m => m.setVisible(false));
 
-// ★この1点だけ表示
-marker.setVisible(true);
+// ヒットしたもの全部表示
+matchedMarkers.forEach(m => m.setVisible(true));
 
 // クラスタ更新
 markerCluster.clearMarkers();
-markerCluster.addMarkers([marker]);
+markerCluster.addMarkers(matchedMarkers);
 
 // 移動
-map.panTo(marker.getPosition());
+if (matchedMarkers.length > 0) {
+  const first = matchedMarkers[0];
 
-setTimeout(() => {
-  showInfo(marker);
-}, 200);
-});
+  map.panTo(first.getPosition());
+
+  setTimeout(() => {
+    showInfo(first); // ← ここはそのまま1個だけ
+  }, 200);
+}
 
         });
     }
