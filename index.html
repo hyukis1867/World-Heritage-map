@@ -709,45 +709,53 @@ map.panTo(newCenter);
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
-const keyword = searchInput.value.trim().toLowerCase();
+  const keyword = searchInput.value.trim().toLowerCase();
 
-const words = keyword.split(/\s+/).filter(w => w); // ★複数条件
+  if (!keyword) return;
 
-const options = Array.from(heritageSelect.options).slice(1);
+  const words = keyword.split(/\s+/).filter(w => w);
 
-const matched = [];
+  // ★データから検索（ここが重要）
+  const found = heritageData.find(d => {
+    const text = (
+      d.heritageName + ' ' +
+      (d.localNameJP || '') + ' ' +
+      (d.localNameEN || '')
+    ).toLowerCase();
 
-options.forEach(option => {
-const text = option.textContent.toLowerCase();
+    return words.every(word => text.includes(word));
+  });
 
-// ★AND条件（全部含む）
-const isMatch = words.every(word => text.includes(word));
+  if (!found) return;
 
-if (isMatch) {
-matched.push(option);
-}
+  const key = `${found.country}_${found.id}`;
+  const marker = markerIndex.get(key);
+  if (!marker) return;
+
+  // ★吹き出しリセット
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
+  lastOpenedMarker = null;
+
+  // ★該当国だけ表示
+  markers.forEach(m => {
+    m.setVisible(m.customCountry === found.country);
+  });
+
+  // ★クラスタ更新
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+
+  // ★移動
+  map.panTo(marker.getPosition());
+
+  // ★表示
+  setTimeout(() => {
+    showInfo(marker);
+  }, 200);
 });
-
-// ★ここが「先頭一致優先」
-matched.sort((a, b) => {
-const aText = a.textContent.toLowerCase();
-const bText = b.textContent.toLowerCase();
-
-const aStarts = words.some(word => aText.startsWith(word));
-const bStarts = words.some(word => bText.startsWith(word));
-
-if (aStarts && !bStarts) return -1;
-if (!aStarts && bStarts) return 1;
-
-return aText.localeCompare(bText);
-});
-
-// 再構築
-heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-matched.forEach(option => heritageSelect.appendChild(option));
-});
-
-        });
     }
 
 // 👇ここ！！！！（これが「外」）
