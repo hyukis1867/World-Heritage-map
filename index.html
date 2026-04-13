@@ -708,55 +708,50 @@ map.panTo(newCenter);
 // 🔍 検索機能（ここに入れる）
 const searchInput = document.getElementById('search-input');
 
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.trim().toLowerCase();
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    const keyword = searchInput.value.trim().toLowerCase();
 
-  if (!keyword) return;
+    if (!keyword) return;
 
-  const words = keyword.split(/\s+/).filter(w => w);
+    const words = keyword.split(/\s+/).filter(w => w);
 
-  // ★データから検索（ここが重要）
-  const found = heritageData.find(d => {
-    const text = (
-      d.heritageName + ' ' +
-      (d.localNameJP || '') + ' ' +
-      (d.localNameEN || '')
-    ).toLowerCase();
+    const found = heritageData.find(d => {
+      const text = (
+        d.heritageName + ' ' +
+        (d.localNameJP || '') + ' ' +
+        (d.localNameEN || '')
+      ).toLowerCase();
 
-    return words.every(word => text.includes(word));
-  });
+      return words.every(word => text.includes(word));
+    });
 
-  if (!found) return;
+    if (!found) return;
 
-  const key = `${found.country}_${found.id}`;
-  const marker = markerIndex.get(key);
-  if (!marker) return;
+    const key = `${found.country}_${found.id}`;
+    const marker = markerIndex.get(key);
+    if (!marker) return;
 
-  // ★吹き出しリセット
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
-  lastOpenedMarker = null;
-
-  // ★該当国だけ表示
-  markers.forEach(m => {
-    m.setVisible(m.customCountry === found.country);
-  });
-
-  // ★クラスタ更新
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(markers.filter(m => m.getVisible()));
-
-  // ★移動
-  map.panTo(marker.getPosition());
-
-  // ★表示
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
-});
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
     }
+    lastOpenedMarker = null;
+
+    markers.forEach(m => {
+      m.setVisible(m.customCountry === found.country);
+    });
+
+    markerCluster.clearMarkers();
+    markerCluster.addMarkers(markers.filter(m => m.getVisible()));
+
+    map.panTo(marker.getPosition());
+
+    setTimeout(() => {
+      showInfo(marker);
+    }, 200);
+  });
+}
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
