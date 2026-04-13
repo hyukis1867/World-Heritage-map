@@ -766,8 +766,6 @@ const found = heritageData.find(d =>
   (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
 );
 
-if (!found) return;
-
 const matchedMarkers = markers.filter(m =>
   m.customData.heritageName === found.heritageName &&
   m.customCountry === found.country &&
