@@ -28,7 +28,7 @@
   }
   #dropdown-container {
     position: absolute;
-    top: 40px;
+    top: 30px;
     left: 10px;
     z-index: 5;
     background: transparent;
@@ -62,9 +62,11 @@
   }
 
   .gm-style .gm-style-mtc {
-    transform: scale(0.85);
-    transform-origin: left bottom;
-  }
+  transform: scale(0.85);
+  transform-origin: left bottom;
+  bottom: 50px !important;   /* ← 数値を小さくすると上に行く */
+  left: 10px !important;
+}
 
 
   </style>
