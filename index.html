@@ -302,6 +302,33 @@ fetch('places.csv')
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
 
+searchInput.addEventListener('input', () => {
+      const keyword = searchInput.value.toLowerCase().trim();
+
+      if (!keyword) {
+        searchResults.style.display = "none";
+        searchResults.innerHTML = "";
+        return;
+      }
+
+      const results = heritageData.filter(d =>
+        d.heritageName.toLowerCase().includes(keyword) ||
+        (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
+        (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
+      );
+
+      searchResults.style.display = "block";
+      searchResults.innerHTML = '<option value="">-- 候補から選択 --</option>';
+
+      results.slice(0, 50).forEach(d => {
+        const option = document.createElement('option');
+        option.value = `${d.country}_${d.id}`;
+        option.textContent = `${d.id}.${d.heritageName}`;
+        searchResults.appendChild(option);
+      });
+    });
+
+
     // ← ★ここに search のイベントも入れる
 
     searchResults.addEventListener('change', () => {
@@ -766,7 +793,7 @@ refreshCluster();
           }
 /// 🔍 検索機能
 
-
+  }); // ← ★閉じる！！
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
   const modal = document.getElementById("image-modal");
