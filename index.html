@@ -28,7 +28,7 @@
   }
   #dropdown-container {
     position: absolute;
-    top: 60px;
+    top: 40px;
     left: 10px;
     z-index: 5;
     background: transparent;
@@ -54,6 +54,18 @@
   border: 1px solid rgba(0,0,0,0.1); /* ← 薄くする */
   border-radius: 4px;
 }
+
+/* ▼ ここに追加（styleタグの一番下でOK） */
+  .gm-style .gm-style-mtc button {
+    font-size: 12px !important;
+    padding: 2px 6px !important;
+  }
+
+  .gm-style .gm-style-mtc {
+    transform: scale(0.85);
+    transform-origin: left bottom;
+  }
+
 
   </style>
 </head>
@@ -239,11 +251,16 @@ infoWindow.open(map);
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 41.9028, lng: 12.4964},
-        zoom: 12,
-        gestureHandling: 'greedy',
-        tilt: 0
-      });
+  center: {lat: 41.9028, lng: 12.4964},
+  zoom: 12,
+  gestureHandling: 'greedy',
+  tilt: 0,
+
+  // ★これ追加
+  mapTypeControlOptions: {
+    position: google.maps.ControlPosition.LEFT_BOTTOM
+  }
+});
 
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');
