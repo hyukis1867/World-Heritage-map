@@ -106,7 +106,14 @@
     let markerCluster; // ★これを一番上に追加
 
     // ★ここに置く（initMapの外）
-  markerCluster = new markerClusterer.MarkerClusterer({
+  function refreshCluster() {
+  if (!markerCluster) return;
+
+  const visibleMarkers = markers.filter(m => m.getVisible());
+
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
+}
 
 
   const visibleMarkers = markers.filter(m => m.getVisible());
@@ -456,7 +463,7 @@ if (!markerIndex.has(key)) {
             regionSelect.appendChild(option);
           });
 
-          const markerCluster = new markerClusterer.MarkerClusterer({
+          markerCluster = new markerClusterer.MarkerClusterer({
   map,
   markers,
   maxZoom: 10,
