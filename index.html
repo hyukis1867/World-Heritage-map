@@ -257,7 +257,7 @@ infoWindow.open(map);
       return result;
     }
 
-    function initMap() {
+    window.initMap = function () {
       map = new google.maps.Map(document.getElementById('map'), {
   center: {lat: 41.9028, lng: 12.4964},
   zoom: 12,
@@ -769,8 +769,6 @@ const found = heritageData.find(d =>
   (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
   (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
 );
-
-if (!found) return;
 
 // ★ここ重要：完全一致の1点を特定
 const marker = markerIndex.get(`${found.country}_${found.id}`);
