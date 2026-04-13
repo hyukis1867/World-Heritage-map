@@ -821,9 +821,11 @@ if (matchedMarkers.length > 0) {
       }
     });
 
+  document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("modal-close").onclick = () => {
-  document.getElementById("image-modal").style.display = "none";
+    document.getElementById("image-modal").style.display = "none";
   };
+});
   </script>
 
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js">
