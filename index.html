@@ -62,11 +62,9 @@
   }
 
   .gm-style .gm-style-mtc {
-  transform: scale(0.85);
-  transform-origin: left bottom;
-  bottom: 40px !important;   /* ← 数値を小さくすると上に行く */
-  left: 10px !important;
-}
+    transform: scale(0.85);
+    transform-origin: left bottom;
+  }
 
 
   </style>
@@ -766,32 +764,35 @@ const found = heritageData.find(d =>
   (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
 );
 
-const matchedMarkers = markers.filter(m =>
-  m.customData.heritageName === found.heritageName &&
-  m.customCountry === found.country &&
-  m.customId === found.id
+if (!found) return;
+
+// ★ここ重要：完全一致の1点を特定
+const marker = markers.find(m =>
+  m.customData.lat === found.lat &&
+  m.customData.lng === found.lng
 );
 
-// 全部非表示
-markers.forEach(m => m.setVisible(false));
+if (!marker) return;
 
-// ヒットしたものだけ表示
-matchedMarkers.forEach(m => m.setVisible(true));
+// ★全マーカー非表示
+markers.forEach(m => {
+  m.setVisible(false);
+});
+
+// ★この1点だけ表示
+marker.setVisible(true);
 
 // クラスタ更新
 markerCluster.clearMarkers();
-markerCluster.addMarkers(matchedMarkers);
+markerCluster.addMarkers([marker]);
 
-// 移動＆吹き出し
-if (matchedMarkers.length > 0) {
-  const first = matchedMarkers[0];
+// 移動
+map.panTo(marker.getPosition());
 
-  map.panTo(first.getPosition());
-
-  setTimeout(() => {
-    showInfo(first);
-  }, 200);
-}
+setTimeout(() => {
+  showInfo(marker);
+}, 200);
+});
 
         });
     }
@@ -821,11 +822,9 @@ if (matchedMarkers.length > 0) {
       }
     });
 
-  document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("modal-close").onclick = () => {
-    document.getElementById("image-modal").style.display = "none";
+  document.getElementById("image-modal").style.display = "none";
   };
-});
   </script>
 
   <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js">
