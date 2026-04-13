@@ -709,15 +709,43 @@ map.panTo(newCenter);
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
+  const keyword = searchInput.value.trim().toLowerCase();
 
-  if (!keyword) return;
+  const words = keyword.split(/\s+/).filter(w => w); // ★複数条件
 
-  const found = heritageData.find(d =>
-    d.heritageName.toLowerCase().includes(keyword) ||
-    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-  );
+  const options = Array.from(heritageSelect.options).slice(1);
+
+  const matched = [];
+
+  options.forEach(option => {
+    const text = option.textContent.toLowerCase();
+
+    // ★AND条件（全部含む）
+    const isMatch = words.every(word => text.includes(word));
+
+    if (isMatch) {
+      matched.push(option);
+    }
+  });
+
+  // ★ここが「先頭一致優先」
+  matched.sort((a, b) => {
+    const aText = a.textContent.toLowerCase();
+    const bText = b.textContent.toLowerCase();
+
+    const aStarts = words.some(word => aText.startsWith(word));
+    const bStarts = words.some(word => bText.startsWith(word));
+
+    if (aStarts && !bStarts) return -1;
+    if (!aStarts && bStarts) return 1;
+
+    return aText.localeCompare(bText);
+  });
+
+  // 再構築
+  heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+  matched.forEach(option => heritageSelect.appendChild(option));
+});
 
   if (!found) return;
 
