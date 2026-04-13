@@ -89,16 +89,6 @@
       </select>
     </div>
 <div id="search-box" style="margin-top:6px;">
-
-<select id="search-results" style="
-  width:100%;
-  font-size:14px;
-  margin-top:2px;
-  display:none;
-">
-</select>
-
-
     <input
        type="text"
   id="search-input"
@@ -295,26 +285,10 @@ infoWindow.open(map);
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
-
-
-    // ← ★ここに search のイベントも入れる
-
-    searchResults.addEventListener('change', () => {
-      const value = searchResults.value;
-      if (!value) return;
-
-      const marker = markerIndex.get(value);
-      if (!marker) return;
-
-      markers.forEach(m => m.setVisible(false));
-      marker.setVisible(true);
-
-      map.panTo(marker.getPosition());
-
-      setTimeout(() => {
-        showInfo(marker);
-      }, 200);
-    });
+      fetch('places.csv')
+        .then(response => response.text())
+        .then(csv => {
+          const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
           const countryHeritageMap = {};
@@ -756,8 +730,71 @@ refreshCluster();
               }
             }, 500);
           }
-/// 🔍 検索機能
-  });  // ← ★ここが fetch の終わり（ここだけにする）
+// 🔍 検索機能（ここに入れる）
+const searchInput = document.getElementById('search-input');
+
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.toLowerCase().trim();
+
+ if (!keyword) {
+
+    // 吹き出し閉じる
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+    lastOpenedMarker = null;
+
+    // 全マーカー表示
+    markers.forEach(m => m.setVisible(true));
+
+    refreshCluster(); 
+
+    // ★プルダウンもリセット（重要）
+    document.getElementById('region-select').value = '';
+    document.getElementById('country-select').value = '';
+    document.getElementById('heritage-select').value = '';
+
+    document.getElementById("country-box").style.display = "none";
+    document.getElementById("heritage-box").style.display = "none";
+
+    return;
+  }
+
+
+  if (!keyword) return;
+
+const found = heritageData.find(d =>
+  d.heritageName.toLowerCase().includes(keyword) ||
+  (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
+  (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
+);
+
+if (!found) return; // ★これ追加
+
+const marker = markerIndex.get(`${found.country}_${found.id}`);
+
+if (!marker) return;
+
+// ★全マーカー非表示
+markers.forEach(m => {
+  m.setVisible(false);
+});
+
+// ★この1点だけ表示
+marker.setVisible(true);
+
+
+// 移動
+map.panTo(marker.getPosition());
+
+setTimeout(() => {
+  showInfo(marker);
+}, 200);
+});
+
+        });
+    }
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
