@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
+<meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>世界遺産マップ</title>
   <style>
@@ -763,60 +760,7 @@ refreshCluster();
             }, 500);
           }
 /// 🔍 検索機能
-const searchInput = document.getElementById('search-input');
-const searchResults = document.getElementById('search-results');
 
-// 入力イベント
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
-
-  // 空なら非表示
-  if (!keyword) {
-    searchResults.style.display = "none";
-    searchResults.innerHTML = "";
-    return;
-  }
-
-  // 🔍 検索
-  const results = heritageData.filter(d =>
-    d.heritageName.toLowerCase().includes(keyword) ||
-    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-  );
-
-  // 表示
-  searchResults.style.display = "block";
-  searchResults.innerHTML = '<option value="">-- 候補から選択 --</option>';
-
-  results.slice(0, 50).forEach(d => {
-    const option = document.createElement('option');
-    option.value = `${d.country}_${d.id}`;
-    option.textContent = `${d.id}.${d.heritageName}`;
-    searchResults.appendChild(option);
-  });
-});
-
-// 選択時
-searchResults.addEventListener('change', () => {
-  const value = searchResults.value;
-  if (!value) return;
-
-  const marker = markerIndex.get(value);
-  if (!marker) return;
-
-  // 全非表示 → 対象のみ
-  markers.forEach(m => m.setVisible(false));
-  marker.setVisible(true);
-
-  map.panTo(marker.getPosition());
-
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
-
-  refreshCluster();
-});
-    }
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
