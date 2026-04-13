@@ -736,61 +736,35 @@ const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
   const keyword = searchInput.value.toLowerCase().trim();
 
- if (!keyword) {
+  const heritageSelect = document.getElementById('heritage-select');
 
-    // 吹き出し閉じる
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    // 全マーカー表示
-    markers.forEach(m => m.setVisible(true));
-
-    refreshCluster(); 
-
-    // ★プルダウンもリセット（重要）
-    document.getElementById('region-select').value = '';
-    document.getElementById('country-select').value = '';
-    document.getElementById('heritage-select').value = '';
-
-    document.getElementById("country-box").style.display = "none";
+  // 空ならリセット
+  if (!keyword) {
+    heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
+    heritageSelect.disabled = true;
     document.getElementById("heritage-box").style.display = "none";
-
     return;
   }
 
+  // 🔍 複数ヒット
+  const results = heritageData.filter(d =>
+    d.heritageName.toLowerCase().includes(keyword) ||
+    (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
+    (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
+  );
 
-  if (!keyword) return;
+  // プルダウン表示ON
+  document.getElementById("heritage-box").style.display = "block";
+  heritageSelect.disabled = false;
 
-const found = heritageData.find(d =>
-  d.heritageName.toLowerCase().includes(keyword) ||
-  (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-  (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-);
+  heritageSelect.innerHTML = '<option value="">-- 候補から選択 --</option>';
 
-if (!found) return; // ★これ追加
-
-const marker = markerIndex.get(`${found.country}_${found.id}`);
-
-if (!marker) return;
-
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
-});
-
-// ★この1点だけ表示
-marker.setVisible(true);
-
-
-// 移動
-map.panTo(marker.getPosition());
-
-setTimeout(() => {
-  showInfo(marker);
-}, 200);
+  results.slice(0, 50).forEach(d => { // ← 上限つける（重要）
+    const option = document.createElement('option');
+    option.value = `${d.country}.${d.id}`;
+    option.textContent = `${d.id}.${d.heritageName}`;
+    heritageSelect.appendChild(option);
+  });
 });
 
         });
