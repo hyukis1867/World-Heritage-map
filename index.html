@@ -774,7 +774,7 @@ if (!found) return;
 
 // ★ここ重要：完全一致の1点を特定
 const marker = markers.find(m =>
-  m.customData.lat === found.lat &&
+  m.customData.id === found.id &&
   m.customData.lng === found.lng
 );
 
