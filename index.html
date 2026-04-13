@@ -68,12 +68,11 @@
   left: 10px !important;
 }
 
-/* ▼ 地図タイプ切替のドロップアップ化 */
-.gm-style .gm-style-mtc > div {
-  display: flex !important;
-  flex-direction: column-reverse !important;
+/* ▼ サブメニューを上に出す */
+.gm-style .gm-style-mtc > div > div {
+  bottom: 100% !important;   /* ← 上に出す */
+  top: auto !important;
 }
-
 
   </style>
 </head>
