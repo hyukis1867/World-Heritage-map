@@ -761,14 +761,15 @@ searchInput.addEventListener('input', () => {
     return;
   }
 
-
-  if (!keyword) return;
-
-const found = heritageData.find(d =>
+const results = heritageData.filter(d =>
   d.heritageName.toLowerCase().includes(keyword) ||
   (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
   (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
 );
+
+if (results.length === 0) return;
+
+const found = results[0]; // とりあえず1件目
 
 if (!found) return; // ★これ追加
 
@@ -783,7 +784,7 @@ markers.forEach(m => {
 
 // ★この1点だけ表示
 marker.setVisible(true);
-
+refreshCluster(); // ← これ追加
 
 // 移動
 map.panTo(marker.getPosition());
