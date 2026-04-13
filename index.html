@@ -770,7 +770,8 @@ const found = heritageData.find(d =>
   (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
 );
 
-// ★ここ重要：完全一致の1点を特定
+if (!found) return; // ★これ追加
+
 const marker = markerIndex.get(`${found.country}_${found.id}`);
 
 if (!marker) return;
