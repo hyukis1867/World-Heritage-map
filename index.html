@@ -1,4 +1,7 @@
-<meta charset="utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>世界遺産マップ</title>
   <style>
@@ -292,29 +295,31 @@ infoWindow.open(map);
         localStorage.setItem('mapZoom', map.getZoom());
       });
 
-      fetch('places.csv')
-        .then(response => response.text())
-        .then(csv => {
+fetch('places.csv')
+  .then(response => response.text())
+  .then(csv => {
 
-});
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
 
-// ★ここ（同じ階層）
-searchResults.addEventListener('change', () => {
-  const value = searchResults.value;
-  if (!value) return;
+    // ← ★ここに search のイベントも入れる
 
-  const marker = markerIndex.get(value);
-  if (!marker) return;
+    searchResults.addEventListener('change', () => {
+      const value = searchResults.value;
+      if (!value) return;
 
-  markers.forEach(m => m.setVisible(false));
-  marker.setVisible(true);
+      const marker = markerIndex.get(value);
+      if (!marker) return;
 
-  map.panTo(marker.getPosition());
+      markers.forEach(m => m.setVisible(false));
+      marker.setVisible(true);
 
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
-});
+      map.panTo(marker.getPosition());
+
+      setTimeout(() => {
+        showInfo(marker);
+      }, 200);
+    });
 
 
           const rows = csv.trim().split('\n').slice(1);
