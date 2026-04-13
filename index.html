@@ -768,15 +768,11 @@ refreshCluster();
               }
             }, 500);
           }
-// 🔍 検索機能（ここに入れる）
-const searchInput = document.getElementById('search-input');
-
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
-
+/// 🔍 検索機能
 const searchInput = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
 
+// 入力イベント
 searchInput.addEventListener('input', () => {
   const keyword = searchInput.value.toLowerCase().trim();
 
@@ -794,7 +790,7 @@ searchInput.addEventListener('input', () => {
     (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
   );
 
-  // 表示ON
+  // 表示
   searchResults.style.display = "block";
   searchResults.innerHTML = '<option value="">-- 候補から選択 --</option>';
 
@@ -806,7 +802,26 @@ searchInput.addEventListener('input', () => {
   });
 });
 
-        });
+// 選択時
+searchResults.addEventListener('change', () => {
+  const value = searchResults.value;
+  if (!value) return;
+
+  const marker = markerIndex.get(value);
+  if (!marker) return;
+
+  // 全非表示 → 対象のみ
+  markers.forEach(m => m.setVisible(false));
+  marker.setVisible(true);
+
+  map.panTo(marker.getPosition());
+
+  setTimeout(() => {
+    showInfo(marker);
+  }, 200);
+
+  refreshCluster();
+});
     }
 
 // 👇ここ！！！！（これが「外」）
