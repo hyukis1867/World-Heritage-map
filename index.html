@@ -105,8 +105,8 @@
     let heritageData = [];
     let markerCluster; // ★これを一番上に追加
 
-    // ★ここに置く（initMapの外）
-  function refreshCluster() {
+  // ★ここに置く（initMapの外）
+function refreshCluster() {
   if (!markerCluster) return;
 
   const visibleMarkers = markers.filter(m => m.getVisible());
@@ -115,12 +115,6 @@
   markerCluster.addMarkers(visibleMarkers);
 }
 
-
-  const visibleMarkers = markers.filter(m => m.getVisible());
-
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(visibleMarkers);
-}
   function getCapitalLatLng(countryName) {
     const capitals = {    
     "アイスランド共和国": {lat: 64.1355, lng: -21.8954},
