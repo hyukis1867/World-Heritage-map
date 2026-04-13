@@ -364,8 +364,6 @@ fetch('places.csv')
       }, 200);
     });
 
-      }); 
-
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
@@ -809,8 +807,8 @@ refreshCluster();
             }, 500);
           }
 /// 🔍 検索機能
+  });  // ← ★ここが fetch の終わり（ここだけにする）
 
-  }; // ← ★閉じる！！
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
   const modal = document.getElementById("image-modal");
