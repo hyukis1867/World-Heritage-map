@@ -306,7 +306,7 @@ fetch('places.csv')
 
   // ▼ ここで全部データ作る
   rows.forEach(row => {
-    ...
+  
     heritageData.push(...);
     markers.push(...);
   });
@@ -363,8 +363,6 @@ fetch('places.csv')
         showInfo(marker);
       }, 200);
     });
-
-          const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
           const countryHeritageMap = {};
