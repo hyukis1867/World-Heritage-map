@@ -802,20 +802,23 @@ const marker = markers.find(m =>
 
 if (!marker) return;
 
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
-});
+// ★全部非表示
+markers.forEach(m => m.setVisible(false));
 
-// ★この1点だけ表示
-marker.setVisible(true);
-refreshCluster(); // ← これ追加
+// ★同じ国＋同じIDだけ表示
+groupMarkers.forEach(m => m.setVisible(true));
+
+refreshCluster();
+
+// ★代表マーカー
+const mainMarker = groupMarkers[0];
 
 // 移動
-map.panTo(marker.getPosition());
+map.panTo(mainMarker.getPosition());
 
+// 吹き出しは1つだけ
 setTimeout(() => {
-  showInfo(marker);
+  showInfo(mainMarker);
 }, 200);
 });
 
