@@ -119,17 +119,11 @@ function normalizeText(str) {
   if (!str) return '';
 
   return str
-    .toString()
-    .normalize('NFKC')
     .toLowerCase()
-    // 全角スペース・通常スペース削除
-    .replace(/\s+/g, '')
-    // カタカナ→ひらがな
+    .normalize('NFKC') // 全角→半角など
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    )
-    // 見えない制御文字削除
-    .replace(/[\u200B-\u200D\uFEFF]/g, '');
+    ); // カタカナ→ひらがな
 }
 
   function getCapitalLatLng(countryName) {
@@ -342,7 +336,7 @@ infoWindow.open(map);
 
           rows.forEach(row => {
   const columns = parseCSVLine(row);
-  const id = Number(columns[0].trim());
+  const id = columns[0].trim();
   const region = columns[1].trim();
   const country = columns[2].trim();
   const heritageName = columns[3].trim();
@@ -429,9 +423,10 @@ marker.customData = {
  markers.push(marker);
 
 // ★ここに入れる
-const key = `${id}_${lat}_${lng}`;
-markerIndex.set(key, marker);
-
+const key = `${country}_${id}`;
+if (!markerIndex.has(key)) {
+  markerIndex.set(key, marker);
+}
 }); // rows.forEach
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
@@ -681,12 +676,8 @@ lastOpenedMarker = null;
   const [selectedCountry, id] = selectedHeritage.split('.');
   if (!selectedCountry || !id) return;
 
-  const targetMarker = markers.find(m =>
-  m.customId === Number(id) &&
-  m.customCountry === selectedCountry
-);
-
-if (!targetMarker) return;
+  const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
+  if (!targetMarker) return;
 
   // ★完全削除
   if (infoWindow) {
@@ -791,50 +782,40 @@ const results = heritageData.filter(d => {
 
 if (results.length === 0) return;
 
-let exactMatches = results.filter(d =>
-  normalizeText(d.heritageName) === keyword ||
-  normalizeText(d.localNameJP || '') === keyword ||
-  normalizeText(d.localNameEN || '') === keyword
-);
-
-let found = null;
-
-if (exactMatches.length === 1) {
-  found = exactMatches[0];
-} else if (exactMatches.length > 1) {
-  // IDが一番小さいものを採用（安定化）
-  found = exactMatches.sort((a,b) => Number(a.id) - Number(b.id))[0];
-} else {
-  // 完全一致なければ部分一致
-  found = results[0];
-}
-
-if (!found) {
-  found = results[0];
-}
+let found =
+  results.find(d => normalizeText(d.heritageName) === keyword) ||
+  results.find(d => normalizeText(d.localNameJP) === keyword) ||
+  results.find(d => normalizeText(d.localNameEN) === keyword) ||
+  results[0];
 
 if (!found) return; // ★これ追加
 
-// ★同じIDの全マーカー取得（グループ）
-const groupMarkers = markers.filter(m =>
-  m.customData.id === found.id
+const marker = markers.find(m =>
+  m.customId == found.id &&
+  m.customCountry == found.country &&
+  (
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+  )
 );
 
-if (groupMarkers.length === 0) return;
+if (!marker) return;
 
-// ★全部表示（グループ）
-markers.forEach(m => m.setVisible(false));
-groupMarkers.forEach(m => m.setVisible(true));
-refreshCluster();
+// ★全マーカー非表示
+markers.forEach(m => {
+  m.setVisible(false);
+});
 
-// ★代表マーカー（最初の1個）
-const mainMarker = groupMarkers[0];
+// ★この1点だけ表示
+marker.setVisible(true);
+refreshCluster(); // ← これ追加
 
 // 移動
-map.panTo(mainMarker.getPosition());
+map.panTo(marker.getPosition());
 
 setTimeout(() => {
-  showInfo(mainMarker);
+  showInfo(marker);
 }, 200);
 });
 
