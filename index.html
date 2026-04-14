@@ -747,112 +747,59 @@ const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
   const keyword = normalizeText(searchInput.value.trim());
 
- if (!keyword) {
-
-    // 吹き出し閉じる
+  if (!keyword) {
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
     }
     lastOpenedMarker = null;
 
-    // 全マーカー表示
     markers.forEach(m => m.setVisible(true));
+    refreshCluster();
 
-    refreshCluster(); 
-
-    // ★プルダウンもリセット（重要）
     document.getElementById('region-select').value = '';
     document.getElementById('country-select').value = '';
     document.getElementById('heritage-select').value = '';
 
     document.getElementById("country-box").style.display = "none";
     document.getElementById("heritage-box").style.display = "none";
-
     return;
   }
 
-const results = heritageData.filter(d => {
-  return (
+  const results = heritageData.filter(d =>
     normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+    normalizeText(d.localNameJP || '').includes(keyword) ||
+    normalizeText(d.localNameEN || '').includes(keyword)
   );
-});
 
-const normalize = s =>
-  (s || '')
-    .normalize('NFKC')
-    .trim()
-    .toLowerCase();
+  if (results.length === 0) return;
 
-// ★完全一致チェック（ピンポイント判定）
-const exact = results.filter(d =>
-  normalize(d.heritageName) === keyword ||
-  normalize(d.localNameJP) === keyword
-);
+  const exact = results.find(d =>
+    normalizeText(d.heritageName) === keyword ||
+    normalizeText(d.localNameJP || '') === keyword
+  );
 
-if (exact.length > 0) {
+  const target = exact || results[0];
 
-  // =========================
-  // 🎯 ピンポイント検索
-  // =========================
-  const target = exact[0];
-  const marker = markerIndex.get(`${target.country}_${target.id}`);
-
-  markers.forEach(m => m.setVisible(false));
-  marker.setVisible(true);
-
-  map.panTo(marker.getPosition());
-
-  setTimeout(() => {
-    showInfo(marker);
-  }, 200);
-
-} else {
-
-  // =========================
-  // 🎯 グループ検索
-  // =========================
-  const id = results[0].id;
-
-  const groupMarkers = markers.filter(m => m.customId == id);
+  const groupMarkers = markers.filter(m =>
+    String(m.customId) === String(target.id)
+  );
 
   markers.forEach(m => {
-    m.setVisible(m.customId == id);
+    m.setVisible(String(m.customId) === String(target.id));
   });
 
   const mainMarker = groupMarkers[0];
+  if (!mainMarker) return;
 
   map.panTo(mainMarker.getPosition());
 
   setTimeout(() => {
     showInfo(mainMarker);
   }, 200);
-}
 
-// ======================
-  // 🎯 グループ検索
-  // ======================
-  const groupId = results[0].id;
-
-  const groupMarkers = markers.filter(m =>
-    String(m.customId) === String(groupId)
-  );
-
-  // 全非表示 → 同IDだけ表示
-  markers.forEach(m => {
-    m.setVisible(String(m.customId) === String(groupId));
-  });
-
-  const mainMarker = groupMarkers[0];
-
-  map.panTo(mainMarker.getPosition());
-
-  setTimeout(() => showInfo(mainMarker), 200);
-}
-
-refreshCluster();
+  refreshCluster();
+});
 
 // 移動
 map.panTo(marker.getPosition());
