@@ -798,19 +798,6 @@ searchInput.addEventListener('input', () => {
     showInfo(mainMarker);
   }, 200);
 
-  refreshCluster();
-});
-
-// 移動
-map.panTo(marker.getPosition());
-
-setTimeout(() => {
-  showInfo(marker);
-}, 200);
-});
-
-        });
-    }
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
