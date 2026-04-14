@@ -95,7 +95,6 @@
   placeholder="🔍 遺産名で検索"
   style="width:100%; font-size:14px; box-sizing:border-box;">
   </div>
-  </div> 
 
   <script>
     let map;
@@ -748,58 +747,80 @@ const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
   const keyword = normalizeText(searchInput.value.trim());
 
-  if (!keyword) {
+ if (!keyword) {
+
+    // 吹き出し閉じる
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
     }
     lastOpenedMarker = null;
 
+    // 全マーカー表示
     markers.forEach(m => m.setVisible(true));
-    refreshCluster();
 
+    refreshCluster(); 
+
+    // ★プルダウンもリセット（重要）
     document.getElementById('region-select').value = '';
     document.getElementById('country-select').value = '';
     document.getElementById('heritage-select').value = '';
 
     document.getElementById("country-box").style.display = "none";
     document.getElementById("heritage-box").style.display = "none";
+
     return;
   }
 
-  const results = heritageData.filter(d =>
+const results = heritageData.filter(d => {
+  return (
     normalizeText(d.heritageName).includes(keyword) ||
-    normalizeText(d.localNameJP || '').includes(keyword) ||
-    normalizeText(d.localNameEN || '').includes(keyword)
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
   );
-
-  if (results.length === 0) return;
-
-  const exact = results.find(d =>
-    normalizeText(d.heritageName) === keyword ||
-    normalizeText(d.localNameJP || '') === keyword
-  );
-
-  const target = exact || results[0];
-
-  const groupMarkers = markers.filter(m =>
-    String(m.customId) === String(target.id)
-  );
-
-  markers.forEach(m => {
-    m.setVisible(String(m.customId) === String(target.id));
-  });
-
-  const mainMarker = groupMarkers[0];
-  if (!mainMarker) return;
-
-  map.panTo(mainMarker.getPosition());
-
-  setTimeout(() => {
-    showInfo(mainMarker);
-  }, 200);
-
 });
+
+if (results.length === 0) return;
+
+let found =
+  results.find(d => normalizeText(d.heritageName) === keyword) ||
+  results.find(d => normalizeText(d.localNameJP) === keyword) ||
+  results.find(d => normalizeText(d.localNameEN) === keyword) ||
+  results[0];
+
+if (!found) return; // ★これ追加
+
+const marker = markers.find(m =>
+  m.customId == found.id &&
+  m.customCountry == found.country &&
+  (
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+  )
+);
+
+if (!marker) return;
+
+// ★全マーカー非表示
+markers.forEach(m => {
+  m.setVisible(false);
+});
+
+// ★この1点だけ表示
+marker.setVisible(true);
+refreshCluster(); // ← これ追加
+
+// 移動
+map.panTo(marker.getPosition());
+
+setTimeout(() => {
+  showInfo(marker);
+}, 200);
+});
+
+        });
+    }
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
