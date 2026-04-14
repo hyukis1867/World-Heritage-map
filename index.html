@@ -103,7 +103,8 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let markerCluster; // ★これを一番上に追加
+    let markerCluster; 
+    let searchTimer = null;  // ←ここに追加
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -745,6 +746,10 @@ refreshCluster();
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
+
+  clearTimeout(searchTimer);
+
+  searchTimer = setTimeout(() => {
   const keyword = normalizeText(searchInput.value.trim());
 
  if (!keyword) {
