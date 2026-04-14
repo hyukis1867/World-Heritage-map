@@ -119,11 +119,17 @@ function normalizeText(str) {
   if (!str) return '';
 
   return str
+    .toString()
+    .normalize('NFKC')
     .toLowerCase()
-    .normalize('NFKC') // 全角→半角など
+    // 全角スペース・通常スペース削除
+    .replace(/\s+/g, '')
+    // カタカナ→ひらがな
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    ); // カタカナ→ひらがな
+    )
+    // 見えない制御文字削除
+    .replace(/[\u200B-\u200D\uFEFF]/g, '');
 }
 
   function getCapitalLatLng(countryName) {
