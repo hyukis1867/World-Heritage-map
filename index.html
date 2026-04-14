@@ -791,12 +791,23 @@ const results = heritageData.filter(d => {
 
 if (results.length === 0) return;
 
-let found =
-  results.find(d =>
-    normalizeText(d.heritageName) === keyword ||
-    normalizeText(d.localNameJP || '') === keyword ||
-    normalizeText(d.localNameEN || '') === keyword
-  );
+let exactMatches = results.filter(d =>
+  normalizeText(d.heritageName) === keyword ||
+  normalizeText(d.localNameJP || '') === keyword ||
+  normalizeText(d.localNameEN || '') === keyword
+);
+
+let found = null;
+
+if (exactMatches.length === 1) {
+  found = exactMatches[0];
+} else if (exactMatches.length > 1) {
+  // IDが一番小さいものを採用（安定化）
+  found = exactMatches.sort((a,b) => Number(a.id) - Number(b.id))[0];
+} else {
+  // 完全一致なければ部分一致
+  found = results[0];
+}
 
 if (!found) {
   found = results[0];
@@ -806,8 +817,7 @@ if (!found) return; // ★これ追加
 
 // ★同じIDの全マーカー取得（グループ）
 const groupMarkers = markers.filter(m =>
-  Number(m.customId) === Number(found.id) &&
-  m.customCountry === found.country
+  m.customData.id === found.id
 );
 
 if (groupMarkers.length === 0) return;
