@@ -429,9 +429,8 @@ marker.customData = {
  markers.push(marker);
 
 // ★ここに入れる
-const key = `${country}_${Number(id)}`;
-if (!markerIndex.has(key)) {
-  markerIndex.set(key, marker);
+const key = `${country}_${id}`;
+markerIndex.set(key, marker);
 }
 }); // rows.forEach
 
