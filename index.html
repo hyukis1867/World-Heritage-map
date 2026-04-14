@@ -831,35 +831,28 @@ if (exact.length > 0) {
   }, 200);
 }
 
+// ======================
+  // 🎯 グループ検索
+  // ======================
+  const groupId = results[0].id;
 
-let found =
-  results.find(d => normalizeText(d.heritageName) === keyword) ||
-  results.find(d => normalizeText(d.localNameJP) === keyword) ||
-  results.find(d => normalizeText(d.localNameEN) === keyword) ||
-  results[0];
+  const groupMarkers = markers.filter(m =>
+    String(m.customId) === String(groupId)
+  );
 
-if (!found) return; // ★これ追加
+  // 全非表示 → 同IDだけ表示
+  markers.forEach(m => {
+    m.setVisible(String(m.customId) === String(groupId));
+  });
 
-const marker = markers.find(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country &&
-  (
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  )
-);
+  const mainMarker = groupMarkers[0];
 
-if (!marker) return;
+  map.panTo(mainMarker.getPosition());
 
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
-});
+  setTimeout(() => showInfo(mainMarker), 200);
+}
 
-// ★この1点だけ表示
-marker.setVisible(true);
-refreshCluster(); // ← これ追加
+refreshCluster();
 
 // 移動
 map.panTo(marker.getPosition());
