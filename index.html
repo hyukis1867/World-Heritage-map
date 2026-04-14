@@ -790,32 +790,26 @@ let found =
 
 if (!found) return; // ★これ追加
 
-const marker = markers.find(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country &&
-  (
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  )
+// ★同じIDの全マーカー取得（グループ）
+const groupMarkers = markers.filter(m =>
+  String(m.customId) === String(found.id)
 );
 
-if (!marker) return;
+if (groupMarkers.length === 0) return;
 
-// ★全マーカー非表示
-markers.forEach(m => {
-  m.setVisible(false);
-});
+// ★全部表示（グループ）
+markers.forEach(m => m.setVisible(false));
+groupMarkers.forEach(m => m.setVisible(true));
+refreshCluster();
 
-// ★この1点だけ表示
-marker.setVisible(true);
-refreshCluster(); // ← これ追加
+// ★代表マーカー（最初の1個）
+const mainMarker = groupMarkers[0];
 
 // 移動
-map.panTo(marker.getPosition());
+map.panTo(mainMarker.getPosition());
 
 setTimeout(() => {
-  showInfo(marker);
+  showInfo(mainMarker);
 }, 200);
 });
 
