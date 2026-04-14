@@ -103,8 +103,7 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let markerCluster;
-    let searchTimer = null;
+    let markerCluster; // ★これを一番上に追加
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -743,78 +742,85 @@ refreshCluster();
             }, 500);
           }
 // 🔍 検索機能（ここに入れる）
+const searchInput = document.getElementById('search-input');
+
 searchInput.addEventListener('input', () => {
+  const keyword = normalizeText(searchInput.value.trim());
 
-  clearTimeout(searchTimer);
+ if (!keyword) {
 
-  searchTimer = setTimeout(() => {
-
-    const keyword = normalizeText(searchInput.value.trim());
-
-    if (!keyword) {
-      if (infoWindow) {
-        infoWindow.close();
-        infoWindow = null;
-      }
-      lastOpenedMarker = null;
-
-      markers.forEach(m => m.setVisible(true));
-      refreshCluster();
-
-      document.getElementById('region-select').value = '';
-      document.getElementById('country-select').value = '';
-      document.getElementById('heritage-select').value = '';
-
-      document.getElementById("country-box").style.display = "none";
-      document.getElementById("heritage-box").style.display = "none";
-
-      return;
+    // 吹き出し閉じる
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
     }
+    lastOpenedMarker = null;
 
-    const results = heritageData.filter(d => {
-      return (
-        normalizeText(d.heritageName).includes(keyword) ||
-        (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-        (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-      );
-    });
+    // 全マーカー表示
+    markers.forEach(m => m.setVisible(true));
 
-    if (results.length === 0) return;
+    refreshCluster(); 
 
-    let found =
-      results.find(d => normalizeText(d.heritageName) === keyword) ||
-      results.find(d => normalizeText(d.localNameJP) === keyword) ||
-      results.find(d => normalizeText(d.localNameEN) === keyword) ||
-      results[0];
+    // ★プルダウンもリセット（重要）
+    document.getElementById('region-select').value = '';
+    document.getElementById('country-select').value = '';
+    document.getElementById('heritage-select').value = '';
 
-    if (!found) return;
+    document.getElementById("country-box").style.display = "none";
+    document.getElementById("heritage-box").style.display = "none";
 
-    const groupMarkers = markers.filter(m =>
-      m.customId == found.id &&
-      m.customCountry == found.country
-    );
+    return;
+  }
 
-    if (groupMarkers.length === 0) return;
+const results = heritageData.filter(d => {
+  return (
+    normalizeText(d.heritageName).includes(keyword) ||
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+  );
+});
 
-    markers.forEach(m => m.setVisible(false));
-    groupMarkers.forEach(m => m.setVisible(true));
+if (results.length === 0) return;
 
-    refreshCluster();
+let found =
+  results.find(d => normalizeText(d.heritageName) === keyword) ||
+  results.find(d => normalizeText(d.localNameJP) === keyword) ||
+  results.find(d => normalizeText(d.localNameEN) === keyword) ||
+  results[0];
 
-    const mainMarker =
-      groupMarkers.find(m =>
-        (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-        (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-        (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-      ) || groupMarkers[0];
+if (!found) return; // ★これ追加
 
-    map.panTo(mainMarker.getPosition());
+// ★同じID＋同じ国の全マーカー取得
+const groupMarkers = markers.filter(m =>
+  m.customId == found.id &&
+  m.customCountry == found.country
+);
 
-    setTimeout(() => {
-      showInfo(mainMarker);
-    }, 200);
+if (groupMarkers.length === 0) return;
 
-  }, 400); // ←ここが「確定待ち時間」
+// ★全部非表示
+markers.forEach(m => m.setVisible(false));
+
+// ★同じ国＋同じIDだけ表示
+groupMarkers.forEach(m => m.setVisible(true));
+
+refreshCluster();
+
+// ★代表（最初の1つだけ）
+const mainMarker =
+  groupMarkers.find(m =>
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+  ) || groupMarkers[0];
+
+// 移動
+map.panTo(mainMarker.getPosition());
+
+// 吹き出しは1つだけ
+setTimeout(() => {
+  showInfo(mainMarker);
+}, 200);
 });
 
         });
