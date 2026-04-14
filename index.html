@@ -429,7 +429,7 @@ marker.customData = {
  markers.push(marker);
 
 // ★ここに入れる
-const key = `${country}_${id}`;
+const key = `${id}_${lat}_${lng}`;
 markerIndex.set(key, marker);
 
 }); // rows.forEach
@@ -681,8 +681,12 @@ lastOpenedMarker = null;
   const [selectedCountry, id] = selectedHeritage.split('.');
   if (!selectedCountry || !id) return;
 
-  const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
-  if (!targetMarker) return;
+  const targetMarker = markers.find(m =>
+  m.customId === Number(id) &&
+  m.customCountry === selectedCountry
+);
+
+if (!targetMarker) return;
 
   // ★完全削除
   if (infoWindow) {
