@@ -790,17 +790,13 @@ let found =
 
 if (!found) return; // ★これ追加
 
-const marker = markers.find(m =>
+// ★同じID＋同じ国の全マーカー取得
+const groupMarkers = markers.filter(m =>
   m.customId == found.id &&
-  m.customCountry == found.country &&
-  (
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  )
+  m.customCountry == found.country
 );
 
-if (!marker) return;
+if (groupMarkers.length === 0) return;
 
 // ★全部非表示
 markers.forEach(m => m.setVisible(false));
@@ -810,7 +806,7 @@ groupMarkers.forEach(m => m.setVisible(true));
 
 refreshCluster();
 
-// ★代表マーカー
+// ★代表（最初の1つだけ）
 const mainMarker = groupMarkers[0];
 
 // 移動
