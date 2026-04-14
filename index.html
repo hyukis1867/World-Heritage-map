@@ -342,7 +342,7 @@ infoWindow.open(map);
 
           rows.forEach(row => {
   const columns = parseCSVLine(row);
-  const id = columns[0].trim();
+  const id = Number(columns[0].trim());
   const region = columns[1].trim();
   const country = columns[2].trim();
   const heritageName = columns[3].trim();
@@ -429,7 +429,7 @@ marker.customData = {
  markers.push(marker);
 
 // ★ここに入れる
-const key = `${country}_${id}`;
+const key = `${country}_${Number(id)}`;
 if (!markerIndex.has(key)) {
   markerIndex.set(key, marker);
 }
@@ -809,7 +809,8 @@ if (!found) return; // ★これ追加
 
 // ★同じIDの全マーカー取得（グループ）
 const groupMarkers = markers.filter(m =>
-  m.customId === found.id && m.customCountry === found.country
+  Number(m.customId) === Number(found.id) &&
+  m.customCountry === found.country
 );
 
 if (groupMarkers.length === 0) return;
