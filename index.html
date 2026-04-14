@@ -780,7 +780,57 @@ const results = heritageData.filter(d => {
   );
 });
 
-if (results.length === 0) return;
+const normalize = s =>
+  (s || '')
+    .normalize('NFKC')
+    .trim()
+    .toLowerCase();
+
+// ★完全一致チェック（ピンポイント判定）
+const exact = results.filter(d =>
+  normalize(d.heritageName) === keyword ||
+  normalize(d.localNameJP) === keyword
+);
+
+if (exact.length > 0) {
+
+  // =========================
+  // 🎯 ピンポイント検索
+  // =========================
+  const target = exact[0];
+  const marker = markerIndex.get(`${target.country}_${target.id}`);
+
+  markers.forEach(m => m.setVisible(false));
+  marker.setVisible(true);
+
+  map.panTo(marker.getPosition());
+
+  setTimeout(() => {
+    showInfo(marker);
+  }, 200);
+
+} else {
+
+  // =========================
+  // 🎯 グループ検索
+  // =========================
+  const id = results[0].id;
+
+  const groupMarkers = markers.filter(m => m.customId == id);
+
+  markers.forEach(m => {
+    m.setVisible(m.customId == id);
+  });
+
+  const mainMarker = groupMarkers[0];
+
+  map.panTo(mainMarker.getPosition());
+
+  setTimeout(() => {
+    showInfo(mainMarker);
+  }, 200);
+}
+
 
 let found =
   results.find(d => normalizeText(d.heritageName) === keyword) ||
