@@ -115,6 +115,17 @@ function refreshCluster() {
   markerCluster.addMarkers(visibleMarkers);
 }
 
+function normalizeText(str) {
+  if (!str) return '';
+
+  return str
+    .toLowerCase()
+    .normalize('NFKC') // 全角→半角など
+    .replace(/[ァ-ン]/g, ch =>
+      String.fromCharCode(ch.charCodeAt(0) - 0x60)
+    ); // カタカナ→ひらがな
+}
+
   function getCapitalLatLng(countryName) {
     const capitals = {    
     "アイスランド共和国": {lat: 64.1355, lng: -21.8954},
@@ -734,7 +745,7 @@ refreshCluster();
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim();
+  const keyword = normalizeText(searchInput.value.trim());
 
  if (!keyword) {
 
@@ -761,11 +772,13 @@ searchInput.addEventListener('input', () => {
     return;
   }
 
-const results = heritageData.filter(d =>
-  d.heritageName.toLowerCase().includes(keyword) ||
-  (d.localNameJP && d.localNameJP.toLowerCase().includes(keyword)) ||
-  (d.localNameEN && d.localNameEN.toLowerCase().includes(keyword))
-);
+const results = heritageData.filter(d => {
+  return (
+    normalizeText(d.heritageName).includes(keyword) ||
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+  );
+});
 
 if (results.length === 0) return;
 
