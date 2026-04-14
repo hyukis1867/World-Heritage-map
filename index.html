@@ -792,7 +792,7 @@ if (!found) return; // ★これ追加
 
 // ★同じIDの全マーカー取得（グループ）
 const groupMarkers = markers.filter(m =>
-  String(m.customId) === String(found.id)
+  m.customId === found.id && m.customCountry === found.country
 );
 
 if (groupMarkers.length === 0) return;
