@@ -790,15 +790,7 @@ let found =
 
 if (!found) return; // ★これ追加
 
-const marker = markers.find(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country &&
-  (
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  )
-);
+const marker = markerIndex.get(`${found.country}_${found.id}`);
 
 if (!marker) return;
 
