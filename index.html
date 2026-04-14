@@ -103,7 +103,8 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let markerCluster; // ★これを一番上に追加
+    let markerCluster;
+    let searchTimer = null;
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -742,85 +743,78 @@ refreshCluster();
             }, 500);
           }
 // 🔍 検索機能（ここに入れる）
-const searchInput = document.getElementById('search-input');
-
 searchInput.addEventListener('input', () => {
-  const keyword = normalizeText(searchInput.value.trim());
 
- if (!keyword) {
+  clearTimeout(searchTimer);
 
-    // 吹き出し閉じる
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
+  searchTimer = setTimeout(() => {
+
+    const keyword = normalizeText(searchInput.value.trim());
+
+    if (!keyword) {
+      if (infoWindow) {
+        infoWindow.close();
+        infoWindow = null;
+      }
+      lastOpenedMarker = null;
+
+      markers.forEach(m => m.setVisible(true));
+      refreshCluster();
+
+      document.getElementById('region-select').value = '';
+      document.getElementById('country-select').value = '';
+      document.getElementById('heritage-select').value = '';
+
+      document.getElementById("country-box").style.display = "none";
+      document.getElementById("heritage-box").style.display = "none";
+
+      return;
     }
-    lastOpenedMarker = null;
 
-    // 全マーカー表示
-    markers.forEach(m => m.setVisible(true));
+    const results = heritageData.filter(d => {
+      return (
+        normalizeText(d.heritageName).includes(keyword) ||
+        (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+        (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+      );
+    });
 
-    refreshCluster(); 
+    if (results.length === 0) return;
 
-    // ★プルダウンもリセット（重要）
-    document.getElementById('region-select').value = '';
-    document.getElementById('country-select').value = '';
-    document.getElementById('heritage-select').value = '';
+    let found =
+      results.find(d => normalizeText(d.heritageName) === keyword) ||
+      results.find(d => normalizeText(d.localNameJP) === keyword) ||
+      results.find(d => normalizeText(d.localNameEN) === keyword) ||
+      results[0];
 
-    document.getElementById("country-box").style.display = "none";
-    document.getElementById("heritage-box").style.display = "none";
+    if (!found) return;
 
-    return;
-  }
+    const groupMarkers = markers.filter(m =>
+      m.customId == found.id &&
+      m.customCountry == found.country
+    );
 
-const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-  );
-});
+    if (groupMarkers.length === 0) return;
 
-if (results.length === 0) return;
+    markers.forEach(m => m.setVisible(false));
+    groupMarkers.forEach(m => m.setVisible(true));
 
-let found =
-  results.find(d => normalizeText(d.heritageName) === keyword) ||
-  results.find(d => normalizeText(d.localNameJP) === keyword) ||
-  results.find(d => normalizeText(d.localNameEN) === keyword) ||
-  results[0];
+    refreshCluster();
 
-if (!found) return; // ★これ追加
+    const mainMarker =
+      groupMarkers.find(m =>
+        (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+        (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+        (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+      ) || groupMarkers[0];
 
-// ★同じID＋同じ国の全マーカー取得
-const groupMarkers = markers.filter(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country
-);
+    map.panTo(mainMarker.getPosition());
 
-if (groupMarkers.length === 0) return;
+    setTimeout(() => {
+      showInfo(mainMarker);
+    }, 200);
 
-// ★全部非表示
-markers.forEach(m => m.setVisible(false));
-
-// ★同じ国＋同じIDだけ表示
-groupMarkers.forEach(m => m.setVisible(true));
-
-refreshCluster();
-
-// ★代表（最初の1つだけ）
-const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  ) || groupMarkers[0];
-
-// 移動
-map.panTo(mainMarker.getPosition());
-
-// 吹き出しは1つだけ
-setTimeout(() => {
-  showInfo(mainMarker);
-}, 200);
+  }, 400); // ←ここが「確定待ち時間」
 });
 
         });
