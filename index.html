@@ -788,21 +788,15 @@ const results = heritageData.filter(d => {
 
 if (results.length === 0) return;
 
-let exactMatches = results.filter(d =>
-  normalizeText(d.heritageName) === keyword ||
-  (d.localNameJP && normalizeText(d.localNameJP) === keyword) ||
-  (d.localNameEN && normalizeText(d.localNameEN) === keyword)
-);
+let found =
+  results.find(d =>
+    normalizeText(d.heritageName) === keyword ||
+    normalizeText(d.localNameJP || '') === keyword ||
+    normalizeText(d.localNameEN || '') === keyword
+  );
 
-// ★ピンポイント確定
-let found;
-
-if (exactMatches.length === 1) {
-  found = exactMatches[0]; // ピンポイント
-} else if (exactMatches.length > 1) {
-  found = exactMatches[0]; // 念のため
-} else {
-  found = results[0]; // あいまい検索
+if (!found) {
+  found = results[0];
 }
 
 if (!found) return; // ★これ追加
