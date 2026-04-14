@@ -782,7 +782,11 @@ const results = heritageData.filter(d => {
 
 if (results.length === 0) return;
 
-const found = results[0]; // とりあえず1件目
+let found =
+  results.find(d => normalizeText(d.heritageName) === keyword) ||
+  results.find(d => normalizeText(d.localNameJP) === keyword) ||
+  results.find(d => normalizeText(d.localNameEN) === keyword) ||
+  results[0];
 
 if (!found) return; // ★これ追加
 
