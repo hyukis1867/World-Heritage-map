@@ -807,7 +807,12 @@ groupMarkers.forEach(m => m.setVisible(true));
 refreshCluster();
 
 // ★代表（最初の1つだけ）
-const mainMarker = groupMarkers[0];
+const mainMarker =
+  groupMarkers.find(m =>
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+  ) || groupMarkers[0];
 
 // 移動
 map.panTo(mainMarker.getPosition());
