@@ -822,64 +822,64 @@ searchInput.addEventListener('input', () => {
 searchInput.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter') return;
 
-const keyword = normalizeText(searchInput.value.trim());
-if (!keyword) return;
+  // ★IME対策（重要）
+  if (e.isComposing) return;
 
-// ★① マーカー単位でスコアリングする（重要）
-const scoredMarkers = markers.map(m => {
-  const d = m.customData;
+  e.preventDefault();
 
-  let score = 0;
+  const raw = searchInput.value;
+  const keyword = normalizeText(raw.trim());
 
-  const jp = d.normJP || "";
-  const en = d.normEN || "";
-  const name = d.normName || "";
+  if (!keyword) return;
 
-  // 完全一致
-  if (jp === keyword) score += 100;
-  if (name === keyword) score += 90;
-  if (en === keyword) score += 60;
+  const scoredMarkers = markers.map(m => {
+    const d = m.customData;
 
-  // 前方一致
-  if (jp.startsWith(keyword)) score += 50;
-  if (name.startsWith(keyword)) score += 40;
-  if (en.startsWith(keyword)) score += 20;
+    let score = 0;
 
-  // 部分一致
-  if (jp.includes(keyword)) score += 25;
-  if (name.includes(keyword)) score += 20;
-  if (en.includes(keyword)) score += 10;
+    const jp = d.normJP || "";
+    const en = d.normEN || "";
+    const name = d.normName || "";
 
-  return { m, score };
-})
-.filter(x => x.score > 0)
-.sort((a, b) => b.score - a.score);
+    if (jp === keyword) score += 100;
+    if (name === keyword) score += 90;
+    if (en === keyword) score += 60;
 
-if (scoredMarkers.length === 0) return;
+    if (jp.startsWith(keyword)) score += 50;
+    if (name.startsWith(keyword)) score += 40;
+    if (en.startsWith(keyword)) score += 20;
 
-// ★② ピンポイントで“マーカー確定”
-const mainMarker = scoredMarkers[0].m;
+    if (jp.includes(keyword)) score += 25;
+    if (name.includes(keyword)) score += 20;
+    if (en.includes(keyword)) score += 10;
 
-// ★③ 同じIDの全部表示（ここは維持）
-const groupMarkers = markers.filter(m =>
-  m.customId == mainMarker.customId &&
-  m.customCountry == mainMarker.customCountry
-);
+    return { m, score };
+  })
+  .filter(x => x.score > 0)
+  .sort((a, b) => b.score - a.score);
 
-// 表示制御
-markers.forEach(m => m.setVisible(false));
-groupMarkers.forEach(m => m.setVisible(true));
+  if (scoredMarkers.length === 0) return;
 
-refreshCluster();
+  const mainMarker = scoredMarkers[0].m;
 
-// ★④ そのマーカーに合わせて移動
-map.panTo(mainMarker.getPosition());
+  const groupMarkers = markers.filter(m =>
+    m.customId == mainMarker.customId &&
+    m.customCountry == mainMarker.customCountry
+  );
 
-// ★⑤ 正しい吹き出し（ここが修正ポイント）
-setTimeout(() => {
-  showInfo(mainMarker, true);
-}, 200);
+  markers.forEach(m => m.setVisible(false));
+  groupMarkers.forEach(m => m.setVisible(true));
+
+  refreshCluster();
+
+  map.panTo(mainMarker.getPosition());
+
+  setTimeout(() => {
+    showInfo(mainMarker, true);
+  }, 200);
 });
+
+        });
     }
 
 // 👇ここ！！！！（これが「外」）
