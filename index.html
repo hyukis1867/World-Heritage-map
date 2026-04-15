@@ -821,60 +821,60 @@ searchInput.addEventListener('input', () => {
 // Enterキーで検索実行
 searchInput.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter') return;
+  if (e.isComposing) return;
+  e.preventDefault();
 
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData.filter(d => {
-  return (
-    d.normName.includes(keyword) ||
-    (d.normJP && d.normJP.includes(keyword)) ||
-    (d.normEN && d.normEN.includes(keyword))
-  );
-});
+  // ① ★マーカー単位でスコアリング（重要）
+  const scored = markers.map(m => {
+    const d = m.customData;
 
-  if (results.length === 0) return;
+    let score = 0;
 
-  const found = results[0];
+    const jp = d.normJP || "";
+    const en = d.normEN || "";
+    const name = d.normName || "";
 
+    if (jp === keyword) score += 100;
+    if (name === keyword) score += 90;
+    if (en === keyword) score += 60;
+
+    if (jp.startsWith(keyword)) score += 50;
+    if (name.startsWith(keyword)) score += 40;
+    if (en.startsWith(keyword)) score += 20;
+
+    if (jp.includes(keyword)) score += 25;
+    if (name.includes(keyword)) score += 20;
+    if (en.includes(keyword)) score += 10;
+
+    return { m, score };
+  })
+  .filter(x => x.score > 0)
+  .sort((a, b) => b.score - a.score);
+
+  if (scored.length === 0) return;
+
+  // ② ★ここが本質：マーカーを直接確定
+  const mainMarker = scored[0].m;
+
+  // ③ 同じIDのグループ表示（維持）
   const groupMarkers = markers.filter(m =>
-    m.customId == found.id &&
-    m.customCountry == found.country
+    m.customId == mainMarker.customId &&
+    m.customCountry == mainMarker.customCountry
   );
-
-  if (groupMarkers.length === 0) return;
 
   markers.forEach(m => m.setVisible(false));
   groupMarkers.forEach(m => m.setVisible(true));
 
   refreshCluster();
 
-  const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.normName && m.customData.normName.includes(keyword)) ||
-    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
-    (m.customData.normEN && m.customData.normEN.includes(keyword))
-  ) || groupMarkers[0];
-
-  const latLng = mainMarker.getPosition();
-
-const offsetY = 150; // ←プルダウンと同じ値にする
-
-const scale = Math.pow(2, map.getZoom());
-const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-const pixelOffset = new google.maps.Point(0, offsetY / scale);
-
-const newCenter = map.getProjection().fromPointToLatLng(
-  new google.maps.Point(
-    worldCoordinateCenter.x,
-    worldCoordinateCenter.y - pixelOffset.y
-  )
-);
-
-map.panTo(newCenter);
+  // ④ ★ここ重要：必ず「mainMarker」にフォーカス
+  map.panTo(mainMarker.getPosition());
 
   setTimeout(() => {
-    showInfo(mainMarker, true); // ← ここ重要（固定表示）
+    showInfo(mainMarker, true);
   }, 200);
 });
 
