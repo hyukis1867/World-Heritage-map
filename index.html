@@ -819,67 +819,67 @@ searchInput.addEventListener('input', () => {
 });
 
 // Enterキーで検索実行
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key !== 'Enter') return;
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('search-input');
 
-  // ★IME対策（重要）
-  if (e.isComposing) return;
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
 
-  e.preventDefault();
+    const raw = searchInput.value;
+    const keyword = normalizeText(raw.trim());
 
-  const raw = searchInput.value;
-  const keyword = normalizeText(raw.trim());
+    if (!keyword) return;
 
-  if (!keyword) return;
+    console.log("ENTER OK:", keyword); // ← デバッグ
 
-  const scoredMarkers = markers.map(m => {
-    const d = m.customData;
+    const scoredMarkers = markers.map(m => {
+      const d = m.customData;
 
-    let score = 0;
+      let score = 0;
 
-    const jp = d.normJP || "";
-    const en = d.normEN || "";
-    const name = d.normName || "";
+      const jp = d.normJP || "";
+      const en = d.normEN || "";
+      const name = d.normName || "";
 
-    if (jp === keyword) score += 100;
-    if (name === keyword) score += 90;
-    if (en === keyword) score += 60;
+      if (jp === keyword) score += 100;
+      if (name === keyword) score += 90;
+      if (en === keyword) score += 60;
 
-    if (jp.startsWith(keyword)) score += 50;
-    if (name.startsWith(keyword)) score += 40;
-    if (en.startsWith(keyword)) score += 20;
+      if (jp.startsWith(keyword)) score += 50;
+      if (name.startsWith(keyword)) score += 40;
+      if (en.startsWith(keyword)) score += 20;
 
-    if (jp.includes(keyword)) score += 25;
-    if (name.includes(keyword)) score += 20;
-    if (en.includes(keyword)) score += 10;
+      if (jp.includes(keyword)) score += 25;
+      if (name.includes(keyword)) score += 20;
+      if (en.includes(keyword)) score += 10;
 
-    return { m, score };
-  })
-  .filter(x => x.score > 0)
-  .sort((a, b) => b.score - a.score);
+      return { m, score };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score);
 
-  if (scoredMarkers.length === 0) return;
+    if (scoredMarkers.length === 0) return;
 
-  const mainMarker = scoredMarkers[0].m;
+    const mainMarker = scoredMarkers[0].m;
 
-  const groupMarkers = markers.filter(m =>
-    m.customId == mainMarker.customId &&
-    m.customCountry == mainMarker.customCountry
-  );
+    const groupMarkers = markers.filter(m =>
+      m.customId == mainMarker.customId &&
+      m.customCountry == mainMarker.customCountry
+    );
 
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
+    markers.forEach(m => m.setVisible(false));
+    groupMarkers.forEach(m => m.setVisible(true));
 
-  refreshCluster();
+    refreshCluster();
 
-  map.panTo(mainMarker.getPosition());
+    map.panTo(mainMarker.getPosition());
 
-  setTimeout(() => {
-    showInfo(mainMarker, true);
-  }, 200);
+    setTimeout(() => {
+      showInfo(mainMarker, true);
+    }, 200);
+  });
 });
-
-        });
     }
 
 // 👇ここ！！！！（これが「外」）
