@@ -844,7 +844,22 @@ searchInput.addEventListener('keydown', (e) => {
     (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
   ) || groupMarkers[0];
 
-  map.panTo(mainMarker.getPosition());
+  const latLng = mainMarker.getPosition();
+
+const offsetY = 150; // ←プルダウンと同じ値にする
+
+const scale = Math.pow(2, map.getZoom());
+const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+const pixelOffset = new google.maps.Point(0, offsetY / scale);
+
+const newCenter = map.getProjection().fromPointToLatLng(
+  new google.maps.Point(
+    worldCoordinateCenter.x,
+    worldCoordinateCenter.y - pixelOffset.y
+  )
+);
+
+map.panTo(newCenter);
 
   setTimeout(() => {
     showInfo(mainMarker, true); // ← ここ重要（固定表示）
