@@ -792,30 +792,19 @@ const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
   const keyword = normalizeText(searchInput.value.trim());
 
- if (!keyword) {
+if (!keyword) {
 
-    // 吹き出し閉じる
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    // 全マーカー表示
-    markers.forEach(m => m.setVisible(true));
-
-    refreshCluster(); 
-
-    // ★プルダウンもリセット（重要）
-    document.getElementById('region-select').value = '';
-    document.getElementById('country-select').value = '';
-    document.getElementById('heritage-select').value = '';
-
-    document.getElementById("country-box").style.display = "none";
-    document.getElementById("heritage-box").style.display = "none";
-
-    return;
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
   }
+  lastOpenedMarker = null;
+
+  markers.forEach(m => m.setVisible(true));
+  refreshCluster();
+
+  return; // ← ここで終わり
+}
 
 const results = heritageData.filter(d => {
   return (
