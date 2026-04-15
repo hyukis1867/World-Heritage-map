@@ -825,30 +825,27 @@ searchInput.addEventListener('keydown', (e) => {
 const keyword = normalizeText(searchInput.value.trim());
 if (!keyword) return;
 
+// ① Google風スコア検索（遺産1つ特定）
 const scored = heritageData.map(d => {
   let score = 0;
 
-  const nameJP = d.normJP || "";
-  const nameEN = d.normEN || "";
+  const jp = d.normJP || "";
+  const en = d.normEN || "";
   const name = d.normName || "";
 
-  // ① 完全一致（最強）
-  if (nameJP === keyword) score += 100;
+  if (jp === keyword) score += 100;
   if (name === keyword) score += 90;
-  if (nameEN === keyword) score += 60;
+  if (en === keyword) score += 60;
 
-  // ② 前方一致（かなり強い）
-  if (nameJP.startsWith(keyword)) score += 50;
+  if (jp.startsWith(keyword)) score += 50;
   if (name.startsWith(keyword)) score += 40;
-  if (nameEN.startsWith(keyword)) score += 20;
+  if (en.startsWith(keyword)) score += 20;
 
-  // ③ 部分一致（弱い）
-  if (nameJP.includes(keyword)) score += 25;
+  if (jp.includes(keyword)) score += 25;
   if (name.includes(keyword)) score += 20;
-  if (nameEN.includes(keyword)) score += 10;
+  if (en.includes(keyword)) score += 10;
 
-  // ④ 日本語ボーナス（超重要）
-  if (/[ぁ-んァ-ン一-龥]/.test(keyword) && nameJP.includes(keyword)) {
+  if (/[ぁ-んァ-ン一-龥]/.test(keyword) && jp.includes(keyword)) {
     score += 30;
   }
 
@@ -861,45 +858,35 @@ if (scored.length === 0) return;
 
 const found = scored[0].d;
 
-  const groupMarkers = markers.filter(m =>
-    m.customId == found.id &&
-    m.customCountry == found.country
-  );
-
-  if (groupMarkers.length === 0) return;
-
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
-
-  refreshCluster();
-
-  const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.normName && m.customData.normName.includes(keyword)) ||
-    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
-    (m.customData.normEN && m.customData.normEN.includes(keyword))
-  ) || groupMarkers[0];
-
-  const latLng = mainMarker.getPosition();
-
-const offsetY = 150; // ←プルダウンと同じ値にする
-
-const scale = Math.pow(2, map.getZoom());
-const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-const pixelOffset = new google.maps.Point(0, offsetY / scale);
-
-const newCenter = map.getProjection().fromPointToLatLng(
-  new google.maps.Point(
-    worldCoordinateCenter.x,
-    worldCoordinateCenter.y - pixelOffset.y
-  )
+// ② ★ここが超重要（複数地点維持）
+const groupMarkers = markers.filter(m =>
+  m.customId == found.id &&
+  m.customCountry == found.country
 );
 
-map.panTo(newCenter);
+if (groupMarkers.length === 0) return;
 
-  setTimeout(() => {
-    showInfo(mainMarker, true); // ← ここ重要（固定表示）
-  }, 200);
+// ③ 表示制御
+markers.forEach(m => m.setVisible(false));
+groupMarkers.forEach(m => m.setVisible(true));
+
+refreshCluster();
+
+// ④ 中心マーカー決定
+const mainMarker =
+  groupMarkers.find(m =>
+    (m.customData.normJP || "").includes(keyword) ||
+    (m.customData.normName || "").includes(keyword) ||
+    (m.customData.normEN || "").includes(keyword)
+  ) || groupMarkers[0];
+
+// ⑤ 移動＋吹き出し
+const latLng = mainMarker.getPosition();
+map.panTo(latLng);
+
+setTimeout(() => {
+  showInfo(mainMarker, true);
+}, 200);
 });
 
         });
