@@ -682,17 +682,6 @@ option.title = heritageName; // ← フル表示（重要）
 });
 
           heritageSelect.addEventListener('change', () => {
-
-Array.from(heritageSelect.options).forEach(opt => {
-  opt.textContent = opt.textContent.replace(/^★/, '');
-});
-
-const selectedOption = heritageSelect.selectedOptions[0];
-if (selectedOption) {
-  selectedOption.textContent = '★' + selectedOption.textContent;
-}
-
-
   const selectedHeritage = heritageSelect.value;
   if (!selectedHeritage) return;
 
