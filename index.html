@@ -819,66 +819,71 @@ searchInput.addEventListener('input', () => {
 });
 
 // Enterキーで検索実行
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key !== 'Enter') return;
-  if (e.isComposing) return;
-  e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('search-input');
 
-  const keyword = normalizeText(searchInput.value.trim());
-  if (!keyword) return;
+  if (!searchInput) {
+    console.error("search-input not found");
+    return;
+  }
 
-  // ① ★マーカー単位でスコアリング（重要）
-  const scored = markers.map(m => {
-    const d = m.customData;
+  searchInput.addEventListener('keyup', (e) => {
+    if (e.key !== 'Enter') return;
 
-    let score = 0;
+    e.preventDefault();
 
-    const jp = d.normJP || "";
-    const en = d.normEN || "";
-    const name = d.normName || "";
+    const keyword = normalizeText(searchInput.value.trim());
+    if (!keyword) return;
 
-    if (jp === keyword) score += 100;
-    if (name === keyword) score += 90;
-    if (en === keyword) score += 60;
+    console.log("ENTER OK:", keyword);
 
-    if (jp.startsWith(keyword)) score += 50;
-    if (name.startsWith(keyword)) score += 40;
-    if (en.startsWith(keyword)) score += 20;
+    const scored = markers.map(m => {
+      const d = m.customData;
 
-    if (jp.includes(keyword)) score += 25;
-    if (name.includes(keyword)) score += 20;
-    if (en.includes(keyword)) score += 10;
+      let score = 0;
 
-    return { m, score };
-  })
-  .filter(x => x.score > 0)
-  .sort((a, b) => b.score - a.score);
+      const jp = d.normJP || "";
+      const en = d.normEN || "";
+      const name = d.normName || "";
 
-  if (scored.length === 0) return;
+      if (jp === keyword) score += 100;
+      if (name === keyword) score += 90;
+      if (en === keyword) score += 60;
 
-  // ② ★ここが本質：マーカーを直接確定
-  const mainMarker = scored[0].m;
+      if (jp.startsWith(keyword)) score += 50;
+      if (name.startsWith(keyword)) score += 40;
+      if (en.startsWith(keyword)) score += 20;
 
-  // ③ 同じIDのグループ表示（維持）
-  const groupMarkers = markers.filter(m =>
-    m.customId == mainMarker.customId &&
-    m.customCountry == mainMarker.customCountry
-  );
+      if (jp.includes(keyword)) score += 25;
+      if (name.includes(keyword)) score += 20;
+      if (en.includes(keyword)) score += 10;
 
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
+      return { m, score };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score);
 
-  refreshCluster();
+    if (scored.length === 0) return;
 
-  // ④ ★ここ重要：必ず「mainMarker」にフォーカス
-  map.panTo(mainMarker.getPosition());
+    const mainMarker = scored[0].m;
 
-  setTimeout(() => {
-    showInfo(mainMarker, true);
-  }, 200);
+    const groupMarkers = markers.filter(m =>
+      m.customId == mainMarker.customId &&
+      m.customCountry == mainMarker.customCountry
+    );
+
+    markers.forEach(m => m.setVisible(false));
+    groupMarkers.forEach(m => m.setVisible(true));
+
+    refreshCluster();
+
+    map.panTo(mainMarker.getPosition());
+
+    setTimeout(() => {
+      showInfo(mainMarker, true);
+    }, 200);
+  });
 });
-
-        });
     }
 
 // 👇ここ！！！！（これが「外」）
