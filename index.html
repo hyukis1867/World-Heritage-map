@@ -103,7 +103,8 @@
     let infoWindow = null;
     let lastOpenedMarker = null;
     let heritageData = [];
-    let markerCluster; // ★これを一番上に追加
+    let markerCluster;
+    let isPinned = false;
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -187,14 +188,17 @@ function normalizeText(str) {
       "複合遺産": "deepskyblue"
     };
 
-function showInfo(marker) {
+function showInfo(marker, pinned = false) {
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
   }
 
   const data = marker.customData;
-if (!data) return;
+  if (!data) return;
+
+  // ★ここ追加
+  isPinned = pinned;
 
   // ★ここに書く（これが正解）
   const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
@@ -409,16 +413,31 @@ marker.customData = {
 };
 
   marker.addListener('click', () => {
-    if (lastOpenedMarker === marker) {
-      if (infoWindow) {
-        infoWindow.close();
-        infoWindow = null;
-        lastOpenedMarker = null;
-      }
-    } else {
-      showInfo(marker);
+  if (lastOpenedMarker === marker && isPinned) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+      lastOpenedMarker = null;
+      isPinned = false;
     }
-  });
+  } else {
+    showInfo(marker, true); // ← クリックは固定
+  }
+});
+
+marker.addListener('mouseover', () => {
+  if (!isPinned) {
+    showInfo(marker, false); // ← 一時表示
+  }
+});
+
+marker.addListener('mouseout', () => {
+  if (!isPinned && infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
+});
+
 
  markers.push(marker);
 
