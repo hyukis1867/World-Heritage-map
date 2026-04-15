@@ -246,13 +246,10 @@ if (!infoWindow) {
 
 infoWindow.setContent(contentHtml);
 
-infoWindow.open({
-  map: map,
-  anchor: marker,
-  shouldFocus: false
-});
+infoWindow.setPosition(marker.getPosition()); // ←これ重要
+infoWindow.open(map);                         // ←anchor使わない
 
-  lastOpenedMarker = marker;
+lastOpenedMarker = marker;
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
