@@ -364,7 +364,16 @@ lastOpenedMarker = marker;
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit});
+  heritageData.push({
+  id, region, country, heritageName, lat, lng, type, year,
+  localNameJP, localNameEN, linkUrl, grade, imageUrl, credit,
+
+  // ★ここ追加（超重要）
+  normName: normalizeText(heritageName),
+  normJP: normalizeText(localNameJP),
+  normEN: normalizeText(localNameEN)
+});
+
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -804,12 +813,12 @@ searchInput.addEventListener('keydown', (e) => {
   if (!keyword) return;
 
   const results = heritageData.filter(d => {
-    return (
-      normalizeText(d.heritageName).includes(keyword) ||
-      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-    );
-  });
+  return (
+    d.normName.includes(keyword) ||
+    (d.normJP && d.normJP.includes(keyword)) ||
+    (d.normEN && d.normEN.includes(keyword))
+  );
+});
 
   if (results.length === 0) return;
 
