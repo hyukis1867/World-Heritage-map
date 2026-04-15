@@ -825,65 +825,57 @@ searchInput.addEventListener('keydown', (e) => {
 const keyword = normalizeText(searchInput.value.trim());
 if (!keyword) return;
 
-// ① Google風スコア検索（遺産1つ特定）
-const scored = heritageData.map(d => {
+// ★① マーカー単位でスコアリングする（重要）
+const scoredMarkers = markers.map(m => {
+  const d = m.customData;
+
   let score = 0;
 
   const jp = d.normJP || "";
   const en = d.normEN || "";
   const name = d.normName || "";
 
+  // 完全一致
   if (jp === keyword) score += 100;
   if (name === keyword) score += 90;
   if (en === keyword) score += 60;
 
+  // 前方一致
   if (jp.startsWith(keyword)) score += 50;
   if (name.startsWith(keyword)) score += 40;
   if (en.startsWith(keyword)) score += 20;
 
+  // 部分一致
   if (jp.includes(keyword)) score += 25;
   if (name.includes(keyword)) score += 20;
   if (en.includes(keyword)) score += 10;
 
-  if (/[ぁ-んァ-ン一-龥]/.test(keyword) && jp.includes(keyword)) {
-    score += 30;
-  }
-
-  return { d, score };
+  return { m, score };
 })
 .filter(x => x.score > 0)
 .sort((a, b) => b.score - a.score);
 
-if (scored.length === 0) return;
+if (scoredMarkers.length === 0) return;
 
-const found = scored[0].d;
+// ★② ピンポイントで“マーカー確定”
+const mainMarker = scoredMarkers[0].m;
 
-// ② ★ここが超重要（複数地点維持）
+// ★③ 同じIDの全部表示（ここは維持）
 const groupMarkers = markers.filter(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country
+  m.customId == mainMarker.customId &&
+  m.customCountry == mainMarker.customCountry
 );
 
-if (groupMarkers.length === 0) return;
-
-// ③ 表示制御
+// 表示制御
 markers.forEach(m => m.setVisible(false));
 groupMarkers.forEach(m => m.setVisible(true));
 
 refreshCluster();
 
-// ④ 中心マーカー決定
-const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.normJP || "").includes(keyword) ||
-    (m.customData.normName || "").includes(keyword) ||
-    (m.customData.normEN || "").includes(keyword)
-  ) || groupMarkers[0];
+// ★④ そのマーカーに合わせて移動
+map.panTo(mainMarker.getPosition());
 
-// ⑤ 移動＋吹き出し
-const latLng = mainMarker.getPosition();
-map.panTo(latLng);
-
+// ★⑤ 正しい吹き出し（ここが修正ポイント）
 setTimeout(() => {
   showInfo(mainMarker, true);
 }, 200);
