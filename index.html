@@ -838,9 +838,9 @@ searchInput.addEventListener('keydown', (e) => {
 
   const mainMarker =
   groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+    (m.customData.normName && m.customData.normName.includes(keyword)) ||
+    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
+    (m.customData.normEN && m.customData.normEN.includes(keyword))
   ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
