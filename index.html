@@ -789,72 +789,61 @@ refreshCluster();
 // 🔍 検索機能（ここに入れる）
 const searchInput = document.getElementById('search-input');
 
+// 入力中は何もしない（必要なら候補表示だけ）
 searchInput.addEventListener('input', () => {
+  // 空に戻した時だけリセット
   const keyword = normalizeText(searchInput.value.trim());
 
-if (!keyword) {
+  if (!keyword) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+    lastOpenedMarker = null;
 
-  if (infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
+    markers.forEach(m => m.setVisible(true));
+    refreshCluster();
   }
-  lastOpenedMarker = null;
-
-  markers.forEach(m => m.setVisible(true));
-  refreshCluster();
-
-  return; // ← ここで終わり
-}
-
-const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-  );
 });
 
-if (results.length === 0) return;
+// Enterキーで検索実行
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
 
-let found =
-  results.find(d => normalizeText(d.heritageName) === keyword) ||
-  results.find(d => normalizeText(d.localNameJP) === keyword) ||
-  results.find(d => normalizeText(d.localNameEN) === keyword) ||
-  results[0];
+  const keyword = normalizeText(searchInput.value.trim());
+  if (!keyword) return;
 
-if (!found) return; // ★これ追加
+  const results = heritageData.filter(d => {
+    return (
+      normalizeText(d.heritageName).includes(keyword) ||
+      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+    );
+  });
 
-// ★同じID＋同じ国の全マーカー取得
-const groupMarkers = markers.filter(m =>
-  m.customId == found.id &&
-  m.customCountry == found.country
-);
+  if (results.length === 0) return;
 
-if (groupMarkers.length === 0) return;
+  const found = results[0];
 
-// ★全部非表示
-markers.forEach(m => m.setVisible(false));
+  const groupMarkers = markers.filter(m =>
+    m.customId == found.id &&
+    m.customCountry == found.country
+  );
 
-// ★同じ国＋同じIDだけ表示
-groupMarkers.forEach(m => m.setVisible(true));
+  if (groupMarkers.length === 0) return;
 
-refreshCluster();
+  markers.forEach(m => m.setVisible(false));
+  groupMarkers.forEach(m => m.setVisible(true));
 
-// ★代表（最初の1つだけ）
-const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  ) || groupMarkers[0];
+  refreshCluster();
 
-// 移動
-map.panTo(mainMarker.getPosition());
+  const mainMarker = groupMarkers[0];
 
-// 吹き出しは1つだけ
-setTimeout(() => {
-  showInfo(mainMarker, true); // ← ★これだけ
-}, 200);
+  map.panTo(mainMarker.getPosition());
+
+  setTimeout(() => {
+    showInfo(mainMarker, true); // ← ここ重要（固定表示）
+  }, 200);
 });
 
         });
