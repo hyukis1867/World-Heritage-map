@@ -553,15 +553,13 @@ function applyFilter() {
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-          regionSelect.addEventListener('change', () => {
+         regionSelect.addEventListener('change', () => {
 
-applyFilter();
+  applyFilter(); // ← これを先頭に
 
-});
+  // ▼ ここから元の処理そのまま残す
+  const selectedRegion = regionSelect.value;
 
-
-            
-  // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
 
