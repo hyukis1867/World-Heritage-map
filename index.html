@@ -1,4 +1,4 @@
-少し修正。これで何点だ？<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -781,7 +781,6 @@ const searchInput = document.getElementById('search-input');
 
 // 入力中は何もしない（必要なら候補表示だけ）
 searchInput.addEventListener('input', () => {
-  // 空に戻した時だけリセット
   const keyword = normalizeText(searchInput.value.trim());
 
   if (!keyword) {
@@ -791,7 +790,23 @@ searchInput.addEventListener('input', () => {
     }
     lastOpenedMarker = null;
 
-    markers.forEach(m => m.setVisible(true));
+    // ★ここ追加（状態取得）
+    const selectedRegion = document.getElementById('region-select').value;
+    const selectedCountry = document.getElementById('country-select').value;
+
+    markers.forEach(m => {
+      if (selectedCountry) {
+        // ★国が選択されている場合 → 国のみ表示
+        m.setVisible(m.customCountry === selectedCountry);
+      } else if (selectedRegion) {
+        // ★地域のみ選択 → 地域のみ表示
+        m.setVisible(m.customRegion === selectedRegion);
+      } else {
+        // ★未選択 → 全表示
+        m.setVisible(true);
+      }
+    });
+
     refreshCluster();
   }
 });
