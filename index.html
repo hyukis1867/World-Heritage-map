@@ -858,30 +858,20 @@ const suggestionBox = document.getElementById('suggestions');
 searchInput.addEventListener('input', () => {
   const keyword = normalizeText(searchInput.value.trim());
 
-  // ★クリア時
   if (!keyword) {
     suggestionBox.style.display = "none";
-
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-    isPinned = false;
-
     applyFilter();
     return;
   }
 
-  // ★候補生成（最大20件）
   const results = heritageData.filter(d =>
     d.normName.includes(keyword) ||
     (d.normJP && d.normJP.includes(keyword)) ||
     (d.normEN && d.normEN.includes(keyword))
   ).slice(0, 20);
 
-  // ★描画
   suggestionBox.innerHTML = "";
+
   results.forEach(d => {
     const div = document.createElement('div');
     div.textContent = `${d.id}｜${d.heritageName}`;
@@ -891,8 +881,6 @@ searchInput.addEventListener('input', () => {
     div.addEventListener('click', () => {
       searchInput.value = d.heritageName;
       suggestionBox.style.display = "none";
-
-      // Enterと同じ処理を呼ぶ
       searchAndMove(d);
     });
 
@@ -901,6 +889,25 @@ searchInput.addEventListener('input', () => {
 
   suggestionBox.style.display = results.length ? "block" : "none";
 });
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const keyword = normalizeText(searchInput.value.trim());
+    if (!keyword) return;
+
+    const results = heritageData.filter(d =>
+      d.normName.includes(keyword) ||
+      (d.normJP && d.normJP.includes(keyword)) ||
+      (d.normEN && d.normEN.includes(keyword))
+    );
+
+    if (results.length === 0) return;
+
+    searchAndMove(results[0]);
+    suggestionBox.style.display = "none";
+  }
+});
+
 
   if (results.length === 0) return;
 
