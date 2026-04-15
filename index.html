@@ -364,7 +364,16 @@ lastOpenedMarker = marker;
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit});
+  heritageData.push({
+  id, region, country, heritageName, lat, lng, type, year,
+  localNameJP, localNameEN, linkUrl, grade, imageUrl, credit,
+
+  // ★ここ追加（超重要）
+  normName: normalizeText(heritageName),
+  normJP: normalizeText(localNameJP),
+  normEN: normalizeText(localNameEN)
+});
+
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -520,30 +529,37 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
+function applyFilter() {
+  const selectedRegion = regionSelect.value;
+  const selectedCountry = countrySelect.value;
+
+  markers.forEach(m => {
+    if (selectedCountry) {
+      m.setVisible(m.customCountry === selectedCountry);
+    } else if (selectedRegion) {
+      m.setVisible(m.customRegion === selectedRegion);
+    } else {
+      m.setVisible(true);
+    }
+  });
+
+  refreshCluster();
+}
+
+
+
+
+
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-          regionSelect.addEventListener('change', () => {
+         regionSelect.addEventListener('change', () => {
 
-if (infoWindow) {
-  infoWindow.close();
-  infoWindow = null;
-}
-lastOpenedMarker = null;
+  applyFilter(); // ← これを先頭に
 
+  // ▼ ここから元の処理そのまま残す
   const selectedRegion = regionSelect.value;
 
-markers.forEach(marker => {
-  if (!selectedRegion) {
-    marker.setVisible(true);   // 地域未選択なら全表示
-  } else {
-    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
-  }
-});
-
-
-            
-  // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
 
@@ -642,6 +658,9 @@ refreshCluster();
 
 
           countrySelect.addEventListener('change', () => {
+
+
+applyFilter();
 
 // ★吹き出しを強制的に閉じる
 if (infoWindow) {
@@ -781,34 +800,10 @@ const searchInput = document.getElementById('search-input');
 
 // 入力中は何もしない（必要なら候補表示だけ）
 searchInput.addEventListener('input', () => {
+  // 空に戻した時だけリセット
   const keyword = normalizeText(searchInput.value.trim());
 
-  if (!keyword) {
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    // ★ここ追加（状態取得）
-    const selectedRegion = document.getElementById('region-select').value;
-    const selectedCountry = document.getElementById('country-select').value;
-
-    markers.forEach(m => {
-      if (selectedCountry) {
-        // ★国が選択されている場合 → 国のみ表示
-        m.setVisible(m.customCountry === selectedCountry);
-      } else if (selectedRegion) {
-        // ★地域のみ選択 → 地域のみ表示
-        m.setVisible(m.customRegion === selectedRegion);
-      } else {
-        // ★未選択 → 全表示
-        m.setVisible(true);
-      }
-    });
-
-    refreshCluster();
-  }
+applyFilter();
 });
 
 // Enterキーで検索実行
@@ -819,12 +814,12 @@ searchInput.addEventListener('keydown', (e) => {
   if (!keyword) return;
 
   const results = heritageData.filter(d => {
-    return (
-      normalizeText(d.heritageName).includes(keyword) ||
-      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-    );
-  });
+  return (
+    d.normName.includes(keyword) ||
+    (d.normJP && d.normJP.includes(keyword)) ||
+    (d.normEN && d.normEN.includes(keyword))
+  );
+});
 
   if (results.length === 0) return;
 
@@ -844,9 +839,9 @@ searchInput.addEventListener('keydown', (e) => {
 
   const mainMarker =
   groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+    (m.customData.normName && m.customData.normName.includes(keyword)) ||
+    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
+    (m.customData.normEN && m.customData.normEN.includes(keyword))
   ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
