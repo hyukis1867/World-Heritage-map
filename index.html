@@ -644,7 +644,19 @@ lastOpenedMarker = null;
       option.value = `${selectedCountry}.${id}`;
       let gradeLabel = '';
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-      option.textContent = `${id}.${heritageName} ${gradeLabel}`;
+      const maxLength = 30;
+
+let displayName = heritageName;
+
+if (heritageName.length > maxLength) {
+  displayName =
+    heritageName.slice(0, 15) + '…' +
+    heritageName.slice(-10);
+}
+
+option.textContent = `${id}.${displayName} ${gradeLabel}`;
+option.title = heritageName; // ← フル表示（重要）
+
       heritageSelect.appendChild(option);
     });
   }
