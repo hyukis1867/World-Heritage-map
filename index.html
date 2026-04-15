@@ -800,10 +800,22 @@ const searchInput = document.getElementById('search-input');
 
 // 入力中は何もしない（必要なら候補表示だけ）
 searchInput.addEventListener('input', () => {
-  // 空に戻した時だけリセット
   const keyword = normalizeText(searchInput.value.trim());
 
-applyFilter();
+  // ★完全削除時の処理
+  if (!keyword) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+    lastOpenedMarker = null;
+    isPinned = false; // ★これ重要（これが無いと残る）
+
+    applyFilter();
+    return;
+  }
+
+  applyFilter();
 });
 
 // Enterキーで検索実行
