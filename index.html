@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+少し修正。これで何点だ？<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -364,16 +364,7 @@ lastOpenedMarker = marker;
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({
-  id, region, country, heritageName, lat, lng, type, year,
-  localNameJP, localNameEN, linkUrl, grade, imageUrl, credit,
-
-  // ★ここ追加（超重要）
-  normName: normalizeText(heritageName),
-  normJP: normalizeText(localNameJP),
-  normEN: normalizeText(localNameEN)
-});
-
+  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit});
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -529,37 +520,30 @@ map.addListener('idle', updateMarkers);
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
 
-function applyFilter() {
-  const selectedRegion = regionSelect.value;
-  const selectedCountry = countrySelect.value;
-
-  markers.forEach(m => {
-    if (selectedCountry) {
-      m.setVisible(m.customCountry === selectedCountry);
-    } else if (selectedRegion) {
-      m.setVisible(m.customRegion === selectedRegion);
-    } else {
-      m.setVisible(true);
-    }
-  });
-
-  refreshCluster();
-}
-
-
-
-
-
           countrySelect.disabled = true;
           heritageSelect.disabled = true;
 
-         regionSelect.addEventListener('change', () => {
+          regionSelect.addEventListener('change', () => {
 
-  applyFilter(); // ← これを先頭に
+if (infoWindow) {
+  infoWindow.close();
+  infoWindow = null;
+}
+lastOpenedMarker = null;
 
-  // ▼ ここから元の処理そのまま残す
   const selectedRegion = regionSelect.value;
 
+markers.forEach(marker => {
+  if (!selectedRegion) {
+    marker.setVisible(true);   // 地域未選択なら全表示
+  } else {
+    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
+  }
+});
+
+
+            
+  // ★これ追加
   countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
   countrySelect.disabled = !selectedRegion;
 
@@ -658,9 +642,6 @@ refreshCluster();
 
 
           countrySelect.addEventListener('change', () => {
-
-
-applyFilter();
 
 // ★吹き出しを強制的に閉じる
 if (infoWindow) {
@@ -800,90 +781,82 @@ const searchInput = document.getElementById('search-input');
 
 // 入力中は何もしない（必要なら候補表示だけ）
 searchInput.addEventListener('input', () => {
+  // 空に戻した時だけリセット
   const keyword = normalizeText(searchInput.value.trim());
 
-  // ★完全削除時の処理
   if (!keyword) {
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
     }
     lastOpenedMarker = null;
-    isPinned = false; // ★これ重要（これが無いと残る）
 
-    applyFilter();
-    return;
+    markers.forEach(m => m.setVisible(true));
+    refreshCluster();
   }
-
-  applyFilter();
 });
 
 // Enterキーで検索実行
-document.addEventListener('DOMContentLoaded', () => {
-  const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
 
-  if (!searchInput) {
-    console.error("search-input not found");
-    return;
-  }
+  const keyword = normalizeText(searchInput.value.trim());
+  if (!keyword) return;
 
-  searchInput.addEventListener('keyup', (e) => {
-    if (e.key !== 'Enter') return;
-
-    e.preventDefault();
-
-    const keyword = normalizeText(searchInput.value.trim());
-    if (!keyword) return;
-
-    console.log("ENTER OK:", keyword);
-
-    const scored = markers.map(m => {
-      const d = m.customData;
-
-      let score = 0;
-
-      const jp = d.normJP || "";
-      const en = d.normEN || "";
-      const name = d.normName || "";
-
-      if (jp === keyword) score += 100;
-      if (name === keyword) score += 90;
-      if (en === keyword) score += 60;
-
-      if (jp.startsWith(keyword)) score += 50;
-      if (name.startsWith(keyword)) score += 40;
-      if (en.startsWith(keyword)) score += 20;
-
-      if (jp.includes(keyword)) score += 25;
-      if (name.includes(keyword)) score += 20;
-      if (en.includes(keyword)) score += 10;
-
-      return { m, score };
-    })
-    .filter(x => x.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-    if (scored.length === 0) return;
-
-    const mainMarker = scored[0].m;
-
-    const groupMarkers = markers.filter(m =>
-      m.customId == mainMarker.customId &&
-      m.customCountry == mainMarker.customCountry
+  const results = heritageData.filter(d => {
+    return (
+      normalizeText(d.heritageName).includes(keyword) ||
+      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
     );
-
-    markers.forEach(m => m.setVisible(false));
-    groupMarkers.forEach(m => m.setVisible(true));
-
-    refreshCluster();
-
-    map.panTo(mainMarker.getPosition());
-
-    setTimeout(() => {
-      showInfo(mainMarker, true);
-    }, 200);
   });
+
+  if (results.length === 0) return;
+
+  const found = results[0];
+
+  const groupMarkers = markers.filter(m =>
+    m.customId == found.id &&
+    m.customCountry == found.country
+  );
+
+  if (groupMarkers.length === 0) return;
+
+  markers.forEach(m => m.setVisible(false));
+  groupMarkers.forEach(m => m.setVisible(true));
+
+  refreshCluster();
+
+  const mainMarker =
+  groupMarkers.find(m =>
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
+  ) || groupMarkers[0];
+
+  const latLng = mainMarker.getPosition();
+
+const offsetY = 150; // ←プルダウンと同じ値にする
+
+const scale = Math.pow(2, map.getZoom());
+const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+const pixelOffset = new google.maps.Point(0, offsetY / scale);
+
+const newCenter = map.getProjection().fromPointToLatLng(
+  new google.maps.Point(
+    worldCoordinateCenter.x,
+    worldCoordinateCenter.y - pixelOffset.y
+  )
+);
+
+map.panTo(newCenter);
+
+  setTimeout(() => {
+    showInfo(mainMarker, true); // ← ここ重要（固定表示）
+  }, 200);
 });
+
+        });
     }
 
 // 👇ここ！！！！（これが「外」）
