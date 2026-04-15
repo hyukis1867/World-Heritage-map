@@ -908,44 +908,6 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-
-  if (groupMarkers.length === 0) return;
-
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
-
-  refreshCluster();
-
-  const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.normName && m.customData.normName.includes(keyword)) ||
-    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
-    (m.customData.normEN && m.customData.normEN.includes(keyword))
-  ) || groupMarkers[0];
-
-  const latLng = mainMarker.getPosition();
-
-const offsetY = 150; // ←プルダウンと同じ値にする
-
-const scale = Math.pow(2, map.getZoom());
-const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-const pixelOffset = new google.maps.Point(0, offsetY / scale);
-
-const newCenter = map.getProjection().fromPointToLatLng(
-  new google.maps.Point(
-    worldCoordinateCenter.x,
-    worldCoordinateCenter.y - pixelOffset.y
-  )
-);
-
-map.panTo(newCenter);
-
-  setTimeout(() => {
-    showInfo(mainMarker, true); // ← ここ重要（固定表示）
-  }, 200);
-});
-
-        });
     }
 
 // 👇ここ！！！！（これが「外」）
