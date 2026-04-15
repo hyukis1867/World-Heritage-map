@@ -245,11 +245,11 @@ if (!infoWindow) {
 
 infoWindow.setContent(contentHtml);
 
-// ★ここが追加ポイント（クリック時だけズラす）
+// ★クリック時だけズラす（ここ修正）
 let position = marker.getPosition();
 
-if (isHover === false) {
-  const offsetY = 150; // 調整OK
+if (isHover === true) {
+  const offsetY = 150;
 
   const scale = Math.pow(2, map.getZoom());
   const worldCoordinate = map.getProjection().fromLatLngToPoint(position);
