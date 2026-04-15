@@ -188,7 +188,7 @@ function normalizeText(str) {
       "複合遺産": "deepskyblue"
     };
 
-function showInfo(marker, isHover = false) {
+function showInfo(marker, pinned = false) {
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
@@ -197,7 +197,8 @@ function showInfo(marker, isHover = false) {
   const data = marker.customData;
   if (!data) return;
 
-
+  // ★ここ追加
+  isPinned = pinned;
 
   // ★ここに書く（これが正解）
   const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
@@ -244,32 +245,10 @@ if (!infoWindow) {
 }
 
 infoWindow.setContent(contentHtml);
-
-// ★クリック時だけズラす（ここ修正）
-let position = marker.getPosition();
-
-if (isHover === true) {
-  const offsetY = 150;
-
-  const scale = Math.pow(2, map.getZoom());
-  const worldCoordinate = map.getProjection().fromLatLngToPoint(position);
-  const pixelOffset = new google.maps.Point(0, offsetY / scale);
-
-  const newCenter = map.getProjection().fromPointToLatLng(
-    new google.maps.Point(
-      worldCoordinate.x,
-      worldCoordinate.y - pixelOffset.y
-    )
-  );
-
-  map.panTo(newCenter);
-}
-
-// 吹き出し表示
-infoWindow.setPosition(position);
+infoWindow.setPosition(marker.getPosition());
 infoWindow.open(map);
 
-lastOpenedMarker = marker;
+  lastOpenedMarker = marker;
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
