@@ -864,7 +864,7 @@ map.panTo(mainMarker.getPosition());
 
 // 吹き出しは1つだけ
 setTimeout(() => {
-  showInfo(mainMarker);
+  showInfo(mainMarker, true); // ← ★これだけ
 }, 200);
 });
 
