@@ -825,12 +825,17 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-const exact = heritageData.find(d =>
-  d.normJP === keyword ||
-  d.normName === keyword
-);
+  const results = heritageData.filter(d => {
+  return (
+    d.normName.includes(keyword) ||
+    (d.normJP && d.normJP.includes(keyword)) ||
+    (d.normEN && d.normEN.includes(keyword))
+  );
+});
 
-const found = exact || results[0];
+  if (results.length === 0) return;
+
+  const found = results[0];
 
   const groupMarkers = markers.filter(m =>
     m.customId == found.id &&
