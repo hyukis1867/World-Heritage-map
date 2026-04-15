@@ -825,17 +825,20 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData.filter(d => {
-  return (
-    d.normName.includes(keyword) ||
-    (d.normJP && d.normJP.includes(keyword)) ||
-    (d.normEN && d.normEN.includes(keyword))
-  );
-});
+const results = heritageData
+  .map(d => {
+    let score = 0;
 
-  if (results.length === 0) return;
+    if (d.normJP?.includes(keyword)) score += 3;
+    if (d.normName?.includes(keyword)) score += 2;
+    if (d.normEN?.includes(keyword)) score += 1;
 
-  const found = results[0];
+    return { d, score };
+  })
+  .filter(x => x.score > 0)
+  .sort((a, b) => b.score - a.score);
+
+const found = results[0]?.d;
 
   const groupMarkers = markers.filter(m =>
     m.customId == found.id &&
