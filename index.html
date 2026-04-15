@@ -97,18 +97,6 @@
   placeholder="🔍 遺産名で検索"
   style="width:100%; font-size:14px; box-sizing:border-box;">
   </div>
-<div id="suggestions" style="
-  position:absolute;
-  background:white;
-  width:100%;
-  max-height:200px;
-  overflow-y:auto;
-  border:1px solid #ccc;
-  border-top:none;
-  z-index:10;
-  display:none;
-"></div>
-</div>
 
   <script>
     let map;
@@ -135,11 +123,10 @@ function normalizeText(str) {
 
   return str
     .toLowerCase()
-    .normalize('NFKC')
+    .normalize('NFKC') // 全角→半角など
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    )
-    .replace(/\s+/g, ''); // ★スペース無視も追加
+    ); // カタカナ→ひらがな
 }
 
   function getCapitalLatLng(countryName) {
@@ -808,11 +795,48 @@ refreshCluster();
               }
             }, 500);
           }
+// 🔍 検索機能（ここに入れる）
+const searchInput = document.getElementById('search-input');
 
+// 入力中は何もしない（必要なら候補表示だけ）
+searchInput.addEventListener('input', () => {
+  const keyword = normalizeText(searchInput.value.trim());
 
+  // ★完全削除時の処理
+  if (!keyword) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+    lastOpenedMarker = null;
+    isPinned = false; // ★これ重要（これが無いと残る）
 
+    applyFilter();
+    return;
+  }
 
-function searchAndMove(found) {
+  applyFilter();
+});
+
+// Enterキーで検索実行
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
+
+  const keyword = normalizeText(searchInput.value.trim());
+  if (!keyword) return;
+
+  const results = heritageData.filter(d => {
+  return (
+    d.normName.includes(keyword) ||
+    (d.normJP && d.normJP.includes(keyword)) ||
+    (d.normEN && d.normEN.includes(keyword))
+  );
+});
+
+  if (results.length === 0) return;
+
+  const found = results[0];
+
   const groupMarkers = markers.filter(m =>
     m.customId == found.id &&
     m.customCountry == found.country
@@ -825,89 +849,36 @@ function searchAndMove(found) {
 
   refreshCluster();
 
-  const mainMarker = groupMarkers[0];
+  const mainMarker =
+  groupMarkers.find(m =>
+    (m.customData.normName && m.customData.normName.includes(keyword)) ||
+    (m.customData.normJP && m.customData.normJP.includes(keyword)) ||
+    (m.customData.normEN && m.customData.normEN.includes(keyword))
+  ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
 
-  const offsetY = 150;
-  const scale = Math.pow(2, map.getZoom());
-  const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-  const pixelOffset = new google.maps.Point(0, offsetY / scale);
+const offsetY = 150; // ←プルダウンと同じ値にする
 
-  const newCenter = map.getProjection().fromPointToLatLng(
-    new google.maps.Point(
-      worldCoordinateCenter.x,
-      worldCoordinateCenter.y - pixelOffset.y
-    )
-  );
+const scale = Math.pow(2, map.getZoom());
+const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+const pixelOffset = new google.maps.Point(0, offsetY / scale);
 
-  map.panTo(newCenter);
+const newCenter = map.getProjection().fromPointToLatLng(
+  new google.maps.Point(
+    worldCoordinateCenter.x,
+    worldCoordinateCenter.y - pixelOffset.y
+  )
+);
+
+map.panTo(newCenter);
 
   setTimeout(() => {
-    showInfo(mainMarker, true);
+    showInfo(mainMarker, true); // ← ここ重要（固定表示）
   }, 200);
-}
-
-
-// 🔍 検索機能（ここに入れる）
-const searchInput = document.getElementById('search-input');
-
-const suggestionBox = document.getElementById('suggestions');
-
-// 入力中は何もしない（必要なら候補表示だけ）
-searchInput.addEventListener('input', () => {
-  const keyword = normalizeText(searchInput.value.trim());
-
-  if (!keyword) {
-    suggestionBox.style.display = "none";
-    applyFilter();
-    return;
-  }
-
-  const results = heritageData.filter(d =>
-    d.normName.includes(keyword) ||
-    (d.normJP && d.normJP.includes(keyword)) ||
-    (d.normEN && d.normEN.includes(keyword))
-  ).slice(0, 20);
-
-  suggestionBox.innerHTML = "";
-
-  results.forEach(d => {
-    const div = document.createElement('div');
-    div.textContent = `${d.id}｜${d.heritageName}`;
-    div.style.padding = "5px";
-    div.style.cursor = "pointer";
-
-    div.addEventListener('click', () => {
-      searchInput.value = d.heritageName;
-      suggestionBox.style.display = "none";
-      searchAndMove(d);
-    });
-
-    suggestionBox.appendChild(div);
-  });
-
-  suggestionBox.style.display = results.length ? "block" : "none";
 });
 
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const keyword = normalizeText(searchInput.value.trim());
-    if (!keyword) return;
-
-    const results = heritageData.filter(d =>
-      d.normName.includes(keyword) ||
-      (d.normJP && d.normJP.includes(keyword)) ||
-      (d.normEN && d.normEN.includes(keyword))
-    );
-
-    if (results.length === 0) return;
-
-    searchAndMove(results[0]);
-    suggestionBox.style.display = "none";
-  }
-});
-
+        });
     }
 
 // 👇ここ！！！！（これが「外」）
