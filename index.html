@@ -14,7 +14,7 @@
   .infowindow-localname {
     text-align: right;
     font-size: 90%;
-    color: #000;   /* ← 遺産名と同じ色 */
+    color: #555;
     margin-top: 2px;
   }
   .infowindow-sub {
@@ -229,7 +229,7 @@ const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
-  ${data.state ? `<div class="infowindow-localname">${data.state}</div>` : ''}
+  ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
   ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
