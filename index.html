@@ -73,6 +73,13 @@
   border-radius: 8px;
 }
 
+.infowindow-state {
+  text-align: right;
+  font-size: 80%;
+  color: #666;
+  margin-top: 2px;
+}
+
     
   </style>
 </head>
@@ -222,6 +229,7 @@ const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
+  ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
   ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
@@ -358,12 +366,13 @@ lastOpenedMarker = marker;
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
-  const localNameJP = columns[8]?.trim();
-  const localNameEN = columns[9]?.trim();
-  const linkUrl = columns[10]?.trim();
-  const gradeRaw = columns[11]?.trim() || "";
-  const imageUrl = columns[12]?.trim(); // ★追加
-  const credit = columns[14]?.trim();
+  const state = columns[8]?.trim();          // ★州/県追加
+  const localNameJP = columns[9]?.trim();
+  const localNameEN = columns[10]?.trim();
+  const linkUrl = columns[11]?.trim();
+  const gradeRaw = columns[12]?.trim() || "";
+  const imageUrl = columns[13]?.trim();
+  const credit = columns[15]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
@@ -417,7 +426,7 @@ lastOpenedMarker = marker;
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
-  type, year, localNameJP, localNameEN,
+  type, year, state, localNameJP, localNameEN,
   linkUrl, grade, imageUrl, credit
 };
 
