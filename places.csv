@@ -337,15 +337,15 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,現地名(J
 18,アジア,中華人民共和国,平遥の古城,37.1991,112.1837,文化遺産,1997,山西省晋中市,平遥の古城,平遥古城 / Ancient City of Ping Yao,,1
 18,アジア,中華人民共和国,平遥の古城,37.2858,112.2789,文化遺産,1997,山西省晋中市,鎮国寺,镇国寺 / Zhen Guo Temple
 18,アジア,中華人民共和国,平遥の古城,37.1711,112.1315,文化遺産,1997,山西省晋中市,双林寺,双林寺 / Shuang Lin Temple
-19,アジア,中華人民共和国,蘇州の古典園林,31.3241,120.6291,文化遺産,1997,江蘇省 蘇州市/拙政園,拙政园：The Humble Administrator's Garden,,1
-19,アジア,中華人民共和国,蘇州の古典園林,31.3156,120.5925,文化遺産,1997,江蘇省 蘇州市/留園,留园：The Lingering Garden
-19,アジア,中華人民共和国,蘇州の古典園林,31.2978,120.6341,文化遺産,1997,江蘇省 蘇州市/網師園,网师园：The Master-of-Nets Garden
-19,アジア,中華人民共和国,蘇州の古典園林,31.3102,120.6135,文化遺産,1997,江蘇省 蘇州市/環秀山荘,环秀山庄：The Mountain Villa with Embracing Beauty
-19,アジア,中華人民共和国,蘇州の古典園林,31.2946,120.6255,文化遺産,2000,江蘇省 蘇州市/滄浪亭,沧浪亭：The Canglang Pavilion
-19,アジア,中華人民共和国,蘇州の古典園林,31.3212,120.6288,文化遺産,2000,江蘇省 蘇州市/獅子林,狮子林：The Lion Forest Garden
-19,アジア,中華人民共和国,蘇州の古典園林,31.3161,120.6386,文化遺産,2000,江蘇省 蘇州市/芸圃,艺圃：The Garden of Cultivation
-19,アジア,中華人民共和国,蘇州の古典園林,31.1578,120.7201,文化遺産,2000,江蘇省 蘇州市/退思園,退思园：The Retreat & Reflection Garden
-20,アジア,中華人民共和国,頤和園,39.9929,116.2733,文化遺産,1998,北京市,颐和园：Summer Palace(an Imperial Garden in Beijing)
+19,アジア,中華人民共和国,蘇州の古典園林,31.3241,120.6291,文化遺産,1997,江蘇省蘇州市,拙政園,拙政园 / The Humble Administrator's Garden,,1
+19,アジア,中華人民共和国,蘇州の古典園林,31.3156,120.5925,文化遺産,1997,江蘇省蘇州市,留園,留园 / The Lingering Garden
+19,アジア,中華人民共和国,蘇州の古典園林,31.2978,120.6341,文化遺産,1997,江蘇省蘇州市,網師園,网师园 / The Master-of-Nets Garden
+19,アジア,中華人民共和国,蘇州の古典園林,31.3102,120.6135,文化遺産,1997,江蘇省蘇州市,環秀山荘,环秀山庄 / The Mountain Villa with Embracing Beauty
+19,アジア,中華人民共和国,蘇州の古典園林,31.2946,120.6255,文化遺産,2000,江蘇省蘇州市,滄浪亭,沧浪亭 / The Canglang Pavilion
+19,アジア,中華人民共和国,蘇州の古典園林,31.3212,120.6288,文化遺産,2000,江蘇省蘇州市,獅子林,狮子林 / The Lion Forest Garden
+19,アジア,中華人民共和国,蘇州の古典園林,31.3161,120.6386,文化遺産,2000,江蘇省蘇州市,芸圃,艺圃 / The Garden of Cultivation
+19,アジア,中華人民共和国,蘇州の古典園林,31.1578,120.7201,文化遺産,2000,江蘇省蘇州市,退思園,退思园 / The Retreat & Reflection Garden
+20,アジア,中華人民共和国,頤和園,39.9929,116.2733,文化遺産,1998,北京市,頤和園,颐和园 / Summer Palace(an Imperial Garden in Beijing)
 21,アジア,中華人民共和国,天壇：北京の皇帝の祭壇,39.8822,116.4065,文化遺産,1998,北京市,天坛:Temple of Heaven：an Imperial Sacrificial Altar in Beijing,,1
 22,アジア,中華人民共和国,武夷山,27.7245,117.7333,複合遺産,1999,福建省,武夷山：Mount Wuyi (Part 1),,1
 22,アジア,中華人民共和国,武夷山,27.5551,118.0461,複合遺産,1999,福建省 南平市,南平市武夷山风景名胜区：Mount Wuyi (Part 2)
@@ -597,7 +597,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,現地名(J
 7,アジア,日本,原爆ドーム,34.3955,132.4536,文化遺産,1996,広島県,Hiroshima Peace Memorial (Genbaku Dome),,"3,2",thumb/JP_07_Hiroshima Peace Memorial.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_07_Hiroshima%20Peace%20Memorial.jpg,Photo by DXR (CC BY-SA 4.0)
 8,アジア,日本,厳島神社,34.2960,132.3198,文化遺産,1996,広島県,Itsukushima Shinto Shrine,,"3,2",thumb/JP_08_Itsukushima Shinto Shrine.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_08_Itsukushima%20Shinto%20Shrine.jpg,Photo by JordyMeow (CC BY-SA 3.0)
 9,アジア,日本,古都奈良の文化財,34.6889,135.8398,文化遺産,1998,東大寺,Tôdai-ji,,"3,2",thumb/JP_09_Tôdai-ji.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_09_To%CC%82dai-ji.jpg,Photo by Wiiii (CC BY-SA 3.0)
-9,アジア,日本,古都奈良の文化財,34.6828,135.8311,文化遺産,1998,興福寺,Kôfuku-ji,,,thumb/JP_09_Kôfuku-ji.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_09_Ko%CC%82fuku-ji.jpg,Photo by Hyppolyte de Saint-Rambert (CC BY-SA 4.0)
+9,アジア,日本,古都奈良の文化財,34.6828,135.8311,文化遺産,1998,奈良県奈良市,興福寺,Kôfuku-ji,,,thumb/JP_09_Kôfuku-ji.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_09_Ko%CC%82fuku-ji.jpg,Photo by Hyppolyte de Saint-Rambert (CC BY-SA 4.0)
 9,アジア,日本,古都奈良の文化財,34.6815,135.8484,文化遺産,1998,春日大社及び春日山原始林,Kasuga-Taisha and Kasugayama Primeval Forest,
 9,アジア,日本,古都奈良の文化財,34.6778,135.8312,文化遺産,1998,元興寺,Gangô-ji,,,thumb/JP_09_Gangô-ji.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_09_Gango%CC%82-ji.jpg,Photo by Saigen Jiro CC0 via Wikimedia Commons
 9,アジア,日本,古都奈良の文化財,34.6685,135.7842,文化遺産,1998,薬師寺,Yakushi-ji,,,thumb/JP_09_Yakushi-ji.jpg,https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/refs/heads/main/images/full/JP_09_Yakushi-ji.jpg,Photo by 663highland (CC BY-SA 3.0) / modified
