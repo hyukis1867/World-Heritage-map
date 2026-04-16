@@ -409,7 +409,11 @@ lastOpenedMarker = marker;
     strokeWeight: 1,
     scale: 14
   },
-  
+  anchorPoint: new google.maps.Point(0, -14), // ← ★ここに追加
+  title: heritageName,
+  customRegion: region,
+  customCountry: country,
+  customId: id
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
