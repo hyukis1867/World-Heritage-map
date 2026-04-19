@@ -376,13 +376,14 @@ lastOpenedMarker = marker;
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
-  const state = columns[8]?.trim();          // ★州/県追加
+  const state = columns[8]?.trim();
   const localNameJP = columns[9]?.trim();
-  const localNameEN = columns[10]?.trim();
-  const linkUrl = columns[11]?.trim();
-  const gradeRaw = columns[12]?.trim() || "";
-  const imageUrl = columns[13]?.trim();
-  const credit = columns[15]?.trim();
+  const hira = columns[10]?.trim();          // ★追加
+  const localNameEN = columns[11]?.trim();
+  const linkUrl = columns[12]?.trim();
+  const gradeRaw = columns[13]?.trim() || "";
+  const imageUrl = columns[14]?.trim();
+  const credit = columns[16]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
@@ -436,7 +437,7 @@ lastOpenedMarker = marker;
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
-  type, year, state, localNameJP, localNameEN,
+  type, year, state, localNameJP, hira, localNameEN,
   linkUrl, grade, imageUrl, credit
 };
 
@@ -847,6 +848,7 @@ searchInput.addEventListener('keydown', (e) => {
       normalizeText(d.heritageName).includes(keyword) ||
       (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
       (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+      (d.hira && normalizeText(d.hira).includes(keyword))
     );
   });
 
