@@ -844,13 +844,13 @@ searchInput.addEventListener('keydown', (e) => {
   if (!keyword) return;
 
   const results = heritageData.filter(d => {
-    return (
-      normalizeText(d.heritageName).includes(keyword) ||
-      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-      (d.hira && normalizeText(d.hira).includes(keyword))
-    );
-  });
+  return (
+    normalizeText(d.heritageName).includes(keyword) ||
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword)) ||
+    (d.hira && normalizeText(d.hira).includes(keyword))
+  );
+});
 
   if (results.length === 0) return;
 
