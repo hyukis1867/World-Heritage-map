@@ -39,7 +39,13 @@
     margin-top: 4px;
   }
 
-
+.infowindow-hira {
+  text-align: right;
+  font-size: 92%;
+  color: #000;
+  margin-top: 2px;
+  opacity: 0.75;
+}
 
   .gm-style-iw button.gm-ui-hover-effect {
     display: none !important;
@@ -91,6 +97,7 @@
   border-radius: 8px;
 }
     
+
   </style>
 </head>
 <body>
@@ -241,6 +248,9 @@ const contentHtml = `
 
 ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
 ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
+${data.country === "中華人民共和国" && data.hira
+  ? `<div class="infowindow-hira">${data.hira}</div>`
+  : ''}
 ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
   ${data.imageUrl ? `
