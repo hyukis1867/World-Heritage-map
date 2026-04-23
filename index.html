@@ -481,49 +481,69 @@ function showAppiaRoute() {
 
   if (status === "OK") {
 
-    const renderer = new google.maps.DirectionsRenderer({
-      map: map,
-      suppressMarkers: true,
-      preserveViewport: true,
-      polylineOptions: {
-        strokeColor: "#FF5722",
-        strokeOpacity: 0.8,
-        strokeWeight: 4
+function drawAppiaRoute() {
+
+  const APPIA_KEYWORD = "アッピア街道";
+
+  const appiaMarkers = markers.filter(m =>
+    m.customCountry === "イタリア共和国" &&
+    m.customData.heritageName.includes(APPIA_KEYWORD)
+  );
+
+  if (appiaMarkers.length < 2) return;
+
+  // 北→南
+  appiaMarkers.sort((a, b) =>
+    b.getPosition().lat() - a.getPosition().lat()
+  );
+
+  const directionsService = new google.maps.DirectionsService();
+
+  for (let i = 0; i < appiaMarkers.length - 1; i++) {
+
+    directionsService.route({
+      origin: appiaMarkers[i].getPosition(),
+      destination: appiaMarkers[i + 1].getPosition(),
+      travelMode: google.maps.TravelMode.WALKING
+    }, (result, status) => {
+
+      if (status === "OK") {
+
+        const renderer = new google.maps.DirectionsRenderer({
+          map: map,
+          suppressMarkers: true,
+          preserveViewport: true,
+          polylineOptions: {
+            strokeColor: "#FF5722",
+            strokeOpacity: 0.8,
+            strokeWeight: 4
+          }
+        });
+
+        renderer.setDirections(result);
+        appiaRenderers.push(renderer);
+
+      } else {
+        // fallback（直線）
+        const line = new google.maps.Polyline({
+          path: [
+            appiaMarkers[i].getPosition(),
+            appiaMarkers[i + 1].getPosition()
+          ],
+          geodesic: true,
+          strokeColor: "#FF5722",
+          strokeOpacity: 0.5,
+          strokeWeight: 3,
+          map: map
+        });
+
+        appiaPolylines.push(line);
       }
+
     });
-
-    renderer.setDirections(result);
-    appiaRenderers.push(renderer);
-
-  } else {
-    // fallback（直線）
-    const line = new google.maps.Polyline({
-      path: [
-        appiaMarkers[i].getPosition(),
-        appiaMarkers[i + 1].getPosition()
-      ],
-      geodesic: true,
-      strokeColor: "#FF5722",
-      strokeOpacity: 0.5,
-      strokeWeight: 3,
-      map: map
-    });
-
-    appiaPolylines.push(line);
   }
+}
 
-});
-
-  const renderer = new google.maps.DirectionsRenderer({
-  map: map,
-  suppressMarkers: true,
-  preserveViewport: true,
-  polylineOptions: {
-    strokeColor: "#FF5722",
-    strokeOpacity: 0.8,
-    strokeWeight: 4
-  }
-});
 renderer.setDirections(result);
 
 // ★保存
@@ -796,9 +816,6 @@ option.title = heritageName; // ← フル表示（重要）
 
 clearAppiaRoute();
 
-if (selectedHeritage.includes("アッピア街道")) {
-  showAppiaRoute();
-}
 
 if (found.heritageName.includes("アッピア街道")) {
   showAppiaRoute();
