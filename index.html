@@ -826,13 +826,7 @@ searchInput.addEventListener('keydown', (e) => {
 
   refreshCluster();
 
-  const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword)) ||
-    (m.customData.hira && normalizeText(m.customData.hira).includes(keyword)) // ←追加
-  ) || groupMarkers[0];
+  const mainMarker = groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
 
