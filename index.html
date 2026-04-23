@@ -154,13 +154,25 @@ function showInfo(marker, pinned = false) {
   ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
   ${data.fullUrl ? `
-  <div style="margin:6px 0; text-align:center;">
-    <img src="${thumbUrl}"
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('${fullUrl}')"
-      onerror="this.src='${fullUrl}'">
-  </div>
-  ` : ''}
+<div style="margin:6px 0; text-align:center;">
+  <img id="info-img-${data.id}"
+    style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer; display:none;"
+    onclick="openImageModal('${fullUrl}')">
+</div>
+<script>
+(() => {
+  const img = document.getElementById("info-img-${data.id}");
+  if (!img) return;
+
+  const temp = new Image();
+  temp.onload = () => {
+    img.src = temp.src;
+    img.style.display = "block";
+  };
+  temp.src = "${thumbUrl}";
+})();
+</script>
+` : ''}
 
   ${data.credit ? `
   <div class="infowindow-sub" style="font-size:75%; color:#777;">
