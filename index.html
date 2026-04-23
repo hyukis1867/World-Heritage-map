@@ -779,14 +779,35 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword)) ||
-    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) ||
-    (d.hira && normalizeText(d.hira).includes(keyword))
-  );
+  const results = heritageData
+  .map(d => {
+    const name = normalizeText(d.heritageName);
+    const jp = normalizeText(d.localNameJP);
+    const en = normalizeText(d.localNameEN);
+    const local = normalizeText(d.localLangName);
+    const hira = normalizeText(d.hira);
+
+    let score = 0;
+
+    // ★① 先頭一致（最強）
+    if (name.startsWith(keyword)) score += 100;
+    if (jp.startsWith(keyword)) score += 90;
+    if (local.startsWith(keyword)) score += 80;
+    if (en.startsWith(keyword)) score += 70;
+    if (hira.startsWith(keyword)) score += 60;
+
+    // ★② 部分一致（弱）
+    if (name.includes(keyword)) score += 50;
+    if (jp.includes(keyword)) score += 40;
+    if (local.includes(keyword)) score += 30;
+    if (en.includes(keyword)) score += 20;
+    if (hira.includes(keyword)) score += 10;
+
+    return { data: d, score };
+  })
+  .filter(obj => obj.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .map(obj => obj.data);
 });
 
   if (results.length === 0) return;
