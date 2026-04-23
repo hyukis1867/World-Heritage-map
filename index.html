@@ -788,22 +788,6 @@ searchInput.addEventListener('input', () => {
 });
 
 
-    if (infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-    lastOpenedMarker = null;
-
-    // ★ここ追加（状態取得）
-    const selectedRegion = document.getElementById('region-select').value;
-    const selectedCountry = document.getElementById('country-select').value;
-
-    
-
-    refreshCluster();
-  }
-});
-
 // Enterキーで検索実行
 searchInput.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter') return;
