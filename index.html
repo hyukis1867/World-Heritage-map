@@ -825,7 +825,12 @@ searchInput.addEventListener('keydown', (e) => {
 
   refreshCluster();
 
-  const mainMarker = groupMarkers[0];
+  const mainMarker =
+  groupMarkers.find(m =>
+    m.customData.heritageName === found.heritageName &&
+    m.customData.localNameJP === found.localNameJP &&
+    m.customData.localNameEN === found.localNameEN
+  ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
 
