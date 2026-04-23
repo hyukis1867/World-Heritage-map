@@ -808,7 +808,6 @@ searchInput.addEventListener('keydown', (e) => {
   .filter(obj => obj.score > 0)
   .sort((a, b) => b.score - a.score)
   .map(obj => obj.data);
-});
 
   if (results.length === 0) return;
 
