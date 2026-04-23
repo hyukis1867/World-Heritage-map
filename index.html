@@ -448,18 +448,20 @@ function drawAppiaRoute() {
 
       if (status === "OK") {
 
-        new google.maps.DirectionsRenderer({
-          map: map,
-          suppressMarkers: true,
-          preserveViewport: true,
-          polylineOptions: {
-            strokeColor: "#FF5722",   // ← 色（オレンジ）
-            strokeOpacity: 0.8,
-            strokeWeight: 4
-          }
-        }).setDirections(result);
+  new google.maps.DirectionsRenderer({
+    map: map,
+    suppressMarkers: true,
+    preserveViewport: true,
+    polylineOptions: {
+      strokeColor: "#FF5722",
+      strokeOpacity: 0.8,
+      strokeWeight: 4
+    }
+  }).setDirections(result);
 
-      }
+} else {
+  console.error("ルート取得失敗:", status);
+}
     });
   }
 }
