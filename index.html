@@ -413,6 +413,61 @@ if (!markerIndex.has(key)) {
 }
 }); // rows.forEach
 
+// =========================
+// ★ アッピア街道ルート描画
+// =========================
+
+// ★対象条件（ここは後で調整OK）
+const APPIA_KEYWORD = "アッピア街道";  // 遺産名に含まれる文字
+
+function drawAppiaRoute() {
+
+  // ① 対象マーカー抽出（イタリア + アッピア街道）
+  const appiaMarkers = markers.filter(m =>
+    m.customCountry === "イタリア共和国" &&
+    m.customData.heritageName.includes(APPIA_KEYWORD)
+  );
+
+  if (appiaMarkers.length < 2) return;
+
+  // ② 並び替え（北→南）
+  appiaMarkers.sort((a, b) =>
+    b.getPosition().lat() - a.getPosition().lat()
+  );
+
+  const directionsService = new google.maps.DirectionsService();
+
+  // ③ 2点ずつルート生成
+  for (let i = 0; i < appiaMarkers.length - 1; i++) {
+
+    directionsService.route({
+      origin: appiaMarkers[i].getPosition(),
+      destination: appiaMarkers[i + 1].getPosition(),
+      travelMode: google.maps.TravelMode.WALKING
+    }, (result, status) => {
+
+      if (status === "OK") {
+
+        new google.maps.DirectionsRenderer({
+          map: map,
+          suppressMarkers: true,
+          preserveViewport: true,
+          polylineOptions: {
+            strokeColor: "#FF5722",   // ← 色（オレンジ）
+            strokeOpacity: 0.8,
+            strokeWeight: 4
+          }
+        }).setDirections(result);
+
+      }
+    });
+  }
+}
+
+drawAppiaRoute();
+
+
+
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
             if (regionCountryMap.hasOwnProperty(region)) {
