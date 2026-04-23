@@ -399,21 +399,26 @@ marker.customData = {
 };
 
   marker.addListener('click', () => {
+
   if (lastOpenedMarker === marker && isPinned) {
+    // 2回目クリック → 閉じる
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
-      lastOpenedMarker = null;
-      isPinned = false;
     }
+    lastOpenedMarker = null;
+    isPinned = false;
     clearAppiaRoute();
-
-    if (marker.customData.heritageName.includes("アッピア街道")) {
-      showAppiaRoute();
-    }
-
-    showInfo(marker, true);
+    return;
   }
+
+  clearAppiaRoute();
+
+  if (marker.customData.heritageName.includes("アッピア街道")) {
+    showAppiaRoute();
+  }
+
+  showInfo(marker, true);
 });
 
 marker.addListener('mouseover', () => {
@@ -446,7 +451,9 @@ if (!markerIndex.has(key)) {
 // ★対象条件（ここは後で調整OK）
 const APPIA_KEYWORD = "アッピア街道";  // 遺産名に含まれる文字
 
-function drawAppiaRoute() {
+function showAppiaRoute() {
+  drawAppiaRoute();
+}
 
   // ① 対象マーカー抽出（イタリア + アッピア街道）
   const appiaMarkers = markers.filter(m =>
@@ -489,7 +496,6 @@ function drawAppiaRoute() {
     appiaRenderers.push(renderer);
 
   } else {
-
     // fallback（直線）
     const line = new google.maps.Polyline({
       path: [
@@ -801,13 +807,20 @@ if (found.heritageName.includes("アッピア街道")) {
 
 
   const selectedHeritage = heritageSelect.value;
-  if (!selectedHeritage) return;
+if (!selectedHeritage) return;
 
-  const [selectedCountry, id] = selectedHeritage.split('.');
-  if (!selectedCountry || !id) return;
+clearAppiaRoute(); // ←まず消す
 
-  const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
-  if (!targetMarker) return;
+const [selectedCountry, id] = selectedHeritage.split('.');
+if (!selectedCountry || !id) return;
+
+const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
+if (!targetMarker) return;
+
+// ★アッピア判定
+if (targetMarker.customData.heritageName.includes("アッピア街道")) {
+  showAppiaRoute();
+}
 
   // ★完全削除
   if (infoWindow) {
