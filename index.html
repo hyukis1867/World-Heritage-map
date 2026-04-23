@@ -473,7 +473,6 @@ function showAppiaRoute() {
   // ③ 2点ずつルート生成
   for (let i = 0; i < appiaMarkers.length - 1; i++) {
 
-   directionsService.route({
   origin: appiaMarkers[i].getPosition(),
   destination: appiaMarkers[i + 1].getPosition(),
   travelMode: google.maps.TravelMode.WALKING
@@ -815,12 +814,6 @@ option.title = heritageName; // ← フル表示（重要）
 
 
 clearAppiaRoute();
-
-
-if (found.heritageName.includes("アッピア街道")) {
-  showAppiaRoute();
-}
-
 
 
   const selectedHeritage = heritageSelect.value;
