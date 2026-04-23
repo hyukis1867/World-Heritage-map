@@ -391,8 +391,8 @@ lastOpenedMarker = marker;
   const localLangName = columns[11]?.trim();   // ★当地名（当地言語）
   const localNameEN = columns[12]?.trim();     // 当地名（EN）
   const gradeRaw = columns[13]?.trim() || "";
-  const fullUrl = columns[14]?.trim();         // ★フル画像URL
-  const thumbFile = columns[15]?.trim();       // ★サムネJPEGファイル名
+  const thumbFile = columns[14]?.trim();   // ← サムネ
+  const fullUrl = columns[15]?.trim();     // ← フル画像
   const credit = columns[16]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
@@ -464,8 +464,8 @@ marker.customData = {
   localLangName,
   localNameEN,
   grade,
-  fullUrl,     // ★追加
-  thumbFile,   // ★追加
+  thumbFile,
+  fullUrl,
   credit
 };
 
