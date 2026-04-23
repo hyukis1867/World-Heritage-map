@@ -601,10 +601,6 @@ setVisibleByFilter({ region: selectedRegion });
               });
             }
 
-            markers.forEach(marker => {
-              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-            });
-
             heritageSelect.value = '';
             countrySelect.value = '';
 
@@ -719,8 +715,6 @@ map.panTo(newCenter);
   setTimeout(() => {
   showInfo(targetMarker, true);
 }, 200);
-
-refreshCluster();  
 
 });
 
