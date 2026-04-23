@@ -46,6 +46,27 @@
     let markerCluster;
     let isPinned = false;
 
+let appiaRenderers = [];
+let appiaPolylines = [];
+
+// ★ここに追加（initMapの外）
+function clearAppiaRoute() {
+  appiaRenderers.forEach(r => r.setMap(null));
+  appiaPolylines.forEach(l => l.setMap(null));
+  appiaRenderers = [];
+  appiaPolylines = [];
+}
+
+// ★これを追加（ここ！！）
+function toggleAppiaRoute(show) {
+  if (show) {
+    drawAppiaRoute();
+  } else {
+    clearAppiaRoute();
+  }
+}
+
+
   // ★ここに置く（initMapの外）
 function refreshCluster() {
   if (!markerCluster) return;
@@ -385,8 +406,13 @@ marker.customData = {
       lastOpenedMarker = null;
       isPinned = false;
     }
-  } else {
-    showInfo(marker, true); // ← クリックは固定
+    clearAppiaRoute();
+
+    if (marker.customData.heritageName.includes("アッピア街道")) {
+      showAppiaRoute();
+    }
+
+    showInfo(marker, true);
   }
 });
 
@@ -448,7 +474,7 @@ function drawAppiaRoute() {
 
       if (status === "OK") {
 
-  new google.maps.DirectionsRenderer({
+const renderer = new google.maps.DirectionsRenderer({
     map: map,
     suppressMarkers: true,
     preserveViewport: true,
@@ -457,7 +483,44 @@ function drawAppiaRoute() {
       strokeOpacity: 0.8,
       strokeWeight: 4
     }
-  }).setDirections(result);
+  });
+
+  renderer.setDirections(result);
+
+  appiaRenderers.push(renderer); // ←これも追加（後で消すため）
+
+} else {
+
+  // ★ fallback（直線）
+  const line = new google.maps.Polyline({
+    path: [
+      appiaMarkers[i].getPosition(),
+      appiaMarkers[i + 1].getPosition()
+    ],
+    geodesic: true,
+    strokeColor: "#FF5722",
+    strokeOpacity: 0.5,
+    strokeWeight: 3,
+    map: map
+  });
+
+  appiaPolylines.push(line); // ←これも追加
+}
+
+  const renderer = new google.maps.DirectionsRenderer({
+  map: map,
+  suppressMarkers: true,
+  preserveViewport: true,
+  polylineOptions: {
+    strokeColor: "#FF5722",
+    strokeOpacity: 0.8,
+    strokeWeight: 4
+  }
+});
+renderer.setDirections(result);
+
+// ★保存
+appiaRenderers.push(renderer);
 
 } else {
   console.error("ルート取得失敗:", status);
@@ -723,6 +786,22 @@ option.title = heritageName; // ← フル表示（重要）
 });
 
           heritageSelect.addEventListener('change', () => {
+
+
+clearAppiaRoute();
+
+if (selectedHeritage.includes("アッピア街道")) {
+  showAppiaRoute();
+}
+
+clearAppiaRoute();
+
+if (found.heritageName.includes("アッピア街道")) {
+  showAppiaRoute();
+}
+
+
+
   const selectedHeritage = heritageSelect.value;
   if (!selectedHeritage) return;
 
