@@ -387,7 +387,6 @@ if (fullUrl) {
   if (lastOpenedMarker === marker && isPinned) {
     if (infoWindow) {
       infoWindow.close();
-      infoWindow = null;
       lastOpenedMarker = null;
       isPinned = false;
     }
@@ -405,7 +404,7 @@ marker.addListener('mouseover', () => {
 marker.addListener('mouseout', () => {
   if (!isPinned && infoWindow) {
     infoWindow.close();
-    infoWindow = null;
+
   }
 });
 
@@ -684,7 +683,7 @@ option.title = heritageName; // ← フル表示（重要）
   // ★完全削除
   if (infoWindow) {
     infoWindow.close();
-    infoWindow = null;
+  
   }
   lastOpenedMarker = null;
 
@@ -753,7 +752,7 @@ searchInput.addEventListener('input', () => {
   if (!keyword) {
     if (infoWindow) {
       infoWindow.close();
-      infoWindow = null;
+   
     }
     lastOpenedMarker = null;
 
