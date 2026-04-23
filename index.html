@@ -377,6 +377,17 @@ marker.customData = {
   credit
 };
 
+// ★画像プリロード（キャッシュ先読み）
+if (thumbFile) {
+  const img = new Image();
+  img.src = `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${thumbFile}`;
+}
+
+if (fullUrl) {
+  const img2 = new Image();
+  img2.src = fullUrl;
+}
+
   marker.addListener('click', () => {
   if (lastOpenedMarker === marker && isPinned) {
     if (infoWindow) {
