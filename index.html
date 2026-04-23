@@ -45,6 +45,11 @@
     let heritageData = [];
     let markerCluster;
     let isPinned = false;
+    let currentFilter = {
+  region: null,
+  country: null,
+  id: null
+};
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -467,10 +472,20 @@ if (!markerIndex.has(key)) {
   if (!bounds) return;
 
   markers.forEach(marker => {
-    const pos = marker.getPosition();
-    marker.setVisible(bounds.contains(pos));
+    let visible = true;
+
+    // フィルタ条件
+    if (currentFilter.region && marker.customRegion !== currentFilter.region) visible = false;
+    if (currentFilter.country && marker.customCountry !== currentFilter.country) visible = false;
+    if (currentFilter.id && marker.customId !== currentFilter.id) visible = false;
+
+    // 画面内判定
+    if (visible && bounds && !bounds.contains(marker.getPosition())) visible = false;
+
+    marker.setVisible(visible);
   });
-}
+
+
 
 // 初回
 google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
@@ -494,13 +509,11 @@ lastOpenedMarker = null;
 
   const selectedRegion = regionSelect.value;
 
-markers.forEach(marker => {
-  if (!selectedRegion) {
-    marker.setVisible(true);   // 地域未選択なら全表示
-  } else {
-    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
-  }
-});
+  currentFilter.region = selectedRegion || null;
+  currentFilter.country = null;
+  currentFilter.id = null;
+
+updateMarkers();
 
 
             
@@ -589,9 +602,7 @@ markers.forEach(marker => {
               });
             }
 
-            markers.forEach(marker => {
-              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
-            });
+
 
             heritageSelect.value = '';
             countrySelect.value = '';
@@ -613,6 +624,13 @@ lastOpenedMarker = null;
 
 
   const selectedCountry = countrySelect.value;
+
+ currentFilter.country = selectedCountry || null;
+ currentFilter.id = null;
+
+updateMarkers();
+
+
   document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
 
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
@@ -645,10 +663,7 @@ option.title = heritageName; // ← フル表示（重要）
     });
   }
 
-  // --- マーカーの表示制御 ---
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+
 
   
 
@@ -662,7 +677,7 @@ option.title = heritageName; // ← フル表示（重要）
       // ズームは変更せず現在のまま
     }
   }
-   refreshCluster();
+
 });
 
           heritageSelect.addEventListener('change', () => {
@@ -670,6 +685,14 @@ option.title = heritageName; // ← フル表示（重要）
   if (!selectedHeritage) return;
 
   const [selectedCountry, id] = selectedHeritage.split('.');
+
+   currentFilter.country = selectedCountry;
+   currentFilter.id = id;
+
+updateMarkers();
+
+
+
   if (!selectedCountry || !id) return;
 
   const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
@@ -683,9 +706,7 @@ option.title = heritageName; // ← フル表示（重要）
   lastOpenedMarker = null;
 
   // ★国のマーカーだけ表示
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+
 
 
   // ★移動
@@ -712,7 +733,7 @@ map.panTo(newCenter);
   showInfo(targetMarker, true);
 }, 200);
 
-refreshCluster();  
+
 
 });
 
@@ -745,6 +766,14 @@ searchInput.addEventListener('input', () => {
   const keyword = normalizeText(searchInput.value.trim());
 
   if (!keyword) {
+
+　currentFilter.region = selectedRegion || null;
+　currentFilter.country = selectedCountry || null;
+　currentFilter.id = null;
+
+updateMarkers();
+
+
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
@@ -755,18 +784,7 @@ searchInput.addEventListener('input', () => {
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
 
-    markers.forEach(m => {
-      if (selectedCountry) {
-        // ★国が選択されている場合 → 国のみ表示
-        m.setVisible(m.customCountry === selectedCountry);
-      } else if (selectedRegion) {
-        // ★地域のみ選択 → 地域のみ表示
-        m.setVisible(m.customRegion === selectedRegion);
-      } else {
-        // ★未選択 → 全表示
-        m.setVisible(true);
-      }
-    });
+    
 
     refreshCluster();
   }
@@ -813,6 +831,11 @@ searchInput.addEventListener('keydown', (e) => {
 
   const found = results[0];
 
+  currentFilter.country = found.country;
+  currentFilter.id = found.id;
+
+updateMarkers();
+
   const groupMarkers = markers.filter(m =>
     m.customId == found.id &&
     m.customCountry == found.country
@@ -820,10 +843,7 @@ searchInput.addEventListener('keydown', (e) => {
 
   if (groupMarkers.length === 0) return;
 
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
 
-  refreshCluster();
 
   const mainMarker =
   groupMarkers.find(m =>
