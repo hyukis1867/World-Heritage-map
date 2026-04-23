@@ -25,6 +25,13 @@
   margin-top: 2px;
 }
 
+.infowindow-local {
+  text-align: right;
+  font-size: 85%;
+  color: #666;
+  margin-top: 2px;
+}
+
 .infowindow-state {
   text-align: right;
   font-size: 85%;
@@ -248,8 +255,7 @@ ${data.country === "中華人民共和国" && data.hira
   ? `<div class="infowindow-hira">${data.hira}</div>`
   : ''}
 
-${data.localLangName ? `<div class="infowindow-sub">${data.localLangName}</div>` : ''}
-
+${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
 ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
   ${data.fullUrl ? `
