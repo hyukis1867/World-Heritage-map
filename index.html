@@ -47,6 +47,24 @@
     let isPinned = false;
 
   // ★ここに置く（initMapの外）
+
+
+function setVisibleByFilter({ region = null, country = null, id = null }) {
+  markers.forEach(marker => {
+    let visible = true;
+
+    if (region && marker.customRegion !== region) visible = false;
+    if (country && marker.customCountry !== country) visible = false;
+    if (id && marker.customId !== id) visible = false;
+
+    marker.setVisible(visible);
+  });
+
+  refreshCluster();
+}
+
+
+
 function refreshCluster() {
   if (!markerCluster) return;
 
@@ -494,13 +512,7 @@ lastOpenedMarker = null;
 
   const selectedRegion = regionSelect.value;
 
-markers.forEach(marker => {
-  if (!selectedRegion) {
-    marker.setVisible(true);   // 地域未選択なら全表示
-  } else {
-    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
-  }
-});
+setVisibleByFilter({ region: selectedRegion });
 
 
             
@@ -646,9 +658,7 @@ option.title = heritageName; // ← フル表示（重要）
   }
 
   // --- マーカーの表示制御 ---
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+  setVisibleByFilter({ country: selectedCountry });
 
   
 
@@ -683,9 +693,7 @@ option.title = heritageName; // ← フル表示（重要）
   lastOpenedMarker = null;
 
   // ★国のマーカーだけ表示
-  markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
-  });
+  setVisibleByFilter({ country: selectedCountry });
 
 
   // ★移動
@@ -755,18 +763,10 @@ searchInput.addEventListener('input', () => {
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
 
-    markers.forEach(m => {
-      if (selectedCountry) {
-        // ★国が選択されている場合 → 国のみ表示
-        m.setVisible(m.customCountry === selectedCountry);
-      } else if (selectedRegion) {
-        // ★地域のみ選択 → 地域のみ表示
-        m.setVisible(m.customRegion === selectedRegion);
-      } else {
-        // ★未選択 → 全表示
-        m.setVisible(true);
-      }
-    });
+    setVisibleByFilter({
+  region: selectedRegion,
+  country: selectedCountry
+});
 
     refreshCluster();
   }
@@ -820,8 +820,10 @@ searchInput.addEventListener('keydown', (e) => {
 
   if (groupMarkers.length === 0) return;
 
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
+  setVisibleByFilter({
+  country: found.country,
+  id: found.id
+});
 
   refreshCluster();
 
