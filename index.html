@@ -238,15 +238,6 @@ function showInfo(marker, pinned = false) {
 
 const fullUrl = data.fullUrl || '';
 
-const thumbUrl =
-  thumbFile
-    ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${thumbFile}`
-    : '';
-
-const fullUrl = fileName
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
-  : '';
-
 const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
@@ -256,6 +247,9 @@ ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''
 ${data.country === "中華人民共和国" && data.hira
   ? `<div class="infowindow-hira">${data.hira}</div>`
   : ''}
+
+${data.localLangName ? `<div class="infowindow-sub">${data.localLangName}</div>` : ''}
+
 ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
   ${data.fullUrl ? `
@@ -409,11 +403,12 @@ lastOpenedMarker = marker;
   id, region, country, heritageName, lat, lng,
   type, year,
   localNameJP,
-  hira,            // ←★これ追加（最重要）
+  hira,
+  localLangName,
   localNameEN,
-  linkUrl,
   grade,
-  imageUrl,
+  fullUrl,
+  thumbFile,
   credit
 });
 
