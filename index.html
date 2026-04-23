@@ -232,11 +232,16 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
-
-const thumbUrl = fileName
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
+  const thumbUrl = data.thumbFile
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
   : '';
+
+const fullUrl = data.fullUrl || '';
+
+const thumbUrl =
+  thumbFile
+    ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${thumbFile}`
+    : '';
 
 const fullUrl = fileName
   ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
@@ -253,14 +258,14 @@ ${data.country === "中華人民共和国" && data.hira
   : ''}
 ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
-  ${data.imageUrl ? `
-    <div style="margin:6px 0; text-align:center;">
-      <img src="${thumbUrl}"
-        style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-        onclick="openImageModal('${fullUrl}')"
-        onerror="this.src='${fullUrl}'">
-    </div>
-  ` : ''}
+  ${data.fullUrl ? `
+  <div style="margin:6px 0; text-align:center;">
+    <img src="${thumbUrl}"
+      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+      onclick="openImageModal('${fullUrl}')"
+      onerror="this.src='${fullUrl}'">
+  </div>
+` : ''}
 
   ${data.credit ? `
   <div class="infowindow-sub" style="font-size:75%; color:#777;">
@@ -387,12 +392,13 @@ lastOpenedMarker = marker;
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
   const state = columns[8]?.trim();
-  const localNameJP = columns[9]?.trim();
-  const hira = columns[10]?.trim();          // ★追加
-  const localNameEN = columns[11]?.trim();
-  const linkUrl = columns[12]?.trim();
+  const localNameJP = columns[9]?.trim();      // 当地名（JP）
+  const hira = columns[10]?.trim();            // hira
+  const localLangName = columns[11]?.trim();   // ★当地名（当地言語）
+  const localNameEN = columns[12]?.trim();     // 当地名（EN）
   const gradeRaw = columns[13]?.trim() || "";
-  const imageUrl = columns[14]?.trim();
+  const fullUrl = columns[14]?.trim();         // ★フル画像URL
+  const thumbFile = columns[15]?.trim();       // ★サムネJPEGファイル名
   const credit = columns[16]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
@@ -457,8 +463,15 @@ lastOpenedMarker = marker;
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
-  type, year, state, localNameJP, hira, localNameEN,
-  linkUrl, grade, imageUrl, credit
+  type, year, state,
+  localNameJP,
+  hira,
+  localLangName,
+  localNameEN,
+  grade,
+  fullUrl,     // ★追加
+  thumbFile,   // ★追加
+  credit
 };
 
   marker.addListener('click', () => {
@@ -868,6 +881,7 @@ searchInput.addEventListener('keydown', (e) => {
     normalizeText(d.heritageName).includes(keyword) ||
     (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
     (d.localNameEN && normalizeText(d.localNameEN).includes(keyword)) ||
+    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) ||
     (d.hira && normalizeText(d.hira).includes(keyword))
   );
 });
