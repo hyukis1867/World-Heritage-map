@@ -47,8 +47,6 @@
     let isPinned = false;
 
   // ★ここに置く（initMapの外）
-
-
 function refreshCluster() {
   if (!markerCluster) return;
 
@@ -464,26 +462,21 @@ if (!markerIndex.has(key)) {
   }
 });
 
-function setVisibleByFilter({ region = null, country = null, id = null }) {
+  function updateMarkers() {
   const bounds = map.getBounds();
+  if (!bounds) return;
 
   markers.forEach(marker => {
-    let visible = true;
-
-    if (region && marker.customRegion !== region) visible = false;
-    if (country && marker.customCountry !== country) visible = false;
-    if (id && marker.customId !== id) visible = false;
-
-    // ★ここ追加（画面内条件を統合）
-    if (bounds && !bounds.contains(marker.getPosition())) {
-      visible = false;
-    }
-
-    marker.setVisible(visible);
+    const pos = marker.getPosition();
+    marker.setVisible(bounds.contains(pos));
   });
-
-  refreshCluster();
 }
+
+// 初回
+google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
+
+// 地図操作後
+map.addListener('idle', updateMarkers);
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -501,7 +494,13 @@ lastOpenedMarker = null;
 
   const selectedRegion = regionSelect.value;
 
-setVisibleByFilter({ region: selectedRegion });
+markers.forEach(marker => {
+  if (!selectedRegion) {
+    marker.setVisible(true);   // 地域未選択なら全表示
+  } else {
+    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
+  }
+});
 
 
             
@@ -590,6 +589,10 @@ setVisibleByFilter({ region: selectedRegion });
               });
             }
 
+            markers.forEach(marker => {
+              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+            });
+
             heritageSelect.value = '';
             countrySelect.value = '';
 
@@ -643,7 +646,9 @@ option.title = heritageName; // ← フル表示（重要）
   }
 
   // --- マーカーの表示制御 ---
-  setVisibleByFilter({ country: selectedCountry });
+  markers.forEach(marker => {
+    marker.setVisible(marker.customCountry === selectedCountry);
+  });
 
   
 
@@ -678,7 +683,9 @@ option.title = heritageName; // ← フル表示（重要）
   lastOpenedMarker = null;
 
   // ★国のマーカーだけ表示
-  setVisibleByFilter({ country: selectedCountry });
+  markers.forEach(marker => {
+    marker.setVisible(marker.customCountry === selectedCountry);
+  });
 
 
   // ★移動
@@ -704,6 +711,8 @@ map.panTo(newCenter);
   setTimeout(() => {
   showInfo(targetMarker, true);
 }, 200);
+
+refreshCluster();  
 
 });
 
@@ -746,10 +755,18 @@ searchInput.addEventListener('input', () => {
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
 
-    setVisibleByFilter({
-  region: selectedRegion,
-  country: selectedCountry
-});
+    markers.forEach(m => {
+      if (selectedCountry) {
+        // ★国が選択されている場合 → 国のみ表示
+        m.setVisible(m.customCountry === selectedCountry);
+      } else if (selectedRegion) {
+        // ★地域のみ選択 → 地域のみ表示
+        m.setVisible(m.customRegion === selectedRegion);
+      } else {
+        // ★未選択 → 全表示
+        m.setVisible(true);
+      }
+    });
 
     refreshCluster();
   }
@@ -803,10 +820,8 @@ searchInput.addEventListener('keydown', (e) => {
 
   if (groupMarkers.length === 0) return;
 
-  setVisibleByFilter({
-  country: found.country,
-  id: found.id
-});
+  markers.forEach(m => m.setVisible(false));
+  groupMarkers.forEach(m => m.setVisible(true));
 
   refreshCluster();
 
