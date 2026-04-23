@@ -767,11 +767,25 @@ searchInput.addEventListener('input', () => {
 
   if (!keyword) {
 
- currentFilter.region = selectedRegion || null;
- currentFilter.country = selectedCountry || null;
- currentFilter.id = null;
+    // ★先に取得（これが正しい順番）
+    const selectedRegion = document.getElementById('region-select').value;
+    const selectedCountry = document.getElementById('country-select').value;
 
-updateMarkers();
+    currentFilter.region = selectedRegion || null;
+    currentFilter.country = selectedCountry || null;
+    currentFilter.id = null;
+
+    updateMarkers();
+
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+    lastOpenedMarker = null;
+
+    refreshCluster();
+  }
+});
 
 
     if (infoWindow) {
