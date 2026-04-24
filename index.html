@@ -141,7 +141,7 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`; '';
+  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`;
 
 const fullUrl = data.fullUrl || '';
 
@@ -160,15 +160,14 @@ ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''
 
   ${data.fullUrl ? `
   <div style="margin:6px 0; text-align:center;">
-    <img src=""
+   <img
+  src=""
   data-src="${thumbUrl}"
-  style="opacity:0; transition: opacity 0.2s;"
+  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer; opacity:0; transition: opacity 0.2s;"
+  onclick="openImageModal('${fullUrl}')"
   onload="this.style.opacity=1"
   onerror="this.src='${fullUrl}'; this.style.opacity=1"
 >
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('${fullUrl}')"
-      onerror="this.src='${fullUrl}'">
   </div>
 ` : ''}
 
