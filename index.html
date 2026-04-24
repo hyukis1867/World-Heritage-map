@@ -141,7 +141,7 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`; '';
+  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`;
 
 const fullUrl = data.fullUrl || '';
 
@@ -166,17 +166,8 @@ const contentHtml = `
 
   <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>
-`; ''}
-
-  ${data.credit ? `
-  <div class="infowindow-sub" style="font-size:75%; color:#777;">
-    ${data.credit}
-  </div>
-` : ''}
-
-<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
-</div>
 `;
+
 
 if (!infoWindow) {
   infoWindow = new google.maps.InfoWindow({
