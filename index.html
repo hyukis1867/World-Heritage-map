@@ -141,9 +141,7 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const thumbUrl = data.thumbFile
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
-  : '';
+  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`; '';
 
 const fullUrl = data.fullUrl || '';
 
