@@ -411,6 +411,15 @@ if (!markerIndex.has(key)) {
 }
 }); // rows.forEach
 
+// ★サムネ画像を先読み（重要）
+heritageData.forEach(d => {
+  if (d.thumbFile) {
+    const img = new Image();
+    img.src = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${d.thumbFile}`;
+  }
+});
+
+
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
             if (regionCountryMap.hasOwnProperty(region)) {
