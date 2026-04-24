@@ -472,7 +472,22 @@ if (!markerIndex.has(key)) {
 
 
 // 地図操作後
-map.addListener('idle', updateMarkers);
+let firstLoad = true;
+
+map.addListener('idle', () => {
+  if (firstLoad) {
+    firstLoad = false;
+
+    setTimeout(() => {
+      updateMarkers();
+      refreshCluster();
+    }, 300); // ←ここ重要（200〜400調整OK）
+
+  } else {
+    updateMarkers();
+    refreshCluster();
+  }
+});
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
