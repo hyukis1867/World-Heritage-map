@@ -358,12 +358,14 @@ lastOpenedMarker = marker;
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
-  const localNameJP = columns[8]?.trim();
-  const localNameEN = columns[9]?.trim();
-  const linkUrl = columns[10]?.trim();
-  const gradeRaw = columns[11]?.trim() || "";
-  const imageUrl = columns[12]?.trim(); // ★追加
-  const credit = columns[14]?.trim();
+  const state = columns[8]?.trim();
+  const localNameJP = columns[9]?.trim();      // 当地名（JP）
+  const hira = columns[10]?.trim();            // hira
+  const localLangName = columns[11]?.trim();   // ★当地名（当地言語）
+  const localNameEN = columns[12]?.trim();     // 当地名（EN）
+  const gradeRaw = columns[13]?.trim() || "";
+  const imageUrl = columns[14]?.trim();
+  const credit = columns[16]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
