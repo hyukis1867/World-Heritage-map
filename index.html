@@ -160,7 +160,12 @@ ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''
 
   ${data.fullUrl ? `
   <div style="margin:6px 0; text-align:center;">
-    <img src="${thumbUrl}"
+    <img src=""
+  data-src="${thumbUrl}"
+  style="opacity:0; transition: opacity 0.2s;"
+  onload="this.style.opacity=1"
+  onerror="this.src='${fullUrl}'; this.style.opacity=1"
+>
       style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
       onclick="openImageModal('${fullUrl}')"
       onerror="this.src='${fullUrl}'">
@@ -189,6 +194,12 @@ infoWindow.setContent(contentHtml);
 
 infoWindow.setPosition(marker.getPosition()); // ←これ重要
 infoWindow.open(map);                         // ←anchor使わない
+
+// ★ここに追加！！
+setTimeout(() => {
+  const img = document.querySelector('.gm-style-iw img[data-src]');
+  if (img) img.src = img.dataset.src;
+}, 50);
 
 lastOpenedMarker = marker;
 }
