@@ -11,49 +11,18 @@
     padding: 0;
     overflow: hidden;
   }
-  .infowindow-jp {
-  text-align: right;
-  font-size: 92%;
-  color: #000;
-  margin-top: 2px;
-}
-
-.infowindow-en {
-  text-align: right;
-  font-size: 85%;
-  color: #666;
-  margin-top: 2px;
-}
-
-.infowindow-local {
-  text-align: right;
-  font-size: 85%;
-  color: #666;
-  margin-top: 2px;
-}
-
-.infowindow-state {
-  text-align: right;
-  font-size: 85%;
-  color: #666;
-  margin-top: 2px;
-}
-
+  .infowindow-localname {
+    text-align: right;
+    font-size: 90%;
+    color: #555;
+    margin-top: 2px;
+  }
   .infowindow-sub {
     text-align: right;
     font-size: 85%;
     color: #444;
     margin-top: 4px;
   }
-
-.infowindow-hira {
-  text-align: right;
-  font-size: 75%;
-  color: #666;
-  margin-top: 2px;
-  opacity: 0.75;
-}
-
   .gm-style-iw button.gm-ui-hover-effect {
     display: none !important;
   }
@@ -103,8 +72,8 @@
   border: 1px solid rgba(0,0,0,0.3) !important;
   border-radius: 8px;
 }
-    
 
+    
   </style>
 </head>
 <body>
@@ -239,33 +208,31 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const thumbUrl = data.thumbFile
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
+  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
+
+const thumbUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
   : '';
 
-const fullUrl = data.fullUrl || '';
+const fullUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
+  : '';
 
 const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
-${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
-${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
-${data.country === "中華人民共和国" && data.hira
-  ? `<div class="infowindow-hira">${data.hira}</div>`
-  : ''}
+  ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
+  ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
-${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
-${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
-
-  ${data.fullUrl ? `
-  <div style="margin:6px 0; text-align:center;">
-    <img src="${thumbUrl}"
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('${fullUrl}')"
-      onerror="this.src='${fullUrl}'">
-  </div>
-` : ''}
+  ${data.imageUrl ? `
+    <div style="margin:6px 0; text-align:center;">
+      <img src="${thumbUrl}"
+        style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+        onclick="openImageModal('${fullUrl}')"
+        onerror="this.src='${fullUrl}'">
+    </div>
+  ` : ''}
 
   ${data.credit ? `
   <div class="infowindow-sub" style="font-size:75%; color:#777;">
@@ -391,32 +358,18 @@ lastOpenedMarker = marker;
   const type = columns[6].trim();
   const rawYear = columns[7]?.trim() || "";
   let year = rawYear.match(/\d{4}/) ? rawYear.match(/\d{4}/)[0] + "年" : rawYear;
-  const state = columns[8]?.trim();
-  const localNameJP = columns[9]?.trim();      // 当地名（JP）
-  const hira = columns[10]?.trim();            // hira
-  const localLangName = columns[11]?.trim();   // ★当地名（当地言語）
-  const localNameEN = columns[12]?.trim();     // 当地名（EN）
-  const gradeRaw = columns[13]?.trim() || "";
-  const thumbFile = columns[14]?.trim();   // ← サムネ
-  const fullUrl = columns[15]?.trim();     // ← フル画像
-  const credit = columns[16]?.trim();
+  const localNameJP = columns[8]?.trim();
+  const localNameEN = columns[9]?.trim();
+  const linkUrl = columns[10]?.trim();
+  const gradeRaw = columns[11]?.trim() || "";
+  const imageUrl = columns[12]?.trim(); // ★追加
+  const credit = columns[14]?.trim();
             
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({
-  id, region, country, heritageName, lat, lng,
-  type, year,
-  localNameJP,
-  hira,
-  localLangName,
-  localNameEN,
-  grade,
-  fullUrl,
-  thumbFile,
-  credit
-});
+  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit});
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -464,15 +417,8 @@ lastOpenedMarker = marker;
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
-  type, year, state,
-  localNameJP,
-  hira,
-  localLangName,
-  localNameEN,
-  grade,
-  thumbFile,
-  fullUrl,
-  credit
+  type, year, localNameJP, localNameEN,
+  linkUrl, grade, imageUrl, credit
 };
 
   marker.addListener('click', () => {
@@ -878,14 +824,12 @@ searchInput.addEventListener('keydown', (e) => {
   if (!keyword) return;
 
   const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword)) ||
-    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) ||
-    (d.hira && normalizeText(d.hira).includes(keyword))
-  );
-});
+    return (
+      normalizeText(d.heritageName).includes(keyword) ||
+      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+    );
+  });
 
   if (results.length === 0) return;
 
@@ -907,8 +851,7 @@ searchInput.addEventListener('keydown', (e) => {
   groupMarkers.find(m =>
     (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
     (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword)) ||
-    (m.customData.hira && normalizeText(m.customData.hira).includes(keyword)) // ←追加
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
   ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
