@@ -470,8 +470,6 @@ if (!markerIndex.has(key)) {
   });
 }
 
-// 初回
-google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 
 // 地図操作後
 map.addListener('idle', updateMarkers);
@@ -851,9 +849,25 @@ map.panTo(newCenter);
     showInfo(mainMarker, true); // ← ここ重要（固定表示）
   }, 200);
 });
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
 
-        });
+  // （中略）
+
+  setTimeout(() => {
+    showInfo(mainMarker, true);
+  }, 200);
+});
+
+// ★ここに追加！！（CSV読み込みが全部終わった後）
+setTimeout(() => {
+  updateMarkers();
+}, 100);
+
+        });  
     }
+
+    
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
