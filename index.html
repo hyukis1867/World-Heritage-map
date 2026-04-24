@@ -4,10 +4,108 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>世界遺産マップ</title>
+  <style>
+  html, body, #map {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .infowindow-jp {
+  text-align: right;
+  font-size: 92%;
+  color: #000;
+  margin-top: 2px;
+}
 
-<link rel="stylesheet" href="style.css">
+.infowindow-en {
+  text-align: right;
+  font-size: 85%;
+  color: #666;
+  margin-top: 2px;
+}
 
+.infowindow-local {
+  text-align: right;
+  font-size: 85%;
+  color: #666;
+  margin-top: 2px;
+}
 
+.infowindow-state {
+  text-align: right;
+  font-size: 85%;
+  color: #666;
+  margin-top: 2px;
+}
+
+  .infowindow-sub {
+    text-align: right;
+    font-size: 85%;
+    color: #444;
+    margin-top: 4px;
+  }
+
+.infowindow-hira {
+  text-align: right;
+  font-size: 75%;
+  color: #666;
+  margin-top: 2px;
+  opacity: 0.75;
+}
+
+  .gm-style-iw button.gm-ui-hover-effect {
+    display: none !important;
+  }
+  #dropdown-container {
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    z-index: 5;
+    background: transparent;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: none;
+    font-family: sans-serif;
+  }
+  #dropdown-container select {
+    margin-bottom: 0px;
+    width: 200px;
+    font-size: 14px;
+  }
+
+#dropdown-container select,
+#search-input {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.1); /* ← 薄くする */
+  border-radius: 4px;
+}
+
+/* ▼ ここに追加（styleタグの一番下でOK） */
+  .gm-style .gm-style-mtc button {
+    font-size: 12px !important;
+    padding: 2px 6px !important;
+  }
+
+  .gm-style .gm-style-mtc {
+    transform: scale(0.85);
+    transform-origin: left bottom;
+  }
+
+  /* ▼ ここに追加（styleタグの一番下） */
+  .gm-style-iw,
+  .gm-style-iw * {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+.gm-style-iw {
+  border: 1px solid rgba(0,0,0,0.3) !important;
+  border-radius: 8px;
+}
+    
+
+  </style>
 </head>
 <body>
   <div id="map"></div>
@@ -141,7 +239,9 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`;
+  const thumbUrl = data.thumbFile
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
+  : '';
 
 const fullUrl = data.fullUrl || '';
 
@@ -160,14 +260,10 @@ ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''
 
   ${data.fullUrl ? `
   <div style="margin:6px 0; text-align:center;">
-   <img
-  src=""
-  data-src="${thumbUrl}"
-  style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer; opacity:0; transition: opacity 0.2s;"
-  onclick="openImageModal('${fullUrl}')"
-  onload="this.style.opacity=1"
-  onerror="this.src='${fullUrl}'; this.style.opacity=1"
->
+    <img src="${thumbUrl}"
+      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+      onclick="openImageModal('${fullUrl}')"
+      onerror="this.src='${fullUrl}'">
   </div>
 ` : ''}
 
@@ -193,12 +289,6 @@ infoWindow.setContent(contentHtml);
 
 infoWindow.setPosition(marker.getPosition()); // ←これ重要
 infoWindow.open(map);                         // ←anchor使わない
-
-// ★ここに追加！！
-setTimeout(() => {
-  const img = document.querySelector('.gm-style-iw img[data-src]');
-  if (img) img.src = img.dataset.src;
-}, 50);
 
 lastOpenedMarker = marker;
 }
@@ -421,15 +511,6 @@ if (!markerIndex.has(key)) {
 }
 }); // rows.forEach
 
-// ★サムネ画像を先読み（重要）
-heritageData.forEach(d => {
-  if (d.thumbFile) {
-    const img = new Image();
-    img.src = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${d.thumbFile}`;
-  }
-});
-
-
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
             if (regionCountryMap.hasOwnProperty(region)) {
@@ -469,19 +550,15 @@ heritageData.forEach(d => {
             regionSelect.appendChild(option);
           });
 
-         setTimeout(() => {
-  markerCluster = new markerClusterer.MarkerClusterer({
-    map,
-    markers,
-    maxZoom: 10,
-    onClusterClick: (event) => {
-      event.stop();
-    }
-  });
-
-  refreshCluster(); // ←これ重要（忘れると表示ズレる）
-
-}, 500);
+          markerCluster = new markerClusterer.MarkerClusterer({
+  map,
+  markers,
+  maxZoom: 10,
+  onClusterClick: (event) => {
+    // ★クラスタクリック完全無効化
+    event.stop();
+  }
+});
 
   function updateMarkers() {
   const bounds = map.getBounds();
@@ -493,24 +570,11 @@ heritageData.forEach(d => {
   });
 }
 
+// 初回
+google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 
 // 地図操作後
-let firstLoad = true;
-
-map.addListener('idle', () => {
-  if (firstLoad) {
-    firstLoad = false;
-
-    setTimeout(() => {
-      updateMarkers();
-      refreshCluster();
-    }, 300); // ←ここ重要（200〜400調整OK）
-
-  } else {
-    updateMarkers();
-    refreshCluster();
-  }
-});
+map.addListener('idle', updateMarkers);
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
@@ -813,35 +877,15 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData
-  .map(d => {
-    const name = normalizeText(d.heritageName);
-    const jp = normalizeText(d.localNameJP);
-    const en = normalizeText(d.localNameEN);
-    const local = normalizeText(d.localLangName);
-    const hira = normalizeText(d.hira);
-
-    let score = 0;
-
-    // ★① 先頭一致（最強）
-    if (name.startsWith(keyword)) score += 100;
-    if (jp.startsWith(keyword)) score += 90;
-    if (local.startsWith(keyword)) score += 80;
-    if (en.startsWith(keyword)) score += 70;
-    if (hira.startsWith(keyword)) score += 60;
-
-    // ★② 部分一致（弱）
-    if (name.includes(keyword)) score += 50;
-    if (jp.includes(keyword)) score += 40;
-    if (local.includes(keyword)) score += 30;
-    if (en.includes(keyword)) score += 20;
-    if (hira.includes(keyword)) score += 10;
-
-    return { data: d, score };
-  })
-  .filter(obj => obj.score > 0)
-  .sort((a, b) => b.score - a.score)
-  .map(obj => obj.data);
+  const results = heritageData.filter(d => {
+  return (
+    normalizeText(d.heritageName).includes(keyword) ||
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword)) ||
+    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) ||
+    (d.hira && normalizeText(d.hira).includes(keyword))
+  );
+});
 
   if (results.length === 0) return;
 
@@ -861,9 +905,10 @@ searchInput.addEventListener('keydown', (e) => {
 
   const mainMarker =
   groupMarkers.find(m =>
-    m.customData.heritageName === found.heritageName &&
-    m.customData.localNameJP === found.localNameJP &&
-    m.customData.localNameEN === found.localNameEN
+    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
+    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword)) ||
+    (m.customData.hira && normalizeText(m.customData.hira).includes(keyword)) // ←追加
   ) || groupMarkers[0];
 
   const latLng = mainMarker.getPosition();
@@ -887,25 +932,9 @@ map.panTo(newCenter);
     showInfo(mainMarker, true); // ← ここ重要（固定表示）
   }, 200);
 });
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key !== 'Enter') return;
 
-  // （中略）
-
-  setTimeout(() => {
-    showInfo(mainMarker, true);
-  }, 200);
-});
-
-// ★ここに追加！！（CSV読み込みが全部終わった後）
-setTimeout(() => {
-  updateMarkers();
-}, 100);
-
-        });  
+        });
     }
-
-    
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
