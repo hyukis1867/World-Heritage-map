@@ -450,15 +450,19 @@ if (!markerIndex.has(key)) {
             regionSelect.appendChild(option);
           });
 
-          markerCluster = new markerClusterer.MarkerClusterer({
-  map,
-  markers,
-  maxZoom: 10,
-  onClusterClick: (event) => {
-    // ★クラスタクリック完全無効化
-    event.stop();
-  }
-});
+         setTimeout(() => {
+  markerCluster = new markerClusterer.MarkerClusterer({
+    map,
+    markers,
+    maxZoom: 10,
+    onClusterClick: (event) => {
+      event.stop();
+    }
+  });
+
+  refreshCluster(); // ←これ重要（忘れると表示ズレる）
+
+}, 300);
 
   function updateMarkers() {
   const bounds = map.getBounds();
