@@ -371,7 +371,11 @@ lastOpenedMarker = marker;
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
 
-  heritageData.push({id, region, country, heritageName, lat, lng, type, year, localNameJP, localNameEN, linkUrl, grade, imageUrl, credit});
+  heritageData.push({
+  id, region, country, heritageName, lat, lng,
+  type, year, localNameJP, localNameEN,
+  grade, imageUrl, credit
+});
 
   // regionCountryMap
   if (!regionCountryMap[region]) regionCountryMap[region] = new Set();
@@ -420,7 +424,7 @@ lastOpenedMarker = marker;
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, localNameEN,
-  linkUrl, grade, imageUrl, credit
+  grade, imageUrl, credit
 };
 
   marker.addListener('click', () => {
