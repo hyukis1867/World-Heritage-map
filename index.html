@@ -149,23 +149,24 @@ const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
-${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
-${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
-${data.country === "中華人民共和国" && data.hira
-  ? `<div class="infowindow-hira">${data.hira}</div>`
-  : ''}
-
-${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
-${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
-
-  ${data.fullUrl ? `
-  <div style="margin:6px 0; text-align:center;">
-    <img src="${thumbUrl}"
-      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
-      onclick="openImageModal('${fullUrl}')"
-      onerror="this.src='${fullUrl}'">
+  <div id="img-container" style="display:none; text-align:center; margin:6px 0;">
+    <img id="thumb-img"
+      style="max-width:250px; border-radius:6px; cursor:pointer;"
+      onclick="openImageModal('${fullUrl}')">
   </div>
-` : ''}
+
+  <div id="loading" style="text-align:center; font-size:12px; color:#888;">
+    Loading...
+  </div>
+
+  ${data.credit ? `
+  <div class="infowindow-sub" style="font-size:75%; color:#777;">
+    ${data.credit}
+  </div>` : ''}
+
+  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+</div>
+`; ''}
 
   ${data.credit ? `
   <div class="infowindow-sub" style="font-size:75%; color:#777;">
@@ -189,6 +190,25 @@ infoWindow.setContent(contentHtml);
 
 infoWindow.setPosition(marker.getPosition()); // ←これ重要
 infoWindow.open(map);                         // ←anchor使わない
+
+
+setTimeout(() => {
+  const img = document.getElementById("thumb-img");
+  const container = document.getElementById("img-container");
+  const loading = document.getElementById("loading");
+
+  if (!img) return;
+
+  const temp = new Image();
+  temp.onload = () => {
+    img.src = thumbUrl;
+    container.style.display = "block";
+    if (loading) loading.style.display = "none";
+  };
+
+  temp.src = thumbUrl;
+}, 0);
+
 
 lastOpenedMarker = marker;
 }
