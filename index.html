@@ -129,66 +129,70 @@ function normalizeText(str) {
     };
 
 function showInfo(marker, pinned = false) {
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+  }
+
   const data = marker.customData;
   if (!data) return;
 
+  // ★ここ追加
   isPinned = pinned;
 
+  // ★ここに書く（これが正解）
   const thumbUrl = data.thumbFile
-    ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
-    : '';
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${data.thumbFile}`
+  : '';
 
-  const fullUrl = data.fullUrl || '';
+const fullUrl = data.fullUrl || '';
 
-  const contentHtml = `
+const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
-  ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
-  ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
-  ${data.country === "中華人民共和国" && data.hira
-    ? `<div class="infowindow-hira">${data.hira}</div>`
-    : ''}
+${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
+${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
+${data.country === "中華人民共和国" && data.hira
+  ? `<div class="infowindow-hira">${data.hira}</div>`
+  : ''}
 
-  ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
-  ${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
+${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
+${data.localNameEN ? `<div class="infowindow-en">${data.localNameEN}</div>` : ''}
 
   ${data.fullUrl ? `
-<div style="margin:6px 0; text-align:center;">
-  <img id="info-img-${data.id}"
-    style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer; display:none;"
-    onclick="openImageModal('${fullUrl}')">
-</div>
-<script>
-(() => {
-  const img = document.getElementById("info-img-${data.id}");
-  if (!img) return;
-
-  const temp = new Image();
-  temp.onload = () => {
-    img.src = temp.src;
-    img.style.display = "block";
-  };
-  temp.src = "${thumbUrl}";
-})();
-</script>
+  <div style="margin:6px 0; text-align:center;">
+    <img src="${thumbUrl}"
+      style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+      onclick="openImageModal('${fullUrl}')"
+      onerror="this.src='${fullUrl}'">
+  </div>
 ` : ''}
 
   ${data.credit ? `
   <div class="infowindow-sub" style="font-size:75%; color:#777;">
     ${data.credit}
   </div>
-  ` : ''}
+` : ''}
 
-  <div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
+<div class="infowindow-sub">${data.country} / ${data.type} / ${data.year}</div>
 </div>
 `;
 
-  infoWindow.setContent(contentHtml);
-  infoWindow.setPosition(marker.getPosition());
-  infoWindow.open(map);
+if (!infoWindow) {
+  infoWindow = new google.maps.InfoWindow({
+  pixelOffset: new google.maps.Size(0, -16),
+  maxWidth: 280,
+  disableAutoPan: true   // ← ★これ追加
+});
+}
 
-  lastOpenedMarker = marker;
+infoWindow.setContent(contentHtml);
+
+infoWindow.setPosition(marker.getPosition()); // ←これ重要
+infoWindow.open(map);                         // ←anchor使わない
+
+lastOpenedMarker = marker;
 }
 
     // ▼ 安全なCSV1行パーサー（ダブルクオート対応）
@@ -212,45 +216,37 @@ function showInfo(marker, pinned = false) {
       return result;
     }
 
-window.initMap = function () {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 41.9028, lng: 12.4964 },
-    zoom: 12,
-    gestureHandling: 'greedy',
-    tilt: 0,
-    mapTypeControlOptions: {
-      position: google.maps.ControlPosition.LEFT_BOTTOM
-    }
-  });
+    window.initMap = function () {
+      map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat: 41.9028, lng: 12.4964},
+  zoom: 12,
+  gestureHandling: 'greedy',
+  tilt: 0,
 
-  // ★ InfoWindowは1回だけ
-  infoWindow = new google.maps.InfoWindow({
-    pixelOffset: new google.maps.Size(0, -16),
-    maxWidth: 280,
-    disableAutoPan: true
-  });
-
-  const savedCenter = localStorage.getItem('mapCenter');
-  const savedZoom = localStorage.getItem('mapZoom');
-
-  if (savedCenter && savedZoom) {
-    const center = JSON.parse(savedCenter);
-    map.setCenter(center);
-    map.setZoom(parseInt(savedZoom));
+  // ★これ追加
+  mapTypeControlOptions: {
+    position: google.maps.ControlPosition.LEFT_BOTTOM
   }
+});
 
-  map.addListener('center_changed', () => {
-    localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
-  });
+      const savedCenter = localStorage.getItem('mapCenter');
+      const savedZoom = localStorage.getItem('mapZoom');
+      if (savedCenter && savedZoom) {
+        const center = JSON.parse(savedCenter);
+        map.setCenter(center);
+        map.setZoom(parseInt(savedZoom));
+      }
 
-  map.addListener('zoom_changed', () => {
-    localStorage.setItem('mapZoom', map.getZoom());
-  });
+      map.addListener('center_changed', () => {
+        localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
+      });
+      map.addListener('zoom_changed', () => {
+        localStorage.setItem('mapZoom', map.getZoom());
+      });
 
-  fetch('places.csv')
-    .then(r => r.text())
-    .then(csv => {
-      // ↓ここから下はそのまま
+      fetch('places.csv')
+        .then(response => response.text())
+        .then(csv => {
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
@@ -396,6 +392,7 @@ if (fullUrl) {
   if (lastOpenedMarker === marker && isPinned) {
     if (infoWindow) {
       infoWindow.close();
+      infoWindow = null;
       lastOpenedMarker = null;
       isPinned = false;
     }
@@ -413,7 +410,7 @@ marker.addListener('mouseover', () => {
 marker.addListener('mouseout', () => {
   if (!isPinned && infoWindow) {
     infoWindow.close();
-
+    infoWindow = null;
   }
 });
 
@@ -502,7 +499,7 @@ map.addListener('idle', updateMarkers);
 
 if (infoWindow) {
   infoWindow.close();
-
+  infoWindow = null;
 }
 lastOpenedMarker = null;
 
@@ -621,7 +618,7 @@ refreshCluster();
 // ★吹き出しを強制的に閉じる
 if (infoWindow) {
   infoWindow.close();
-
+  infoWindow = null;
 }
 lastOpenedMarker = null;
 
@@ -692,7 +689,7 @@ option.title = heritageName; // ← フル表示（重要）
   // ★完全削除
   if (infoWindow) {
     infoWindow.close();
-  
+    infoWindow = null;
   }
   lastOpenedMarker = null;
 
@@ -761,7 +758,7 @@ searchInput.addEventListener('input', () => {
   if (!keyword) {
     if (infoWindow) {
       infoWindow.close();
-   
+      infoWindow = null;
     }
     lastOpenedMarker = null;
 
