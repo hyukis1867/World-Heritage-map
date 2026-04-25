@@ -842,14 +842,33 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.hira && normalizeText(d.hira).includes(keyword)) ||                // ←追加
-    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) || // ←追加
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-  );
+  const results = heritageData
+  .map(d => {
+    const targets = [
+      d.heritageName,
+      d.localNameJP,
+      d.hira,
+      d.localLangName,
+      d.localNameEN
+    ].filter(Boolean).map(normalizeText);
+
+    // スコア付け（ここがポイント）
+    let score = 0;
+
+    targets.forEach(t => {
+      if (t.startsWith(keyword)) {
+        score += 100; // ★前方一致を最優先
+      } else if (t.includes(keyword)) {
+        score += 10;  // ★部分一致は弱く
+      }
+    });
+
+    return { data: d, score };
+  })
+  .filter(item => item.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .map(item => item.data);
+ 
 });
 
   if (results.length === 0) return;
