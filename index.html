@@ -223,7 +223,12 @@ const contentHtml = `
   <strong>${data.heritageName}</strong>
 
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
-  ${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
+
+${data.hira ? `<div class="infowindow-localname">${data.hira}</div>` : ''}
+
+${data.localLangName ? `<div class="infowindow-localname">${data.localLangName}</div>` : ''}
+
+${data.localNameEN ? `<div class="infowindow-localname">${data.localNameEN}</div>` : ''}
 
   ${data.imageUrl ? `
     <div style="margin:6px 0; text-align:center;">
@@ -373,7 +378,11 @@ lastOpenedMarker = marker;
 
   heritageData.push({
   id, region, country, heritageName, lat, lng,
-  type, year, localNameJP, localNameEN,
+  type, year,
+  localNameJP,
+  hira,              // ←追加
+  localLangName,     // ←追加
+  localNameEN,
   grade, imageUrl, credit
 });
 
@@ -423,7 +432,11 @@ lastOpenedMarker = marker;
 }); 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
-  type, year, localNameJP, localNameEN,
+  type, year,
+  localNameJP,
+  hira,              // ←追加
+  localLangName,     // ←追加
+  localNameEN,
   grade, imageUrl, credit
 };
 
