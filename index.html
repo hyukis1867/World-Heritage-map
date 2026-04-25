@@ -142,9 +142,13 @@ function showInfo(marker, pinned = false) {
   // ★ここに書く（これが正解）
   const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
 
-  const thumbUrl = `https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main/images/thumb/${data.thumbFile}`;
+const thumbUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
+  : '';
 
-const fullUrl = data.fullUrl || '';
+const fullUrl = fileName
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
+  : '';
 
 const contentHtml = `
 <div>
