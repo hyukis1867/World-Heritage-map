@@ -633,7 +633,7 @@ lastOpenedMarker = null;
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
       const maxLength = 30;
 
-let displayName = heritageName;
+let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
 
 if (heritageName.length > maxLength) {
   displayName =
