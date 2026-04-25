@@ -232,10 +232,13 @@ lastOpenedMarker = marker;
   gestureHandling: 'greedy',
   tilt: 0,
 
-  // ★これ追加
   mapTypeControlOptions: {
     position: google.maps.ControlPosition.LEFT_BOTTOM
-  }
+  },
+
+  // 👇ここ追加
+  zoomControl: false,
+  streetViewControl: false
 });
 
       const savedCenter = localStorage.getItem('mapCenter');
