@@ -222,6 +222,8 @@ const contentHtml = `
 <div>
   <strong>${data.heritageName}</strong>
 
+${data.state ? `<div class="infowindow-localname">${data.state}</div>` : ''}
+
   ${data.localNameJP ? `<div class="infowindow-localname">${data.localNameJP}</div>` : ''}
 
 ${data.hira ? `<div class="infowindow-localname">${data.hira}</div>` : ''}
@@ -433,9 +435,10 @@ lastOpenedMarker = marker;
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
+  state,              // ← ★これ追加
   localNameJP,
-  hira,              // ←追加
-  localLangName,     // ←追加
+  hira,
+  localLangName,
   localNameEN,
   grade, imageUrl, credit
 };
