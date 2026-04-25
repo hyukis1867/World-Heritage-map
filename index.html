@@ -843,12 +843,14 @@ searchInput.addEventListener('keydown', (e) => {
   if (!keyword) return;
 
   const results = heritageData.filter(d => {
-    return (
-      normalizeText(d.heritageName).includes(keyword) ||
-      (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-      (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
-    );
-  });
+  return (
+    normalizeText(d.heritageName).includes(keyword) ||
+    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
+    (d.hira && normalizeText(d.hira).includes(keyword)) ||                // ←追加
+    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) || // ←追加
+    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+  );
+});
 
   if (results.length === 0) return;
 
@@ -870,6 +872,8 @@ searchInput.addEventListener('keydown', (e) => {
   groupMarkers.find(m =>
     (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
     (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
+    (m.customData.hira && normalizeText(m.customData.hira).includes(keyword)) ||                // ←追加
+    (m.customData.localLangName && normalizeText(m.customData.localLangName).includes(keyword)) || // ←追加
     (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
   ) || groupMarkers[0];
 
