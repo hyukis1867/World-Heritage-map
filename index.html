@@ -842,14 +842,33 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
 
-  const results = heritageData.filter(d => {
-  return (
-    normalizeText(d.heritageName).includes(keyword) ||
-    (d.localNameJP && normalizeText(d.localNameJP).includes(keyword)) ||
-    (d.hira && normalizeText(d.hira).includes(keyword)) ||                // ←追加
-    (d.localLangName && normalizeText(d.localLangName).includes(keyword)) || // ←追加
-    (d.localNameEN && normalizeText(d.localNameEN).includes(keyword))
+  function matchScore(text, keyword) {
+  if (!text) return 0;
+  const t = normalizeText(text);
+
+  if (t === keyword) return 3;        // 完全一致
+  if (t.startsWith(keyword)) return 2; // 前方一致
+  if (t.includes(keyword)) return 1;   // 部分一致
+  return 0;
+}
+
+const scored = heritageData.map(d => {
+  const score = Math.max(
+    matchScore(d.heritageName, keyword),
+    matchScore(d.localNameJP, keyword),
+    matchScore(d.hira, keyword),
+    matchScore(d.localLangName, keyword),
+    matchScore(d.localNameEN, keyword)
   );
+  return { data: d, score };
+}).filter(r => r.score > 0);
+
+// スコア順に並べる
+scored.sort((a, b) => b.score - a.score);
+
+if (scored.length === 0) return;
+
+const found = scored[0].data;
 });
 
   if (results.length === 0) return;
@@ -868,14 +887,19 @@ searchInput.addEventListener('keydown', (e) => {
 
   refreshCluster();
 
-  const mainMarker =
-  groupMarkers.find(m =>
-    (m.customData.heritageName && normalizeText(m.customData.heritageName).includes(keyword)) ||
-    (m.customData.localNameJP && normalizeText(m.customData.localNameJP).includes(keyword)) ||
-    (m.customData.hira && normalizeText(m.customData.hira).includes(keyword)) ||                // ←追加
-    (m.customData.localLangName && normalizeText(m.customData.localLangName).includes(keyword)) || // ←追加
-    (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
-  ) || groupMarkers[0];
+  const mainMarker = groupMarkers
+  .map(m => {
+    const d = m.customData;
+    const score = Math.max(
+      matchScore(d.heritageName, keyword),
+      matchScore(d.localNameJP, keyword),
+      matchScore(d.hira, keyword),
+      matchScore(d.localLangName, keyword),
+      matchScore(d.localNameEN, keyword)
+    );
+    return { marker: m, score };
+  })
+  .sort((a, b) => b.score - a.score)[0].marker;
 
   const latLng = mainMarker.getPosition();
 
