@@ -160,7 +160,10 @@ const contentHtml = `
 
   ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
 
-  ${data.hira ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
+  ${(data.hira && !(data.country === "日本" && !data.localNameJP))
+  ? `<div class="infowindow-hira">${data.hira}</div>`
+  : ''
+}
 
   ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
 
