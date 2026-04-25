@@ -850,16 +850,17 @@ searchInput.addEventListener('keydown', (e) => {
       d.hira,
       d.localLangName,
       d.localNameEN
-    ].filter(Boolean).map(normalizeText);
+    ]
+      .filter(Boolean)
+      .map(normalizeText);
 
-    // スコア付け（ここがポイント）
     let score = 0;
 
     targets.forEach(t => {
       if (t.startsWith(keyword)) {
-        score += 100; // ★前方一致を最優先
+        score += 100;   // ★前方一致を最優先
       } else if (t.includes(keyword)) {
-        score += 10;  // ★部分一致は弱く
+        score += 10;    // ★部分一致は弱く
       }
     });
 
@@ -868,8 +869,6 @@ searchInput.addEventListener('keydown', (e) => {
   .filter(item => item.score > 0)
   .sort((a, b) => b.score - a.score)
   .map(item => item.data);
- 
-});
 
   if (results.length === 0) return;
 
