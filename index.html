@@ -219,7 +219,7 @@ if (!infoWindow) {
 
 infoWindow.setContent(contentHtml);
 
-infoWindow.setPosition(marker.getPosition()); // ←これ重要
+infoWindow.setPosition(marker.position);
 infoWindow.open(map);                         // ←anchor使わない
 
 lastOpenedMarker = marker;
@@ -505,7 +505,7 @@ if (!markerIndex.has(key)) {
   lastBounds = bounds;
 
   markers.forEach(marker => {
-    const pos = marker.getPosition();
+    const pos = marker.position;
 
     let shouldBeVisible = bounds.contains(pos);
 
@@ -751,7 +751,7 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
 
   // ★移動
-  const latLng = targetMarker.getPosition();
+  const latLng = targetMarker.position;
 
 // 画面の縦方向に少しずらす（px指定）
 const offsetY = 150; // ← 調整ポイント（スマホなら100〜200が目安）
@@ -894,7 +894,7 @@ searchInput.addEventListener('keydown', (e) => {
     (m.customData.localNameEN && normalizeText(m.customData.localNameEN).includes(keyword))
   ) || groupMarkers[0];
 
-  const latLng = mainMarker.getPosition();
+  const latLng = mainMarker.position;
 
 const offsetY = 150; // ←プルダウンと同じ値にする
 
