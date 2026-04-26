@@ -389,22 +389,10 @@ markerEl.style.border = "1px solid white";
 
 markerEl.textContent = label;
 
-const marker = new google.maps.Marker({
+const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
   map,
-  label: {
-    text: label,
-    color: "white",
-    fontSize: "12px"
-  },
-  icon: {
-    path: google.maps.SymbolPath.CIRCLE,
-    scale: 14,
-    fillColor: color,
-    fillOpacity: 1,
-    strokeColor: "white",
-    strokeWeight: 1
-  }
+  content: markerEl
 });
 marker.customData = {
   id, region, country, heritageName, lat, lng,
