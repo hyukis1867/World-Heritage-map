@@ -387,6 +387,8 @@ markerEl.style.border = "1px solid white";
 markerEl.textContent = label;
 
 markerEl.style.pointerEvents = "auto";
+markerEl.style.padding = "2px";
+markerEl.style.boxSizing = "border-box";
 
 const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
