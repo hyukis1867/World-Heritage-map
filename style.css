@@ -97,4 +97,9 @@ html, body, #map {
   border-radius: 8px;
 }
 
-
+#dropdown-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 99999;
+}
