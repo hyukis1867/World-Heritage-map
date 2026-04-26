@@ -140,16 +140,14 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-const baseCDN = "https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main";
-
-const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
+  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
 
 const thumbUrl = fileName
-  ? `${baseCDN}/images/thumb/${fileName}`
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
   : '';
 
 const fullUrl = fileName
-  ? `${baseCDN}/images/full/${fileName}`
+  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
   : '';
 
 const contentHtml = `
