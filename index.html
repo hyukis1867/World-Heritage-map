@@ -653,7 +653,7 @@ markers.forEach(marker => {
             }
 
             markers.forEach(marker => {
-              marker.setVisible(!selectedRegion || marker.customRegion === selectedRegion);
+              marker.setVisible(!selectedRegion || marker.customData.region === selectedRegion);
             });
 
             heritageSelect.value = '';
@@ -746,7 +746,7 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
   // ★国のマーカーだけ表示
   markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
+    marker.setVisible(marker.customData.country === selectedCountry);
   });
 
 
