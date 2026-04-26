@@ -104,11 +104,3 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
-#map {
-  cursor: default;
-}
-
-#map:active {
-  cursor: grabbing;
-}
-
