@@ -430,22 +430,31 @@ marker.customData = {
   }
 });
 
+let hoverTimer = null;
+
+// マウス乗った時
 marker.content.addEventListener("mouseenter", () => {
-  if (!isPinned) showInfo(marker, false);
+  if (isPinned) return;
+
+  hoverTimer = setTimeout(() => {
+    showInfo(marker, false);
+  }, 120); // ← 100〜150で調整OK
 });
 
+// マウス離れた時
 marker.content.addEventListener("mouseleave", () => {
-  if (!isPinned && infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
+  if (hoverTimer) {
+    clearTimeout(hoverTimer);
+    hoverTimer = null;
   }
-});
 
-marker.addListener('mouseout', () => {
-  if (!isPinned && infoWindow) {
-    infoWindow.close();
-    infoWindow = null;
-  }
+  // 即閉じない（ここが効く）
+  setTimeout(() => {
+    if (!isPinned && infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+  }, 80);
 });
 
 
