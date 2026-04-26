@@ -508,7 +508,6 @@ function updateMarkers() {
   const selectedRegion = document.getElementById('region-select').value;
   const selectedCountry = document.getElementById('country-select').value;
 
-  // ★余裕バッファ（ここがミソ）
   const buffer = 0.3;
 
   const extendedBounds = new google.maps.LatLngBounds(
@@ -545,6 +544,8 @@ function updateMarkers() {
       marker.map = null;
     }
   });
+
+  refreshCluster(); // ← ★これ追加
 }
 
 // 初回
@@ -557,9 +558,9 @@ map.addListener('idle', () => {
   if (updateTimer) clearTimeout(updateTimer);
 
   updateTimer = setTimeout(() => {
-    updateMarkers();
-    refreshCluster(); // ← ここだけ
-  }, 150);
+    updateTimer = setTimeout(() => {
+  updateMarkers();
+}, 150);
 });
 
           const countrySelect = document.getElementById('country-select');
