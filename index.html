@@ -253,14 +253,8 @@ lastOpenedMarker = marker;
   zoom: 12,
   gestureHandling: 'greedy',
   tilt: 0,
-
-
-mapId:"d4813258172c17d21338d573",
-
-  // ★これ追加
-  mapTypeControlOptions: {
-    position: google.maps.ControlPosition.LEFT_BOTTOM
-  }
+  mapId:"d4813258172c17d21338d573",
+  mapTypeControl: false   // ←これ追加
 });
 
       const savedCenter = localStorage.getItem('mapCenter');
