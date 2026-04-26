@@ -469,10 +469,22 @@ if (!markerIndex.has(key)) {
   const bounds = map.getBounds();
   if (!bounds) return;
 
+  let changed = false;
+
   markers.forEach(marker => {
     const pos = marker.getPosition();
-    marker.setVisible(bounds.contains(pos));
+    const shouldBeVisible = bounds.contains(pos);
+
+    if (marker.getVisible() !== shouldBeVisible) {
+      marker.setVisible(shouldBeVisible);
+      changed = true;
+    }
   });
+
+  // ★ここが超重要
+  if (changed) {
+    refreshCluster();
+  }
 }
 
 // 初回
