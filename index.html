@@ -371,11 +371,18 @@ lastOpenedMarker = marker;
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
+const wrapper = document.createElement("div");
+wrapper.style.width = "44px";          // ← 当たり判定だけ大きく
+wrapper.style.height = "44px";
+wrapper.style.display = "flex";
+wrapper.style.alignItems = "center";
+wrapper.style.justifyContent = "center";
+wrapper.style.cursor = "pointer";      // ← ここに付ける
+
 const markerEl = document.createElement("div");
-markerEl.style.width = "36px";
-markerEl.style.height = "36px";
-markerEl.style.border = "6px solid transparent";
-markerEl.style.transform = "translate(-50%, -50%)";
+markerEl.style.width = "28px";         // ← 見た目はそのまま
+markerEl.style.height = "28px";
+markerEl.style.borderRadius = "50%";
 markerEl.style.background = color;
 markerEl.style.display = "flex";
 markerEl.style.alignItems = "center";
@@ -386,11 +393,16 @@ markerEl.style.border = "1px solid white";
 
 markerEl.textContent = label;
 
+// 合体
+wrapper.appendChild(markerEl);
+
 const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
   map,
-  content: markerEl
+  content: wrapper   // ← ここが重要
 });
+
+
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
