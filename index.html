@@ -232,10 +232,13 @@ lastOpenedMarker = marker;
   gestureHandling: 'greedy',
   tilt: 0,
 
-  // ★これ追加
   mapTypeControlOptions: {
     position: google.maps.ControlPosition.LEFT_BOTTOM
-  }
+  },
+
+  // 👇ここ追加
+  zoomControl: false,
+  streetViewControl: false
 });
 
       const savedCenter = localStorage.getItem('mapCenter');
@@ -465,14 +468,23 @@ if (!markerIndex.has(key)) {
   }
 });
 
-  function updateMarkers() {
+let lastBounds = null; // ← ★これをupdateMarkersの上に追加
+
+function updateMarkers() {
   const bounds = map.getBounds();
   if (!bounds) return;
+
+  // ★ここ追加（同じ範囲ならスキップ）
+  if (lastBounds && bounds.equals(lastBounds)) return;
+
+  lastBounds = bounds;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
     marker.setVisible(bounds.contains(pos));
   });
+
+  refreshCluster(); // ←ここに集約（重要）
 }
 
 // 初回
@@ -599,7 +611,7 @@ markers.forEach(marker => {
             heritageSelect.value = '';
             countrySelect.value = '';
 
-refreshCluster();
+
 
           });
 
@@ -664,7 +676,7 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
       // ズームは変更せず現在のまま
     }
   }
-   refreshCluster();
+  
 });
 
           heritageSelect.addEventListener('change', () => {
@@ -714,7 +726,7 @@ map.panTo(newCenter);
   showInfo(targetMarker, true);
 }, 200);
 
-refreshCluster();  
+
 
 });
 
@@ -770,7 +782,7 @@ searchInput.addEventListener('input', () => {
       }
     });
 
-    refreshCluster();
+   
   }
 });
 
@@ -823,7 +835,6 @@ searchInput.addEventListener('keydown', (e) => {
   markers.forEach(m => m.setVisible(false));
   groupMarkers.forEach(m => m.setVisible(true));
 
-  refreshCluster();
 
   const mainMarker =
   groupMarkers.find(m =>
