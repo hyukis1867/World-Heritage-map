@@ -372,15 +372,16 @@ lastOpenedMarker = marker;
   const label = id.toString();
   const color = iconColors[type] || "gray";
 const wrapper = document.createElement("div");
-wrapper.style.width = "44px";          // ← 当たり判定だけ大きく
-wrapper.style.height = "44px";
+
+wrapper.style.width = "36px";
+wrapper.style.height = "36px";
 wrapper.style.display = "flex";
 wrapper.style.alignItems = "center";
 wrapper.style.justifyContent = "center";
-wrapper.style.cursor = "pointer";      // ← ここに付ける
+wrapper.style.cursor = "pointer";
 
 const markerEl = document.createElement("div");
-markerEl.style.width = "28px";         // ← 見た目はそのまま
+markerEl.style.width = "28px";
 markerEl.style.height = "28px";
 markerEl.style.borderRadius = "50%";
 markerEl.style.background = color;
