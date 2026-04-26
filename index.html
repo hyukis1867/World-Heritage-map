@@ -562,11 +562,7 @@ lastOpenedMarker = null;
   const selectedRegion = regionSelect.value;
 
 markers.forEach(marker => {
-  if (!selectedRegion) {
-  marker.map = map;
-  } else {
-    marker.setVisible(marker.customData.region === selectedRegion); // 選択地域以外非表示
-  }
+  marker.map = (!selectedRegion || marker.customData.region === selectedRegion) ? map : null;
 });
 
 
@@ -657,8 +653,8 @@ markers.forEach(marker => {
             }
 
             markers.forEach(marker => {
-              marker.setVisible(!selectedRegion || marker.customData.region === selectedRegion);
-            });
+  marker.map = (!selectedRegion || marker.customData.region === selectedRegion) ? map : null;
+});
 
             heritageSelect.value = '';
             countrySelect.value = '';
@@ -713,7 +709,11 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
   // --- マーカーの表示制御 ---
   markers.forEach(marker => {
-    marker.setVisible(marker.customData.country === selectedCountry);
+    if (marker.customData.country === selectedCountry) {
+  marker.map = map;
+} else {
+  marker.map = null;
+}
   });
 
   
@@ -750,7 +750,11 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
   // ★国のマーカーだけ表示
   markers.forEach(marker => {
-    marker.setVisible(marker.customData.country === selectedCountry);
+    if (marker.customData.country === selectedCountry) {
+  marker.map = map;
+} else {
+  marker.map = null;
+}
   });
 
 
@@ -821,18 +825,15 @@ searchInput.addEventListener('input', () => {
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
 
-    markers.forEach(m => {
-      if (selectedCountry) {
-        // ★国が選択されている場合 → 国のみ表示
-        m.setVisible(m.customData.country === selectedCountry);
-      } else if (selectedRegion) {
-        // ★地域のみ選択 → 地域のみ表示
-        m.setVisible(m.customData.region === selectedRegion);
-      } else {
-        // ★未選択 → 全表示
-        m.setVisible(true);
-      }
-    });
+markers.forEach(m => {
+  if (selectedCountry) {
+    m.map = (m.customData.country === selectedCountry) ? map : null;
+  } else if (selectedRegion) {
+    m.map = (m.customData.region === selectedRegion) ? map : null;
+  } else {
+    m.map = map;
+  }
+});
 
     refreshCluster();
   }
@@ -884,8 +885,8 @@ searchInput.addEventListener('keydown', (e) => {
 
   if (groupMarkers.length === 0) return;
 
-  markers.forEach(m => m.setVisible(false));
-  groupMarkers.forEach(m => m.setVisible(true));
+  markers.forEach(m => m.map = null);
+  groupMarkers.forEach(m => m.map = map);
 
   refreshCluster();
 
