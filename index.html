@@ -55,6 +55,27 @@ function refreshCluster() {
   markerCluster.addMarkers(visibleMarkers);
 }
 
+let lastBounds = null;
+
+function boundsChangedSignificantly(newBounds) {
+  if (!lastBounds) return true;
+
+  const ne1 = lastBounds.getNorthEast();
+  const sw1 = lastBounds.getSouthWest();
+  const ne2 = newBounds.getNorthEast();
+  const sw2 = newBounds.getSouthWest();
+
+  const threshold = 0.01;
+
+  return (
+    Math.abs(ne1.lat() - ne2.lat()) > threshold ||
+    Math.abs(ne1.lng() - ne2.lng()) > threshold ||
+    Math.abs(sw1.lat() - sw2.lat()) > threshold ||
+    Math.abs(sw1.lng() - sw2.lng()) > threshold
+  );
+}
+
+
 function normalizeText(str) {
   if (!str) return '';
 
@@ -469,25 +490,27 @@ if (!markerIndex.has(key)) {
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  const selectedRegion = document.getElementById('region-select').value;
-  const selectedCountry = document.getElementById('country-select').value;
+  // ★これ追加（超重要）
+  if (!boundsChangedSignificantly(bounds)) return;
+
+  lastBounds = bounds;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
 
     let shouldBeVisible = bounds.contains(pos);
 
-    // ★地域フィルタ
+    const selectedRegion = document.getElementById('region-select').value;
+    const selectedCountry = document.getElementById('country-select').value;
+
     if (selectedRegion && marker.customRegion !== selectedRegion) {
       shouldBeVisible = false;
     }
 
-    // ★国フィルタ
     if (selectedCountry && marker.customCountry !== selectedCountry) {
       shouldBeVisible = false;
     }
 
-    // ★差分更新（これ重要）
     if (marker.getVisible() !== shouldBeVisible) {
       marker.setVisible(shouldBeVisible);
     }
