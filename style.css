@@ -105,11 +105,10 @@ html, body, #map {
 }
 
 #map {
-  cursor: grab;
+  cursor: default;
 }
 
 #map:active {
   cursor: grabbing;
 }
-
 
