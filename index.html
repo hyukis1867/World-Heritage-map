@@ -542,8 +542,9 @@ map.addListener('idle', () => {
   if (updateTimer) clearTimeout(updateTimer);
 
   updateTimer = setTimeout(() => {
-  updateMarkers();
-}, 250);
+    updateMarkers();
+    refreshCluster(); // ← ここだけ
+  }, 250);
 });
 
           const countrySelect = document.getElementById('country-select');
