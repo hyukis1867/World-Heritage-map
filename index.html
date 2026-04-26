@@ -160,10 +160,7 @@ const contentHtml = `
 
   ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
 
-  ${(data.hira && !(data.country === "日本" && !data.localNameJP))
-  ? `<div class="infowindow-hira">${data.hira}</div>`
-  : ''
-}
+  ${data.hira ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
 
   ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
 
@@ -232,13 +229,10 @@ lastOpenedMarker = marker;
   gestureHandling: 'greedy',
   tilt: 0,
 
+  // ★これ追加
   mapTypeControlOptions: {
     position: google.maps.ControlPosition.LEFT_BOTTOM
-  },
-
-  // 👇ここ追加
-  zoomControl: false,
-  streetViewControl: false
+  }
 });
 
       const savedCenter = localStorage.getItem('mapCenter');
@@ -468,37 +462,14 @@ if (!markerIndex.has(key)) {
   }
 });
 
-let lastBounds = null;
-
-function updateMarkers() {
+  function updateMarkers() {
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  if (lastBounds && bounds.equals(lastBounds)) return;
-  lastBounds = bounds;
-
-  // ★現在の選択状態を取得
-  const selectedRegion = document.getElementById('region-select').value;
-  const selectedCountry = document.getElementById('country-select').value;
-
   markers.forEach(marker => {
     const pos = marker.getPosition();
-
-    // ★ここが重要（フィルタ統合）
-    let visible = bounds.contains(pos);
-
-    if (selectedRegion) {
-      visible = visible && (marker.customRegion === selectedRegion);
-    }
-
-    if (selectedCountry) {
-      visible = visible && (marker.customCountry === selectedCountry);
-    }
-
-    marker.setVisible(visible);
+    marker.setVisible(bounds.contains(pos));
   });
-
-  refreshCluster();
 }
 
 // 初回
@@ -625,7 +596,7 @@ markers.forEach(marker => {
             heritageSelect.value = '';
             countrySelect.value = '';
 
-
+refreshCluster();
 
           });
 
@@ -659,7 +630,7 @@ lastOpenedMarker = null;
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
       const maxLength = 30;
 
-let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
+let displayName = heritageName;
 
 if (heritageName.length > maxLength) {
   displayName =
@@ -668,6 +639,7 @@ if (heritageName.length > maxLength) {
 }
 
 option.textContent = `${id}｜${displayName} ${gradeLabel}`;
+option.title = heritageName; // ← フル表示（重要）
 
       heritageSelect.appendChild(option);
     });
@@ -690,7 +662,7 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
       // ズームは変更せず現在のまま
     }
   }
-  
+   refreshCluster();
 });
 
           heritageSelect.addEventListener('change', () => {
@@ -740,7 +712,7 @@ map.panTo(newCenter);
   showInfo(targetMarker, true);
 }, 200);
 
-
+refreshCluster();  
 
 });
 
@@ -796,7 +768,7 @@ searchInput.addEventListener('input', () => {
       }
     });
 
-   
+    refreshCluster();
   }
 });
 
@@ -849,6 +821,7 @@ searchInput.addEventListener('keydown', (e) => {
   markers.forEach(m => m.setVisible(false));
   groupMarkers.forEach(m => m.setVisible(true));
 
+  refreshCluster();
 
   const mainMarker =
   groupMarkers.find(m =>
