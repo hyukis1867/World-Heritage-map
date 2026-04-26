@@ -372,24 +372,25 @@ lastOpenedMarker = marker;
   // マーカー生成（元の挙動を保持）
   const label = id.toString();
   const color = iconColors[type] || "gray";
-  const marker = new google.maps.Marker({
-  position: {lat, lng},
+const markerEl = document.createElement("div");
+markerEl.style.width = "28px";
+markerEl.style.height = "28px";
+markerEl.style.borderRadius = "50%";
+markerEl.style.background = color;
+markerEl.style.display = "flex";
+markerEl.style.alignItems = "center";
+markerEl.style.justifyContent = "center";
+markerEl.style.color = "white";
+markerEl.style.fontSize = "12px";
+markerEl.style.border = "1px solid white";
+
+markerEl.textContent = label;
+
+const marker = new google.maps.marker.AdvancedMarkerElement({
+  position: { lat, lng },
   map,
-  label: { text: label, color: 'white', fontSize: '12px', fontWeight: 'normal' },
-  icon: {
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: color,
-    fillOpacity: 1,
-    strokeColor: 'white',
-    strokeWeight: 1,
-    scale: 14
-  },
-  anchorPoint: new google.maps.Point(0, -14), // ← ★ここに追加
-  title: "",
-  customRegion: region,
-  customCountry: country,
-  customId: id
-}); 
+  content: markerEl
+});
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
@@ -550,7 +551,7 @@ lastOpenedMarker = null;
 
 markers.forEach(marker => {
   if (!selectedRegion) {
-    marker.setVisible(true);   // 地域未選択なら全表示
+  marker.map = map;
   } else {
     marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
   }
@@ -944,7 +945,7 @@ map.panTo(newCenter);
   </script>
 
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZPRJzf-rbyrdjWjmJYWYpb74dnfLjkHw&libraries=marker&callback=initMap">
   </script>
 
 
