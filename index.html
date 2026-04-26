@@ -820,10 +820,10 @@ searchInput.addEventListener('input', () => {
     markers.forEach(m => {
       if (selectedCountry) {
         // ★国が選択されている場合 → 国のみ表示
-        m.setVisible(m.customCountry === selectedCountry);
+        m.setVisible(m.customData.country === selectedCountry);
       } else if (selectedRegion) {
         // ★地域のみ選択 → 地域のみ表示
-        m.setVisible(m.customRegion === selectedRegion);
+        m.setVisible(m.customData.region === selectedRegion);
       } else {
         // ★未選択 → 全表示
         m.setVisible(true);
