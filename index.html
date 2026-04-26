@@ -507,7 +507,17 @@ if (!markerIndex.has(key)) {
   markers.forEach(marker => {
     const pos = marker.position;
 
-    let shouldBeVisible = bounds.contains(pos);
+    let shouldBeVisible = true;
+
+if (!bounds.contains(pos)) shouldBeVisible = false;
+
+if (selectedRegion && marker.customData.region !== selectedRegion) {
+  shouldBeVisible = false;
+}
+
+if (selectedCountry && marker.customData.country !== selectedCountry) {
+  shouldBeVisible = false;
+}
 
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
