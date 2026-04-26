@@ -103,3 +103,13 @@ html, body, #map {
   left: 10px;
   z-index: 999999 !important;
 }
+
+#map {
+  cursor: grab;
+}
+
+#map:active {
+  cursor: grabbing;
+}
+
+
