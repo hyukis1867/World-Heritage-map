@@ -372,9 +372,8 @@ lastOpenedMarker = marker;
   const label = id.toString();
   const color = iconColors[type] || "gray";
 const markerEl = document.createElement("div");
-markerEl.style.width = "32px";
-markerEl.style.height = "32px";
-markerEl.style.cursor = "pointer";
+markerEl.style.width = "28px";
+markerEl.style.height = "28px";
 markerEl.style.borderRadius = "50%";
 markerEl.style.background = color;
 markerEl.style.display = "flex";
@@ -385,10 +384,6 @@ markerEl.style.fontSize = "12px";
 markerEl.style.border = "1px solid white";
 
 markerEl.textContent = label;
-
-markerEl.style.pointerEvents = "auto";
-markerEl.style.padding = "2px";
-markerEl.style.boxSizing = "border-box";
 
 const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
