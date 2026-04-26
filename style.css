@@ -99,7 +99,7 @@ html, body, #map {
 
 #dropdown-container {
   position: fixed;
-  top: 10px;
+  top: 70px; /* ←ここが重要 */
   left: 10px;
-  z-index: 999999 !important;
+  z-index: 999999;
 }
