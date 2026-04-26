@@ -44,6 +44,7 @@
     let heritageData = [];
     let markerCluster;
     let isPinned = false;
+    let isSearchMode = false;
 
   // ★ここに置く（initMapの外）
 function refreshCluster() {
@@ -496,6 +497,7 @@ if (!markerIndex.has(key)) {
 });
 
 function updateMarkers() {
+  if (isSearchMode) return;  // ★これ追加
   const bounds = map.getBounds();
   if (!bounds) return;
 
@@ -818,6 +820,7 @@ searchInput.addEventListener('input', () => {
     if (infoWindow) {
       infoWindow.close();
       infoWindow = null;
+      isSearchMode = false; // ★これ追加
     }
     lastOpenedMarker = null;
 
@@ -884,6 +887,8 @@ searchInput.addEventListener('keydown', (e) => {
   );
 
   if (groupMarkers.length === 0) return;
+
+  isSearchMode = true;
 
   markers.forEach(m => m.map = null);
   groupMarkers.forEach(m => m.map = map);
