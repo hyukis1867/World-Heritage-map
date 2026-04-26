@@ -49,7 +49,7 @@
 function refreshCluster() {
   if (!markerCluster) return;
 
-  const visibleMarkers = markers.filter(m => m.getVisible());
+  const visibleMarkers = markers.filter(m => m.map !== null);
 
   markerCluster.clearMarkers();
   markerCluster.addMarkers(visibleMarkers);
@@ -520,8 +520,12 @@ function updateMarkers() {
       shouldBeVisible = false;
     }
 
-    if (marker.getVisible() !== shouldBeVisible) {
-      marker.setVisible(shouldBeVisible);
+    const isVisible = marker.map !== null;
+
+    if (shouldBeVisible && !isVisible) {
+      marker.map = map;
+    } else if (!shouldBeVisible && isVisible) {
+      marker.map = null;
     }
   });
 }
@@ -559,7 +563,7 @@ lastOpenedMarker = null;
 
 markers.forEach(marker => {
   if (!selectedRegion) {
-  marker.setVisible(true);
+  marker.map = map;
   } else {
     marker.setVisible(marker.customData.region === selectedRegion); // 選択地域以外非表示
   }
