@@ -468,23 +468,37 @@ if (!markerIndex.has(key)) {
   }
 });
 
-let lastBounds = null; // ← ★これをupdateMarkersの上に追加
+let lastBounds = null;
 
 function updateMarkers() {
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  // ★ここ追加（同じ範囲ならスキップ）
   if (lastBounds && bounds.equals(lastBounds)) return;
-
   lastBounds = bounds;
+
+  // ★現在の選択状態を取得
+  const selectedRegion = document.getElementById('region-select').value;
+  const selectedCountry = document.getElementById('country-select').value;
 
   markers.forEach(marker => {
     const pos = marker.getPosition();
-    marker.setVisible(bounds.contains(pos));
+
+    // ★ここが重要（フィルタ統合）
+    let visible = bounds.contains(pos);
+
+    if (selectedRegion) {
+      visible = visible && (marker.customRegion === selectedRegion);
+    }
+
+    if (selectedCountry) {
+      visible = visible && (marker.customCountry === selectedCountry);
+    }
+
+    marker.setVisible(visible);
   });
 
-  refreshCluster(); // ←ここに集約（重要）
+  refreshCluster();
 }
 
 // 初回
