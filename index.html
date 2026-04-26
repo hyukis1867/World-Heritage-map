@@ -140,14 +140,16 @@ function showInfo(marker, pinned = false) {
   isPinned = pinned;
 
   // ★ここに書く（これが正解）
-  const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
+const baseCDN = "https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main";
+
+const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
 
 const thumbUrl = fileName
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/thumb/${fileName}`
+  ? `${baseCDN}/images/thumb/${fileName}`
   : '';
 
 const fullUrl = fileName
-  ? `https://raw.githubusercontent.com/hyukis1867/World-Heritage-map/main/images/full/${fileName}`
+  ? `${baseCDN}/images/full/${fileName}`
   : '';
 
 const contentHtml = `
@@ -158,7 +160,10 @@ const contentHtml = `
 
   ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>` : ''}
 
-  ${data.hira ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
+  ${(data.hira && !(data.country === "日本" && !data.localNameJP))
+  ? `<div class="infowindow-hira">${data.hira}</div>`
+  : ''
+}
 
   ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
 
@@ -628,7 +633,7 @@ lastOpenedMarker = null;
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
       const maxLength = 30;
 
-let displayName = heritageName;
+let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
 
 if (heritageName.length > maxLength) {
   displayName =
@@ -637,7 +642,6 @@ if (heritageName.length > maxLength) {
 }
 
 option.textContent = `${id}｜${displayName} ${gradeLabel}`;
-option.title = heritageName; // ← フル表示（重要）
 
       heritageSelect.appendChild(option);
     });
