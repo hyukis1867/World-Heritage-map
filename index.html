@@ -504,23 +504,23 @@ if (!markerIndex.has(key)) {
 
   lastBounds = bounds;
 
+  unction updateMarkers() {
+  const bounds = map.getBounds();
+  if (!bounds) return;
+
+  if (!boundsChangedSignificantly(bounds)) return;
+  lastBounds = bounds;
+
+  // ★ここが最重要（先に取得）
+  const selectedRegion = document.getElementById('region-select').value;
+  const selectedCountry = document.getElementById('country-select').value;
+
   markers.forEach(marker => {
     const pos = marker.position;
 
     let shouldBeVisible = true;
 
-if (!bounds.contains(pos)) shouldBeVisible = false;
-
-if (selectedRegion && marker.customData.region !== selectedRegion) {
-  shouldBeVisible = false;
-}
-
-if (selectedCountry && marker.customData.country !== selectedCountry) {
-  shouldBeVisible = false;
-}
-
-    const selectedRegion = document.getElementById('region-select').value;
-    const selectedCountry = document.getElementById('country-select').value;
+    if (!bounds.contains(pos)) shouldBeVisible = false;
 
     if (selectedRegion && marker.customData.region !== selectedRegion) {
       shouldBeVisible = false;
@@ -529,6 +529,12 @@ if (selectedCountry && marker.customData.country !== selectedCountry) {
     if (selectedCountry && marker.customData.country !== selectedCountry) {
       shouldBeVisible = false;
     }
+
+    if (marker.getVisible() !== shouldBeVisible) {
+      marker.setVisible(shouldBeVisible);
+    }
+  });
+}
 
     if (marker.getVisible() !== shouldBeVisible) {
       marker.setVisible(shouldBeVisible);
