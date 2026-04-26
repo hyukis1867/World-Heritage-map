@@ -42,7 +42,7 @@ html, body, #map {
 .infowindow-hira {
   text-align: right;
   font-size: 75%;
-  color: #666;
+  color: #444;
   margin-top: 2px;
   opacity: 0.75;
 }
