@@ -472,31 +472,26 @@ if (!markerIndex.has(key)) {
   const selectedRegion = document.getElementById('region-select').value;
   const selectedCountry = document.getElementById('country-select').value;
 
-  let changed = false;
-
   markers.forEach(marker => {
     const pos = marker.getPosition();
 
-    // ★ここが核心（フィルタ条件）
-    let matchesFilter = true;
+    let shouldBeVisible = bounds.contains(pos);
 
-    if (selectedCountry) {
-      matchesFilter = marker.customCountry === selectedCountry;
-    } else if (selectedRegion) {
-      matchesFilter = marker.customRegion === selectedRegion;
+    // ★地域フィルタ
+    if (selectedRegion && marker.customRegion !== selectedRegion) {
+      shouldBeVisible = false;
     }
 
-    const shouldBeVisible = matchesFilter && bounds.contains(pos);
+    // ★国フィルタ
+    if (selectedCountry && marker.customCountry !== selectedCountry) {
+      shouldBeVisible = false;
+    }
 
+    // ★差分更新（これ重要）
     if (marker.getVisible() !== shouldBeVisible) {
       marker.setVisible(shouldBeVisible);
-      changed = true;
     }
   });
-
-  if (changed) {
-    refreshCluster();
-  }
 }
 
 // 初回
