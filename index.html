@@ -221,7 +221,9 @@ if (!infoWindow) {
 infoWindow.setContent(contentHtml);
 
 infoWindow.setPosition(marker.position);
-infoWindow.open(map);                         // ←anchor使わない
+infoWindow.open(map);
+
+map.panBy(0, -10);// ←anchor使わない
 
 lastOpenedMarker = marker;
 }
