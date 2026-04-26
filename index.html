@@ -418,9 +418,14 @@ marker.customData = {
   }
 });
 
-marker.addListener('mouseover', () => {
-  if (!isPinned) {
-    showInfo(marker, false); // ← 一時表示
+marker.content.addEventListener("mouseenter", () => {
+  if (!isPinned) showInfo(marker, false);
+});
+
+marker.content.addEventListener("mouseleave", () => {
+  if (!isPinned && infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
   }
 });
 
@@ -507,11 +512,11 @@ if (!markerIndex.has(key)) {
     const selectedRegion = document.getElementById('region-select').value;
     const selectedCountry = document.getElementById('country-select').value;
 
-    if (selectedRegion && marker.customRegion !== selectedRegion) {
+    if (selectedRegion && marker.customData.region !== selectedRegion) {
       shouldBeVisible = false;
     }
 
-    if (selectedCountry && marker.customCountry !== selectedCountry) {
+    if (selectedCountry && marker.customData.country !== selectedCountry) {
       shouldBeVisible = false;
     }
 
@@ -556,7 +561,7 @@ markers.forEach(marker => {
   if (!selectedRegion) {
   marker.map = map;
   } else {
-    marker.setVisible(marker.customRegion === selectedRegion); // 選択地域以外非表示
+    marker.setVisible(marker.customData.region === selectedRegion); // 選択地域以外非表示
   }
 });
 
@@ -704,7 +709,7 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
   // --- マーカーの表示制御 ---
   markers.forEach(marker => {
-    marker.setVisible(marker.customCountry === selectedCountry);
+    marker.setVisible(marker.customData.country === selectedCountry);
   });
 
   
@@ -869,8 +874,8 @@ searchInput.addEventListener('keydown', (e) => {
   const found = results[0];
 
   const groupMarkers = markers.filter(m =>
-    m.customId == found.id &&
-    m.customCountry == found.country
+    m.customData.id == found.id &&
+    m.customData.country == found.country
   );
 
   if (groupMarkers.length === 0) return;
