@@ -103,7 +103,3 @@ html, body, #map {
   left: 10px;
   z-index: 999999 !important;
 }
-
-.gm-style .gm-style-iw {
-  transform: translateY(4px);
-}
