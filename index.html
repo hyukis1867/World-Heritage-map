@@ -558,9 +558,8 @@ map.addListener('idle', () => {
   if (updateTimer) clearTimeout(updateTimer);
 
   updateTimer = setTimeout(() => {
-    updateTimer = setTimeout(() => {
-  updateMarkers();
-}, 150);
+    updateMarkers();
+  }, 150);
 });
 
           const countrySelect = document.getElementById('country-select');
