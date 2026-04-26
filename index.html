@@ -559,7 +559,7 @@ lastOpenedMarker = null;
 
 markers.forEach(marker => {
   if (!selectedRegion) {
-  marker.map = map;
+  marker.setVisible(true);
   } else {
     marker.setVisible(marker.customData.region === selectedRegion); // 選択地域以外非表示
   }
