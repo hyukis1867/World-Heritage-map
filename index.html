@@ -542,9 +542,8 @@ map.addListener('idle', () => {
   if (updateTimer) clearTimeout(updateTimer);
 
   updateTimer = setTimeout(() => {
-    updateMarkers();
-    refreshCluster();
-  }, 250); // ← 50〜150で調整OK
+  updateMarkers();
+}, 250);
 });
 
           const countrySelect = document.getElementById('country-select');
