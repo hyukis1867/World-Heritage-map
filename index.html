@@ -498,7 +498,16 @@ if (!markerIndex.has(key)) {
 google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 
 // 地図操作後
-map.addListener('idle', updateMarkers);
+let updateTimer = null;
+
+map.addListener('idle', () => {
+  if (updateTimer) clearTimeout(updateTimer);
+
+  updateTimer = setTimeout(() => {
+    updateMarkers();
+    refreshCluster();
+  }, 100); // ← 50〜150で調整OK
+});
 
           const countrySelect = document.getElementById('country-select');
           const heritageSelect = document.getElementById('heritage-select');
