@@ -97,13 +97,4 @@ html, body, #map {
   border-radius: 8px;
 }
 
-#dropdown-container {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
-  background: white;
-  padding: 6px;
-  border-radius: 8px;
-}
 
