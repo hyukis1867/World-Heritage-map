@@ -497,7 +497,8 @@ if (!markerIndex.has(key)) {
 });
 
 function updateMarkers() {
-  if (isSearchMode) return;  // ★これ追加
+  if (isSearchMode) return;
+
   const bounds = map.getBounds();
   if (!bounds) return;
 
@@ -507,12 +508,26 @@ function updateMarkers() {
   const selectedRegion = document.getElementById('region-select').value;
   const selectedCountry = document.getElementById('country-select').value;
 
+  // ★余裕バッファ（ここがミソ）
+  const buffer = 0.3;
+
+  const extendedBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(
+      bounds.getSouthWest().lat() - buffer,
+      bounds.getSouthWest().lng() - buffer
+    ),
+    new google.maps.LatLng(
+      bounds.getNorthEast().lat() + buffer,
+      bounds.getNorthEast().lng() + buffer
+    )
+  );
+
   markers.forEach(marker => {
     const pos = marker.position;
 
     let shouldBeVisible = true;
 
-    if (!bounds.contains(pos)) shouldBeVisible = false;
+    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
 
     if (selectedRegion && marker.customData.region !== selectedRegion) {
       shouldBeVisible = false;
