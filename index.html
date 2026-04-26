@@ -526,12 +526,6 @@ function updateMarkers() {
   });
 }
 
-    if (marker.getVisible() !== shouldBeVisible) {
-      marker.setVisible(shouldBeVisible);
-    }
-  });
-}
-
 // 初回
 google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 
