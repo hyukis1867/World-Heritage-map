@@ -150,10 +150,6 @@ function normalizeText(str) {
     };
 
 function showInfo(marker, pinned = false) {
-
-  // ★これ追加（超重要）
-  if (lastOpenedMarker === marker && infoWindow) return;
-
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
@@ -398,7 +394,7 @@ markerEl.style.border = "1px solid white";
 
 markerEl.textContent = label;
 
-wrapper.style.paddingTop = "8px";
+markerEl.style.transform = "translateY(8px)";
 
 // 合体
 wrapper.appendChild(markerEl);
@@ -408,8 +404,6 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
   map,
   content: wrapper   // ← ここが重要
 });
-
-
 
 
 marker.customData = {
@@ -442,11 +436,9 @@ let hoverTimer = null;
 marker.content.addEventListener("mouseenter", () => {
   if (isPinned) return;
 
-  if (lastOpenedMarker === marker && infoWindow) return;
-
   hoverTimer = setTimeout(() => {
     showInfo(marker, false);
-  }, 120);
+  }, 120); // ← 100〜150で調整OK
 });
 
 // マウス離れた時
@@ -456,18 +448,13 @@ marker.content.addEventListener("mouseleave", () => {
     hoverTimer = null;
   }
 
+  // 即閉じない（ここが効く）
   setTimeout(() => {
-    // ★ここ重要
     if (!isPinned && infoWindow) {
-      const iw = document.querySelector('.gm-style-iw');
-
-      // 吹き出しに乗ってたら閉じない
-      if (iw && iw.matches(':hover')) return;
-
       infoWindow.close();
       infoWindow = null;
     }
-  }, 150); // ← 少し伸ばす
+  }, 80);
 });
 
 
