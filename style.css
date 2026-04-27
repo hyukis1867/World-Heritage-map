@@ -104,6 +104,6 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
-.gm-style-iw-c {
-  box-shadow: none !important;
+.gm-style-iw-tc {
+  display: none !important;
 }
