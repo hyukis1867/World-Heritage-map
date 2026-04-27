@@ -405,6 +405,32 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
   content: wrapper   // ← ここが重要
 });
 
+marker.content.addEventListener("mouseenter", () => {
+  if (isPinned || isHovering) return;
+
+  isHovering = true;
+
+  hoverTimer = setTimeout(() => {
+    showInfo(marker, false);
+  }, 120);
+});
+
+marker.content.addEventListener("mouseleave", () => {
+  isHovering = false;
+
+  if (hoverTimer) {
+    clearTimeout(hoverTimer);
+    hoverTimer = null;
+  }
+
+  setTimeout(() => {
+    if (!isPinned && infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+    }
+  }, 80);
+});
+
 
 marker.customData = {
   id, region, country, heritageName, lat, lng,
