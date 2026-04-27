@@ -298,7 +298,6 @@ lastOpenedMarker = marker;
           const regionCountryMap = {};
           const countryHeritageMap = {};
           const regionCountryIDsMap = {};
-          const globalUniqueIDs = new Set();
 
           // --- country -> 読み（ひらがな）マップ。精度高めるため必要ならここへ追加してください ---
           const countryReadingMap = {
@@ -447,7 +446,6 @@ marker.customData = {
   }
 });
 
-let hoverTimer = null;
 
 marker.content.addEventListener("mouseenter", (e) => {
   if (isPinned) return;
@@ -838,23 +836,13 @@ refreshCluster();
           const urlLat = parseFloat(urlParams.get('lat'));
           const urlLng = parseFloat(urlParams.get('lng'));
           const urlZoom = parseInt(urlParams.get('zoom'));
-          const targetPlace = urlParams.get('place');
 
           if (!isNaN(urlLat) && !isNaN(urlLng) && !isNaN(urlZoom)) {
             map.setCenter({ lat: urlLat, lng: urlLng });
             map.setZoom(urlZoom);
           }
 
-          if (targetPlace) {
-            const decodedPlace = decodeURIComponent(targetPlace);
-            setTimeout(() => {
-              const targetMarker = markers.find(m => m.title === decodedPlace);
-              if (targetMarker) {
-                map.setCenter(targetMarker.getPosition());
-                map.setZoom(10);
-              }
-            }, 500);
-          }
+         
 // 🔍 検索機能（ここに入れる）
 const searchInput = document.getElementById('search-input');
 
