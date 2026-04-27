@@ -394,7 +394,7 @@ markerEl.style.border = "1px solid white";
 
 markerEl.textContent = label;
 
-markerEl.style.transform = "translateY(8px)";
+wrapper.style.paddingTop = "8px";
 
 // 合体
 wrapper.appendChild(markerEl);
@@ -405,31 +405,7 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
   content: wrapper   // ← ここが重要
 });
 
-marker.content.addEventListener("mouseenter", () => {
-  if (isPinned || isHovering) return;
 
-  isHovering = true;
-
-  hoverTimer = setTimeout(() => {
-    showInfo(marker, false);
-  }, 120);
-});
-
-marker.content.addEventListener("mouseleave", () => {
-  isHovering = false;
-
-  if (hoverTimer) {
-    clearTimeout(hoverTimer);
-    hoverTimer = null;
-  }
-
-  setTimeout(() => {
-    if (!isPinned && infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-  }, 80);
-});
 
 
 marker.customData = {
