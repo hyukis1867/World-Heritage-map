@@ -76,6 +76,20 @@ function refreshCluster() {
 
 let lastBounds = null;
 
+let clusterUpdateScheduled = false;
+
+function scheduleClusterUpdate() {
+  if (clusterUpdateScheduled) return;
+
+  clusterUpdateScheduled = true;
+
+  requestAnimationFrame(() => {
+    refreshCluster();
+    clusterUpdateScheduled = false;
+  });
+}
+
+
 function boundsChangedSignificantly(newBounds) {
   if (!lastBounds) return true;
 
@@ -554,30 +568,25 @@ function updateMarkers() {
   );
 
   markers.forEach(marker => {
-    const pos = marker.position;
+  const pos = marker.position;
 
-    let shouldBeVisible = true;
+  let shouldBeVisible = true;
 
-    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+  if (!extendedBounds.contains(pos)) shouldBeVisible = false;
 
-    if (selectedRegion && marker.customData.region !== selectedRegion) {
-      shouldBeVisible = false;
-    }
+  if (selectedRegion && marker.customData.region !== selectedRegion) {
+    shouldBeVisible = false;
+  }
 
-    if (selectedCountry && marker.customData.country !== selectedCountry) {
-      shouldBeVisible = false;
-    }
+  if (selectedCountry && marker.customData.country !== selectedCountry) {
+    shouldBeVisible = false;
+  }
 
-    const isVisible = marker.map !== null;
+  // ★ここが変更点
+  marker.setVisible(shouldBeVisible);
+});
 
-    if (shouldBeVisible && !isVisible) {
-      marker.map = map;
-    } else if (!shouldBeVisible && isVisible) {
-      marker.map = null;
-    }
-  });
-
-  refreshCluster(); // ← ★これ追加
+  scheduleClusterUpdate();
 }
 
 // 初回
