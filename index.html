@@ -960,13 +960,13 @@ searchInput.addEventListener('keydown', (e) => {
   const found = results[0];
 
 // ★アッピア街道以外は線を出さない
-if (found.heritageName !== "アッピア街道") {
+if (found.heritageName.includes("アッピア街道")) {
+  drawRouteLine(groupMarkers);
+} else {
   if (routeLine) {
     routeLine.setMap(null);
     routeLine = null;
   }
-} else {
-  drawRouteLine(groupMarkers);
 }
 
   const groupMarkers = markers.filter(m =>
