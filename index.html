@@ -150,6 +150,10 @@ function normalizeText(str) {
     };
 
 function showInfo(marker, pinned = false) {
+
+  // ★これ追加（超重要）
+  if (lastOpenedMarker === marker && infoWindow) return;
+
   if (infoWindow) {
     infoWindow.close();
     infoWindow = null;
@@ -438,9 +442,11 @@ let hoverTimer = null;
 marker.content.addEventListener("mouseenter", () => {
   if (isPinned) return;
 
+  if (lastOpenedMarker === marker && infoWindow) return;
+
   hoverTimer = setTimeout(() => {
     showInfo(marker, false);
-  }, 120); // ← 100〜150で調整OK
+  }, 120);
 });
 
 // マウス離れた時
@@ -461,7 +467,7 @@ marker.content.addEventListener("mouseleave", () => {
       infoWindow.close();
       infoWindow = null;
     }
-  }, 200); // ← 少し伸ばす
+  }, 150); // ← 少し伸ばす
 });
 
 
