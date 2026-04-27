@@ -450,13 +450,18 @@ marker.content.addEventListener("mouseleave", () => {
     hoverTimer = null;
   }
 
-  // 即閉じない（ここが効く）
   setTimeout(() => {
+    // ★ここ重要
     if (!isPinned && infoWindow) {
+      const iw = document.querySelector('.gm-style-iw');
+
+      // 吹き出しに乗ってたら閉じない
+      if (iw && iw.matches(':hover')) return;
+
       infoWindow.close();
       infoWindow = null;
     }
-  }, 80);
+  }, 150); // ← 少し伸ばす
 });
 
 
