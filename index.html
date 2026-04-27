@@ -68,30 +68,11 @@
 function refreshCluster() {
   if (!markerCluster) return;
 
-  requestAnimationFrame(() => {
-    const visibleMarkers = markers.filter(m => m.map !== null);
+  const visibleMarkers = markers.filter(m => m.map !== null);
 
-    markerCluster.clearMarkers();
-    markerCluster.addMarkers(visibleMarkers);
-  });
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
 }
-
-let clusterTimer;
-
-function refreshCluster() {
-  if (!markerCluster) return;
-
-  clearTimeout(clusterTimer);
-
-  clusterTimer = setTimeout(() => {
-    const visibleMarkers = markers.filter(m => m.map !== null);
-
-    markerCluster.clearMarkers();
-    markerCluster.addMarkers(visibleMarkers);
-  }, 120);
-}
-
-
 
 let lastBounds = null;
 
