@@ -46,6 +46,23 @@
     let isPinned = false;
     let isSearchMode = false;
 
+    // ★ここに追加（これが正解）
+    const tooltip = document.createElement("div");
+
+    tooltip.style.position = "absolute";
+    tooltip.style.background = "rgba(0,0,0,0.75)";
+    tooltip.style.color = "white";
+    tooltip.style.padding = "6px 10px";
+    tooltip.style.borderRadius = "6px";
+    tooltip.style.fontSize = "12px";
+    tooltip.style.pointerEvents = "none";
+    tooltip.style.zIndex = "1000";
+    tooltip.style.whiteSpace = "nowrap";
+    tooltip.style.display = "none";
+
+    document.body.appendChild(tooltip);
+
+
   // ★ここに置く（initMapの外）
 function refreshCluster() {
   if (!markerCluster) return;
@@ -432,30 +449,24 @@ marker.customData = {
 
 let hoverTimer = null;
 
-// マウス乗った時
-marker.content.addEventListener("mouseenter", () => {
+marker.content.addEventListener("mouseenter", (e) => {
   if (isPinned) return;
 
-  hoverTimer = setTimeout(() => {
-    showInfo(marker, false);
-  }, 120); // ← 100〜150で調整OK
+  const data = marker.customData;
+
+  tooltip.innerHTML = data.heritageName;
+  tooltip.style.display = "block";
 });
 
-// マウス離れた時
+marker.content.addEventListener("mousemove", (e) => {
+  tooltip.style.left = e.pageX + 10 + "px";
+  tooltip.style.top = e.pageY - 30 + "px";
+});
+
 marker.content.addEventListener("mouseleave", () => {
-  if (hoverTimer) {
-    clearTimeout(hoverTimer);
-    hoverTimer = null;
-  }
-
-  // 即閉じない（ここが効く）
-  setTimeout(() => {
-    if (!isPinned && infoWindow) {
-      infoWindow.close();
-      infoWindow = null;
-    }
-  }, 80);
+  tooltip.style.display = "none";
 });
+
 
 
  markers.push(marker);
