@@ -965,7 +965,8 @@ if (found.heritageName !== "アッピア街道") {
     routeLine.setMap(null);
     routeLine = null;
   }
-  return;
+} else {
+  drawRouteLine(groupMarkers);
 }
 
   const groupMarkers = markers.filter(m =>
