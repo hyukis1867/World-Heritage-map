@@ -70,8 +70,7 @@ function refreshCluster() {
 
   const visibleMarkers = markers.filter(m => m.map !== null);
 
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(visibleMarkers);
+  markerCluster.repaint();
 }
 
 let lastBounds = null;
@@ -571,9 +570,9 @@ function updateMarkers() {
     const isVisible = marker.map !== null;
 
     if (shouldBeVisible && !isVisible) {
-      marker.map = map;
+      marker.setVisible(true);
     } else if (!shouldBeVisible && isVisible) {
-      marker.map = null;
+      marker.setVisible(false);
     }
   });
 
@@ -759,9 +758,9 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
   // --- マーカーの表示制御 ---
   markers.forEach(marker => {
     if (marker.customData.country === selectedCountry) {
-  marker.map = map;
+  marker.setVisible(true);
 } else {
-  marker.map = null;
+  marker.setVisible(false);
 }
   });
 
@@ -800,9 +799,9 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
   // ★国のマーカーだけ表示
   markers.forEach(marker => {
     if (marker.customData.country === selectedCountry) {
-  marker.map = map;
+  marker.setVisible(true);
 } else {
-  marker.map = null;
+  marker.setVisible(false);
 }
   });
 
