@@ -104,8 +104,6 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
-.gm-style-iw-t::after {
-  transform: scale(1.05);
-  transform-origin: top;
+.gm-style-iw-c {
+  box-shadow: none !important;
 }
-
