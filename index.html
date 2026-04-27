@@ -58,7 +58,7 @@
     tooltip.style.fontSize = "12px";
     tooltip.style.pointerEvents = "none";
     tooltip.style.zIndex = "1000";
-    tooltip.style.whiteSpace = "nowrap";
+    tooltip.style.whiteSpace = "normal";
     tooltip.style.display = "none";
 
     document.body.appendChild(tooltip);
@@ -453,7 +453,9 @@ marker.content.addEventListener("mouseenter", (e) => {
 
   const data = marker.customData;
 
-  tooltip.innerHTML = data.heritageName;
+  tooltip.innerHTML =
+  `${data.heritageName}
+   ${data.localNameJP ? `<br>${data.localNameJP}` : ''}`;
   tooltip.style.display = "block";
 });
 
