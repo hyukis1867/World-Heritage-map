@@ -959,6 +959,15 @@ searchInput.addEventListener('keydown', (e) => {
 
   const found = results[0];
 
+// ★アッピア街道以外は線を出さない
+if (found.heritageName !== "アッピア街道") {
+  if (routeLine) {
+    routeLine.setMap(null);
+    routeLine = null;
+  }
+  return;
+}
+
   const groupMarkers = markers.filter(m =>
     m.customData.id == found.id &&
     m.customData.country == found.country
