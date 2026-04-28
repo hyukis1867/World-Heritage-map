@@ -28,12 +28,14 @@
       </select>
     </div>
 <div id="search-box" style="margin-top:6px;">
-    <input
+    
+  <div style="position:relative; display:inline-block;">
+  <input
        type="text"
   id="search-input"
   placeholder="🔍 遺産名で検索"
-  style="width:100%; font-size:14px; box-sizing:border-box;">
-  </div>
+  <span id="clear-btn">×</span>
+</div>
 
   <script>
     let map;
@@ -1046,5 +1048,23 @@ map.panTo(newCenter);
     box-shadow:0 0 20px rgba(0,0,0,0.5);
   ">
 </div>
+
+<script>
+const input = document.getElementById('search-input');
+const clearBtn = document.getElementById('clear-btn');
+
+input.addEventListener('input', () => {
+  clearBtn.style.display = input.value ? 'block' : 'none';
+});
+
+clearBtn.addEventListener('click', () => {
+  input.value = '';
+  clearBtn.style.display = 'none';
+  input.focus();
+  input.dispatchEvent(new Event('input'));
+});
+</script>
+
+
 </body>
 </html>
