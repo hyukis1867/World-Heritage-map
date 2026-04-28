@@ -104,48 +104,5 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
-#search-input {
-  padding-right:28px;   /* ←これだけ追加（長さ変えない） */
-}
-
-#clear-btn {
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
-  
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  background:#d1d1d6;
-
-  cursor:pointer;
-  display:none;
-  z-index:10;
-}
-
-/* ×を疑似要素で完全中央配置 */
-#clear-btn::before {
-  content:"×";
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -52%); /* ←微調整で完全中央 */
-  
-  font-size:11px;
-  color:white;
-}
-
-#search-input {
-  width:100%;   /* ←これでプルダウンと揃う */
-  box-sizing:border-box;
-  padding-right:28px; /* ←×と被らない最低限 */
-}
-
-/* iOSのデフォルト×を消す */
-#search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
 
 
