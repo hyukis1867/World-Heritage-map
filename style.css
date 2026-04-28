@@ -104,3 +104,23 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
+#clear-btn {
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  
+  background:#d1d1d6;       /* iOSっぽいグレー */
+  color:white;
+  
+  font-size:12px;
+  line-height:18px;
+  text-align:center;
+  
+  cursor:pointer;
+  display:none;
+}
