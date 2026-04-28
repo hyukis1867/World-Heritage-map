@@ -135,3 +135,17 @@ html, body, #map {
   font-size:11px;
   color:white;
 }
+
+#search-input {
+  width:100%;   /* ←これでプルダウンと揃う */
+  box-sizing:border-box;
+  padding-right:28px; /* ←×と被らない最低限 */
+}
+
+/* iOSのデフォルト×を消す */
+#search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+
