@@ -107,7 +107,7 @@ html, body, #map {
 /* スマホだけ */
 @media (max-width: 768px) {
   .gm-style-iw img {
-    max-height: 200px !important;
+    max-height: 230px !important;
     width: 100%;
     object-fit: cover;
   }
