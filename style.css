@@ -110,22 +110,28 @@ html, body, #map {
 
 #clear-btn {
   position:absolute;
-  right:6px;
+  right:8px;
   top:50%;
   transform:translateY(-50%);
   
-  width:18px;
-  height:18px;
+  width:16px;
+  height:16px;
   border-radius:50%;
-  
   background:#d1d1d6;
-  color:white;
 
-  display:flex;              /* ←これが重要 */
-  align-items:center;        /* 縦中央 */
-  justify-content:center;    /* 横中央 */
-
-  font-size:12px;
   cursor:pointer;
   display:none;
+  z-index:10;
+}
+
+/* ×を疑似要素で完全中央配置 */
+#clear-btn::before {
+  content:"×";
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -52%); /* ←微調整で完全中央 */
+  
+  font-size:11px;
+  color:white;
 }
