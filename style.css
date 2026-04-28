@@ -103,3 +103,12 @@ html, body, #map {
   left: 10px;
   z-index: 999999 !important;
 }
+
+/* スマホだけ */
+@media (max-width: 768px) {
+  .infowindow img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+}
+
