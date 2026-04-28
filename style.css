@@ -106,8 +106,9 @@ html, body, #map {
 
 /* スマホだけ */
 @media (max-width: 768px) {
-  .infowindow img {
-    max-height: 200px;
+  .gm-style-iw img {
+    max-height: 200px !important;
+    width: 100%;
     object-fit: cover;
   }
 }
