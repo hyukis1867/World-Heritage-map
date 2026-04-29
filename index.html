@@ -528,9 +528,20 @@ if (!markerIndex.has(key)) {
             const option = document.createElement('option');
             option.value = region;
             const count = countUniqueIDsInRegion(region);
-            option.textContent = `${region} (${count})`;
-            regionSelect.appendChild(option);
-          });
+            Object.keys(regionCountryMap).forEach(region => {
+  const option = document.createElement('option');
+  option.value = region;
+
+  const count = countUniqueIDsInRegion(region);
+
+  const regionNameMap = {
+    "欧州": "ヨーロッパ"
+  };
+
+  option.textContent = `${regionNameMap[region] || region} (${count})`;
+
+  regionSelect.appendChild(option);
+});
 
           markerCluster = new markerClusterer.MarkerClusterer({
   map,
