@@ -753,10 +753,10 @@ lastOpenedMarker = null;
 
 let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
 
-if (heritageName.length > maxLength) {
+if (displayName.length > maxLength) {
   displayName =
-    heritageName.slice(0, 15) + '…' +
-    heritageName.slice(-10);
+    displayName.slice(0, 15) + '…' +
+    displayName.slice(-10);
 }
 
 option.textContent = `${id}｜${displayName} ${gradeLabel}`;
