@@ -104,5 +104,28 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
+#clear-btn {
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
 
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#d1d1d6;
+
+  display:none;
+  cursor:pointer;
+}
+
+#clear-btn::before {
+  content:"×";
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  font-size:12px;
+  color:white;
+}
 
