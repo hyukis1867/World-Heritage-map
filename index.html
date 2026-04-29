@@ -27,14 +27,21 @@
         <option value="">-- 遺産を選択 --</option>
       </select>
     </div>
-<div id="search-box" style="margin-top:6px; position:relative;">
-  <input
-    type="text"
-    id="search-input"
-    placeholder="🔍 遺産名で検索"
-    style="width:100%; font-size:14px; box-sizing:border-box; padding-right:30px;"
-  >
-  <span id="clear-btn"></span>
+    
+<div id="dropdown-container" style="width:100%;">
+
+  <select id="region-select" style="width:100%;"></select>
+
+  <div id="search-box" style="margin-top:6px; position:relative; width:100%;">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="🔍 遺産名で検索"
+      style="width:100%; font-size:14px; box-sizing:border-box; padding-right:30px;"
+    >
+    <span id="clear-btn"></span>
+  </div>
+
 </div>
 
   <script>
