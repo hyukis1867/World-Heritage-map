@@ -525,10 +525,6 @@ if (!markerIndex.has(key)) {
           }
 
           Object.keys(regionCountryMap).forEach(region => {
-            const option = document.createElement('option');
-            option.value = region;
-            const count = countUniqueIDsInRegion(region);
-            Object.keys(regionCountryMap).forEach(region => {
   const option = document.createElement('option');
   option.value = region;
 
@@ -542,6 +538,7 @@ if (!markerIndex.has(key)) {
 
   regionSelect.appendChild(option);
 });
+            
 
           markerCluster = new markerClusterer.MarkerClusterer({
   map,
