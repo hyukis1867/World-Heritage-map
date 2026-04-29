@@ -46,8 +46,6 @@
     let isPinned = false;
     let isSearchMode = false;
     let globalUniqueIDs = new Set();
-    let routeLine = null;
-
 
     // ★ここに追加（これが正解）
     const tooltip = document.createElement("div");
@@ -121,29 +119,6 @@ function normalizeText(str) {
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
     ); // カタカナ→ひらがな
 }
-
-function drawRouteLine(groupMarkers) {
-  if (routeLine) {
-    routeLine.setMap(null);
-    routeLine = null;
-  }
-
-  if (!groupMarkers || groupMarkers.length < 2) return;
-
-  const path = groupMarkers.map(m => m.position);
-
-  routeLine = new google.maps.Polyline({
-    path: path,
-    geodesic: true,
-    strokeColor: "#ff4444",
-    strokeOpacity: 0.9,
-    strokeWeight: 3,
-    map: map
-  });
-}
-
-
-
 
   function getCapitalLatLng(countryName) {
     const capitals = {    
@@ -549,20 +524,13 @@ if (!markerIndex.has(key)) {
             regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
           }
 
-        Object.keys(regionCountryMap).forEach(region => {
-  const option = document.createElement('option');
-  option.value = region;
-
-  const count = countUniqueIDsInRegion(region);
-
-  const regionNameMap = {
-    "欧州": "ヨーロッパ"
-  };
-
-  option.textContent = `${regionNameMap[region] || region} (${count})`;
-
-  regionSelect.appendChild(option);
-});
+          Object.keys(regionCountryMap).forEach(region => {
+            const option = document.createElement('option');
+            option.value = region;
+            const count = countUniqueIDsInRegion(region);
+            option.textContent = `${region} (${count})`;
+            regionSelect.appendChild(option);
+          });
 
           markerCluster = new markerClusterer.MarkerClusterer({
   map,
@@ -899,13 +867,6 @@ searchInput.addEventListener('input', () => {
       infoWindow.close();
       infoWindow = null;
       isSearchMode = false; // ★これ追加
-
-if (routeLine) {
-  routeLine.setMap(null);
-  routeLine = null;
-}
-
-
     }
     lastOpenedMarker = null;
 
@@ -966,22 +927,10 @@ searchInput.addEventListener('keydown', (e) => {
 
   const found = results[0];
 
-// ★アッピア街道以外は線を出さない
-if (found.heritageName !== "アッピア街道") {
-  if (routeLine) {
-    routeLine.setMap(null);
-    routeLine = null;
-  }
-} else {
-  drawRouteLine(groupMarkers);
-}
-
   const groupMarkers = markers.filter(m =>
     m.customData.id == found.id &&
     m.customData.country == found.country
   );
-
-  drawRouteLine(groupMarkers);
 
   if (groupMarkers.length === 0) return;
 
