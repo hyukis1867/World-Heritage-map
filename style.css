@@ -129,3 +129,8 @@ html, body, #map {
   color:white;
 }
 
+#dropdown-container select,
+#dropdown-container input {
+  width: 100%;
+  box-sizing: border-box; /* ←これが最重要 */
+}
