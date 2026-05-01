@@ -120,6 +120,12 @@ function normalizeText(str) {
     ); // カタカナ→ひらがな
 }
 
+function removeCircleNumber(str) {
+  if (!str) return '';
+  return str.replace(/\s*(（\d+）|[①②③④⑤⑥⑦⑧⑨⑩]+)$/, '');
+}
+
+
   function getCapitalLatLng(countryName) {
     const capitals = {    
     "アイスランド共和国": {lat: 64.1355, lng: -21.8954},
@@ -759,7 +765,9 @@ lastOpenedMarker = null;
       if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
       const maxLength = 30;
 
-let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
+let displayName = removeCircleNumber(
+  heritageName.replace(/<br\s*\/?>/gi, '')
+);
 
 if (displayName.length > maxLength) {
   displayName =
