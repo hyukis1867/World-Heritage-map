@@ -342,6 +342,25 @@ lastOpenedMarker = marker;
             return countryName;
           }
 
+function highlightMarkers(targetMarkers) {
+  markers.forEach(m => {
+    const el = m.content.firstChild;
+    el.style.transform = "translateY(8px) scale(1)";
+    el.style.border = "1px solid white";
+    el.style.zIndex = "1";
+  });
+
+  targetMarkers.forEach(m => {
+    const el = m.content.firstChild;
+    el.style.transform = "translateY(8px) scale(1.3)";
+    el.style.border = "3px solid white";
+    el.style.zIndex = "10";
+  });
+}
+
+
+
+
           rows.forEach(row => {
   const columns = parseCSVLine(row);
   const id = columns[0].trim();
@@ -938,7 +957,9 @@ searchInput.addEventListener('keydown', (e) => {
   const groupMarkers = markers.filter(m =>
     m.customData.id == found.id &&
     m.customData.country == found.country
-  );
+  )
+  
+  highlightMarkers(groupMarkers);
 
   if (groupMarkers.length === 0) return;
 
