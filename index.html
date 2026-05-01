@@ -345,10 +345,38 @@ lastOpenedMarker = marker;
 function highlightMarkers(targetMarkers) {
   markers.forEach(m => {
     const el = m.content.firstChild;
+
     el.style.transform = "translateY(8px) scale(1)";
     el.style.border = "1px solid white";
-    el.style.zIndex = "1";
+
+    // ★リセット
+    el.style.boxShadow = "none";
+    el.style.backgroundClip = "padding-box";
+    el.style.backgroundColor = el.dataset.baseColor || el.style.backgroundColor;
   });
+
+  targetMarkers.forEach(m => {
+    const el = m.content.firstChild;
+
+    // ★元の色保存（初回のみ）
+    if (!el.dataset.baseColor) {
+      el.dataset.baseColor = el.style.backgroundColor;
+    }
+
+    el.style.transform = "translateY(8px) scale(1.3)";
+    
+    // ★枠を太く
+    el.style.border = "2px solid white";
+
+    // ★外側に白リング（これが広がる部分）
+    el.style.boxShadow = "0 0 0 4px rgba(255,255,255,0.8)";
+
+    // ★内側を少し白く（半透明）
+    el.style.backgroundColor = "rgba(255,255,255,0.3)";
+
+    el.style.zIndex = "10";
+  });
+}
 
   targetMarkers.forEach(m => {
     const el = m.content.firstChild;
