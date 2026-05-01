@@ -826,6 +826,18 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
   const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
   if (!targetMarker) return;
 
+// ★追加ここから
+const groupMarkers = markers.filter(m =>
+  m.customData.id == id &&
+  m.customData.country == selectedCountry
+);
+
+highlightMarkers([]); // 一旦リセット
+highlightMarkers(groupMarkers);
+// ★追加ここまで
+
+
+
   // ★完全削除
   if (infoWindow) {
     infoWindow.close();
@@ -959,7 +971,6 @@ searchInput.addEventListener('keydown', (e) => {
     m.customData.country == found.country
   )
   
-  highlightMarkers(groupMarkers);
 
   if (groupMarkers.length === 0) return;
 
