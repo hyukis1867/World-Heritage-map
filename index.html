@@ -322,6 +322,17 @@ lastOpenedMarker = marker;
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
+
+// ★① 先にIDごとの総数をカウント
+rows.forEach(row => {
+  const columns = parseCSVLine(row);
+  const id = columns[0].trim();
+
+  if (!idCountMap[id]) idCountMap[id] = 0;
+  idCountMap[id]++;
+});
+
+
           const countryHeritageMap = {};
           const regionCountryIDsMap = {};
 
@@ -373,13 +384,6 @@ lastOpenedMarker = marker;
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
   const num = columns[columns.length - 1];   
-
-// ★これ追加（total用）
-if (!idCountMap[id]) {
-  idCountMap[id] = 0;
-}
-idCountMap[id]++;
-
 
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
