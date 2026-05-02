@@ -801,14 +801,24 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
     });
   }
 
-  // --- マーカーの表示制御 ---
+ // --- マーカーの表示制御（修正版）---
+if (selectedCountry) {
+  // 国が選ばれている時 → 国で絞る
   markers.forEach(marker => {
-    if (marker.customData.country === selectedCountry) {
-  marker.map = map;
-} else {
-  marker.map = null;
-}
+    marker.map = (marker.customData.country === selectedCountry) ? map : null;
   });
+} else {
+  // ★国が未選択になった時 → 地域表示に戻す
+  const selectedRegion = regionSelect.value;
+
+  markers.forEach(marker => {
+    if (!selectedRegion || marker.customData.region === selectedRegion) {
+      marker.map = map;
+    } else {
+      marker.map = null;
+    }
+  });
+}
 
   
 
