@@ -22,10 +22,15 @@
         <option value="">-- 国を選択 --</option>
       </select>
     </div>
+
     <div id="heritage-box" style="display: none;">
-      <select id="heritage-select">
-        <option value="">-- 遺産を選択 --</option>
-      </select>
+  <select id="heritage-select">
+    <option value="">-- 遺産を選択 --</option>
+  </select>
+
+  <!-- ★これ追加 -->
+  <div id="custom-heritage" class="custom-dropdown"></div>
+</div>
     </div>
 <div id="search-box" style="margin-top:6px;">
     <input
@@ -773,33 +778,37 @@ lastOpenedMarker = null;
   heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
   heritageSelect.disabled = !selectedCountry;
 
-  if (selectedCountry && countryHeritageMap[selectedCountry]) {
-    const heritagesObj = countryHeritageMap[selectedCountry];
-    const list = Object.values(heritagesObj)
-      .sort((a,b) => Number(a.id) - Number(b.id));
+if (selectedCountry && countryHeritageMap[selectedCountry]) {
+  const heritagesObj = countryHeritageMap[selectedCountry];
+  const list = Object.values(heritagesObj)
+    .sort((a,b) => Number(a.id) - Number(b.id));
 
-    list.forEach(({ id, heritageName, grade }) => {
-      const option = document.createElement('option');
-      option.value = `${selectedCountry}.${id}`;
-      let gradeLabel = '';
-      if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
-      const maxLength = 30;
+  list.forEach(({ id, heritageName, grade }) => {
+    const option = document.createElement('option');
+    option.value = `${selectedCountry}.${id}`;
 
-let displayName = removeCircleNumber(
-  heritageName.replace(/<br\s*\/?>/gi, '')
-);
+    let gradeLabel = '';
+    if (grade) gradeLabel = grade.split(',').map(g => `【${g}級】`).join('');
 
-if (displayName.length > maxLength) {
-  displayName =
-    displayName.slice(0, 15) + '…' +
-    displayName.slice(-10);
+    let displayName = heritageName.replace(/<br\s*\/?>/gi, '');
+
+    const maxLength = 30;
+    if (displayName.length > maxLength) {
+      displayName =
+        displayName.slice(0, 15) + '…' +
+        displayName.slice(-10);
+    }
+
+    option.textContent = `${id}｜${displayName} ${gradeLabel}`;
+    heritageSelect.appendChild(option);
+  });
+
+  // ★★★ここに追加！！★★★
+  buildCustomHeritageDropdown(list.map(item => ({
+    ...item,
+    country: selectedCountry
+  })));
 }
-
-option.textContent = `${id}｜${displayName} ${gradeLabel}`;
-
-      heritageSelect.appendChild(option);
-    });
-  }
 
   // --- マーカーの表示制御 ---
   markers.forEach(marker => {
@@ -1010,6 +1019,59 @@ map.panTo(newCenter);
 
         });
     }
+
+
+    function buildCustomHeritageDropdown(list) {
+  const container = document.getElementById('custom-heritage');
+  container.innerHTML = '';
+
+  const selected = document.createElement('div');
+  selected.className = 'custom-selected';
+  selected.textContent = '遺産を選択';
+  container.appendChild(selected);
+
+  const listEl = document.createElement('div');
+  listEl.className = 'custom-list';
+
+  list.forEach(({ id, heritageName, grade, country }) => {
+    const item = document.createElement('div');
+    item.className = 'custom-item';
+
+    let name = heritageName.replace(/<br\s*\/?>/gi, '');
+
+    // ★番号削除（プルダウンだけ）
+    name = name.replace(/\s*(（\d+\/\d+）|（\d+）|[①②③④⑤⑥⑦⑧⑨⑩]+)$/, '');
+
+    item.innerHTML = `
+      <div class="item-line1">${id}</div>
+      <div class="item-line2">${name} ${grade ? '【'+grade+'級】' : ''}</div>
+    `;
+
+    item.addEventListener('click', () => {
+      selected.textContent = `${id}｜${name}`;
+
+      // ★裏のselectと連動（ここが最重要）
+      const value = `${country}.${id}`;
+      const select = document.getElementById('heritage-select');
+      select.value = value;
+      select.dispatchEvent(new Event('change'));
+
+      listEl.style.display = 'none';
+    });
+
+    listEl.appendChild(item);
+  });
+
+  container.appendChild(listEl);
+
+  selected.addEventListener('click', () => {
+    listEl.style.display =
+      listEl.style.display === 'block' ? 'none' : 'block';
+  });
+}
+
+
+
 
 // 👇ここ！！！！（これが「外」）
     function openImageModal(src) {
