@@ -850,23 +850,31 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
 
 
   // ★移動
-  const latLng = targetMarker.position;
+const latLng = targetMarker.position;
 
-// 画面の縦方向に少しずらす（px指定）
-const offsetY = 150; // ← 調整ポイント（スマホなら100〜200が目安）
+setTimeout(() => {
+  const offsetY = 150;
 
-const scale = Math.pow(2, map.getZoom());
-const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-const pixelOffset = new google.maps.Point(0, offsetY / scale);
+  const scale = Math.pow(2, map.getZoom());
+  const projection = map.getProjection();
 
-const newCenter = map.getProjection().fromPointToLatLng(
-  new google.maps.Point(
-    worldCoordinateCenter.x,
-    worldCoordinateCenter.y - pixelOffset.y
-  )
-);
+  if (!projection) {
+    map.panTo(latLng); // fallback
+    return;
+  }
 
-map.panTo(newCenter);
+  const worldCoordinateCenter = projection.fromLatLngToPoint(latLng);
+  const pixelOffset = new google.maps.Point(0, offsetY / scale);
+
+  const newCenter = projection.fromPointToLatLng(
+    new google.maps.Point(
+      worldCoordinateCenter.x,
+      worldCoordinateCenter.y - pixelOffset.y
+    )
+  );
+
+  map.panTo(newCenter);
+}, 0);
 
   // ★最後に表示
   setTimeout(() => {
