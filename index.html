@@ -512,15 +512,8 @@ marker.content.addEventListener("mouseleave", () => {
   tooltip.style.display = "none";
 });
 
-
-
  markers.push(marker);
 
-// ★ここに入れる
-const key = `${country}_${id}`;
-if (!markerIndex.has(key)) {
-  markerIndex.set(key, marker);
-}
 }); // rows.forEach
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
