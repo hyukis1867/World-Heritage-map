@@ -211,10 +211,13 @@ const thumbUrl = fileName
 const fullUrl = fileName
   ? `${baseCDN}/images/full/${fileName}`
   : '';
+const numberLabel = data.num
+  ? `（${data.num}/${data.total}）`
+  : '';
 
 const contentHtml = `
 <div>
-  <strong>${data.heritageName}（${data.num}）</strong>
+  <strong>${data.heritageName}${numberLabel}</strong>
 
   ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
 
@@ -369,6 +372,13 @@ lastOpenedMarker = marker;
   const credit = columns[16]?.trim();
   const num = columns[columns.length - 1];   
 
+// ★これ追加（total用）
+if (!idCountMap[id]) {
+  idCountMap[id] = 0;
+}
+idCountMap[id]++;
+
+
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
@@ -454,7 +464,8 @@ marker.customData = {
   localLangName,
   localNameEN,
   grade, imageUrl, credit,
-  num   // ← ★これ追加（超重要）
+  num,
+  total: idCountMap[id]   // ← ★これ追加
 };
 
   marker.addListener('click', () => {
