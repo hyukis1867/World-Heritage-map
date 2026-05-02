@@ -47,7 +47,6 @@
     let isSearchMode = false;
     let globalUniqueIDs = new Set();
 
-    let idCountMap = {}; 
     // ★ここに追加（これが正解）
     const tooltip = document.createElement("div");
 
@@ -213,13 +212,9 @@ const fullUrl = fileName
   ? `${baseCDN}/images/full/${fileName}`
   : '';
 
-const numberLabel = data.num
-  ? `（${data.num}/${data.total}）`
-  : '';
-
 const contentHtml = `
 <div>
-  <strong>${data.heritageName}${numberLabel}</strong>
+  <strong>${data.heritageName}</strong>
 
   ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
 
@@ -322,19 +317,6 @@ lastOpenedMarker = marker;
           const rows = csv.trim().split('\n').slice(1);
 
           const regionCountryMap = {};
-
-// ★① 先にIDごとの総数をカウント
-rows.forEach(row => {
-  const columns = parseCSVLine(row);
-  const id = columns[0].trim();
-const country = columns[2].trim();
-const key = `${country}_${id}`;
-
-if (!idCountMap[key]) idCountMap[key] = 0;
-idCountMap[key]++;
-});
-
-
           const countryHeritageMap = {};
           const regionCountryIDsMap = {};
 
@@ -385,8 +367,7 @@ idCountMap[key]++;
   const gradeRaw = columns[13]?.trim() || "";
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
-  const num = columns[columns.length - 1];   
-
+            
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
@@ -395,11 +376,10 @@ idCountMap[key]++;
   id, region, country, heritageName, lat, lng,
   type, year,
   localNameJP,
-  hira,
-  localLangName,
+  hira,              // ←追加
+  localLangName,     // ←追加
   localNameEN,
-  grade, imageUrl, credit,
-  num   // ←これ追加
+  grade, imageUrl, credit
 });
 
   // regionCountryMap
@@ -463,19 +443,15 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
 });
 
 
-const key = `${country}_${id}`;
-
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
-  state,
+  state,              // ← ★これ追加
   localNameJP,
   hira,
   localLangName,
   localNameEN,
-  grade, imageUrl, credit,
-  num,
-  total: idCountMap[key]
+  grade, imageUrl, credit
 };
 
   marker.addListener('click', () => {
@@ -512,11 +488,15 @@ marker.content.addEventListener("mouseleave", () => {
   tooltip.style.display = "none";
 });
 
+
+
  markers.push(marker);
- if (!markerIndex.has(key)) {
+
+// ★ここに入れる
+const key = `${country}_${id}`;
+if (!markerIndex.has(key)) {
   markerIndex.set(key, marker);
 }
-
 }); // rows.forEach
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
@@ -795,7 +775,7 @@ if (displayName.length > maxLength) {
     displayName.slice(-10);
 }
 
-option.textContent = `${id}｜${displayName} ${gradeLabel}`;
+option.textContent = `${id}｜${displayName}`;
 
       heritageSelect.appendChild(option);
     });
