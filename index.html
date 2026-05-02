@@ -448,12 +448,13 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
-  state,              // ← ★これ追加
+  state,
   localNameJP,
   hira,
   localLangName,
   localNameEN,
-  grade, imageUrl, credit
+  grade, imageUrl, credit,
+  num   // ← ★これ追加（超重要）
 };
 
   marker.addListener('click', () => {
