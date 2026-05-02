@@ -513,9 +513,8 @@ marker.content.addEventListener("mouseleave", () => {
 });
 
  markers.push(marker);
- const key = `${country}_${id}`;
-if (!markerIndex.has(key)) {
-  markerIndex.set(key, marker); // ← 最初の1個だけ登録
+ if (!markerIndex.has(key)) {
+  markerIndex.set(key, marker);
 }
 
 }); // rows.forEach
