@@ -214,7 +214,7 @@ const fullUrl = fileName
 
 const contentHtml = `
 <div>
-  <strong>${data.heritageName}</strong>
+  <strong>${data.heritageName}（${data.num}/${total}）</strong>
 
   ${data.state ? `<div class="infowindow-state">${data.state}</div>` : ''}
 
@@ -367,7 +367,8 @@ lastOpenedMarker = marker;
   const gradeRaw = columns[13]?.trim() || "";
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
-            
+  const num = columns[columns.length - 1];   
+
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
   const grade = gradeArray.join(',');
@@ -376,10 +377,11 @@ lastOpenedMarker = marker;
   id, region, country, heritageName, lat, lng,
   type, year,
   localNameJP,
-  hira,              // ←追加
-  localLangName,     // ←追加
+  hira,
+  localLangName,
   localNameEN,
-  grade, imageUrl, credit
+  grade, imageUrl, credit,
+  num   // ←これ追加
 });
 
   // regionCountryMap
