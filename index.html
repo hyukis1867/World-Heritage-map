@@ -122,7 +122,7 @@ function normalizeText(str) {
 
 function removeCircleNumber(str) {
   if (!str) return '';
-  return str.replace(/\s*(（\d+）|[①②③④⑤⑥⑦⑧⑨⑩]+)$/, '');
+  return str.replace(/\s*(（\d+\/\d+）|（\d+）|[①②③④⑤⑥⑦⑧⑨⑩]+)$/, '');
 }
 
 
