@@ -104,3 +104,48 @@ html, body, #map {
   z-index: 999999 !important;
 }
 
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+}
+
+.custom-selected {
+  background: rgba(255,255,255,0.9);
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.custom-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 6px;
+  margin-top: 2px;
+  display: none;
+  z-index: 1000;
+}
+
+.custom-item {
+  padding: 6px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.custom-item:hover {
+  background: #eee;
+}
+
+/* ★IDと名前を分離（ここが今回の核心） */
+.item-line1 {
+  font-weight: bold;
+}
+
+.item-line2 {
+  padding-left: 1.5em;
+}
