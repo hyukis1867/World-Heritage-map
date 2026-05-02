@@ -327,9 +327,11 @@ lastOpenedMarker = marker;
 rows.forEach(row => {
   const columns = parseCSVLine(row);
   const id = columns[0].trim();
+const country = columns[2].trim();
+const key = `${country}_${id}`;
 
-  if (!idCountMap[id]) idCountMap[id] = 0;
-  idCountMap[id]++;
+if (!idCountMap[key]) idCountMap[key] = 0;
+idCountMap[key]++;
 });
 
 
@@ -471,7 +473,9 @@ marker.customData = {
   localNameEN,
   grade, imageUrl, credit,
   num,
-  total: idCountMap[id]   // ← ★これ追加
+  const key = `${country}_${id}`;
+
+total: idCountMap[key]   // ← ★これ追加
 };
 
   marker.addListener('click', () => {
