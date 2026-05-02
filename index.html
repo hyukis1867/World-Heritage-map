@@ -463,6 +463,8 @@ const marker = new google.maps.marker.AdvancedMarkerElement({
 });
 
 
+const key = `${country}_${id}`;
+
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
@@ -473,9 +475,7 @@ marker.customData = {
   localNameEN,
   grade, imageUrl, credit,
   num,
-  const key = `${country}_${id}`;
-
-total: idCountMap[key]   // ← ★これ追加
+  total: idCountMap[key]
 };
 
   marker.addListener('click', () => {
