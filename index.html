@@ -802,13 +802,23 @@ option.textContent = `${id}｜${displayName} ${gradeLabel}`;
   }
 
   // --- マーカーの表示制御 ---
-  markers.forEach(marker => {
-    if (marker.customData.country === selectedCountry) {
-  marker.map = map;
-} else {
-  marker.map = null;
-}
-  });
+ const selectedRegion = regionSelect.value;
+const selectedCountry = countrySelect.value;
+
+markers.forEach(marker => {
+
+  const matchRegion =
+    !selectedRegion || marker.customData.region === selectedRegion;
+
+  const matchCountry =
+    !selectedCountry || marker.customData.country === selectedCountry;
+
+  if (selectedCountry) {
+    marker.map = (matchRegion && matchCountry) ? map : null;
+  } else {
+    marker.map = matchRegion ? map : null;
+  }
+});
 
   
 
