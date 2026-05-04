@@ -205,14 +205,16 @@ const baseCDN = "https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main"
 
 const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
 
+// ★これ追加
+const country = fileName.split("_")[0];
+
 const thumbUrl = fileName
-  ? `${baseCDN}/images/thumb/${fileName}`
+  ? `${baseCDN}/images/thumb/${country}/${fileName}`
   : '';
 
 const fullUrl = fileName
-  ? `${baseCDN}/images/full/${fileName}`
+  ? `${baseCDN}/images/full/${country}/${fileName}`
   : '';
-
 const numberLabel = data.num
   ? `（${data.num}/${data.total}）`
   : '';
