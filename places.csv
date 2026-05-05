@@ -594,12 +594,12 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 6,アジア,日本,白川郷・五箇山の合掌造り集落,36.4260,136.9354,文化遺産,1995,富山県南砺市,五箇山 : 相倉合掌造り集落,あいのくらがっしょうつくりしゅうらく,,Ainokura Village,,JP_06_Ainokura_Village_01.jpg,,Photo by くろふね (CC BY-SA 4.0),4
 7,アジア,日本,原爆ドーム,34.3955,132.4536,文化遺産,1996,広島県広島市,,げんばくどーむ,,Hiroshima Peace Memorial (Genbaku Dome),"3,2",JP_07_Hiroshima_Peace_Memorial_01.jpg,,Photo by DXR (CC BY-SA 4.0),
 8,アジア,日本,厳島神社,34.2960,132.3198,文化遺産,1996,広島県廿日市市,,いつくしまじんじゃ,,Itsukushima Shinto Shrine,"3,2",JP_08_Itsukushima_Shinto_Shrine_01.jpg,,Photo by JordyMeow (CC BY-SA 3.0),
-9,アジア,日本,古都奈良の文化財,34.6889,135.8398,文化遺産,1998,奈良県奈良市,東大寺,とうだいじ,,Tôdai-ji,"3,2",JP_09_Tôdai-ji_01.jpg,,Photo by Wiiii (CC BY-SA 3.0),1
-9,アジア,日本,古都奈良の文化財,34.6828,135.8311,文化遺産,1998,奈良県奈良市,興福寺,こうふくじ,,Kôfuku-ji,,JP_09_Kôfuku-ji_01.jpg,,Photo by Hyppolyte de Saint-Rambert (CC BY-SA 4.0),2
+9,アジア,日本,古都奈良の文化財,34.6889,135.8398,文化遺産,1998,奈良県奈良市,東大寺,とうだいじ,,Tôdai-ji,"3,2",JP_09_Todai-ji_01.jpg,,Photo by Wiiii (CC BY-SA 3.0),1
+9,アジア,日本,古都奈良の文化財,34.6828,135.8311,文化遺産,1998,奈良県奈良市,興福寺,こうふくじ,,Kôfuku-ji,,JP_09_Kofuku-ji_01.jpg,,Photo by Hyppolyte de Saint-Rambert (CC BY-SA 4.0),2
 9,アジア,日本,古都奈良の文化財,34.6815,135.8484,文化遺産,1998,奈良県奈良市,春日大社及び春日山原始林,かすがたいしゃ / かすがやま,,Kasuga - Taisha<br>and Kasugayama Primeval Forest,,,,,3
-9,アジア,日本,古都奈良の文化財,34.6778,135.8312,文化遺産,1998,奈良県奈良市,元興寺,がんごうじ,,Gangô-ji,,JP_09_Gangô-ji_01.jpg,,Photo by Saigen Jiro CC0 via Wikimedia Commons,4
+9,アジア,日本,古都奈良の文化財,34.6778,135.8312,文化遺産,1998,奈良県奈良市,元興寺,がんごうじ,,Gangô-ji,,JP_09_Gango-ji_01.jpg,,Photo by Saigen Jiro CC0 via Wikimedia Commons,4
 9,アジア,日本,古都奈良の文化財,34.6685,135.7842,文化遺産,1998,奈良県奈良市,薬師寺,やくしじ,,Yakushi-ji,,JP_09_Yakushi-ji_01.jpg,,Photo by 663highland (CC BY-SA 3.0) / modified,5
-9,アジア,日本,古都奈良の文化財,34.6755,135.7848,文化遺産,1998,奈良県奈良市,唐招提寺,とうしょうだいじ,,Tôshôdai-ji,,JP_09_Tôshôdai-ji_01.jpg,,Photo by Naokijp (CC BY-SA 4.0) / modified,6
+9,アジア,日本,古都奈良の文化財,34.6755,135.7848,文化遺産,1998,奈良県奈良市,唐招提寺,とうしょうだいじ,,Tôshôdai-ji,,JP_09_Toshodai-ji_01.jpg,,Photo by Naokijp (CC BY-SA 4.0) / modified,6
 9,アジア,日本,古都奈良の文化財,34.6922,135.7971,文化遺産,1998,奈良県奈良市,平城宮跡,へいじょうぐうあと,,Nara Palace Site,,JP_09_Nara_Palace_Site_01.jpg,,Photo by 663highland (CC BY-SA 3.0),7
 10,アジア,日本,日光の社寺,36.7581,139.5987,文化遺産,1999,栃木県日光市山内,,にっこうのしゃじ,,Shrines and Temples of Nikko,"3,2",JP_10_Shrines_and_Temples_of_Nikko_01.jpg,,photo by Jpatokal (CC BY-SA 4.0),
 11,アジア,日本,琉球王国のグスク及び関連遺産群,26.2183,127.7147,文化遺産,2000,沖縄県那覇市,玉陵,たまうどぅん,,Tamaudun,"3,2",,,,1
@@ -669,10 +669,10 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 15,アジア,日本,小笠原諸島,27.1174,142.1678,自然遺産,2011,東京都小笠原村,西島と周辺の珊瑚礁,にしじま,,Nishijima and peripheral reefs,,,,,18
 15,アジア,日本,小笠原諸島,27.1225,142.2118,自然遺産,2011,東京都小笠原村,兄島と周辺の珊瑚礁,あにじま,,Anijima and peripheral reefs,,,,,19
 15,アジア,日本,小笠原諸島,27.1667,142.1911,自然遺産,2011,東京都小笠原村,弟島と周辺の珊瑚礁,おとうとじま,,Ototojima and peripheral reefs,,,,,20
-16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,39.0016,141.1027,文化遺産,2011,岩手県西磐井郡平泉町,中尊寺,ちゅうそんじ,,Chûson-ji,"3,2",JP_16_Chûson-ji_01.jpg,,Photo by 663highland (CC BY-SA 4.0),1
-16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9871,141.1075,文化遺産,2011,岩手県西磐井郡平泉町,毛越寺,もうつうじ,,Môtsû-ji,,JP_16_Môtsû-ji_01.jpg,,Photo by 663highland (CC BY-SA 4.0),2
-16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9885,141.1104,文化遺産,2011,岩手県西磐井郡平泉町,観自在王院跡,かんじざいおういんあと,,Kanjizaiô-in Ato,,JP_16_Kanjizaiô-in_Ato_01.jpg,,Photo by 663highland (CC BY-SA 4.0),3
-16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9928,141.1156,文化遺産,2011,岩手県西磐井郡平泉町,無量光院跡,むりょうこういんあと,,Muryôkô-in Ato,,JP_16_Muryôkô-in_Ato_01.jpg,,Photo by 663highland (CC BY-SA 4.0),4
+16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,39.0016,141.1027,文化遺産,2011,岩手県西磐井郡平泉町,中尊寺,ちゅうそんじ,,Chûson-ji,"3,2",JP_16_Chuson-ji_01.jpg,,Photo by 663highland (CC BY-SA 4.0),1
+16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9871,141.1075,文化遺産,2011,岩手県西磐井郡平泉町,毛越寺,もうつうじ,,Môtsû-ji,,JP_16_Motsu-ji_01.jpg,,Photo by 663highland (CC BY-SA 4.0),2
+16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9885,141.1104,文化遺産,2011,岩手県西磐井郡平泉町,観自在王院跡,かんじざいおういんあと,,Kanjizaiô-in Ato,,JP_16_Kanjizaio-in_Ato_01.jpg,,Photo by 663highland (CC BY-SA 4.0),3
+16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9928,141.1156,文化遺産,2011,岩手県西磐井郡平泉町,無量光院跡,むりょうこういんあと,,Muryôkô-in Ato,,JP_16_Muryoko-in_Ato_01.jpg,,Photo by 663highland (CC BY-SA 4.0),4
 16,アジア,日本,平泉－仏国土（浄土）を表す<br>建築・庭園及び考古学的遺跡群,38.9934,141.1092,文化遺産,2011,岩手県西磐井郡平泉町,金鶏山,きんけいさん,,Mt Kinkeisan,,,,,5
 17,アジア,日本,富士山：<br>信仰の対象と芸術の源泉,35.3605,138.7273,文化遺産,2013,静岡県（富士宮市、裾野市、富士市、御殿場市、小山町）、山梨県（富士吉田市、鳴沢村）,富士山域,ふじさんいき,,Fujisan Moutain Area,"3,2",,,,1
 17,アジア,日本,富士山：<br>信仰の対象と芸術の源泉,35.2274,138.6100,文化遺産,2013,静岡県富士宮市,富士山本宮浅間大社,ふじさんほんぐうせんげんたいしゃ,,Fujisan Hongu Sengen Taisha Shrine,,,,,2
