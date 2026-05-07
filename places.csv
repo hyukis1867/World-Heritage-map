@@ -152,7 +152,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 37,欧州,イタリア共和国,ピエモンテとロンバルディアの<br>サクロ・モンテ群,46.1063,8.2884,文化遺産,2003,ピエモンテ州,ドモドッソラのカルヴァリオ丘の<br>サクロ・モンテ,,,Sacro Monte Calvario / Domodossola,,IT_37_Domodossola_01.jpg,,Photo by FrancescoSchiraldi85 (CC BY-SA 4.0),8
 37,欧州,イタリア共和国,ピエモンテとロンバルディアの<br>サクロ・モンテ群,45.3688,7.6330,文化遺産,2003,ピエモンテ州,カナヴェーゼのヴァルペルガにある<br>ベルモンテ（美しい山）のサクロ・モンテ,,,Sacro Monte di Belmonte / Valperga Canavese ,,,,,9
 38,欧州,イタリア共和国,サン・ジョルジョ山,45.8887944947884,8.92711157249473,自然遺産,2000,ロンバルディア州,,,,Monte San Giorgio,,,,,
-39,欧州,イタリア共和国,オルチャ渓谷,43.0638,11.5601,文化遺産,2004,トスカーナ州,,,,Val D'Orcia,,IT_39_Val_D_Orcia_01.jpg,,,
+39,欧州,イタリア共和国,オルチャ渓谷,43.0638,11.5601,文化遺産,2004,トスカーナ州,,,,Val D'Orcia,,IT_39_Val_D_Orcia_01.jpg,,Photo by Oishi Kuranosuke (CC BY-SA 2.0),
 40,欧州,イタリア共和国,チェルヴェテリとタルキニアの<br>エトルリア墓地遺跡群,42.0067,12.1019,文化遺産,2004,ラツィオ州,チェルヴェテリ：バンデタッチャ遺跡の<br>エトルリアのネクロポリス,,,Cerveteri / Etruscan Necropolis of Banditaccia,1,IT_40_Cerveteri_Banditaccia_01.jpg,,Photo by Sailko (CC BY-SA 3.0),1
 40,欧州,イタリア共和国,チェルヴェテリとタルキニアの<br>エトルリア墓地遺跡群,42.2498,11.7676,文化遺産,2004,ラツィオ州,タルキニア：モンテロッツィ遺跡の<br>エトルリアのネクロポリス,,,Tarquinia / Etruscan Necropolis of Monterozzi,,,,,2
 41,欧州,イタリア共和国,シラクサとパンタリカの岩壁墓地遺跡,37.1415,15.0297,文化遺産,2005,シチリア自治州,パンタリカのネクロポリス,,,Necropolis of Pantalica,1,,,,1
@@ -1763,7 +1763,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 15,欧州,ポルトガル共和国,コインブラ大学：<br>アルタとソフィア,40.2115,-8.4291,文化遺産,2013,コインブラ県,ソフィア通り,,,Rua da Sofia,,,,,2
 16,欧州,ポルトガル共和国,マフラの王宮－宮殿、教会、修道院、<br>セルコ庭園及び狩猟公園［タパダ］,38.9368,-9.3259,文化遺産,2019,リスボン県,,,,Royal Building of Mafra – Palace / Basilica /<br>Convent / Cerco Garden and Hunting Park<br>(Tapada),1,,,,
 17,欧州,ポルトガル共和国,ブラガの<br>ボン・ジェズス・ド・モンテの聖域,41.5545,-8.3787,文化遺産,2019,ブラガ県,,,,Sanctuary of Bom Jesus do Monte in Braga,,,,,
-1,欧州,ポーランド共和国,クラクフ歴史地区,50.0616,19.9373,文化遺産,1978,マウォポルスカ県,クラクフ,,,Historic Centre of Kraków,2,thumb/PL_01_Historic Centre of Kraków.jpg,,Photo by Krzysztof Zgłobicki (CC BY-SA 4.0),
+1,欧州,ポーランド共和国,クラクフ歴史地区,50.0616,19.9373,文化遺産,1978,マウォポルスカ県,クラクフ,,,Historic Centre of Kraków,2,PL_01_Historic_Centre_of_Krakow_01.jpg,,Photo by Krzysztof Zgłobicki (CC BY-SA 4.0),
 2,欧州,ポーランド共和国,ヴィエリチカとボフニャの<br>王立岩塩坑群,49.9791,20.0638,文化遺産,1978,マウォポルスカ県,ヴィエリチカ岩塩坑,,,Salt Mine in Wieliczka,2,,,,1
 2,欧州,ポーランド共和国,ヴィエリチカとボフニャの<br>王立岩塩坑群,49.9689,20.4176,文化遺産,1978,マウォポルスカ県,ボフニャ岩塩坑,,,Salt Mine in Bochnia,,,,,2
 2,欧州,ポーランド共和国,ヴィエリチカとボフニャの<br>王立岩塩坑群,49.9839,20.0597,文化遺産,1978,マウォポルスカ県,ヴィエリチカ岩塩坑管理城,,,Saltworks Castle in Wieliczka,,,,,3
@@ -1860,15 +1860,15 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 10,欧州,ルーマニア,トゥルグ・ジウの<br>ブランクーシ記念作品群,45.0396,23.2666,文化遺産,2024,ゴルジュ県,沈黙のテーブル,,,Table of Silence,,,,,3
 11,欧州,ルーマニア,ローマ帝国の国境線－ダキア,44.6245,22.6671,文化遺産,2024,メヘディンツィ県,ドロベタ＝トゥルヌ・セヴェリン―ドロベタ,,,Drobeta-Turnu Severin -Drobeta,,,,,
 1,欧州,ロシア連邦,サンクト・ペテルブルグ歴史地区と<br>関連建造物群,59.9503,30.3164,文化遺産,1990,サンクト・ペテルブルグ,,,Исторический центр Санкт-Петербурга<br>и связанные с ним группы памятников,Historic Centre of Saint Petersburg<br>and Related Groups of Monuments,"3,2",,,,
-2,欧州,ロシア連邦,キージ島の木造教会と集落,62.0675,35.2235,文化遺産,1990,カレリア共和国,,,Кижский погост,Kizhi Pogost,,thumb/RU_02_Kizhi Pogost.jpg,,Photo by Andrey Korchagin (CC BY-SA 2.0)/modified,
-3,欧州,ロシア連邦,モスクワのクレムリンと赤の広場,55.7539,37.6204,文化遺産,1990,モスクワ,,,Московский Кремль и Красная Площадь,Kremlin and Red Square / Moscow,"3,2",thumb/RU_03_Kremlin and Red Square.jpg,,Photo by Alvesgaspar (CC BY-SA 3.0),
+2,欧州,ロシア連邦,キージ島の木造教会と集落,62.0675,35.2235,文化遺産,1990,カレリア共和国,,,Кижский погост,Kizhi Pogost,,RU_02_Kizhi_Pogost_01.jpg,,Photo by Andrey Korchagin (CC BY-SA 2.0)/modified,
+3,欧州,ロシア連邦,モスクワのクレムリンと赤の広場,55.7539,37.6204,文化遺産,1990,モスクワ,,,Московский Кремль и Красная Площадь,Kremlin and Red Square / Moscow,"3,2",RU_03_Kremlin_and_Red_Square_01.jpg,,Photo by Alvesgaspar (CC BY-SA 3.0),
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,65.0824,35.6668,文化遺産,1992,カレリア共和国,ソロヴェツキー諸島,,Соловецкие острова,Solovetsky Island,,,,,1
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,65.1450,36.0963,文化遺産,1992,カレリア共和国,アンゼルスキー諸島,,Остров Анзерский,Anzer Island,,,,,2
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,65.0419,35.9585,文化遺産,1992,カレリア共和国,ボリシャヤムクサルマ島,,Остров Большая Муксалма,Big Mucksalma Island,,,,,3
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,65.0151,35.9942,文化遺産,1992,カレリア共和国,マーラヤムクサルマ島,,Остров Малая Муксалма,Small Mucksalma Island,,,,,4
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,64.9624,35.6461,文化遺産,1992,カレリア共和国,マーリージャッツキー島,,Малый Заяцкий остров,Small Zayatsky,,,,,5
 4,欧州,ロシア連邦,ソロヴェツキー諸島の<br>文化と歴史遺産群,64.9705,35.6748,文化遺産,1992,カレリア共和国,ボリショイジャッツキー島,,Большой Заяцкий остров,Big Zayatski Island,,,,,6
-5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5219,31.2736,文化遺産,1992,ノヴゴロド州,ノヴゴロド歴史地区（西部）<br>およびノヴゴロド・クレムリン,,Исторический центр Великого Новгорода<br>(западная часть) и Новгородский Кремль,Historic Centre of Novgorod (west)<br>and the Novgorod Kremlin,,thumb/RU_05_Historic Centre of Novgorod.jpg,,Photo by WildPea CC0 via Wikimedia Commons,1
+5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5219,31.2736,文化遺産,1992,ノヴゴロド州,ノヴゴロド歴史地区（西部）<br>およびノヴゴロド・クレムリン,,Исторический центр Великого Новгорода<br>(западная часть) и Новгородский Кремль,Historic Centre of Novgorod (west)<br>and the Novgorod Kremlin,,RU_05_Historic_Centre_of_Novgorod_01.jpg,,Photo by WildPea CC0 via Wikimedia Commons,1
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5184,31.2825,文化遺産,1992,ノヴゴロド州,ノヴゴロド歴史地区（東部）〔ヤロスラフの宮廷地区および生神女しるし修道院を含む〕,,Исторический центр Великого Новгорода<br>(Торговая Сторона) с Ярославовым дворищем<br>и Знаменским монастырём,Historic Centre of Novgorod (east)<br>with the Yaroslav's Court Cluster<br>and Our Lady of the Sign Monastery,,,,,2
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5359,31.2762,文化遺産,1992,ノヴゴロド州,ズヴェリン修道院とその周辺,,Зверин-Покровский монастырь<br>и его окрестности,Zverin Monastery and its environs,,,,,3
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5399,31.2873,文化遺産,1992,ノヴゴロド州,聖アントニウス修道院,,Монастырь Святого Антония,St Anthony Monastery,,,,,4
@@ -1879,20 +1879,20 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.4866,31.2844,文化遺産,1992,ノヴゴロド州,ユーリエフ修道院,,Юрьев монастырь,Yuriev Monastery,,,,,9
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5075,31.2761,文化遺産,1992,ノヴゴロド州,ミャチノ湖畔の教会群<br>（施し者聖ヨハネ教会および復活教会）,,Церковь Иоанна Милостивого на Мячине,Churches on Miachino Lake: St John the Alms<br>Giver Church and the Resurrection Church,,,,,10
 5,欧州,ロシア連邦,ノヴゴロドの<br>文化財とその周辺地区,58.5092,31.2587,文化遺産,1992,ノヴゴロド州,シルニシチェの聖ペトロ・聖パウロ教会,,Церковь Петра и Павла<br>на Сини́чьей горе (на Си́льнище),Sts Peter and Paul Church on Silnishche,,,,,11
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1273,40.4092,文化遺産,1992,ウラジーミル州,生神女就寝大聖堂(ウスペンスキー大聖堂),,Свято - Успенский кафедральный собор,Cathedral of the Assumption,,thumb/RU_06_Cathedral of the Assumption.jpg,,Photo by Alexxx1979 (CC BY-SA 3.0),1
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1268,40.3971,文化遺産,1992,ウラジーミル州,黄金の環,,Золотые ворота,The Golden Gate,,thumb/RU_06_The Golden Gate.jpg,,Photo by A.Savin via Wikimedia Commons,2
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1961,40.5370,文化遺産,1992,ウラジーミル州,ボゴリューボヴォの公の城館<br>（聖母降誕大聖堂および<br>アンドレイ・ボゴリュブスキー宮殿<br>の階段塔）,,Княжеский замок в Боголюбове» (Собор<br>Рождества Богородицы и лестничная башня<br>палат Андрея Боголюбского),The Prince Castle in Bogolyubovo (Cathedral of<br>the Nativity of the Virgin and Staircase Tower of<br>the Palace of Andrei Bogolyubsky),,thumb/RU_06_The Prince Castle in Bogolyubovo.jpg,,Photo by A.Savin via Wikimedia Commons,3
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1962,40.5612,文化遺産,1992,ウラジーミル州,ネルリ川の生神女庇護教会,,Церковь Покрова на Нерли,Church of the Intercession on the River Nerl,,thumb/RU_06_Church of the Intercession on the River Nerl.jpg,,Photo by A.Savin via Wikimedia Commons,4
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1292,40.4109,文化遺産,1992,ウラジーミル州,聖ドミトリイ大聖堂,,Дмитриевский собор,Cathedral of St. Demetrius,,thumb/RU_06_Cathedral of St. Demetrius.jpg,,Photo by Ludvig14 (CC BY-SA 4.0),5
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4166,40.4428,文化遺産,1992,ウラジーミル州,スーズダリのクレムリン<br>および生神女降誕大聖堂,,Суздальский кремльи Рождественский собор,Kremlin of Suzdal and Cathedral of the Nativity,,thumb/RU_06_Kremlin of Suzdal and Cathedral of the Nativity.jpg,,Photo by Ludvig14 (CC BY-SA 3.0),6
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4320,40.4418,文化遺産,1992,ウラジーミル州,救世主及び聖エウフィミイ修道院,,Спасо-Евфимиев монастырь,Monastery of Our Savior and St Euthymius,,thumb/RU_06_Monastery of Our Savior and St Euthymius.jpg,,Photo by A.Savin via Wikimedia Commons,7
-6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4249,40.5278,文化遺産,1992,ウラジーミル州,聖ボリスと聖グレブ教会,,Церковь Бориса и Глеба,Church of Sts Boris and Gleb,,thumb/RU_06_Church of Sts Boris and Gleb.jpg,,Photo by Ludvig14 (CC BY-SA 4.0),8
-7,欧州,ロシア連邦,セルギエフ・ポッサードの<br>トロイツェ・セルギー大修道院<br>の建造物群,56.3103,38.1305,文化遺産,1993,モスクワ州,,,Архитектурный ансамбль Троице-Сергиевой<br>лавры в городе Сергиев Посад,Architectural Ensemble of the Trinity Sergius<br>Lavra in Sergiev Posad,2,thumb/RU_07_Sergiyev Posad.jpg,,Photo by Sergey Ashmarin (CC BY-SA 3.0),
-8,欧州,ロシア連邦,コローメンスコエの昇天教会,55.6672,37.6707,文化遺産,1994,モスクワ,,,Церковь Вознесения в Коломенском,Church of the Ascension / Kolomenskoye,,thumb/RU_08_Kolomenskoye.jpg,,Photo by Alexxx1979 (CC BY-SA 4.0),
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1273,40.4092,文化遺産,1992,ウラジーミル州,生神女就寝大聖堂(ウスペンスキー大聖堂),,Свято - Успенский кафедральный собор,Cathedral of the Assumption,,RU_06_Cathedral_of_the_Assumption_01.jpg,,Photo by Alexxx1979 (CC BY-SA 3.0),1
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1268,40.3971,文化遺産,1992,ウラジーミル州,黄金の環,,Золотые ворота,The Golden Gate,,RU_06_The_Golden_Gate_01.jpg,,Photo by A.Savin via Wikimedia Commons,2
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1961,40.5370,文化遺産,1992,ウラジーミル州,ボゴリューボヴォの公の城館<br>（聖母降誕大聖堂および<br>アンドレイ・ボゴリュブスキー宮殿<br>の階段塔）,,Княжеский замок в Боголюбове» (Собор<br>Рождества Богородицы и лестничная башня<br>палат Андрея Боголюбского),The Prince Castle in Bogolyubovo (Cathedral of<br>the Nativity of the Virgin and Staircase Tower of<br>the Palace of Andrei Bogolyubsky),,RU_06_The_Prince_Castle_in_Bogolyubovo_01.jpg,,Photo by A.Savin via Wikimedia Commons,3
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1962,40.5612,文化遺産,1992,ウラジーミル州,ネルリ川の生神女庇護教会,,Церковь Покрова на Нерли,Church of the Intercession on the River Nerl,,RU_06_Church_of_the_Intercession_on_the_River_Nerl_01.jpg,,Photo by A.Savin via Wikimedia Commons,4
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.1292,40.4109,文化遺産,1992,ウラジーミル州,聖ドミトリイ大聖堂,,Дмитриевский собор,Cathedral of St. Demetrius,,RU_06_Cathedral_of St_Demetrius_01.jpg,,Photo by Ludvig14 (CC BY-SA 4.0),5
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4166,40.4428,文化遺産,1992,ウラジーミル州,スーズダリのクレムリン<br>および生神女降誕大聖堂,,Суздальский кремльи Рождественский собор,Kremlin of Suzdal and Cathedral of the Nativity,,RU_06_Kremlin_of_Suzdal_and_Cathedral_of_the_Nativity_01.jpg,,Photo by Ludvig14 (CC BY-SA 3.0),6
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4320,40.4418,文化遺産,1992,ウラジーミル州,救世主及び聖エウフィミイ修道院,,Спасо-Евфимиев монастырь,Monastery of Our Savior and St Euthymius,,RU_06_Monastery_of_Our_Savior_and_St_Euthymius_01.jpg,,Photo by A.Savin via Wikimedia Commons,7
+6,欧州,ロシア連邦,ウラジーミルとスーズダリの<br>白い建造物群,56.4249,40.5278,文化遺産,1992,ウラジーミル州,聖ボリスと聖グレブ教会,,Церковь Бориса и Глеба,Church of Sts Boris and Gleb,,RU_06_Church_of_Sts_Boris_and_Gleb_01.jpg,,Photo by Ludvig14 (CC BY-SA 4.0),8
+7,欧州,ロシア連邦,セルギエフ・ポッサードの<br>トロイツェ・セルギー大修道院<br>の建造物群,56.3103,38.1305,文化遺産,1993,モスクワ州,,,Архитектурный ансамбль Троице-Сергиевой<br>лавры в городе Сергиев Посад,Architectural Ensemble of the Trinity Sergius<br>Lavra in Sergiev Posad,2,RU_07_Sergiyev_Posad_01.jpg,,Photo by Sergey Ashmarin (CC BY-SA 3.0),
+8,欧州,ロシア連邦,コローメンスコエの昇天教会,55.6672,37.6707,文化遺産,1994,モスクワ,,,Церковь Вознесения в Коломенском,Church of the Ascension / Kolomenskoye,,RU_08_Kolomenskoye_01.jpg,,Photo by Alexxx1979 (CC BY-SA 4.0),
 9,欧州,ロシア連邦,コミ原生林,64.7437,59.3900,自然遺産,1995,コミ共和国,ユグィド・ヴァ（清き水）国立公園,,национальный парк Югыд ва (светлая вода) ,Yugyd Va (Clear Water) National Park,,,,,1
 9,欧州,ロシア連邦,コミ原生林,62.4028,57.1883,自然遺産,1995,コミ共和国,ペチョラ＝イリチ自然保護区,,Печоро-Илычский заповедник,Pechoro-Ilychskiy Nature Reserve,,,,,2
 9,欧州,ロシア連邦,コミ原生林,61.8757,57.0091,自然遺産,1995,コミ共和国,ヤクシャ森林地区,,Якшинское лесничество,Yaksha Forest District,,,,,3
-10,欧州,ロシア連邦,バイカル湖,53.1339,107.7745,自然遺産,1996,イルクーツク州,,,Озеро Байкал,Lake Baikal,3,thumb/RU_10_Lake Baikal.jpg,,Photo by W0zny (CC BY-SA 3.0),
+10,欧州,ロシア連邦,バイカル湖,53.1339,107.7745,自然遺産,1996,イルクーツク州,,,Озеро Байкал,Lake Baikal,3,RU_10_Lake_Baikal_01.jpg,,Photo by W0zny (CC BY-SA 3.0),
 11,欧州,ロシア連邦,カムチャツカ火山群,54.7464,160.9991,自然遺産,1996,カムチャツカ地方,クロノツキー厳格自然保護区（2区画）,,Кроноцкий государственный природный<br>биосферный заповедник (два участка),Kronotsky Strict Nature Reserve (two parcels),"3,2",,,,1
 11,欧州,ロシア連邦,カムチャツカ火山群,51.3331,157.0000,自然遺産,1996,カムチャツカ地方,南カムチャツカ自然保護区,,Южно-Камчатский государственный<br>природный заказник,Southern Kamchatka Wildlife Reserve,,,,,2
 11,欧州,ロシア連邦,カムチャツカ火山群,53.2265,159.2535,自然遺産,1996,カムチャツカ地方,ナリチェヴォ地域自然公園,,Природный парк „Налычево“,Nalychevo Regional Nature Park,,,,,3
@@ -1905,7 +1905,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 13,欧州,ロシア連邦,西コーカサス山脈,43.9758,40.0028,自然遺産,1999,クラスノダール地方,,,Западный Кавказ,Western Caucasus,,,,,
 14,欧州,ロシア連邦,クルシュー砂州,55.1640,20.8193,文化遺産,2000,カリーニングラード州,,,Куршская коса,Curonian Spit,,,,,
 15,欧州,ロシア連邦,フェラポントフ修道院群,59.9566,38.5672,文化遺産,2000,ヴォログダ州,,,Ансамбль Ферапонтова монастыря,Ensemble of the Ferapontov Monastery,,,,,
-16,欧州,ロシア連邦,カザン・クレムリンの歴史的建築遺産群,55.7988,49.1062,文化遺産,2000,タタールスタン共和国,,,Историко - архитектурный комплекс<br>Казанского Кремля,Historic and Architectural Complex<br>of the Kazan Kremlin,2,thumb/RU_16_Historic and Architectural Complex of the Kazan Kremlin.jpg,,Photo by Nikitin bokeh (CC BY-SA 4.0),
+16,欧州,ロシア連邦,カザン・クレムリンの歴史的建築遺産群,55.7988,49.1062,文化遺産,2000,タタールスタン共和国,,,Историко - архитектурный комплекс<br>Казанского Кремля,Historic and Architectural Complex<br>of the Kazan Kremlin,2,RU_16_Historic_and_Architectural_Complex_of_the_Kazan_Kremlin_01.jpg,,Photo by Nikitin bokeh (CC BY-SA 4.0),
 17,欧州,ロシア連邦,シホテ・アリニ山脈中央部,45.04890,136.6202,自然遺産,2001,プリモールスキー地方,シホテ・アリン自然保護区,,Сихотэ - Алинский государственный<br>природный биосферный заповедник,Sikhote-Alin Nature Preserve,,,,,1
 17,欧州,ロシア連邦,シホテ・アリニ山脈中央部,45.1279,136.75622,自然遺産,2001,プリモールスキー地方,ゴーラル動物保護区,,Горалий зоологический заказник,Goralij Zoological Preserve,,,,,2
 17,欧州,ロシア連邦,シホテ・アリニ山脈中央部,46.8101,134.2366,自然遺産,2001,ハバロフスク地方,ビキン川流域,,Долина реки Бикин,Bikin River Valley,,,,,3
@@ -1917,7 +1917,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 19,欧州,ロシア連邦,ウヴス・ヌール盆地,50.2494,94.7499,自然遺産,2003,トゥヴァ共和国,ジャマリグ,,Джамалыг,Jamaalyg,,,,,5
 19,欧州,ロシア連邦,ウヴス・ヌール盆地,50.0824,95.2503,自然遺産,2003,トゥヴァ共和国,ツゲール砂丘,,Цугээр элс,Tsugeer els,,,,,6
 19,欧州,ロシア連邦,ウヴス・ヌール盆地,50.5332,95.6333,自然遺産,2003,トゥヴァ共和国,ウラル地域,,Улар,Ular,,,,,7
-20,欧州,ロシア連邦,ノヴォデヴィチ女子修道院群,55.7261,37.5560,文化遺産,2004,モスクワ市,,,Ансамбль Новодевичьего монастыря,Ensemble of the Novodevichy Convent,,thumb/RU_20_Novodevichy Convent.jpg,,Photo by Sergey Ashmarin (CC BY-SA 3.0),
+20,欧州,ロシア連邦,ノヴォデヴィチ女子修道院群,55.7261,37.5560,文化遺産,2004,モスクワ市,,,Ансамбль Новодевичьего монастыря,Ensemble of the Novodevichy Convent,,RU_20_Novodevichy_Convent_01.jpg,,Photo by Sergey Ashmarin (CC BY-SA 3.0),
 21,欧州,ロシア連邦,ウランゲリ島保護区の自然生態系,71.1841,-179.7144,自然遺産,2004,チュクチ自治管区,,,Природный комплекс заповедника<br>Остров Врангеля,Natural System of Wrangel Island Reserve,2,,,,
 22,欧州,ロシア連邦,ヤロスラヴリ市街の歴史地区,57.6254,39.8907,文化遺産,2005,ヤロスラブリ州,,,Исторический центр Ярославля,Historical Centre of the City of Yaroslavl,,,,,
 23,欧州,ロシア連邦,シュトルーヴェの測地弧,60.0741,26.9697,文化遺産,2005,レニングラード州,マキパーリュス,,Мякипяэлюс,MÄKI-PÄÄLYS Mäkipällys,2,,,,1
@@ -1946,12 +1946,12 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 31,欧州,ロシア連邦,カザン連邦大学の天体観測施設群,55.8395,48.8148,文化遺産,2023,タタールスタン共和国,エンゲルハルト天文台,,Астрономическая обсерватория Энгельгардта,Engelhardt Astronomical Observatory,,,,,2
 32,欧州,ロシア連邦,ケノゼロ湖の文化的景観,62.0765,38.1864,文化遺産,2024,アルハンゲリスク州,,,Культурный ландшафт Кенозерья,Cultural Landscape of Kenozero Lake,,,,,
 33,欧州,ロシア連邦,シュルガン＝タシュ洞窟の岩絵群,53.0436,57.0651,文化遺産,2025,バシコルトスタン共和国,,,Наскальные рисунки в пещере Шульган-Таш,Rock Paintings of Shulgan-Tash Cave,,,,,
-1,欧州,フランス共和国,シャルトル大聖堂,48.4477,1.4878,文化遺産,1979,サルトル＝ヴァル・ロワール地方<br>ウール＝エ＝ロワール県,,,Cathédrale de Chartres,Chartres Cathedral,,thumb/FR_01_Chartres Cathedral.jpg,,Photo by Francesco Bandarin (CC BY-SA 3.0 IGO),
-2,欧州,フランス共和国,モン＝サン＝ミシェルとその湾,48.6360,-1.5113,文化遺産,1979,ノルマンディー地方 マンシュ県,,,,Le Mont Saint-Michel et sa baie,"3,2",thumb/FR_02_Mont-Saint-Michel.jpg,,Photo by Amaustan (CC BY-SA 4.0),1
+1,欧州,フランス共和国,シャルトル大聖堂,48.4477,1.4878,文化遺産,1979,サルトル＝ヴァル・ロワール地方<br>ウール＝エ＝ロワール県,,,Cathédrale de Chartres,Chartres Cathedral,,FR_01_Chartres_Cathedral_01.jpg,,Photo by Francesco Bandarin (CC BY-SA 3.0 IGO),
+2,欧州,フランス共和国,モン＝サン＝ミシェルとその湾,48.6360,-1.5113,文化遺産,1979,ノルマンディー地方 マンシュ県,,,,Le Mont Saint-Michel et sa baie,"3,2",FR_02_Mont_Saint_Michel_01.jpg,,Photo by Amaustan (CC BY-SA 4.0),1
 2,欧州,フランス共和国,モン＝サン＝ミシェルとその湾,48.5851,-1.5061,文化遺産,1979,ノルマンディー地方 マンシュ県,モワドレの旧製粉所,,,Ancien moulin de Moidrey,,,,,2
-3,欧州,フランス共和国,ヴェルサイユの宮殿と庭園,48.8047,2.1203,文化遺産,1979,イヴリーヌ県,,,Palais et parc de Versailles,Palace and Park of Versailles,"3,2",thumb/FR_03_Palace and Park of Versailles.jpg,,Photo by ToucanWings (CC BY-SA 3.0),
-4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9402,1.0097,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,クロマニヨン岩陰遺跡,,,Abri de Cro-Magnon (Les Eyzies-de-Tayac-Sireuil),2,thumb/FR_04_Prehistoric Sites and Decorated Caves of the Vézère Valley.jpg,,Photo by Rilba (CC BY-SA 3.0),1
-4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9439,0.9982,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ポワソン岩陰遺跡,,,Abri du Poisson (Les Eyzies-de-Tayac-Sireuil),,thumb/FR_04_Abri du Poisson.jpg,,Photo by Heinrich Wendel (CC BY-SA 4.0),2
+3,欧州,フランス共和国,ヴェルサイユの宮殿と庭園,48.8047,2.1203,文化遺産,1979,イヴリーヌ県,,,Palais et parc de Versailles,Palace and Park of Versailles,"3,2",FR_03_Palace and_Park_of_Versailles_01.jpg,,Photo by ToucanWings (CC BY-SA 3.0),
+4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9402,1.0097,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,クロマニヨン岩陰遺跡,,,Abri de Cro-Magnon (Les Eyzies-de-Tayac-Sireuil),2,FR_04_Prehistoric_Sites_and_Decorated_Caves_of_the_Vezere_Valley_01.jpg,,Photo by Rilba (CC BY-SA 3.0),1
+4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9439,0.9982,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ポワソン岩陰遺跡,,,Abri du Poisson (Les Eyzies-de-Tayac-Sireuil),,FR_04_Abri_du_Poisson_01.jpg,,Photo by Heinrich Wendel (CC BY-SA 4.0),2
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9370,1.0266,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,フォン・ドゥ・ゴーム洞窟,,,Font de Gaume (Les Eyzies-de-Tayac-Sireuil),,,,,3
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9577,1.0066,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ミコック岩陰遺跡,,,La Micoque (Les Eyzies-de-Tayac-Sireuil),,,,,4
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9246,1.0205,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ムート洞窟,,,La Mouthe (Les Eyzies-de-Tayac-Sireuil),,,,,5
@@ -1960,13 +1960,13 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9480,0.9982,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,グラン・ロック洞窟,,,Le Grand Roc (Les Eyzies-de-Tayac-Sireuil),,,,,8
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9436,1.0422,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,コンバレル洞窟,,,Les Combarelles (Les Eyzies-de-Tayac-Sireuil),,,,,9
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9456,1.0970,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,カップ・ブラン岩陰遺跡,,,Le Cap Blanc (Marquay),,,,,10
-4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,45.0539,1.1675,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ラスコー洞窟,,,Lascaux (Montignac),,thumb/FR_04_Lascaux (Montignac).jpg,,Photo by Francesco Bandarin (CC BY-SA 3.0 IGO),11
+4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,45.0539,1.1675,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ラスコー洞窟,,,Lascaux (Montignac),,FR_04_Lascaux(Montignac)_01.jpg,,Photo by Francesco Bandarin (CC BY-SA 3.0 IGO),11
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,45.0086,0.9879,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,クロ・ドゥ・グランヴィレ洞窟<br>（ルーフィニャック洞窟）,,,Cro de Granville (cro de Rouffignac)<br>(Rouffignac-Saint-Cernin-de-Reilhac),,,,,12
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9258,0.9671,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ロック・ドゥ・サン＝シルク洞窟<br>（ソルシエ洞窟）,,,Roc de Saint-Cirq (Saint-Cirq),,,,,13
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9942,1.0598,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,ムスティエ岩陰遺跡群,,,Le Moustier (Saint-Léon-sur-Vézère),,,,,14
 4,欧州,フランス共和国,ヴェゼール渓谷の<br>先史遺跡群と装飾洞窟群,44.9685,1.0336,文化遺産,1979,ヌーヴェル＝アキテーヌ地方 ドロドーニュ県,マドレーヌ岩陰遺跡,,,La Madeleine (Tursac),,,,,15
-5,欧州,フランス共和国,ヴェズレーの教会と丘,47.4663,3.7485,文化遺産,1979,ブルゴーニュ地方 ヨンヌ県,ヴェズレーの丘,,,Colline de Vézelay,1,thumb/FR_05_Colline de Vézelay.jpg,,Photo by Office de tourisme de Vézelay (CC BY-SA 4.0),1
+5,欧州,フランス共和国,ヴェズレーの教会と丘,47.4663,3.7485,文化遺産,1979,ブルゴーニュ地方 ヨンヌ県,ヴェズレーの丘,,,Colline de Vézelay,1,FR_05_Colline_de_Vezelay_01.jpg,,Photo by Office de tourisme de Vézelay (CC BY-SA 4.0),1
 5,欧州,フランス共和国,ヴェズレーの教会と丘,47.4580,3.7359,文化遺産,1979,ブルゴーニュ地方 ヨンヌ県,コルビニー,,,Corbigny,,,,,2
-6,欧州,フランス共和国,アミアンの大聖堂,49.8945,2.3020,文化遺産,1981,オー＝ド＝フランス地域 ソンム県,,,Cathédrale d'Amiens,Amiens Cathedral,,thumb/FR_06_Amiens Cathedral.jpg,,Photo by Raimond Spekking (CC BY-SA 4.0),
-7,欧州,フランス共和国,アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,43.6777,4.6309,文化遺産,1981,プロヴァンス地方 プーシュ＝デュ＝ローヌ県,,,Arles / monuments romains et romans,Arles / Roman and Romanesque Monuments,2,thumb/FR_07_Arles_Roman and Romanesque Monuments.jpg,,Photo by Chensiyuan (CC BY-SA 4.0),
-8,欧州,フランス共和国,フォントネーのシトー会修道院,47.6396,4.3894,文化遺産,1981,ブルゴーニュ地方 コート＝ドール県,,,Abbaye cistercienne de Fontenay,Cistercian Abbey of Fontenay,1,thumb/FR_08_Cistercian Abbey of Fontenay.jpg,,Photo by FrDr (CC BY-SA 4.0),
+6,欧州,フランス共和国,アミアンの大聖堂,49.8945,2.3020,文化遺産,1981,オー＝ド＝フランス地域 ソンム県,,,Cathédrale d'Amiens,Amiens Cathedral,,FR_06_Amiens_Cathedral_01.jpg,,Photo by Raimond Spekking (CC BY-SA 4.0),
+7,欧州,フランス共和国,アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,43.6777,4.6309,文化遺産,1981,プロヴァンス地方 プーシュ＝デュ＝ローヌ県,,,Arles / monuments romains et romans,Arles / Roman and Romanesque Monuments,2,FR_07_Arles_Roman_and_Romanesque_Monuments_01.jpg,,Photo by Chensiyuan (CC BY-SA 4.0),
+8,欧州,フランス共和国,フォントネーのシトー会修道院,47.6396,4.3894,文化遺産,1981,ブルゴーニュ地方 コート＝ドール県,,,Abbaye cistercienne de Fontenay,Cistercian Abbey of Fontenay,1,FR_08_Cistercian_Abbey_of_Fontenay_01.jpg,,Photo by FrDr (CC BY-SA 4.0),
