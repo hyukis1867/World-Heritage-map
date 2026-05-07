@@ -48,6 +48,9 @@
     let globalUniqueIDs = new Set();
 
     let idCountMap = {}; 
+    const countryCodeMap = {};
+    const capitalMap = {};
+    const countryReadingMap = {};
     // ★ここに追加（これが正解）
     const tooltip = document.createElement("div");
 
@@ -272,7 +275,29 @@ lastOpenedMarker = marker;
   fetch('countries.csv').then(r => r.text())
 ])
 .then(([placesCsv, countriesCsv]) => {
-          const rows = placesCsv.trim().split('\n').slice(1);
+
+const countryRows = countriesCsv.trim().split('\n').slice(1);
+
+countryRows.forEach(row => {
+  const cols = parseCSVLine(row);
+
+  const country = cols[0]?.trim();
+  const code = cols[1]?.trim();
+  const reading = cols[2]?.trim();
+  const lat = parseFloat(cols[3]);
+  const lng = parseFloat(cols[4]);
+
+  if (country) {
+    countryCodeMap[country] = code;
+    countryReadingMap[country] = reading;
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+      capitalMap[country] = { lat, lng };
+    }
+  }
+});
+
+const rows = placesCsv.trim().split('\n').slice(1);
           
           const regionCountryMap = {};
           
@@ -621,31 +646,6 @@ markers.forEach(marker => {
 
   document.getElementById("country-box").style.display = selectedRegion ? "block" : "none";
   document.getElementById("heritage-box").style.display = "none";
-
-const countryCodeMap = {};
-const capitalMap = {};
-const countryReadingMap = {};
-
-const countryRows = countriesCsv.trim().split('\n').slice(1);
-
-countryRows.forEach(row => {
-  const cols = parseCSVLine(row);
-
-  const country = cols[0]?.trim();
-  const code = cols[1]?.trim();
-  const reading = cols[2]?.trim();
-  const lat = parseFloat(cols[3]);
-  const lng = parseFloat(cols[4]);
-
-  if (country) {
-    countryCodeMap[country] = code;
-    countryReadingMap[country] = reading;
-
-    if (!isNaN(lat) && !isNaN(lng)) {
-      capitalMap[country] = { lat, lng };
-    }
-  }
-});
 
 
             function getFlagEmojiFromName(countryName) {
