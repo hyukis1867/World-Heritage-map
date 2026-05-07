@@ -284,8 +284,8 @@ countryRows.forEach(row => {
   const country = cols[0]?.trim();
   const code = cols[1]?.trim();
   const reading = cols[2]?.trim();
-  const lat = parseFloat(cols[3]);
-  const lng = parseFloat(cols[4]);
+  const lat = parseFloat(cols[3]?.trim());
+const lng = parseFloat(cols[4]?.trim());
 
   if (country) {
     countryCodeMap[country] = code;
@@ -327,17 +327,9 @@ idCountMap[key]++;
             );
           }
 
-          // 国名からソートキー（読み）を返す
           function getReading(countryName) {
-            if (!countryName) return '';
-            if (countryReadingMap[countryName]) return countryReadingMap[countryName];
-            // もしカタカナが混ざっていればひらがな化して返す
-            if (/[ァ-ン]/.test(countryName)) {
-              return katakanaToHiragana(countryName);
-            }
-            // フォールバック：そのまま返す（漢字だけの国はここでは読みが無いので限界あり）
-            return countryName;
-          }
+  return countryReadingMap[countryName] || '';
+}
 
           rows.forEach(row => {
   const columns = parseCSVLine(row);
