@@ -327,8 +327,12 @@ idCountMap[key]++;
             );
           }
 
-          function getReading(countryName) {
-  return countryReadingMap[countryName] || '';
+          
+  function getReading(countryName) {
+  return (
+    countryReadingMap[countryName] ||
+    countryName
+  );
 }
 
           rows.forEach(row => {
