@@ -297,31 +297,37 @@
     }
 
     function updateMarkers() {
-      if (isSearchMode) return;
-      const bounds = map.getBounds();
-      if (!bounds) return;
-      if (!boundsChangedSignificantly(bounds)) return;
-      lastBounds = bounds;
+  if (isSearchMode) return;
+  const bounds = map.getBounds();
+  if (!bounds) return;
+  if (!boundsChangedSignificantly(bounds)) return;
+  lastBounds = bounds;
 
-      const selectedRegion  = document.getElementById('region-select').value;
-      const selectedCountry = document.getElementById('country-select').value;
-      const buffer = 0.3;
-      const extendedBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(bounds.getSouthWest().lat() - buffer, bounds.getSouthWest().lng() - buffer),
-        new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
-      );
+  const selectedRegion  = document.getElementById('region-select').value;
+  const selectedCountry = document.getElementById('country-select').value;
+  const buffer = 0.3;
+  const extendedBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(bounds.getSouthWest().lat() - buffer, bounds.getSouthWest().lng() - buffer),
+    new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
+  );
 
-      markers.forEach(marker => {
-        const pos = marker.position;
-        let shouldBeVisible = true;
-        if (!extendedBounds.contains(pos)) shouldBeVisible = false;
-        if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
-        if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-        marker.map = shouldBeVisible ? map : null;
-      });
+  let changed = false;
+  markers.forEach(marker => {
+    const pos = marker.position;
+    let shouldBeVisible = true;
+    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+    if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
+    if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
 
-      scheduleClusterUpdate();
+    const isVisible = marker.map !== null;
+    if (isVisible !== shouldBeVisible) {
+      marker.map = shouldBeVisible ? map : null;
+      changed = true;
     }
+  });
+
+  if (changed) scheduleClusterUpdate();
+}
 
 
     // ============================================================
