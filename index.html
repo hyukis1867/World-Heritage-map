@@ -697,11 +697,11 @@ function handleSuggestClick(index) {
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score; // スコア降順
-      const nameA = getReading(a.data.localNameJP || a.data.heritageName);
-      const nameB = getReading(b.data.localNameJP || b.data.heritageName);
-      return nameA.localeCompare(nameB, 'ja'); // 同スコアなら五十音順
-    })
+  if (b.score !== a.score) return b.score - a.score;
+  const nameA = a.data.hira || a.data.localNameJP || a.data.heritageName;
+  const nameB = b.data.hira || b.data.localNameJP || b.data.heritageName;
+  return nameA.localeCompare(nameB, 'ja');
+})
     .map(item => item.data);
 }
 
