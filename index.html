@@ -698,13 +698,14 @@ function jumpToHeritage(country, id, heritageName) {
     if (results.length === 0) { suggestBox.style.display = 'none'; return; }
 
     suggestBox.innerHTML = results.map(d => {
-      const kw = searchInput.value.trim();
-      return `
-        <div class="suggest-item" onclick="jumpToHeritage('${d.country}', '${d.id}', '${d.heritageName.replace(/'/g, "\\'")}')">
-          <div class="suggest-item-name">${highlightText(d.heritageName, kw)}</div>
-          <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
-        </div>`;
-    }).join('');
+  const kw          = searchInput.value.trim();
+  const displayName = d.localNameJP || d.heritageName; // 9列目優先、空なら3列目
+  return `
+    <div class="suggest-item" onclick="jumpToHeritage('${d.country}', '${d.id}', '${d.heritageName.replace(/'/g, "\\'")}')">
+      <div class="suggest-item-name">${highlightText(displayName, kw)}</div>
+      <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
+    </div>`;
+}).join('');
     suggestBox.style.display = 'block';
   }
 
