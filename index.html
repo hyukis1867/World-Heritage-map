@@ -25,13 +25,22 @@
         <option value="">-- 遺産を選択 --</option>
       </select>
     </div>
-    <div id="search-box" style="margin-top:6px;">
-      <input
-        type="text"
-        id="search-input"
-        placeholder="🔍 遺産名で検索"
-        style="width:100%; font-size:14px; box-sizing:border-box;">
-    </div>
+    <div id="search-box" style="margin-top:6px; position:relative;">
+  <input
+    type="text"
+    id="search-input"
+    placeholder="🔍 遺産名で検索"
+    style="width:100%; font-size:14px; box-sizing:border-box; padding-right:28px;">
+  <button id="search-clear" onclick="clearSearch()" style="
+    display:none;
+    position:absolute;
+    right:4px; top:50%;
+    transform:translateY(-50%);
+    background:none; border:none;
+    font-size:14px; color:#999;
+    cursor:pointer; line-height:1;
+    padding:2px 4px;">×</button>
+</div>
   </div>
 
   <script>
@@ -592,10 +601,38 @@
     // 検索機能
     // ============================================================
 
+   function clearSearch() {
+  const searchInput = document.getElementById('search-input');
+  const clearBtn    = document.getElementById('search-clear');
+
+  searchInput.value = '';
+  clearBtn.style.display = 'none';
+
+  // 検索モード解除・マーカーを元の状態に戻す
+  if (infoWindow) { infoWindow.close(); infoWindow = null; }
+  isSearchMode = false;
+  lastOpenedMarker = null;
+
+  const selectedRegion  = document.getElementById('region-select').value;
+  const selectedCountry = document.getElementById('country-select').value;
+  markers.forEach(m => {
+    if (selectedCountry) {
+      m.map = (m.customData.country === selectedCountry) ? map : null;
+    } else if (selectedRegion) {
+      m.map = (m.customData.region === selectedRegion) ? map : null;
+    } else {
+      m.map = map;
+    }
+  });
+  refreshCluster();
+}
+
     function setupSearch() {
       const searchInput = document.getElementById('search-input');
+      const clearBtn    = document.getElementById('search-clear');
 
       searchInput.addEventListener('input', () => {
+      clearBtn.style.display = searchInput.value ? 'block' : 'none';
         const keyword = normalizeText(searchInput.value.trim());
         if (!keyword) {
           if (infoWindow) { infoWindow.close(); infoWindow = null; }
