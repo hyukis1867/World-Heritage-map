@@ -753,14 +753,16 @@ suggestBox.style.display = 'block';
       });
 
       searchInput.addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter') return;
-        const keyword = normalizeText(searchInput.value.trim());
-        if (!keyword) return;
-        suggestBox.style.display = 'none';
-        const results = getScoredResults(keyword);
-        if (results.length === 0) return;
-        jumpToHeritage(results[0].country, results[0].id);
-      });
+  if (e.key !== 'Enter') return;
+  const keyword = normalizeText(searchInput.value.trim());
+  if (!keyword) return;
+  suggestBox.style.display = 'none';
+  const results = getScoredResults(keyword);
+  if (results.length === 0) return;
+  const d = results[0];
+  const targetName = d.localNameJP || d.heritageName; // ← 追加
+  jumpToHeritage(d.country, d.id, targetName);        // ← targetName を渡す
+});
     }
 
 
