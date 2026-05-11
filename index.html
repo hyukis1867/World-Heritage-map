@@ -634,37 +634,49 @@
   refreshCluster();
 }
 
-    function jumpToHeritage(country, id) {
-      const suggestBox = document.getElementById('search-suggest');
-      suggestBox.style.display = 'none';
+    function jumpToHeritage(country, id, targetName) {
+  const suggestBox = document.getElementById('search-suggest');
+  suggestBox.style.display = 'none';
 
-      const groupMarkers = markers.filter(m =>
-        m.customData.id == id && m.customData.country == country
-      );
-      if (groupMarkers.length === 0) return;
+  const groupMarkers = markers.filter(m =>
+    m.customData.id == id && m.customData.country == country
+  );
+  if (groupMarkers.length === 0) return;
 
-      isSearchMode = true;
-      markers.forEach(m => m.map = null);
-      groupMarkers.forEach(m => m.map = map);
-      refreshCluster();
+  isSearchMode = true;
+  markers.forEach(m => m.map = null);
+  groupMarkers.forEach(m => m.map = map);
+  refreshCluster();
 
-      const mainMarker = groupMarkers.find(m =>
-    [m.customData.heritageName, m.customData.localNameJP,
-     m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
-      .some(v => v && v === targetName)
-  ) || groupMarkers[0];
+  const mainMarker = (targetName
+    ? groupMarkers.find(m =>
+        [m.customData.heritageName, m.customData.localNameJP,
+         m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
+          .some(v => v && v === targetName)
+      )
+    : null) || groupMarkers[0];
 
-      const latLng = mainMarker.position;
-      const offsetY = 150;
-      const scale = Math.pow(2, map.getZoom());
-      const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-      const pixelOffset = new google.maps.Point(0, offsetY / scale);
-      const newCenter = map.getProjection().fromPointToLatLng(
-        new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
-      );
-      map.panTo(newCenter);
-      setTimeout(() => { showInfo(mainMarker, true); }, 200);
-    }
+  const latLng = mainMarker.position;
+  const offsetY = 150;
+  const scale = Math.pow(2, map.getZoom());
+  const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+  const pixelOffset = new google.maps.Point(0, offsetY / scale);
+  const newCenter = map.getProjection().fromPointToLatLng(
+    new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
+  );
+  map.panTo(newCenter);
+  setTimeout(() => { showInfo(mainMarker, true); }, 200);
+}
+
+function handleSuggestClick(index) {
+  const suggestBox = document.getElementById('search-suggest');
+  const results = suggestBox._results;
+  if (!results || !results[index]) return;
+  const d = results[index];
+  const targetName = d.localNameJP || d.heritageName;
+  jumpToHeritage(d.country, d.id, targetName);
+}
+
 
     function setupSearch() {
       const searchInput = document.getElementById('search-input');
@@ -703,16 +715,15 @@
         const results = getScoredResults(keyword).slice(0, 5);
         if (results.length === 0) { suggestBox.style.display = 'none'; return; }
 
-        suggestBox.innerHTML = results.map(d => {
-          const displayName = d.localNameJP || d.heritageName;
-          const escapedName = (d.localNameJP || d.heritageName).replace(/'/g,"\\'");
-return `<div class="suggest-item"
-  onmousedown="jumpToHeritage('${d.country.replace(/'/g,"\\'")}', '${d.id}', '${escapedName}')">
-            <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
-            <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
-          </div>`;
-        }).join('');
-        suggestBox.style.display = 'block';
+        suggestBox.innerHTML = results.map((d, i) => {
+  const displayName = d.localNameJP || d.heritageName;
+  return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
+    <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
+    <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
+  </div>`;
+}).join('');
+suggestBox._results = results; // 結果をDOMに紐付けて保持
+suggestBox.style.display = 'block';
       }
 
       searchInput.addEventListener('input', () => {
