@@ -822,11 +822,10 @@
         setupSearch();
 
         // 7. 地図表示更新リスナー
-        google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
-        map.addListener('idle', () => {
-          if (updateTimer) clearTimeout(updateTimer);
-          updateTimer = setTimeout(updateMarkers, 150);
-        });
+map.addListener('idle', () => {
+  if (updateTimer) clearTimeout(updateTimer);
+  updateTimer = setTimeout(updateMarkers, 150);
+});
       });
     };
 
