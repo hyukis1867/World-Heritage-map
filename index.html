@@ -310,15 +310,13 @@
   );
 
   markers.forEach(marker => {
-    // 画面外 → 非表示にする（ちらつき防止のため表示中は触らない）
-    if (marker.map !== null) {
-      const pos = marker.position;
-      let shouldBeVisible = true;
-      if (!extendedBounds.contains(pos)) shouldBeVisible = false;
-      if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
-      if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-      if (!shouldBeVisible) marker.map = null;
-    }
+    if (marker.map === null) return; // 既に非表示のものは触らない
+    const pos = marker.position;
+    let shouldBeVisible = true;
+    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+    if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
+    if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
+    if (!shouldBeVisible) marker.map = null; // 画面外に出たものだけ非表示
   });
 
   scheduleClusterUpdate();
