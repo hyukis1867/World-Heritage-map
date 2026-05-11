@@ -287,7 +287,7 @@
       if (!lastBounds) return true;
       const ne1 = lastBounds.getNorthEast(), sw1 = lastBounds.getSouthWest();
       const ne2 = newBounds.getNorthEast(),  sw2 = newBounds.getSouthWest();
-      const threshold = 0.05;
+      const threshold = 2.0;
       return (
         Math.abs(ne1.lat() - ne2.lat()) > threshold ||
         Math.abs(ne1.lng() - ne2.lng()) > threshold ||
