@@ -684,21 +684,26 @@ function handleSuggestClick(index) {
       const suggestBox  = document.getElementById('search-suggest');
 
       function getScoredResults(keyword) {
-        return heritageData
-          .map(d => {
-            const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
-              .filter(Boolean).map(normalizeText);
-            let score = 0;
-            targets.forEach(t => {
-              if (t.startsWith(keyword)) score += 100;
-              else if (t.includes(keyword)) score += 10;
-            });
-            return { data: d, score };
-          })
-          .filter(item => item.score > 0)
-          .sort((a, b) => b.score - a.score)
-          .map(item => item.data);
-      }
+  return heritageData
+    .map(d => {
+      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
+        .filter(Boolean).map(normalizeText);
+      let score = 0;
+      targets.forEach(t => {
+        if (t.startsWith(keyword)) score += 100;
+        else if (t.includes(keyword)) score += 10;
+      });
+      return { data: d, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score; // スコア降順
+      const nameA = getReading(a.data.localNameJP || a.data.heritageName);
+      const nameB = getReading(b.data.localNameJP || b.data.heritageName);
+      return nameA.localeCompare(nameB, 'ja'); // 同スコアなら五十音順
+    })
+    .map(item => item.data);
+}
 
       function highlightText(text, keyword) {
         if (!keyword || !text) return text || '';
