@@ -417,18 +417,18 @@
           num, total: idCountMap[key]
         };
 
-        marker.addListener('click', () => {
-          if (lastOpenedMarker === marker && isPinned) {
-            if (infoWindow) {
-              infoWindow.close();
-              infoWindow = null;
-              lastOpenedMarker = null;
-              isPinned = false;
-            }
-          } else {
-            showInfo(marker, true);
-          }
-        });
+        marker.addListener('gmp-click', () => {
+  if (lastOpenedMarker === marker && isPinned) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+      lastOpenedMarker = null;
+      isPinned = false;
+    }
+  } else {
+    showInfo(marker, true);
+  }
+});
 
         marker.content.addEventListener("mouseenter", () => {
           if (isPinned) return;
