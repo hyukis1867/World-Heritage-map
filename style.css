@@ -104,3 +104,31 @@ html, body, #map {
   left: 10px;
   z-index: 999999 !important;
 }
+
+
+#search-suggest {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  z-index: 999999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.suggest-item {
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 0.5px solid rgba(0,0,0,0.06);
+  color: #333;
+}
+.suggest-item:last-child { border-bottom: none; }
+.suggest-item:hover { background: rgba(0,0,0,0.05); }
+.suggest-item-name { font-weight: 500; }
+.suggest-item-sub { font-size: 11px; color: #888; margin-top: 2px; }
+.suggest-hl { color: #1a73e8; }
+
