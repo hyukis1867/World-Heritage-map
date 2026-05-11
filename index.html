@@ -268,11 +268,13 @@
     // ============================================================
 
     function refreshCluster() {
-      if (!markerCluster) return;
-      const visibleMarkers = markers.filter(m => m.map !== null);
-      markerCluster.clearMarkers();
-      markerCluster.addMarkers(visibleMarkers);
-    }
+  if (!markerCluster) return;
+  const visibleMarkers = markers.filter(m => m.map !== null);
+  markerCluster.clearMarkers();
+  requestAnimationFrame(() => {
+    markerCluster.addMarkers(visibleMarkers);
+  });
+}
 
     function scheduleClusterUpdate() {
       if (clusterUpdateScheduled) return;
@@ -309,7 +311,6 @@
     new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
   );
 
-  let changed = false;
   markers.forEach(marker => {
     const pos = marker.position;
     let shouldBeVisible = true;
@@ -320,11 +321,9 @@
     const isVisible = marker.map !== null;
     if (isVisible !== shouldBeVisible) {
       marker.map = shouldBeVisible ? map : null;
-      changed = true;
     }
   });
-
-  if (changed) scheduleClusterUpdate();
+  // scheduleClusterUpdate() を呼ばない
 }
 
 
