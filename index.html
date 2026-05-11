@@ -40,7 +40,6 @@
     font-size:14px; color:#999;
     cursor:pointer; line-height:1;
     padding:2px 4px;">×</button>
-  <div id="search-suggest"></div>
 </div>
   </div>
 
@@ -605,11 +604,9 @@
    function clearSearch() {
   const searchInput = document.getElementById('search-input');
   const clearBtn    = document.getElementById('search-clear');
-  const suggestBox  = document.getElementById('search-suggest');
 
   searchInput.value = '';
-  clearBtn.style.display   = 'none';
-  suggestBox.style.display = 'none';
+  clearBtn.style.display = 'none';
 
   // 検索モード解除・マーカーを元の状態に戻す
   if (infoWindow) { infoWindow.close(); infoWindow = null; }
@@ -630,46 +627,39 @@
   refreshCluster();
 }
 
-    function jumpToHeritage(country, id) {
-      const suggestBox = document.getElementById('search-suggest');
-      suggestBox.style.display = 'none';
-
-      const groupMarkers = markers.filter(m =>
-        m.customData.id == id && m.customData.country == country
-      );
-      if (groupMarkers.length === 0) return;
-
-      isSearchMode = true;
-      markers.forEach(m => m.map = null);
-      groupMarkers.forEach(m => m.map = map);
-      refreshCluster();
-
-      const keyword = normalizeText(document.getElementById('search-input').value.trim());
-      const mainMarker = groupMarkers.find(m =>
-        [m.customData.heritageName, m.customData.localNameJP,
-         m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
-          .some(v => v && normalizeText(v).includes(keyword))
-      ) || groupMarkers[0];
-
-      const latLng = mainMarker.position;
-      const offsetY = 150;
-      const scale = Math.pow(2, map.getZoom());
-      const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-      const pixelOffset = new google.maps.Point(0, offsetY / scale);
-      const newCenter = map.getProjection().fromPointToLatLng(
-        new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
-      );
-      map.panTo(newCenter);
-      setTimeout(() => { showInfo(mainMarker, true); }, 200);
-    }
-
     function setupSearch() {
       const searchInput = document.getElementById('search-input');
       const clearBtn    = document.getElementById('search-clear');
-      const suggestBox  = document.getElementById('search-suggest');
 
-      function getScoredResults(keyword) {
-        return heritageData
+      searchInput.addEventListener('input', () => {
+      clearBtn.style.display = searchInput.value ? 'block' : 'none';
+        const keyword = normalizeText(searchInput.value.trim());
+        if (!keyword) {
+          if (infoWindow) { infoWindow.close(); infoWindow = null; }
+          isSearchMode = false;
+          lastOpenedMarker = null;
+
+          const selectedRegion  = document.getElementById('region-select').value;
+          const selectedCountry = document.getElementById('country-select').value;
+          markers.forEach(m => {
+            if (selectedCountry) {
+              m.map = (m.customData.country === selectedCountry) ? map : null;
+            } else if (selectedRegion) {
+              m.map = (m.customData.region === selectedRegion) ? map : null;
+            } else {
+              m.map = map;
+            }
+          });
+          refreshCluster();
+        }
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        const keyword = normalizeText(searchInput.value.trim());
+        if (!keyword) return;
+
+        const results = heritageData
           .map(d => {
             const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
               .filter(Boolean).map(normalizeText);
@@ -683,68 +673,37 @@
           .filter(item => item.score > 0)
           .sort((a, b) => b.score - a.score)
           .map(item => item.data);
-      }
 
-      function highlightText(text, keyword) {
-        if (!keyword || !text) return text || '';
-        const normalized = normalizeText(text);
-        const idx = normalized.indexOf(keyword);
-        if (idx === -1) return text;
-        return text.slice(0, idx)
-          + `<span style="color:#1a73e8;font-weight:bold;">${text.slice(idx, idx + keyword.length)}</span>`
-          + text.slice(idx + keyword.length);
-      }
-
-      function showSuggests(keyword) {
-        if (!keyword) { suggestBox.style.display = 'none'; return; }
-        const results = getScoredResults(keyword).slice(0, 5);
-        if (results.length === 0) { suggestBox.style.display = 'none'; return; }
-
-        suggestBox.innerHTML = results.map(d => {
-          const displayName = d.localNameJP || d.heritageName;
-          return `<div class="suggest-item"
-            onmousedown="jumpToHeritage('${d.country.replace(/'/g,"\\'")}', '${d.id}')">
-            <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
-            <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
-          </div>`;
-        }).join('');
-        suggestBox.style.display = 'block';
-      }
-
-      searchInput.addEventListener('input', () => {
-        clearBtn.style.display = searchInput.value ? 'block' : 'none';
-        const keyword = normalizeText(searchInput.value.trim());
-        if (!keyword) {
-          suggestBox.style.display = 'none';
-          if (infoWindow) { infoWindow.close(); infoWindow = null; }
-          isSearchMode = false;
-          lastOpenedMarker = null;
-          const selectedRegion  = document.getElementById('region-select').value;
-          const selectedCountry = document.getElementById('country-select').value;
-          markers.forEach(m => {
-            if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
-            else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
-            else                     m.map = map;
-          });
-          refreshCluster();
-          return;
-        }
-        showSuggests(keyword);
-      });
-
-      // フォーカスが外れたら候補を閉じる（mousedownでjumpした後はblurより先に実行される）
-      searchInput.addEventListener('blur', () => {
-        setTimeout(() => { suggestBox.style.display = 'none'; }, 150);
-      });
-
-      searchInput.addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter') return;
-        const keyword = normalizeText(searchInput.value.trim());
-        if (!keyword) return;
-        suggestBox.style.display = 'none';
-        const results = getScoredResults(keyword);
         if (results.length === 0) return;
-        jumpToHeritage(results[0].country, results[0].id);
+        const found = results[0];
+
+        const groupMarkers = markers.filter(m =>
+          m.customData.id == found.id && m.customData.country == found.country
+        );
+        if (groupMarkers.length === 0) return;
+
+        isSearchMode = true;
+        markers.forEach(m => m.map = null);
+        groupMarkers.forEach(m => m.map = map);
+        refreshCluster();
+
+        const mainMarker = groupMarkers.find(m =>
+          [m.customData.heritageName, m.customData.localNameJP,
+           m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
+            .some(v => v && normalizeText(v).includes(keyword))
+        ) || groupMarkers[0];
+
+        const latLng = mainMarker.position;
+        const offsetY = 150;
+        const scale = Math.pow(2, map.getZoom());
+        const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+        const pixelOffset = new google.maps.Point(0, offsetY / scale);
+        const newCenter = map.getProjection().fromPointToLatLng(
+          new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
+        );
+        map.panTo(newCenter);
+
+        setTimeout(() => { showInfo(mainMarker, true); }, 200);
       });
     }
 
@@ -841,14 +800,10 @@
   const dropdown = document.getElementById("dropdown-container");
 
   modal.style.display = "none";
-  dropdown.style.display = "none";
+  dropdown.style.display = "none"; // ← 追加
 
   const tempImg = new Image();
   tempImg.onload = () => {
-    img.src = src;
-    modal.style.display = "flex";
-  };
-  tempImg.onerror = () => {
     img.src = src;
     modal.style.display = "flex";
   };
