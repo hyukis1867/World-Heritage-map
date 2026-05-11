@@ -270,8 +270,10 @@
     function refreshCluster() {
       if (!markerCluster) return;
       const visibleMarkers = markers.filter(m => m.map !== null);
+      // clearMarkersとaddMarkersを同一フレームで実行してちらつきを防ぐ
       markerCluster.clearMarkers();
-      markerCluster.addMarkers(visibleMarkers);
+      markerCluster.addMarkers(visibleMarkers, true); // true = noDraw（再描画を保留）
+      markerCluster.render(); // まとめて1回だけ描画
     }
 
     function scheduleClusterUpdate() {
