@@ -827,11 +827,11 @@
         // 6. 検索機能セットアップ
         setupSearch();
 
-        // 7. 地図表示更新リスナー
-map.addListener('idle', () => {
-  if (updateTimer) clearTimeout(updateTimer);
-  updateTimer = setTimeout(updateMarkers, 150);
-});
+      // 7. 地図表示更新リスナー（一時的に無効化）
+// map.addListener('idle', () => {
+//   if (updateTimer) clearTimeout(updateTimer);
+//   updateTimer = setTimeout(updateMarkers, 150);
+// });
       });
     };
 
