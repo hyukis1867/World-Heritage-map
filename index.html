@@ -11,6 +11,29 @@
 <body>
   <div id="map"></div>
 
+  <div id="image-modal" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;">
+    <span id="modal-close" style="
+      position:absolute;
+      top:20px; right:30px;
+      font-size:30px;
+      color:white;
+      cursor:pointer;">×</span>
+    <img id="modal-img" style="
+      max-width:90%;
+      max-height:90%;
+      border-radius:8px;
+      box-shadow:0 0 20px rgba(0,0,0,0.5);">
+  </div>
+
   <div id="dropdown-container">
     <div id="region-box" style="margin-bottom: 2px;">
       <select id="region-select">
@@ -890,33 +913,5 @@ searchInput.addEventListener('keydown', (e) => {
   </script>
 
 
-<div id="image-modal" style="
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-  z-index:9999;
-  justify-content:center;
-  align-items:center;
-">
-  <!-- ★これ追加 -->
-  <span id="modal-close" style="
-    position:absolute;
-    top:20px;
-    right:30px;
-    font-size:30px;
-    color:white;
-    cursor:pointer;
-  ">×</span>
-
-  <img id="modal-img" style="
-    max-width:90%;
-    max-height:90%;
-    border-radius:8px;
-    box-shadow:0 0 20px rgba(0,0,0,0.5);
-  ">
-</div>
 </body>
 </html>
