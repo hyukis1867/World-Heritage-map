@@ -300,8 +300,6 @@
   if (isSearchMode) return;
   const bounds = map.getBounds();
   if (!bounds) return;
-  if (!boundsChangedSignificantly(bounds)) return;
-  lastBounds = bounds;
 
   const selectedRegion  = document.getElementById('region-select').value;
   const selectedCountry = document.getElementById('country-select').value;
@@ -827,11 +825,11 @@
         // 6. 検索機能セットアップ
         setupSearch();
 
-      // 7. 地図表示更新リスナー（一時的に無効化）
-// map.addListener('idle', () => {
-//   if (updateTimer) clearTimeout(updateTimer);
-//   updateTimer = setTimeout(updateMarkers, 150);
-// });
+      // 7. 地図表示更新リスナー
+map.addListener('dragend', () => {
+  if (updateTimer) clearTimeout(updateTimer);
+  updateTimer = setTimeout(updateMarkers, 150);
+});
       });
     };
 
