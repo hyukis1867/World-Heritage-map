@@ -648,12 +648,11 @@
       groupMarkers.forEach(m => m.map = map);
       refreshCluster();
 
-      const keyword = normalizeText(document.getElementById('search-input').value.trim());
       const mainMarker = groupMarkers.find(m =>
-        [m.customData.heritageName, m.customData.localNameJP,
-         m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
-          .some(v => v && normalizeText(v).includes(keyword))
-      ) || groupMarkers[0];
+    [m.customData.heritageName, m.customData.localNameJP,
+     m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
+      .some(v => v && v === targetName)
+  ) || groupMarkers[0];
 
       const latLng = mainMarker.position;
       const offsetY = 150;
@@ -706,8 +705,9 @@
 
         suggestBox.innerHTML = results.map(d => {
           const displayName = d.localNameJP || d.heritageName;
-          return `<div class="suggest-item"
-            onmousedown="jumpToHeritage('${d.country.replace(/'/g,"\\'")}', '${d.id}')">
+          const escapedName = (d.localNameJP || d.heritageName).replace(/'/g,"\\'");
+return `<div class="suggest-item"
+  onmousedown="jumpToHeritage('${d.country.replace(/'/g,"\\'")}', '${d.id}', '${escapedName}')">
             <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
             <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
           </div>`;
