@@ -695,7 +695,7 @@
         const idx = normalized.indexOf(keyword);
         if (idx === -1) return text;
         return text.slice(0, idx)
-          + `<span style="color:#1a73e8;font-weight:bold;">${text.slice(idx, idx + keyword.length)}</span>`
+          + `<span style="color:#1a73e8;">${text.slice(idx, idx + keyword.length)}</span>`
           + text.slice(idx + keyword.length);
       }
 
