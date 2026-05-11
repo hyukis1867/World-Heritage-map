@@ -732,11 +732,13 @@ function jumpToHeritage(country, id, heritageName) {
   });
 
   // 候補以外をクリックしたら候補を閉じる
-  document.addEventListener('click', (e) => {
-    if (!document.getElementById('search-box').contains(e.target)) {
-      suggestBox.style.display = 'none';
-    }
-  });
+  document.addEventListener('pointerdown', (e) => {
+  const searchBox = document.getElementById('search-box');
+  const modal     = document.getElementById('image-modal');
+  if (!searchBox.contains(e.target) && !modal.contains(e.target)) {
+    suggestBox.style.display = 'none';
+  }
+});
 
   // Enterキーは従来通り（先頭候補にジャンプ）
   searchInput.addEventListener('keydown', (e) => {
