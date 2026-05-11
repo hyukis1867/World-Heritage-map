@@ -295,7 +295,7 @@
       );
     }
 
-    function updateMarkers() {
+  function updateMarkers() {
   if (isSearchMode) return;
   const bounds = map.getBounds();
   if (!bounds) return;
@@ -310,23 +310,16 @@
     new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
   );
 
-  let changed = false; // ★追加：変化があった時だけクラスタ更新
-
   markers.forEach(marker => {
     const pos = marker.position;
     let shouldBeVisible = true;
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-
-    const currentlyVisible = marker.map !== null;
-    if (currentlyVisible !== shouldBeVisible) { // ★変化があるマーカーだけ更新
-      marker.map = shouldBeVisible ? map : null;
-      changed = true;
-    }
+    marker.map = shouldBeVisible ? map : null;
   });
 
-  if (changed) scheduleClusterUpdate(); // ★変化があった時だけ実行
+  scheduleClusterUpdate();
 }
 
 
@@ -859,18 +852,21 @@ function jumpToHeritage(country, id, heritageName) {
     // 画像モーダル
     // ============================================================
 
-    function openImageModal(src) {
+  function openImageModal(src) {
   const modal    = document.getElementById("image-modal");
   const img      = document.getElementById("modal-img");
   const dropdown = document.getElementById("dropdown-container");
 
-  modal.style.display = "none";
-  dropdown.style.display = "none"; // ← 追加
+  dropdown.style.display = "none";
 
   const tempImg = new Image();
   tempImg.onload = () => {
     img.src = src;
     modal.style.display = "flex";
+  };
+  tempImg.onerror = () => {
+    img.src = src;
+    modal.style.display = "flex"; // ★読み込み失敗時も表示
   };
   tempImg.src = src;
 }
