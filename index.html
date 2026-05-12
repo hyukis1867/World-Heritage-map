@@ -48,9 +48,25 @@
       </div>
     </div>
     <div id="heritage-box" style="display: none;">
-      <div class="dd-wrap" id="heritage-dd">
-        <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
-        <div class="dd-list" id="heritage-list"></div>
+      <div style="display:flex; gap:4px; align-items:stretch;">
+        <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0;">
+          <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
+          <div class="dd-list" id="heritage-list"></div>
+        </div>
+        <div class="grade-box">
+          <div class="grade-dd-wrap" id="grade-dd">
+            <div class="grade-num-btn" id="grade-selected" onclick="toggleGradeDD()">
+              <span id="grade-num">-</span>
+            </div>
+            <div class="grade-list" id="grade-list">
+              <div class="grade-list-item active" onclick="onGradeSelect('-')">-</div>
+              <div class="grade-list-item" onclick="onGradeSelect('1')">1</div>
+              <div class="grade-list-item" onclick="onGradeSelect('2')">2</div>
+              <div class="grade-list-item" onclick="onGradeSelect('3')">3</div>
+            </div>
+          </div>
+          <div class="grade-fixed">級</div>
+        </div>
       </div>
     </div>
     <div id="search-box" style="margin-top:6px; position:relative;">
@@ -93,6 +109,7 @@
 
     // カスタムドロップダウン状態（グローバル）
     const ddState = { region: '', country: '', heritage: '' };
+    let selectedGrade = '-';
     function getDDRegion()  { return ddState.region; }
     function getDDCountry() { return ddState.country; }
 
@@ -370,6 +387,7 @@ idCountMap[key]++;
   const gradeRaw = columns[13]?.trim() || "";
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
+  const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -384,7 +402,8 @@ idCountMap[key]++;
   localLangName,
   localNameEN,
   grade, imageUrl, credit,
-  num   // ←これ追加
+  ddName,
+  num
 });
 
   // regionCountryMap
@@ -394,7 +413,7 @@ idCountMap[key]++;
   // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
   if (!countryHeritageMap[country][id]) {
-    countryHeritageMap[country][id] = { id, heritageName, grade };
+    countryHeritageMap[country][id] = { id, heritageName, grade, ddName };
   } else {
     const prev = countryHeritageMap[country][id];
     const merged = new Set([
@@ -402,6 +421,7 @@ idCountMap[key]++;
       ...(grade ? grade.split(',') : [])
     ]);
     prev.grade = Array.from(merged).join(',');
+    if (!prev.ddName && ddName) prev.ddName = ddName;
   }
 
   globalUniqueIDs.add(id);
@@ -594,7 +614,7 @@ map.addListener('idle', () => {
           // 状態管理はグローバルddStateを使用
 
           function ddOpen(listId) {
-            ['region-list','country-list','heritage-list'].forEach(id => {
+            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
               if (id !== listId) document.getElementById(id).style.display = 'none';
             });
             const list = document.getElementById(listId);
@@ -602,8 +622,9 @@ map.addListener('idle', () => {
           }
 
           function ddClose() {
-            ['region-list','country-list','heritage-list'].forEach(id => {
-              document.getElementById(id).style.display = 'none';
+            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+              const el = document.getElementById(id);
+              if (el) el.style.display = 'none';
             });
           }
 
@@ -620,7 +641,7 @@ map.addListener('idle', () => {
 
           // 外側クリックで閉じる
           document.addEventListener('click', e => {
-            if (!e.target.closest('.dd-wrap') && !e.target.closest('#image-modal')) ddClose();
+            if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal')) ddClose();
           });
 
           function getFlagEmojiFromName(countryName) {
@@ -733,22 +754,27 @@ map.addListener('idle', () => {
           }
 
           // 遺産リスト構築
+          const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
+
           function buildHeritageList(country) {
             const list = document.getElementById('heritage-list');
             list.innerHTML = '';
             if (!country || !countryHeritageMap[country]) return;
             const heritages = Object.values(countryHeritageMap[country])
               .sort((a, b) => Number(a.id) - Number(b.id));
-            heritages.forEach(({ id, heritageName, grade }) => {
-  const gradeLabel = grade ? grade.split(',').map(g => `【${g}級】`).join('') : '';
-  const gradeHtml  = gradeLabel
-    ? `<span class="dd-item-grade">${gradeLabel}</span>`
-    : '';
-  const cleanName = removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
+            heritages.forEach(({ id, heritageName, grade, ddName }) => {
+              const displayName = ddName
+                ? ddName
+                : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
+              const grades = grade ? grade.split(',') : [];
               const item = document.createElement('div');
               item.className = 'dd-item';
+              if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
+              if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
+                item.style.background = gradeColors[selectedGrade];
+              }
               item.dataset.value = `${country}.${id}`;
-              item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${cleanName}${gradeHtml}</span>`;
+              item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
               item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
               list.appendChild(item);
             });
@@ -764,10 +790,11 @@ map.addListener('idle', () => {
             if (!targetMarker) return;
 
             ddState.heritage = value;
-            const cleanName = removeCircleNumber(
-              (countryHeritageMap[country][id]?.heritageName || '').replace(/<br\s*\/?>/gi, '')
-            );
-            document.getElementById('heritage-selected').textContent = `${id}｜${cleanName}`;
+            const heritage = countryHeritageMap[country][id];
+            const displayName = heritage?.ddName
+              ? heritage.ddName
+              : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
+            document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
 
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
@@ -787,9 +814,21 @@ map.addListener('idle', () => {
             refreshCluster();
           }
 
-          // updateMarkersで使うdd値取得
-          function getDDRegion()  { return ddState.region; }
-          function getDDCountry() { return ddState.country; }
+          // 級DDトグル
+          function toggleGradeDD() {
+            ddOpen('grade-list');
+          }
+
+          // 級選択
+          function onGradeSelect(grade) {
+            selectedGrade = grade;
+            document.getElementById('grade-num').textContent = grade;
+            document.getElementById('grade-list').style.display = 'none';
+            document.querySelectorAll('.grade-list-item').forEach(el => {
+              el.classList.toggle('active', el.textContent.trim() === grade);
+            });
+            buildHeritageList(ddState.country);
+          }
 
           buildRegionList();
 
