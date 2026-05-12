@@ -740,10 +740,11 @@ map.addListener('idle', () => {
             const heritages = Object.values(countryHeritageMap[country])
               .sort((a, b) => Number(a.id) - Number(b.id));
             heritages.forEach(({ id, heritageName, grade }) => {
-              const gradeHtml = gradeLabel
-  ? `<span class="dd-item-grade">${gradeLabel}</span>`
-  : '';
-              const cleanName  = removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
+  const gradeLabel = grade ? grade.split(',').map(g => `【${g}級】`).join('') : '';
+  const gradeHtml  = gradeLabel
+    ? `<span class="dd-item-grade">${gradeLabel}</span>`
+    : '';
+  const cleanName = removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
               const item = document.createElement('div');
               item.className = 'dd-item';
               item.dataset.value = `${country}.${id}`;
