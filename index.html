@@ -109,8 +109,13 @@
 
     // カスタムドロップダウン状態（グローバル）
     const ddState = { region: '', country: '', heritage: '' };
+    let selectedGrade = '-';
     function getDDRegion()  { return ddState.region; }
     function getDDCountry() { return ddState.country; }
+
+    // 遺産マップと級カラー（グローバル）
+    let countryHeritageMap = {};
+    const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
 
     const tooltip = document.createElement("div");
 
@@ -348,7 +353,6 @@ idCountMap[key]++;
 
 
 
-          const countryHeritageMap = {};
           const regionCountryIDsMap = {};
 
 
@@ -754,70 +758,7 @@ map.addListener('idle', () => {
           }
 
           // 遺産リスト構築
-          // 遺産リスト構築
-          const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
-
-          function buildHeritageList(country) {
-            const list = document.getElementById('heritage-list');
-            list.innerHTML = '';
-            if (!country || !countryHeritageMap[country]) return;
-            const heritages = Object.values(countryHeritageMap[country])
-              .sort((a, b) => Number(a.id) - Number(b.id));
-            heritages.forEach(({ id, heritageName, grade, ddName }) => {
-              const displayName = ddName
-                ? ddName
-                : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
-              const grades = grade ? grade.split(',') : [];
-              const item = document.createElement('div');
-              item.className = 'dd-item';
-              if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
-              if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
-                item.style.background = gradeColors[selectedGrade];
-              }
-              item.dataset.value = `${country}.${id}`;
-              item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
-              item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
-              list.appendChild(item);
-            });
-          }
-
-          // 遺産選択
-          function onHeritageSelect(value) {
-            ddClose();
-            if (!value) return;
-            const [country, id] = value.split('.');
-            if (!country || !id) return;
-            const targetMarker = markerIndex.get(`${country}_${id}`);
-            if (!targetMarker) return;
-
-            ddState.heritage = value;
-            const heritage = countryHeritageMap[country][id];
-            const displayName = heritage?.ddName
-              ? heritage.ddName
-              : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
-            document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
-
-            if (infoWindow) { infoWindow.close(); infoWindow = null; }
-            lastOpenedMarker = null;
-
-            markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
-
-            const latLng  = targetMarker.position;
-            const offsetY = 150;
-            const scale   = Math.pow(2, map.getZoom());
-            const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-            const pixelOffset = new google.maps.Point(0, offsetY / scale);
-            const newCenter   = map.getProjection().fromPointToLatLng(
-              new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
-            );
-            map.panTo(newCenter);
-            setTimeout(() => { showInfo(targetMarker, true); }, 200);
-            refreshCluster();
-          }
-
-          // updateMarkersで使うdd値取得
-          function getDDRegion()  { return ddState.region; }
-          function getDDCountry() { return ddState.country; }
+          // updateMarkersで使うdd値取得（グローバルに移動済み）
 
           buildRegionList();
 
@@ -923,6 +864,67 @@ searchInput.addEventListener('keydown', (e) => {
 });
 
         });
+    }
+
+    function buildHeritageList(country) {
+      const list = document.getElementById('heritage-list');
+      list.innerHTML = '';
+      if (!country || !countryHeritageMap[country]) return;
+      const heritages = Object.values(countryHeritageMap[country])
+        .sort((a, b) => Number(a.id) - Number(b.id));
+      heritages.forEach(({ id, heritageName, grade, ddName }) => {
+        const displayName = ddName
+          ? ddName
+          : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
+        const grades = grade ? grade.split(',') : [];
+        const item = document.createElement('div');
+        item.className = 'dd-item';
+        if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
+        if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
+          item.style.background = gradeColors[selectedGrade];
+        }
+        item.dataset.value = `${country}.${id}`;
+        item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
+        item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
+        list.appendChild(item);
+      });
+    }
+
+    function onHeritageSelect(value) {
+      const listEl = document.getElementById('region-list');
+      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      if (!value) return;
+      const [country, id] = value.split('.');
+      if (!country || !id) return;
+      const targetMarker = markerIndex.get(`${country}_${id}`);
+      if (!targetMarker) return;
+
+      ddState.heritage = value;
+      const heritage = countryHeritageMap[country][id];
+      const displayName = heritage?.ddName
+        ? heritage.ddName
+        : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
+      document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
+
+      if (infoWindow) { infoWindow.close(); infoWindow = null; }
+      lastOpenedMarker = null;
+
+      markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
+
+      const latLng  = targetMarker.position;
+      const offsetY = 150;
+      const scale   = Math.pow(2, map.getZoom());
+      const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+      const pixelOffset = new google.maps.Point(0, offsetY / scale);
+      const newCenter   = map.getProjection().fromPointToLatLng(
+        new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
+      );
+      map.panTo(newCenter);
+      setTimeout(() => { showInfo(targetMarker, true); }, 200);
+      refreshCluster();
     }
 
     function toggleGradeDD() {
