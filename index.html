@@ -814,21 +814,24 @@ map.addListener('idle', () => {
             refreshCluster();
           }
 
-          // 級DDトグル
           function toggleGradeDD() {
-            ddOpen('grade-list');
-          }
+  const list = document.getElementById('grade-list');
+  const hList = document.getElementById('heritage-list');
+  hList.style.display = 'none';
+  list.style.display = list.style.display === 'block' ? 'none' : 'block';
+}
 
-          // 級選択
-          function onGradeSelect(grade) {
-            selectedGrade = grade;
-            document.getElementById('grade-num').textContent = grade;
-            document.getElementById('grade-list').style.display = 'none';
-            document.querySelectorAll('.grade-list-item').forEach(el => {
-              el.classList.toggle('active', el.textContent.trim() === grade);
-            });
-            buildHeritageList(ddState.country);
-          }
+function onGradeSelect(grade) {
+  selectedGrade = grade;
+  document.getElementById('grade-num').textContent = grade;
+  document.getElementById('grade-list').style.display = 'none';
+  document.querySelectorAll('.grade-list-item').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim() === grade);
+  });
+  // buildHeritageListはinitMap内なのでddStateから国を取得
+  const country = getDDCountry();
+  if (country) buildHeritageList(country);
+}
 
           buildRegionList();
 
