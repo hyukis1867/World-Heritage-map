@@ -132,3 +132,70 @@ html, body, #map {
 .suggest-item-sub { font-size: 11px; color: #888; margin-top: 2px; }
 .suggest-hl { color: #1a73e8; }
 
+
+/* カスタムドロップダウン */
+.dd-wrap {
+  position: relative;
+  width: 200px;
+}
+.dd-selected {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px 20px 3px 6px;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  position: relative;
+}
+.dd-selected::after {
+  content: '▾';
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: #666;
+  pointer-events: none;
+}
+.dd-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 999999;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.dd-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.05);
+  line-height: 1.4;
+  color: #333;
+}
+.dd-item:last-child { border-bottom: none; }
+.dd-item:hover { background: rgba(0,0,0,0.05); }
+.dd-item-id {
+  flex-shrink: 0;
+  color: #888;
+  font-size: 12px;
+  padding-top: 1px;
+}
+.dd-item-name { flex: 1; }
+
