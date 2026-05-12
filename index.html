@@ -36,26 +36,45 @@
 
   <div id="dropdown-container">
     <div id="region-box" style="margin-bottom: 2px;">
-      <select id="region-select">
-        <option value="">-- 地域を選択 --</option>
-      </select>
+      <div class="dd-wrap" id="region-dd">
+        <div class="dd-selected" id="region-selected">-- 地域を選択 --</div>
+        <div class="dd-list" id="region-list"></div>
+      </div>
     </div>
     <div id="country-box" style="display: none; margin-bottom: 2px;">
-      <select id="country-select">
-        <option value="">-- 国を選択 --</option>
-      </select>
+      <div class="dd-wrap" id="country-dd">
+        <div class="dd-selected" id="country-selected">-- 国を選択 --</div>
+        <div class="dd-list" id="country-list"></div>
+      </div>
     </div>
     <div id="heritage-box" style="display: none;">
-      <select id="heritage-select">
-        <option value="">-- 遺産を選択 --</option>
-      </select>
+      <div style="display:flex; gap:4px; align-items:stretch; width:200px;">
+        <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0; width:auto;">
+          <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
+          <div class="dd-list" id="heritage-list"></div>
+        </div>
+        <div class="grade-box">
+          <div class="grade-dd-wrap" id="grade-dd">
+            <div class="grade-num-btn" id="grade-selected" onclick="toggleGradeDD()">
+              <span id="grade-num">-</span>
+            </div>
+            <div class="grade-list" id="grade-list">
+              <div class="grade-list-item active" onclick="onGradeSelect('-')">-</div>
+              <div class="grade-list-item" onclick="onGradeSelect('1')">1</div>
+              <div class="grade-list-item" onclick="onGradeSelect('2')">2</div>
+              <div class="grade-list-item" onclick="onGradeSelect('3')">3</div>
+            </div>
+          </div>
+          <div class="grade-fixed">級</div>
+        </div>
+      </div>
     </div>
-    <div id="search-box" style="margin-top:6px; position:relative;">
+    <div id="search-box" style="margin-top:6px; position:relative; width:200px;">
       <input
         type="text"
         id="search-input"
         placeholder="🔍 キーワードで検索"
-        style="font-size:14px; box-sizing:border-box; padding-right:28px;">
+        style="width:100%; font-size:14px; box-sizing:border-box; padding-right:28px;">
       <button id="search-clear" onclick="clearSearch()" style="
         display:none;
         position:absolute;
@@ -83,10 +102,15 @@
     let isSearchMode = false;
     let globalUniqueIDs = new Set();
 
-    let idCountMap = {}; 
+    let idCountMap = {};
     const countryCodeMap = {};
     const capitalMap = {};
     const countryReadingMap = {};
+
+    // カスタムドロップダウン状態（グローバル）
+    const ddState = { region: '', country: '', heritage: '' };
+    function getDDRegion()  { return ddState.region; }
+    function getDDCountry() { return ddState.country; }
 
     const tooltip = document.createElement("div");
 
@@ -362,6 +386,7 @@ idCountMap[key]++;
   const gradeRaw = columns[13]?.trim() || "";
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
+  const ddName = columns[18]?.trim() || "";  // ドロップダウン表示名（19列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -376,7 +401,8 @@ idCountMap[key]++;
   localLangName,
   localNameEN,
   grade, imageUrl, credit,
-  num   // ←これ追加
+  ddName,
+  num
 });
 
   // regionCountryMap
@@ -386,7 +412,7 @@ idCountMap[key]++;
   // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
   if (!countryHeritageMap[country][id]) {
-    countryHeritageMap[country][id] = { id, heritageName, grade };
+    countryHeritageMap[country][id] = { id, heritageName, grade, ddName };
   } else {
     const prev = countryHeritageMap[country][id];
     const merged = new Set([
@@ -394,6 +420,7 @@ idCountMap[key]++;
       ...(grade ? grade.split(',') : [])
     ]);
     prev.grade = Array.from(merged).join(',');
+    if (!prev.ddName && ddName) prev.ddName = ddName;
   }
 
   globalUniqueIDs.add(id);
@@ -522,27 +549,6 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          const regionSelect = document.getElementById('region-select');
-          if (regionSelect && regionSelect.options.length > 0) {
-            regionSelect.options[0].textContent = `-- 地域を選択 -- (${allRegionsTotalCount})`;
-          }
-
-          Object.keys(regionCountryMap).forEach(region => {
-  const option = document.createElement('option');
-  option.value = region;
-
-  const count = countUniqueIDsInRegion(region);
-
-  const regionNameMap = {
-    "欧州": "ヨーロッパ"
-  };
-
-  option.textContent = `${regionNameMap[region] || region} (${count})`;
-
-  regionSelect.appendChild(option);
-});
-            
-
           markerCluster = new markerClusterer.MarkerClusterer({
   map,
   markers,
@@ -562,8 +568,8 @@ function updateMarkers() {
   if (!boundsChangedSignificantly(bounds)) return;
   lastBounds = bounds;
 
-  const selectedRegion = document.getElementById('region-select').value;
-  const selectedCountry = document.getElementById('country-select').value;
+  const selectedRegion = getDDRegion();
+  const selectedCountry = getDDCountry();
 
   const buffer = 0.3;
 
@@ -598,116 +604,203 @@ map.addListener('idle', () => {
   updateTimer = setTimeout(updateMarkers, 150);
 });
 
-          const countrySelect = document.getElementById('country-select');
-          const heritageSelect = document.getElementById('heritage-select');
+          // ============================================================
+          // カスタムドロップダウン
+          // ============================================================
 
-          countrySelect.disabled = true;
-          heritageSelect.disabled = true;
+          // 状態管理はグローバルddStateを使用
 
-          regionSelect.addEventListener('change', () => {
-            if (infoWindow) { infoWindow.close(); infoWindow = null; }
-            lastOpenedMarker = null;
-            const selectedRegion = regionSelect.value;
-            markers.forEach(marker => {
-              marker.map = (!selectedRegion || marker.customData.region === selectedRegion) ? map : null;
+          function ddOpen(listId) {
+            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+              if (id !== listId) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+              }
             });
-            countrySelect.innerHTML = '<option value="">-- 国を選択 --</option>';
-            countrySelect.disabled  = !selectedRegion;
-            document.getElementById("country-box").style.display  = selectedRegion ? "block" : "none";
-            document.getElementById("heritage-box").style.display = "none";
+            const list = document.getElementById(listId);
+            list.style.display = list.style.display === 'block' ? 'none' : 'block';
+          }
 
+          function ddClose() {
+            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+              const el = document.getElementById(id);
+              if (el) el.style.display = 'none';
+            });
+          }
 
-            function getFlagEmojiFromName(countryName) {
-              const code = countryCodeMap[countryName];
-              if (!code) return "";
-              return code
-                .toUpperCase()
-                .split('')
-                .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
-                .map(cp => String.fromCodePoint(cp))
-                .join('');
-            }
-
-            heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-            heritageSelect.disabled  = true;
-
-            if (selectedRegion && regionCountryMap[selectedRegion]) {
-              Array.from(regionCountryMap[selectedRegion]).forEach(country => {
-                if (!country || !country.trim()) return;
-                const option  = document.createElement('option');
-                const idCount = regionCountryIDsMap[selectedRegion][country]?.size || 0;
-                option.value  = country;
-                option.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
-                countrySelect.appendChild(option);
-              });
-            }
-
-            heritageSelect.value = '';
-            countrySelect.value  = '';
-            refreshCluster();
+          // 地域ドロップダウンのクリック
+          document.getElementById('region-selected').addEventListener('click', () => ddOpen('region-list'));
+          document.getElementById('country-selected').addEventListener('click', () => {
+            if (!ddState.region) return;
+            ddOpen('country-list');
+          });
+          document.getElementById('heritage-selected').addEventListener('click', () => {
+            if (!ddState.country) return;
+            ddOpen('heritage-list');
           });
 
+          // 外側クリックで閉じる
+          document.addEventListener('click', e => {
+            if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal')) ddClose();
+          });
 
+          function getFlagEmojiFromName(countryName) {
+            const code = countryCodeMap[countryName];
+            if (!code) return "";
+            return code.toUpperCase().split('')
+              .map(char => 0x1F1E6 - 65 + char.charCodeAt(0))
+              .map(cp => String.fromCodePoint(cp)).join('');
+          }
 
-          countrySelect.addEventListener('change', () => {
+          // 地域リスト構築
+          function buildRegionList() {
+            let allTotal = 0;
+            Object.keys(regionCountryIDsMap).forEach(r => { allTotal += countUniqueIDsInRegion(r); });
+            const regionNameMap = { "欧州": "ヨーロッパ" };
+            document.getElementById('region-selected').textContent = `-- 地域を選択 -- (${allTotal})`;
+
+            const list = document.getElementById('region-list');
+            list.innerHTML = '';
+
+            // 「すべて」項目
+            const allItem = document.createElement('div');
+            allItem.className = 'dd-item';
+            allItem.textContent = `-- 地域を選択 -- (${allTotal})`;
+            allItem.addEventListener('click', () => onRegionSelect(''));
+            list.appendChild(allItem);
+
+            Object.keys(regionCountryMap).forEach(region => {
+              const item = document.createElement('div');
+              item.className = 'dd-item';
+              item.textContent = `${regionNameMap[region] || region} (${countUniqueIDsInRegion(region)})`;
+              item.dataset.value = region;
+              item.addEventListener('click', () => onRegionSelect(region));
+              list.appendChild(item);
+            });
+          }
+
+          // 地域選択
+          function onRegionSelect(region) {
+            ddClose();
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
+            ddState.region  = region;
+            ddState.country = '';
+            ddState.heritage = '';
 
-            const selectedCountry = countrySelect.value;
-            document.getElementById("heritage-box").style.display = selectedCountry ? "block" : "none";
+            const regionNameMap = { "欧州": "ヨーロッパ" };
+            const allTotal = Object.keys(regionCountryIDsMap).reduce((s, r) => s + countUniqueIDsInRegion(r), 0);
+            document.getElementById('region-selected').textContent = region
+              ? `${regionNameMap[region] || region} (${countUniqueIDsInRegion(region)})`
+              : `-- 地域を選択 -- (${allTotal})`;
+            document.getElementById('country-selected').textContent = '-- 国を選択 --';
+            document.getElementById('heritage-selected').textContent = '-- 遺産を選択 --';
+            document.getElementById('country-box').style.display  = region ? 'block' : 'none';
+            document.getElementById('heritage-box').style.display = 'none';
 
-            heritageSelect.innerHTML = '<option value="">-- 遺産を選択 --</option>';
-            heritageSelect.disabled  = !selectedCountry;
+            markers.forEach(m => {
+              m.map = (!region || m.customData.region === region) ? map : null;
+            });
+            buildCountryList(region);
+            refreshCluster();
+          }
 
-            if (selectedCountry && countryHeritageMap[selectedCountry]) {
-              const list = Object.values(countryHeritageMap[selectedCountry])
-                .sort((a, b) => Number(a.id) - Number(b.id));
-              list.forEach(({ id, heritageName, grade }) => {
-                const option = document.createElement('option');
-                option.value = `${selectedCountry}.${id}`;
-                const gradeLabel = grade ? grade.split(',').map(g => `【${g}級】`).join('') : '';
-                let displayName = removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
-                if (displayName.length > 30) {
-                  displayName = displayName.slice(0, 15) + '…' + displayName.slice(-10);
-                }
-                option.textContent = `${id}｜${displayName} ${gradeLabel}`;
-                heritageSelect.appendChild(option);
-              });
-            }
+          // 国リスト構築
+          function buildCountryList(region) {
+            const list = document.getElementById('country-list');
+            list.innerHTML = '';
+            if (!region || !regionCountryMap[region]) return;
+            Array.from(regionCountryMap[region]).forEach(country => {
+              if (!country || !country.trim()) return;
+              const idCount = regionCountryIDsMap[region][country]?.size || 0;
+              const item = document.createElement('div');
+              item.className = 'dd-item';
+              item.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+              item.dataset.value = country;
+              item.addEventListener('click', () => onCountrySelect(country));
+              list.appendChild(item);
+            });
+          }
 
-            if (selectedCountry) {
-              markers.forEach(marker => {
-                marker.map = (marker.customData.country === selectedCountry) ? map : null;
-              });
+          // 国選択
+          function onCountrySelect(country) {
+            ddClose();
+            if (infoWindow) { infoWindow.close(); infoWindow = null; }
+            lastOpenedMarker = null;
+            ddState.country  = country;
+            ddState.heritage = '';
+
+            const region = ddState.region;
+            const idCount = regionCountryIDsMap[region][country]?.size || 0;
+            document.getElementById('country-selected').textContent = country
+              ? `${getFlagEmojiFromName(country)} ${country} (${idCount})`
+              : '-- 国を選択 --';
+            document.getElementById('heritage-selected').textContent = '-- 遺産を選択 --';
+            document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
+
+            if (country) {
+              markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
             } else {
-              const selectedRegion = regionSelect.value;
-              markers.forEach(marker => {
-                marker.map = (!selectedRegion || marker.customData.region === selectedRegion) ? map : null;
-              });
+              markers.forEach(m => { m.map = (!region || m.customData.region === region) ? map : null; });
             }
 
-            heritageSelect.value = '';
-            if (selectedCountry) {
-              const capitalCoords = getCapitalLatLng(selectedCountry);
+            buildHeritageList(country);
+
+            if (country) {
+              const capitalCoords = getCapitalLatLng(country);
               if (capitalCoords) map.panTo(capitalCoords);
             }
             refreshCluster();
-          });
+          }
 
-          heritageSelect.addEventListener('change', () => {
-            const selectedHeritage = heritageSelect.value;
-            if (!selectedHeritage) return;
-            const [selectedCountry, id] = selectedHeritage.split('.');
-            if (!selectedCountry || !id) return;
-            const targetMarker = markerIndex.get(`${selectedCountry}_${id}`);
+          // 遺産リスト構築
+          // 遺産リスト構築
+          const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
+
+          function buildHeritageList(country) {
+            const list = document.getElementById('heritage-list');
+            list.innerHTML = '';
+            if (!country || !countryHeritageMap[country]) return;
+            const heritages = Object.values(countryHeritageMap[country])
+              .sort((a, b) => Number(a.id) - Number(b.id));
+            heritages.forEach(({ id, heritageName, grade, ddName }) => {
+              const displayName = ddName
+                ? ddName
+                : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
+              const grades = grade ? grade.split(',') : [];
+              const item = document.createElement('div');
+              item.className = 'dd-item';
+              if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
+              if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
+                item.style.background = gradeColors[selectedGrade];
+              }
+              item.dataset.value = `${country}.${id}`;
+              item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
+              item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
+              list.appendChild(item);
+            });
+          }
+
+          // 遺産選択
+          function onHeritageSelect(value) {
+            ddClose();
+            if (!value) return;
+            const [country, id] = value.split('.');
+            if (!country || !id) return;
+            const targetMarker = markerIndex.get(`${country}_${id}`);
             if (!targetMarker) return;
+
+            ddState.heritage = value;
+            const heritage = countryHeritageMap[country][id];
+            const displayName = heritage?.ddName
+              ? heritage.ddName
+              : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
+            document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
 
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
 
-            markers.forEach(marker => {
-              marker.map = (marker.customData.country === selectedCountry) ? map : null;
-            });
+            markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
 
             const latLng  = targetMarker.position;
             const offsetY = 150;
@@ -720,7 +813,13 @@ map.addListener('idle', () => {
             map.panTo(newCenter);
             setTimeout(() => { showInfo(targetMarker, true); }, 200);
             refreshCluster();
-          });
+          }
+
+          // updateMarkersで使うdd値取得
+          function getDDRegion()  { return ddState.region; }
+          function getDDCountry() { return ddState.country; }
+
+          buildRegionList();
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
@@ -795,8 +894,8 @@ searchInput.addEventListener('input', () => {
     if (infoWindow) { infoWindow.close(); infoWindow = null; }
     isSearchMode = false;
     lastOpenedMarker = null;
-    const selectedRegion  = document.getElementById('region-select').value;
-    const selectedCountry = document.getElementById('country-select').value;
+    const selectedRegion  = getDDRegion();
+    const selectedCountry = getDDCountry();
     markers.forEach(m => {
       if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
       else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
@@ -824,6 +923,24 @@ searchInput.addEventListener('keydown', (e) => {
 });
 
         });
+    }
+
+    function toggleGradeDD() {
+      const list  = document.getElementById('grade-list');
+      const hList = document.getElementById('heritage-list');
+      hList.style.display = 'none';
+      list.style.display  = list.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function onGradeSelect(grade) {
+      selectedGrade = grade;
+      document.getElementById('grade-num').textContent = grade;
+      document.getElementById('grade-list').style.display = 'none';
+      document.querySelectorAll('.grade-list-item').forEach(el => {
+        el.classList.toggle('active', el.textContent.trim() === grade);
+      });
+      const country = getDDCountry();
+      if (country) buildHeritageList(country);
     }
 
     function openImageModal(src) {
@@ -895,8 +1012,8 @@ searchInput.addEventListener('keydown', (e) => {
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       isSearchMode     = false;
       lastOpenedMarker = null;
-      const selectedRegion  = document.getElementById('region-select').value;
-      const selectedCountry = document.getElementById('country-select').value;
+      const selectedRegion  = getDDRegion();
+      const selectedCountry = getDDCountry();
       markers.forEach(m => {
         if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
         else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
