@@ -742,7 +742,8 @@ function getScoredResults(keyword) {
   return heritageData
     .map(d => {
       const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
-        .filter(Boolean).map(normalizeText);
+  .filter(Boolean)
+  .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
       let score = 0;
       targets.forEach(t => {
         if (t.startsWith(keyword)) score += 100;
