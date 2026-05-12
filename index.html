@@ -55,14 +55,14 @@
         </div>
         <div class="grade-box">
           <div class="grade-dd-wrap" id="grade-dd">
-            <div class="grade-num-btn" id="grade-selected" onclick="toggleGradeDD()">
+            <div class="grade-num-btn" id="grade-selected" onclick="event.stopPropagation(); toggleGradeDD()">
               <span id="grade-num">-</span>
             </div>
             <div class="grade-list" id="grade-list">
-              <div class="grade-list-item active" onclick="onGradeSelect('-')">-</div>
-              <div class="grade-list-item" onclick="onGradeSelect('1')">1</div>
-              <div class="grade-list-item" onclick="onGradeSelect('2')">2</div>
-              <div class="grade-list-item" onclick="onGradeSelect('3')">3</div>
+              <div class="grade-list-item active" onclick="event.stopPropagation(); onGradeSelect('-')">-</div>
+              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('1')">1</div>
+              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('2')">2</div>
+              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('3')">3</div>
             </div>
           </div>
           <div class="grade-fixed">級</div>
