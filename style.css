@@ -268,15 +268,19 @@ html, body, #map {
 .grade-list-item:hover { background: rgba(0,0,0,0.05); }
 .grade-list-item.active { background: rgba(0,0,0,0.06); font-weight: 500; }
 
-/* 遺産+級BOXのコンテナ（合計幅200px） */
+/* 遺産+級BOXのコンテナ */
 #heritage-box > div {
   width: 200px;
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
 }
 
-/* 遺産DDはflex:1で残りを占有（grade-boxの分を引く） */
+/* 遺産DDはflex:1 */
 #heritage-box .dd-wrap {
   width: auto;
   flex: 1;
   min-width: 0;
 }
+
 
