@@ -274,8 +274,9 @@ function removeCircleNumber(str) {
         localStorage.setItem('mapCenter', JSON.stringify(map.getCenter().toJSON()));
       });
       map.addListener('zoom_changed', () => {
-        localStorage.setItem('mapZoom', map.getZoom());
-      });
+  localStorage.setItem('mapZoom', map.getZoom());
+  tooltip.style.display = 'none'; // ← 追加
+});
 
       Promise.all([
   fetch('places.csv').then(r => r.text()),
