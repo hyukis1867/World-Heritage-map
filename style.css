@@ -199,3 +199,7 @@ html, body, #map {
 }
 .dd-item-name { flex: 1; }
 
+.dd-item-grade {
+  display: inline-block;
+  white-space: nowrap;
+}
