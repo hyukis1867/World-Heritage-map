@@ -884,7 +884,8 @@ searchInput.addEventListener('keydown', (e) => {
           item.style.background = gradeColors[selectedGrade];
         }
         item.dataset.value = `${country}.${id}`;
-        item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
+        const check = (ddState.heritage === `${country}.${id}`) ? '✓' : '';
+        item.innerHTML = `<span class="dd-item-check">${check}</span><span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
         item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
         list.appendChild(item);
       });
