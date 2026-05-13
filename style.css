@@ -194,7 +194,7 @@ html, body, #map {
 .dd-item:hover { background: rgba(0,0,0,0.05); }
 .dd-item-id {
   flex-shrink: 0;
-  color: #888;
+  color: #333;
   font-size: 12px;
   padding-top: 1px;
 }
