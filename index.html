@@ -945,20 +945,18 @@ searchInput.addEventListener('keydown', (e) => {
       if (country) buildHeritageList(country);
     }
 
-    // 級ボタンのイベントをDOMContentLoadedで登録
-    document.addEventListener('DOMContentLoaded', () => {
-      const gradeBtn = document.getElementById('grade-selected');
-      if (gradeBtn) {
-        gradeBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          toggleGradeDD();
-        });
-      }
-      document.querySelectorAll('.grade-list-item').forEach(el => {
-        el.addEventListener('click', e => {
-          e.stopPropagation();
-          onGradeSelect(el.dataset.grade);
-        });
+    // 級ボタンのイベントを直接登録
+    const gradeBtn = document.getElementById('grade-selected');
+    if (gradeBtn) {
+      gradeBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleGradeDD();
+      });
+    }
+    document.querySelectorAll('.grade-list-item').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        onGradeSelect(el.dataset.grade);
       });
     });
 
