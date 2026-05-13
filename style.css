@@ -213,9 +213,12 @@ html, body, #map {
   background: rgba(255,255,255,0.88);
   border: 1px solid rgba(0,0,0,0.12);
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;  /* ← hiddenをvisibleに変更 */
+  position: relative;
 }
-.grade-dd-wrap { position: relative; }
+.grade-dd-wrap {
+  position: relative;
+}
 .grade-num-btn {
   display: flex;
   align-items: center;
@@ -243,32 +246,21 @@ html, body, #map {
   color: #555;
   white-space: nowrap;
   background: rgba(0,0,0,0.03);
+  border-radius: 0 4px 4px 0;
 }
 .grade-list {
   display: none;
   position: absolute;
-  top: 100%; right: 0;
+  top: 100%;
+  right: 0;
   width: auto;
-  min-width: unset;
+  min-width: 100%;
   background: #fff;
   border: 1px solid rgba(0,0,0,0.15);
   border-top: none;
   border-radius: 0 0 4px 4px;
   z-index: 999999;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* 遺産リストの幅を200pxに固定 */
-#heritage-list {
-  width: 200px;
-}
-
-/* 遺産選択後のBOX幅を固定 */
-#heritage-box .dd-selected {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .grade-list-item {
   padding: 6px 8px;
@@ -285,18 +277,20 @@ html, body, #map {
 /* 遺産+級BOXのコンテナ */
 #heritage-box > div {
   width: 200px;
-  max-width: 200px;
   display: flex;
   gap: 4px;
   align-items: stretch;
-  overflow: visible;
 }
 
 #heritage-box .dd-wrap {
-  width: auto;
   flex: 1;
   min-width: 0;
-  overflow: hidden;
+  width: auto;
+}
+
+/* 遺産リストの幅を200pxに固定 */
+#heritage-list {
+  width: 200px;
 }
 
 .dd-list {
