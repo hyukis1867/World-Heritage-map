@@ -117,6 +117,24 @@
     let countryHeritageMap = {};
     const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
 
+    function ddOpen(listId) {
+      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+        if (id !== listId) {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        }
+      });
+      const list = document.getElementById(listId);
+      if (list) list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function ddClose() {
+      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
+
     const tooltip = document.createElement("div");
 
     tooltip.style.position = "absolute";
@@ -614,24 +632,6 @@ map.addListener('idle', () => {
 
           // 状態管理はグローバルddStateを使用
 
-          function ddOpen(listId) {
-            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
-              if (id !== listId) {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'none';
-              }
-            });
-            const list = document.getElementById(listId);
-            list.style.display = list.style.display === 'block' ? 'none' : 'block';
-          }
-
-          function ddClose() {
-            ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
-              const el = document.getElementById(id);
-              if (el) el.style.display = 'none';
-            });
-          }
-
           // 地域ドロップダウンのクリック
           document.getElementById('region-selected').addEventListener('click', () => ddOpen('region-list'));
           document.getElementById('country-selected').addEventListener('click', () => {
@@ -946,13 +946,13 @@ searchInput.addEventListener('keydown', (e) => {
     }
 
     // 級ボタンのイベントを直接登録
-    const gradeBtn = document.getElementById('grade-selected');
-    if (gradeBtn) {
-      gradeBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleGradeDD();
-      });
-    }
+    document.getElementById('grade-selected').addEventListener('click', e => {
+      e.stopPropagation();
+      const list = document.getElementById('grade-list');
+      const hList = document.getElementById('heritage-list');
+      if (hList) hList.style.display = 'none';
+      list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    });
     document.querySelectorAll('.grade-list-item').forEach(el => {
       el.addEventListener('click', e => {
         e.stopPropagation();
