@@ -248,7 +248,7 @@ html, body, #map {
   display: none;
   position: absolute;
   top: 100%; right: 0;
-  width: 100%;
+  width: auto;
   min-width: unset;
   background: #fff;
   border: 1px solid rgba(0,0,0,0.15);
@@ -258,9 +258,17 @@ html, body, #map {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* 遺産リストの幅を国選択と同じ200pxに */
+/* 遺産リストの幅を200pxに固定 */
 #heritage-list {
   width: 200px;
+}
+
+/* 遺産選択後のBOX幅を固定 */
+#heritage-box .dd-selected {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .grade-list-item {
   padding: 6px 8px;
@@ -277,13 +285,18 @@ html, body, #map {
 /* 遺産+級BOXのコンテナ */
 #heritage-box > div {
   width: 200px;
+  max-width: 200px;
   display: flex;
   gap: 4px;
   align-items: stretch;
+  overflow: visible;
 }
 
 #heritage-box .dd-wrap {
   width: auto;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .dd-list {
