@@ -1,7 +1,7 @@
-ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(JP),ひらがな読み,当地名（当地言語）,当地名（EN）,級,thumbUrl,fullUrl,credit,,番号
+ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(JP),ひらがな読み,当地名（当地言語）,当地名（EN）,級,thumbUrl,fullUrl,credit,プルダウン表記,番号
 1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.9022,12.4582,文化遺産,1980,ラツィオ州,教皇領,,,Properties of the Holy See<br>in that City Enjoying Extraterritorial Rights,"3,2",VA_01_Properties_of_the_Holy_See_01.jpg,,Photo by AMANO Jun-ichi (CC BY-SA 3.0),,
 1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.8587,12.4761,文化遺産,1980,ラツィオ州,サン・パオロ・フオーリ・レ・ムーラ大聖堂,,,San Paolo Fuori le Mura,,VA_01_San_Paolo_Fuori_le_Mura_01.jpg,,Photo by Philippe Golaz (CC BY-SA 3.0),,
-1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,45.8910,10.1784,文化遺産,1979,ロンバルディア州,アルケオロージコ・ディ・ルイネ公園,,,Parco Comunale di Luine di Darfo-Boario Terme,1,,,,ヴァル・カモニカの岩絵群,1
+1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,45.8910,10.1784,文化遺産,1979,ロンバルディア州,アルケオロージコ・ディ・ルイネ公園,,,Parco Comunale di Luine di Darfo-Boario Terme,1,,,,ヴァル・カモニカ<br>の岩絵群,1
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0307,10.3389,文化遺産,1979,ロンバルディア州,アルケオロージコ・ナツィオナーレ・<br>デイ・マッシ・ディ・チェンモ公園,,,Parco Archeologico Nazionale<br>dei Massi di Cemmo,,,,,,2
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0349,10.3430,文化遺産,1979,ロンバルディア州,アルケオロージコ・コムナーレ<br>・ディ・セラディナ＝ベドリナ公園,,,Parco Archeologico Comunale<br>di Seradina-Bedolina in Capo di Ponte,,,,,,3
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0584,10.3371,文化遺産,1979,ロンバルディア州,セッレロ公園,,,Parco Comunale di Sellero,,,,,,4
@@ -15,7 +15,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 6,欧州,イタリア共和国,ピサのドゥオモ広場,43.7232,10.3947,文化遺産,1987,トスカーナ州,ピサ,,,Piazza del Duomo in Pisa,3,IT_06_Piazza_del_Duomo_in_Pisa_01.jpg,,Photo by Arne Müseler (CC BY-SA 3.0),ピサのドゥオモ広場,
 7,欧州,イタリア共和国,サン・ジミニャーノ歴史地区,43.4670,11.0422,文化遺産,1990,トスカーナ州,サン・ジミニャーノ,,,Historic Centre of San Gimignano,1,IT_07_Historic_Centre_of_San_Gimignano_01.jpg,,Photo by Lorenzo Gaudenzi (CC BY-SA 4.0),サン・ジミニャーノ<br>歴史地区,
 8,欧州,イタリア共和国,マテーラの洞窟住居と岩窟教会公園,40.6648,16.6108,文化遺産,1993,バジリカータ州,マテーラ,,,he Sassi and the Park<br>of the Rupestrian Churches of Matera,,,,,マテーラの洞窟住居と<br>岩窟教会公園,
-9,欧州,イタリア共和国,ヴィチェンツァ市街と<br>パッラーディオの邸宅群,45.5469,11.5445,文化遺産,1994,ヴェネト州,ヴィチェンツァ市街<br>（パッラーディオ設計の23の建造物を含む）,,,City of Vicenza<br>(including 23 buildings constructed by Palladio),,IT_09_City_of_Vicenza_01.jpg,,Photo by Federico (CC BY-SA 4.0),,1
+9,欧州,イタリア共和国,ヴィチェンツァ市街と<br>パッラーディオの邸宅群,45.5469,11.5445,文化遺産,1994,ヴェネト州,ヴィチェンツァ市街<br>（パッラーディオ設計の23の建造物を含む）,,,City of Vicenza<br>(including 23 buildings constructed by Palladio),,IT_09_City_of_Vicenza_01.jpg,,Photo by Federico (CC BY-SA 4.0),ヴィチェンツァ市街と<br>パッラーディオの邸宅群,1
 9,欧州,イタリア共和国,ヴィチェンツァ市街と<br>パッラーディオの邸宅群,45.5315,11.5602,文化遺産,1994,ヴェネト州,ヴィッラ・アルメリコ・カプラ,,,Villa Almerico Capra,,IT_09_Villa_Almerico_Capra_01.jpg,,Photo by Hans A. Rosbach (CC BY-SA 3.0),,2
 9,欧州,イタリア共和国,ヴィチェンツァ市街と<br>パッラーディオの邸宅群,45.5664,11.5481,文化遺産,1994,ヴェネト州,トリッシノ邸（現トレッテネロ、クリコリ）,,,Villa Trissino / now Trettenero / Cricoli,,,,,,3
 9,欧州,イタリア共和国,ヴィチェンツァ市街と<br>パッラーディオの邸宅群,45.5593,11.6009,文化遺産,1994,ヴェネト州,ガツォッティ邸,,,Villa Gazzotti Grimani,,,,,,4
@@ -46,16 +46,16 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 11,欧州,イタリア共和国,ナポリ歴史地区,40.7966,14.1932,文化遺産,1995,カンパニア州,マレキアーロ,,,Marechiaro,,,,,,3
 11,欧州,イタリア共和国,ナポリ歴史地区,40.8037,14.1920,文化遺産,1995,カンパニア州,カザーレとサント・ストラト地区,,,District of Casale and Santo Strato,,,,,,4
 12,欧州,イタリア共和国,クレスピ・ダッダ,45.5966,9.5353,文化遺産,1995,ロンバルディア州,,,,Crespi d'Adda,1,IT_12_Crespi_d_Adda_01.jpg,,Photo by adirricor (CC BY-SA 3.0),,
-13,欧州,イタリア共和国,フェッラーラ：ルネサンス期の市街と<br>ポー川のデルタ,44.8334,11.6146,文化遺産,1995,エミリア＝ロマーニャ州,フェッラーラ,,,Ferrara,1,IT_13_Ferrara_01.jpg,,Photo by Almusaiti (CC BY-SA 2.0),,1
+13,欧州,イタリア共和国,フェッラーラ：ルネサンス期の市街と<br>ポー川のデルタ,44.8334,11.6146,文化遺産,1995,エミリア＝ロマーニャ州,フェッラーラ,,,Ferrara,1,IT_13_Ferrara_01.jpg,,Photo by Almusaiti (CC BY-SA 2.0),フェッラーラ：<br>ルネサンス期の市街と<br>ポー川のデルタ,1
 13,欧州,イタリア共和国,フェッラーラ：ルネサンス期の市街と<br>ポー川のデルタ,44.8849,11.5093,文化遺産,1995,エミリア＝ロマーニャ州,ディアマンティーナ,,,Diamantina,,,,,,2
 14,欧州,イタリア共和国,デル・モンテ城,41.0847,16.2710,文化遺産,1996,プーリア州,,,,Castel del Monte,"3,2",IT_14_Castel_del_Monte_01.jpg,,Photo by Calogero77 (CC BY-SA 4.0),,
-15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7844,17.2379,文化遺産,1996,プーリア州,カーサ・ダモーレ,,,Casa D'Amore,3,IT_15_Casa_D_Amore_01.jpg,,Photo by Bernard Gagnon via Wikimedia Commons,,1
+15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7844,17.2379,文化遺産,1996,プーリア州,カーサ・ダモーレ,,,Casa D'Amore,3,IT_15_Casa_D_Amore_01.jpg,,Photo by Bernard Gagnon via Wikimedia Commons,アルベロベッロの<br>トゥルッリ,1
 15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7840,17.2385,文化遺産,1996,プーリア州,メルカート広場,,,Piazza del Mercato,,,,,,2
 15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7840,17.2390,文化遺産,1996,プーリア州,歴史博物館,,,Museo Storico,,,,,,3
 15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7873,17.2353,文化遺産,1996,プーリア州,トゥルッロ・ソヴラーノ,,,Trullo Sovrano,,IT_15_Trullo_Sovrano_01.jpg,,Photo by Benjamin Smith (CC BY-SA 4.0),,4
 15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7837,17.2386,文化遺産,1996,プーリア州,アイア・ピッコロ地区,,,Quartiere Aja Piccola,,,,,,5
 15,欧州,イタリア共和国,アルベロベッロのトゥルッリ,40.7833,17.2333,文化遺産,1996,プーリア州,モンティ地区,,,Quartiere Monti,,IT_15_Quartiere_Monti_01.jpg,,Photo by Berthold Werner (CC BY-SA 3.0),,6
-16,欧州,イタリア共和国,ラヴェンナの初期キリスト教建築物群,44.4209,12.1970,文化遺産,1996,エミリア＝ロマーニャ州,ガッラ・プラキディア廟堂,,,Mausoleum of Galla Placida,2,IT_16_Mausoleum_of_Galla_Placida_01.jpg,,Photo by Petar Milošević (CC BY-SA 4.0),,1
+16,欧州,イタリア共和国,ラヴェンナの初期キリスト教建築物群,44.4209,12.1970,文化遺産,1996,エミリア＝ロマーニャ州,ガッラ・プラキディア廟堂,,,Mausoleum of Galla Placida,2,IT_16_Mausoleum_of_Galla_Placida_01.jpg,,Photo by Petar Milošević (CC BY-SA 4.0),ラヴェンナの<br>初期キリスト教建築物群,1
 16,欧州,イタリア共和国,ラヴェンナの初期キリスト教建築物群,44.4205,12.1963,文化遺産,1996,エミリア＝ロマーニャ州,サン・ヴィターレ聖堂,,,Church of St. Vitale,,IT_16_Church_of_St_Vitale_01.jpg,,Photo by Conor Manley (CC BY-SA 4.0),,2
 16,欧州,イタリア共和国,ラヴェンナの初期キリスト教建築物群,44.4150,12.1972,文化遺産,1996,エミリア＝ロマーニャ州,ネオニ/アルチヴェスコヴィーレ礼拝堂<br>（サンタンドレア礼拝堂）,,,Archiepiscopal Chapel,,IT_16_Archiepiscopal_Chapel_01.jpg,,Photo by Zairon (CC BY-SA 4.0),,3
 16,欧州,イタリア共和国,ラヴェンナの初期キリスト教建築物群,44.4166,12.2046,文化遺産,1996,エミリア＝ロマーニャ州,サンタポリナーレ・ヌオヴォ聖堂,,,Basilica of St. Apollinaire Nuovo,,IT_16_Basilica_of_St_Apollinaire_Nuovo_01.jpg,,Photo by bradhostetler (CC BY-SA 2.0),,4
