@@ -301,12 +301,4 @@ html, body, #map {
 .dd-list::-webkit-scrollbar-track { background: transparent; }
 .dd-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
 
-.dd-item-check {
-  flex-shrink: 0;
-  width: 14px;
-  font-size: 11px;
-  color: #555;
-  padding-top: 1px;
-}
-
 
