@@ -69,7 +69,8 @@ html, body, #map {
 
 #dropdown-container select,
 #search-input {
-  width: 200px;  /* ← これを追加 */
+  width: 200px;
+  box-sizing: border-box;  /* ← 追加 */
   background: rgba(255,255,255,0.85);
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -136,7 +137,7 @@ html, body, #map {
 /* カスタムドロップダウン */
 .dd-wrap {
   position: relative;
-  width: 200px;
+  width: 200px;  /* 地域・国はそのまま200px */
 }
 .dd-selected {
   width: 100%;
@@ -267,3 +268,22 @@ html, body, #map {
 .grade-list-item:hover { background: rgba(0,0,0,0.05); }
 .grade-list-item.active { background: rgba(0,0,0,0.06); font-weight: 500; }
 
+/* 遺産+級BOXのコンテナ */
+#heritage-box > div {
+  width: 200px;
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
+}
+
+#heritage-box .dd-wrap {
+  width: auto;
+}
+
+.dd-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+.dd-list::-webkit-scrollbar { width: 4px; }
+.dd-list::-webkit-scrollbar-track { background: transparent; }
+.dd-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
