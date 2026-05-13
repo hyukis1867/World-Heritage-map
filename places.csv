@@ -1,7 +1,7 @@
 ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(JP),ひらがな読み,当地名（当地言語）,当地名（EN）,級,thumbUrl,fullUrl,credit,プルダウン表記,番号
 1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.9022,12.4582,文化遺産,1980,ラツィオ州,教皇領,,,Properties of the Holy See<br>in that City Enjoying Extraterritorial Rights,"3,2",VA_01_Properties_of_the_Holy_See_01.jpg,,Photo by AMANO Jun-ichi (CC BY-SA 3.0),,
 1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.8587,12.4761,文化遺産,1980,ラツィオ州,サン・パオロ・フオーリ・レ・ムーラ大聖堂,,,San Paolo Fuori le Mura,,VA_01_San_Paolo_Fuori_le_Mura_01.jpg,,Photo by Philippe Golaz (CC BY-SA 3.0),,
-1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,45.8910,10.1784,文化遺産,1979,ロンバルディア州,アルケオロージコ・ディ・ルイネ公園,,,Parco Comunale di Luine di Darfo-Boario Terme,1,,,,ヴァル・カモニカ<br>の岩絵群,1
+1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,45.8910,10.1784,文化遺産,1979,ロンバルディア州,アルケオロージコ・ディ・ルイネ公園,,,Parco Comunale di Luine di Darfo-Boario Terme,1,,,,ヴァル・カモニカの<br>岩絵群,1
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0307,10.3389,文化遺産,1979,ロンバルディア州,アルケオロージコ・ナツィオナーレ・<br>デイ・マッシ・ディ・チェンモ公園,,,Parco Archeologico Nazionale<br>dei Massi di Cemmo,,,,,,2
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0349,10.3430,文化遺産,1979,ロンバルディア州,アルケオロージコ・コムナーレ<br>・ディ・セラディナ＝ベドリナ公園,,,Parco Archeologico Comunale<br>di Seradina-Bedolina in Capo di Ponte,,,,,,3
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0584,10.3371,文化遺産,1979,ロンバルディア州,セッレロ公園,,,Parco Comunale di Sellero,,,,,,4
@@ -82,7 +82,7 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 19,欧州,イタリア共和国,サヴォイア王家の王宮群,44.8048,8.0999,文化遺産,1997,ピエモンテ州,ゴヴォネ城,,,Castello di Govone,,IT_19_Castello_di_Govone_01.jpg,,Photo by Davide Papalini (CC BY-SA 3.0),,13
 19,欧州,イタリア共和国,サヴォイア王家の王宮群,44.6819,7.8940,文化遺産,1997,ピエモンテ州,ポレンツォ城,,,Castello di Pollenzo,,IT_19_Castello_di_Pollenzo_01.jpg,,Photo by Georgius LXXXIX (CC BY-SA 4.0),,14
 20,欧州,イタリア共和国,パドヴァの植物園［オルト・ボタニコ］,45.3994,11.8798,文化遺産,1997,ヴェネト州,パドヴァ,,,Botanical Garden (Orto Botanico) / Padua,1,IT_20_Botanical_Garden_01.jpg,,Photo by Semolo75 via Wikimedia Commons,パドヴァの植物園<br>［オルト・ボタニコ］,
-21,欧州,イタリア共和国,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,44.0571,9.8384,文化遺産,1997,リグーリア州,ポルトヴェーネレ,,,Portovenere,,,,,,1
+21,欧州,イタリア共和国,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,44.0571,9.8384,文化遺産,1997,リグーリア州,ポルトヴェーネレ,,,Portovenere,,,,,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,1
 21,欧州,イタリア共和国,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,44.1462,9.6498,文化遺産,1997,リグーリア州,チンクエ・テッレ : <br>モンテロッソ・アル・マーレ,,,Cinque Terre / Monterosso al Mare,,,,,,2
 21,欧州,イタリア共和国,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,44.1352,9.6835,文化遺産,1997,リグーリア州,チンクエ・テッレ : ヴェルナッツァ,,,Cinque Terre / Vernazza,,,,,,3
 21,欧州,イタリア共和国,ポルトヴェーネレ、<br>チンクエ・テッレと小島群,44.1199,9.7102,文化遺産,1997,リグーリア州,チンクエ・テッレ : コルニリア,,,Cinque Terre / Corniglia,,,,,,4
@@ -103,8 +103,8 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 23,欧州,イタリア共和国,ポンペイ、エルコラーノおよび<br>トッレ・アヌンツィアータの遺跡地域,40.8074,14.3448,文化遺産,1997,カンパニア州,パピルスの家（ヴィッラ・デイ・パピリ）,,,Villa dei Papiri,,IT_23_Villa_dei_Papiri_01.jpg,,Photo by Cayambe (CC BY-SA 4.0),,7
 24,欧州,イタリア共和国,アマルフィ海岸,40.6333,14.6029,文化遺産,1997,カンパニア州,アマルフィ,,,Costiera Amalfitana,,IT_24_Costiera_Amalfitana_01.jpg,,Photo by Alessandro Ambrosetti (CC BY-SA 2.0),,
 25,欧州,イタリア共和国,アグリジェントの遺跡地域,37.3101,13.5833,文化遺産,1997,シチリア自治州,アグリジェント,,,Archaeological Area of Agrigento,,IT_25_Archaeological_Area_of_Agrigento_01.jpg,,Photo by Benjamin Smith (CC BY-SA 4.0),,
-26,欧州,イタリア共和国,ヴィッラ・ロマーナ・デル・カサーレ,37.3646,14.3344,文化遺産,1997,シチリア自治州,,,,Villa Romana del Casale,1,IT_26_Villa_Romana_del_Casale_01.jpg,,Photo by José Luiz Bernardes Ribeiro (CC BY-SA 4.0),,
-27,欧州,イタリア共和国,スー・ヌラージ・ディ・バルーミニ,39.7059,8.9910,文化遺産,1997,サルデーニャ自治州,,,,Su Nuraxi di Barumini,1,IT_27_Su_Nuraxi_di_Barumini_01.jpg,,Photo by Norbert Nagel (CC BY-SA 3.0),,
+26,欧州,イタリア共和国,ヴィッラ・ロマーナ・デル・カサーレ,37.3646,14.3344,文化遺産,1997,シチリア自治州,,,,Villa Romana del Casale,1,IT_26_Villa_Romana_del_Casale_01.jpg,,Photo by José Luiz Bernardes Ribeiro (CC BY-SA 4.0),ヴィッラ・ロマーナ・<br>デル・カサーレ,
+27,欧州,イタリア共和国,スー・ヌラージ・ディ・バルーミニ,39.7059,8.9910,文化遺産,1997,サルデーニャ自治州,,,,Su Nuraxi di Barumini,1,IT_27_Su_Nuraxi_di_Barumini_01.jpg,,Photo by Norbert Nagel (CC BY-SA 3.0),スー・ヌラージ・ディ・<br>バルーミニ,
 28,欧州,イタリア共和国,アクイレイアの遺跡地域と<br>総主教聖堂バシリカ,45.7675,13.3672,文化遺産,1998,フリウリ＝ヴェネツィア・ジュリア自治州,アクイレイア,,,Archaeological Area<br>and the Patriarchal Basilica of Aquileia,,IT_28_Aquileia_01.jpg,,Photo by Carsten Steger (CC BY-SA 4.0),,
 29,欧州,イタリア共和国,ウルビーノ歴史地区,43.7254,12.6353,文化遺産,1998,マルケ州,ウルビーノ,,,Historic Centre of Urbino,,IT_29_Historic_Centre_of_Urbino_01.jpg,,Photo by Terragio67 (CC BY-SA 4.0),,
 30,欧州,イタリア共和国,パエストゥムとヴェリアの古代遺跡群を<br>含むチレント・エ・ヴァッロ・<br>ディ・ディアノ国立公園とパドゥーラの<br>カルトゥジオ修道院,40.4269,15.0050,文化遺産,1998,カンパニア州,パエストゥム,,,Paestum,1,IT_30_Paestum_01.jpg,,Photo by Kasa Fue (CC BY-SA 4.0),,1
