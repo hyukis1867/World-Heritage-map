@@ -69,7 +69,8 @@ html, body, #map {
 
 #dropdown-container select,
 #search-input {
-  width: 200px;  /* ← これを追加 */
+  width: 200px;
+  box-sizing: border-box;  /* ← 追加 */
   background: rgba(255,255,255,0.85);
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -136,7 +137,7 @@ html, body, #map {
 /* カスタムドロップダウン */
 .dd-wrap {
   position: relative;
-  width: 200px;
+  width: 200px;  /* 地域・国はそのまま200px */
 }
 .dd-selected {
   width: 100%;
@@ -203,3 +204,105 @@ html, body, #map {
   display: inline-block;
   white-space: nowrap;
 }
+
+/* 級ボックス [ 数字▾ | 級 ] */
+.grade-box {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.grade-dd-wrap { position: relative; }
+.grade-num-btn {
+  display: flex;
+  align-items: center;
+  padding: 4px 18px 4px 6px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  color: #333;
+  position: relative;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  white-space: nowrap;
+}
+.grade-num-btn::after {
+  content: '▾';
+  position: absolute;
+  right: 4px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px; color: #666;
+}
+.grade-fixed {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  font-size: 13px;
+  color: #555;
+  white-space: nowrap;
+  background: rgba(0,0,0,0.03);
+}
+.grade-list {
+  display: none;
+  position: absolute;
+  top: 100%; right: 0;
+  width: auto;
+  min-width: unset;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 999999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 遺産リストの幅を200pxに固定 */
+#heritage-list {
+  width: 200px;
+}
+
+/* 遺産選択後のBOX幅を固定 */
+#heritage-box .dd-selected {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.grade-list-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  border-bottom: 0.5px solid rgba(0,0,0,0.05);
+  color: #333;
+}
+.grade-list-item:last-child { border-bottom: none; }
+.grade-list-item:hover { background: rgba(0,0,0,0.05); }
+.grade-list-item.active { background: rgba(0,0,0,0.06); font-weight: 500; }
+
+/* 遺産+級BOXのコンテナ */
+#heritage-box > div {
+  width: 200px;
+  max-width: 200px;
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
+  overflow: visible;
+}
+
+#heritage-box .dd-wrap {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dd-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+.dd-list::-webkit-scrollbar { width: 4px; }
+.dd-list::-webkit-scrollbar-track { background: transparent; }
+.dd-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
