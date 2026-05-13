@@ -55,14 +55,14 @@
         </div>
         <div class="grade-box">
           <div class="grade-dd-wrap" id="grade-dd">
-            <div class="grade-num-btn" id="grade-selected" onclick="event.stopPropagation(); toggleGradeDD()">
+            <div class="grade-num-btn" id="grade-selected">
               <span id="grade-num">-</span>
             </div>
             <div class="grade-list" id="grade-list">
-              <div class="grade-list-item active" onclick="event.stopPropagation(); onGradeSelect('-')">-</div>
-              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('1')">1</div>
-              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('2')">2</div>
-              <div class="grade-list-item" onclick="event.stopPropagation(); onGradeSelect('3')">3</div>
+              <div class="grade-list-item active" data-grade="-">-</div>
+              <div class="grade-list-item" data-grade="1">1</div>
+              <div class="grade-list-item" data-grade="2">2</div>
+              <div class="grade-list-item" data-grade="3">3</div>
             </div>
           </div>
           <div class="grade-fixed">級</div>
@@ -939,11 +939,28 @@ searchInput.addEventListener('keydown', (e) => {
       document.getElementById('grade-num').textContent = grade;
       document.getElementById('grade-list').style.display = 'none';
       document.querySelectorAll('.grade-list-item').forEach(el => {
-        el.classList.toggle('active', el.textContent.trim() === grade);
+        el.classList.toggle('active', el.dataset.grade === grade);
       });
       const country = getDDCountry();
       if (country) buildHeritageList(country);
     }
+
+    // 級ボタンのイベントをDOMContentLoadedで登録
+    document.addEventListener('DOMContentLoaded', () => {
+      const gradeBtn = document.getElementById('grade-selected');
+      if (gradeBtn) {
+        gradeBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          toggleGradeDD();
+        });
+      }
+      document.querySelectorAll('.grade-list-item').forEach(el => {
+        el.addEventListener('click', e => {
+          e.stopPropagation();
+          onGradeSelect(el.dataset.grade);
+        });
+      });
+    });
 
     function openImageModal(src) {
       const modal    = document.getElementById("image-modal");
