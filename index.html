@@ -48,24 +48,27 @@
       </div>
     </div>
     <div id="heritage-box" style="display: none;">
-      <div style="display:flex; gap:4px; align-items:stretch; width:200px;">
-        <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0; width:auto;">
-          <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
-          <div class="dd-list" id="heritage-list"></div>
-        </div>
-        <div class="grade-box">
-          <div class="grade-dd-wrap" id="grade-dd">
-            <div class="grade-num-btn" id="grade-selected">
-              <span id="grade-num">-</span>
-            </div>
-            <div class="grade-list" id="grade-list">
-              <div class="grade-list-item active" data-grade="-">-</div>
-              <div class="grade-list-item" data-grade="1">1</div>
-              <div class="grade-list-item" data-grade="2">2</div>
-              <div class="grade-list-item" data-grade="3">3</div>
-            </div>
+      <div style="position:relative; width:200px;">
+        <div style="display:flex; gap:4px; align-items:stretch;">
+          <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0; width:auto;">
+            <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
+            <div class="dd-list" id="heritage-list"></div>
           </div>
-          <div class="grade-fixed">級</div>
+          <div class="grade-box">
+            <div class="grade-dd-wrap" id="grade-dd">
+              <div class="grade-num-btn" id="grade-selected">
+                <span id="grade-num">-</span>
+              </div>
+            </div>
+            <div class="grade-fixed">級</div>
+          </div>
+        </div>
+        <!-- grade-listをgrade-boxの外に配置 -->
+        <div class="grade-list" id="grade-list" style="position:absolute; right:0; top:100%; min-width:44px;">
+          <div class="grade-list-item active" data-grade="-">-</div>
+          <div class="grade-list-item" data-grade="1">1</div>
+          <div class="grade-list-item" data-grade="2">2</div>
+          <div class="grade-list-item" data-grade="3">3</div>
         </div>
       </div>
     </div>
