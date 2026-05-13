@@ -247,14 +247,20 @@ html, body, #map {
 .grade-list {
   display: none;
   position: absolute;
-  top: 100%; left: 0;
-  min-width: 100%;
+  top: 100%; right: 0;
+  width: 100%;
+  min-width: unset;
   background: #fff;
   border: 1px solid rgba(0,0,0,0.15);
   border-top: none;
   border-radius: 0 0 4px 4px;
   z-index: 999999;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 遺産リストの幅を国選択と同じ200pxに */
+#heritage-list {
+  width: 200px;
 }
 .grade-list-item {
   padding: 6px 8px;
