@@ -48,27 +48,25 @@
       </div>
     </div>
     <div id="heritage-box" style="display: none;">
-      <div style="position:relative; width:200px;">
-        <div style="display:flex; gap:4px; align-items:stretch;">
-          <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0; width:auto;">
-            <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
-            <div class="dd-list" id="heritage-list"></div>
-          </div>
-          <div class="grade-box">
-            <div class="grade-dd-wrap" id="grade-dd">
-              <div class="grade-num-btn" id="grade-selected">
-                <span id="grade-num">-</span>
-              </div>
-            </div>
-            <div class="grade-fixed">級</div>
-          </div>
+      <div style="position:relative; width:200px; display:flex; gap:4px; align-items:stretch;">
+        <div class="dd-wrap" id="heritage-dd" style="flex:1; min-width:0; width:auto;">
+          <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
+          <div class="dd-list" id="heritage-list"></div>
         </div>
-        <!-- grade-listをgrade-boxの外に配置 -->
-        <div class="grade-list" id="grade-list" style="position:absolute; right:0; top:100%;">
-          <div class="grade-list-item active" data-grade="-">-</div>
-          <div class="grade-list-item" data-grade="1">1</div>
-          <div class="grade-list-item" data-grade="2">2</div>
-          <div class="grade-list-item" data-grade="3">3</div>
+        <div class="grade-box">
+          <div class="grade-dd-wrap" id="grade-dd">
+            <div class="grade-num-btn" id="grade-selected">
+              <span id="grade-num">-</span>
+            </div>
+            <div class="grade-list" id="grade-list">
+              <div class="grade-list-item active" data-grade="-">-</div>
+              <div class="grade-list-item" data-grade="1">1</div>
+              <div class="grade-list-item" data-grade="2">2</div>
+              <div class="grade-list-item" data-grade="3">3</div>
+              <div class="grade-list-item" data-grade="4">4</div> 
+            </div>
+          </div>
+          <div class="grade-fixed">級</div>
         </div>
       </div>
     </div>
@@ -118,7 +116,7 @@
 
     // 遺産マップと級カラー（グローバル）
     let countryHeritageMap = {};
-    const gradeColors = { '1':'#FFF9C4', '2':'#FFD6E0', '3':'#FFE0CC' };
+    const gradeColors = { '1':'#a0d8ef', '2':'#C8E86A', '3':'#fff3b8', '4':'#E8440A' };
 
     function ddOpen(listId) {
       ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
@@ -239,7 +237,7 @@ function removeCircleNumber(str) {
       const data = marker.customData;
       if (!data) return;
       isPinned = pinned;
-      const baseCDN  = "https://cdn.jsdelivr.net/gh/hyukis1867/World-Heritage-map@main";
+      const baseCDN = "https://hyukis1867.github.io/World-Heritage-map";
       const fileName = data.imageUrl ? data.imageUrl.split('/').pop() : '';
       const country  = fileName.split("_")[0];
 
@@ -336,19 +334,20 @@ function removeCircleNumber(str) {
 
 const countryRows = countriesCsv.trim().split('\n').slice(1);
 
+const countryDisplayMap = {};  // ← グローバル変数に追加してもOK
+
 countryRows.forEach(row => {
   const cols = parseCSVLine(row);
-
-  const country = cols[0]?.trim();
-  const code = cols[1]?.trim();
-  const reading = cols[2]?.trim();
-  const lat = parseFloat(cols[3]?.trim());
-const lng = parseFloat(cols[4]?.trim());
-
+  const country     = cols[0]?.trim();
+  const code        = cols[1]?.trim();
+  const reading     = cols[2]?.trim();
+  const lat         = parseFloat(cols[3]?.trim());
+  const lng         = parseFloat(cols[4]?.trim());
+  const displayName = cols[5]?.trim() || '';  // 6列目
   if (country) {
-    countryCodeMap[country] = code;
-    countryReadingMap[country] = reading;
-
+    countryCodeMap[country]     = code;
+    countryReadingMap[country]  = reading;
+    if (displayName) countryDisplayMap[country] = displayName;
     if (!isNaN(lat) && !isNaN(lng)) {
       capitalMap[country] = { lat, lng };
     }
@@ -411,7 +410,7 @@ idCountMap[key]++;
   const gradeRaw = columns[13]?.trim() || "";
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
-  const ddName = columns[18]?.trim() || "";  // ドロップダウン表示名（19列目）
+  const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -722,7 +721,8 @@ map.addListener('idle', () => {
               const idCount = regionCountryIDsMap[region][country]?.size || 0;
               const item = document.createElement('div');
               item.className = 'dd-item';
-              item.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+              const dispName = countryDisplayMap[country] || country;
+              item.innerHTML = `<span style="flex-shrink:0; margin-right:3px;">${getFlagEmojiFromName(country)}</span><span style="flex:1;">${dispName} (${idCount})</span>`;
               item.dataset.value = country;
               item.addEventListener('click', () => onCountrySelect(country));
               list.appendChild(item);
@@ -784,7 +784,7 @@ const suggestBox  = document.getElementById('search-suggest');
 function getScoredResults(keyword) {
   return heritageData
     .map(d => {
-      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
+      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName]
   .filter(Boolean)
   .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
       let score = 0;
@@ -820,7 +820,16 @@ function showSuggests(keyword) {
   const results = getScoredResults(keyword).slice(0, 5);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
-    const displayName = (d.localNameJP || d.heritageName).replace(/<br\s*\/?>/gi, '');
+    const kw = searchInput.value.trim();
+const nkw = normalizeText(kw);
+const displayName = (
+  (d.ddName && normalizeText(d.ddName).includes(nkw)) ? d.ddName :
+  (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
+  (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
+  (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
+  (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
+  d.ddName || d.heritageName
+).replace(/<br\s*\/?>/gi, '');
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
@@ -908,8 +917,8 @@ searchInput.addEventListener('keydown', (e) => {
       ddState.heritage = value;
       const heritage = countryHeritageMap[country][id];
       const displayName = heritage?.ddName
-        ? heritage.ddName
-        : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
+      ? heritage.ddName.replace(/<br\s*\/?>/gi, ' ')
+      : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
       document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
 
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
