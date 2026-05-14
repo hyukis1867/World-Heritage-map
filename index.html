@@ -333,19 +333,20 @@ function removeCircleNumber(str) {
 
 const countryRows = countriesCsv.trim().split('\n').slice(1);
 
+const countryDisplayMap = {};  // ← グローバル変数に追加してもOK
+
 countryRows.forEach(row => {
   const cols = parseCSVLine(row);
-
-  const country = cols[0]?.trim();
-  const code = cols[1]?.trim();
-  const reading = cols[2]?.trim();
-  const lat = parseFloat(cols[3]?.trim());
-const lng = parseFloat(cols[4]?.trim());
-
+  const country     = cols[0]?.trim();
+  const code        = cols[1]?.trim();
+  const reading     = cols[2]?.trim();
+  const lat         = parseFloat(cols[3]?.trim());
+  const lng         = parseFloat(cols[4]?.trim());
+  const displayName = cols[18]?.trim() || '';  // 19列目
   if (country) {
-    countryCodeMap[country] = code;
-    countryReadingMap[country] = reading;
-
+    countryCodeMap[country]     = code;
+    countryReadingMap[country]  = reading;
+    if (displayName) countryDisplayMap[country] = displayName;
     if (!isNaN(lat) && !isNaN(lng)) {
       capitalMap[country] = { lat, lng };
     }
@@ -719,7 +720,8 @@ map.addListener('idle', () => {
               const idCount = regionCountryIDsMap[region][country]?.size || 0;
               const item = document.createElement('div');
               item.className = 'dd-item';
-              item.textContent = `${getFlagEmojiFromName(country)} ${country} (${idCount})`;
+              const dispName = countryDisplayMap[country] || country;
+              item.innerHTML = `<span style="flex-shrink:0; margin-right:3px;">${getFlagEmojiFromName(country)}</span><span style="flex:1;">${dispName} (${idCount})</span>`;
               item.dataset.value = country;
               item.addEventListener('click', () => onCountrySelect(country));
               list.appendChild(item);
