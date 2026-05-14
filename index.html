@@ -156,13 +156,11 @@
     // クラスタ・マーカー表示更新
     // ============================================================
     function refreshCluster() {
-  if (!markerCluster) return;
-
-  const visibleMarkers = markers.filter(m => m.map !== null);
-
-  markerCluster.clearMarkers();
-  markerCluster.addMarkers(visibleMarkers);
-}
+      if (!markerCluster) return;
+      const visibleMarkers = markers.filter(m => m.getVisible());
+      markerCluster.clearMarkers();
+      markerCluster.addMarkers(visibleMarkers);
+    }
 
 let lastBounds = null;
 
