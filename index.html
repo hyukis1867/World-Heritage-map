@@ -781,7 +781,7 @@ const suggestBox  = document.getElementById('search-suggest');
 function getScoredResults(keyword) {
   return heritageData
     .map(d => {
-      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN]
+      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName]
   .filter(Boolean)
   .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
       let score = 0;
@@ -905,8 +905,8 @@ searchInput.addEventListener('keydown', (e) => {
       ddState.heritage = value;
       const heritage = countryHeritageMap[country][id];
       const displayName = heritage?.ddName
-        ? heritage.ddName
-        : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
+      ? heritage.ddName.replace(/<br\s*\/?>/gi, ' ')
+      : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
       document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
 
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
