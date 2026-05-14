@@ -311,12 +311,12 @@ ID,地域,国名,遺産名,緯度,経度,タイプ,登録年,州/県,当地名(J
 2,アジア,中華人民共和国,万里の長城,39.9676,119.7927,文化遺産,1987,河北省 秦皇島市,山海関,さんかいかん,,山海关 / Shanhaiguan,,CN_02_Shanhaiguan_01.jpg,,Photo by Nyx Ning (CC BY-SA 3.0),,2
 2,アジア,中華人民共和国,万里の長城,39.8013,98.2224,文化遺産,1987,甘粛省 嘉峪関市,嘉峪関,かよくかん,,嘉峪关 / Jiayuguan,,CN_02_Jiayuguan_01.jpg,,Photo by N509FZ (CC BY-SA 3.0),,3
 3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,39.9204,116.3968,文化遺産,1987,北京市,故宮,こきゅう,故宫,The Imperial Palace of the Ming and Qing Dynasties,3,CN_03_The_Imperial_Palace_01.jpg,,Photo by 红烧腰果 (CC BY-SA 3.0),故宮：北京と瀋陽の<br>明・清王朝皇宮群,1
-3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,41.7982,123.4557,文化遺産,2004,遼寧省 瀋陽市,瀋陽故宮,しんようこきゅう,沈阳故宫,The Imperial Palace of the Qing Dynasty,,,,,,2
-4,アジア,中華人民共和国,敦煌の莫高窟,40.0412,94.8091,文化遺産,1987,甘粛省 敦煌市,莫高窟,ばっこうくつ,,莫高窟 / Mogao Caves,3,,,,,
-5,アジア,中華人民共和国,秦の始皇帝陵と兵馬俑坑,34.3839,109.2808,文化遺産,1987,陕西省 西安市,秦の始皇帝陵と兵馬俑坑,しんのしこうてい と へいばようこう,秦始皇陵及兵马俑坑,Mausoleum of the First Qin Emperor,3,,,,,
-6,アジア,中華人民共和国,周口店の北京原人遺跡,39.6880,115.9285,文化遺産,1987,北京市,周口店の北京原人遺跡,しゅうこうてんのぺきんげんじん いせき,周口店遗址,Peking Man Site at Zhoukoudian,1,,,,,
-7,アジア,中華人民共和国,黄山,30.1374,118.1652,複合遺産,1990,安徽省 黄山市,黄山,こうざん,,黄山 / Mount Huangshan,2,,,,,
-8,アジア,中華人民共和国,九寨溝：歴史的・景観的重要地区,33.2438,103.9357,自然遺産,1992,四川省 アバ・チベット族チャン族自治州,九寨溝,きゅうさいこう,九寨沟风景名胜区,Jiuzhaigou Valley Scenic<br>and Historic Interest Area,,,,,九寨溝：<br>歴史的・景観的重要地区,
+3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,41.7982,123.4557,文化遺産,2004,遼寧省 瀋陽市,瀋陽故宮,しんようこきゅう,沈阳故宫,The Imperial Palace of the Qing Dynasty,,CN_03_Qing_Dynasty_01.jpg,,Photo by Techyan (CC BY-SA 4.0),,2
+4,アジア,中華人民共和国,敦煌の莫高窟,40.0412,94.8091,文化遺産,1987,甘粛省 敦煌市,莫高窟,ばっこうくつ,,莫高窟 / Mogao Caves,3,CN_04_Mogao_Caves_01.jpg,,Photo by Hiroki Ogawa (CC BY-SA 3.0),,
+5,アジア,中華人民共和国,秦の始皇帝陵と兵馬俑坑,34.3839,109.2808,文化遺産,1987,陕西省 西安市,秦の始皇帝陵と兵馬俑坑,しんのしこうてい と へいばようこう,秦始皇陵及兵马俑坑,Mausoleum of the First Qin Emperor,3,CN_05_Mausoleum_of_the_First_Qin_Emperor_01.jpg,,Photo by Ideophagous (CC BY-SA 4.0),,
+6,アジア,中華人民共和国,周口店の北京原人遺跡,39.6880,115.9285,文化遺産,1987,北京市,周口店の北京原人遺跡,しゅうこうてんのぺきんげんじん いせき,周口店遗址,Peking Man Site at Zhoukoudian,1,CN_06_Peking_Man_Site_01.jpg,,Photo by Siyuwj (CC BY-SA 3.0),,
+7,アジア,中華人民共和国,黄山,30.1374,118.1652,複合遺産,1990,安徽省 黄山市,黄山,こうざん,,黄山 / Mount Huangshan,2,CN_07_Mount_Huangshan_01.jpg,,Photo by Romain Pontida (CC BY-SA 2.0),,
+8,アジア,中華人民共和国,九寨溝：歴史的・景観的重要地区,33.2438,103.9357,自然遺産,1992,四川省 アバ・チベット族チャン族自治州,九寨溝,きゅうさいこう,九寨沟风景名胜区,Jiuzhaigou Valley Scenic<br>and Historic Interest Area,,CN_08_Jiuzhaigou_01.jpg,,Photo by Chensiyuan (CC BY-SA 4.0),九寨溝：<br>歴史的・景観的重要地区,
 9,アジア,中華人民共和国,黄龍：歴史的・景観的重要地区,32.7400,103.8331,自然遺産,1992,四川省 アバ・チベット族チャン族自治州松潘県,黄龍,こうりゅう,黄龙风景名胜区,Huanglong Scenic and Historic Interest Area,2,,,,黄龍：<br>歴史的・景観的重要地区,
 10,アジア,中華人民共和国,武陵源の景観と歴史地域,29.3372,110.5256,自然遺産,1992,湖南省 張家界市,武陵源,ぶりょうげん,武陵源风景名胜区,Wulingyuan Scenic and Historic Interest Area,1,,,,,
 11,アジア,中華人民共和国,承徳避暑山荘と外八廟,40.9944,117.9358,文化遺産,1994,河北省 承德市,承徳避暑山荘と外八廟,しょうとくひしょさんそう と がいはちびょう,承德避暑山庄及其周围寺庙,Mountain Resort<br>and its Outlying Temples/Chengde,1,,,,,
