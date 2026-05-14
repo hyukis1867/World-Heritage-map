@@ -817,7 +817,16 @@ function showSuggests(keyword) {
   const results = getScoredResults(keyword).slice(0, 5);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
-    const displayName = (d.ddName || d.heritageName).replace(/<br\s*\/?>/gi, '');
+    const kw = searchInput.value.trim();
+const nkw = normalizeText(kw);
+const displayName = (
+  (d.ddName && normalizeText(d.ddName).includes(nkw)) ? d.ddName :
+  (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
+  (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
+  (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
+  (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
+  d.ddName || d.heritageName
+).replace(/<br\s*\/?>/gi, '');
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
