@@ -817,7 +817,7 @@ function showSuggests(keyword) {
   const results = getScoredResults(keyword).slice(0, 5);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
-    const displayName = (d.localNameJP || d.heritageName).replace(/<br\s*\/?>/gi, '');
+    const displayName = (d.ddName || d.heritageName).replace(/<br\s*\/?>/gi, '');
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
