@@ -106,6 +106,7 @@
     const countryCodeMap = {};
     const capitalMap = {};
     const countryReadingMap = {};
+    const countryDisplayMap = {};
 
     // カスタムドロップダウン状態（グローバル）
     const ddState = { region: '', country: '', heritage: '' };
@@ -332,8 +333,6 @@ function removeCircleNumber(str) {
 .then(([placesCsv, countriesCsv]) => {
 
 const countryRows = countriesCsv.trim().split('\n').slice(1);
-
-const countryDisplayMap = {};  // ← グローバル変数に追加してもOK
 
 countryRows.forEach(row => {
   const cols = parseCSVLine(row);
