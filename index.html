@@ -641,10 +641,12 @@ map.addListener('idle', () => {
             ddOpen('heritage-list');
           });
 
-          // 外側クリックで閉じる
           document.addEventListener('click', e => {
-            if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal')) ddClose();
-          });
+  if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal') && !e.target.closest('#search-box')) ddClose();
+  if (!e.target.closest('#search-box')) {
+    suggestBox.style.display = 'none';
+  }
+});
 
           function getFlagEmojiFromName(countryName) {
             const code = countryCodeMap[countryName];
@@ -813,7 +815,7 @@ function showSuggests(keyword) {
   const searchInput = document.getElementById('search-input');
   const suggestBox  = document.getElementById('search-suggest');
   if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const results = getScoredResults(keyword).slice(0, 5);
+  const results = getScoredResults(keyword).slice(0, 10);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
@@ -857,9 +859,6 @@ searchInput.addEventListener('input', () => {
   showSuggests(keyword);
 });
 
-searchInput.addEventListener('blur', () => {
-  setTimeout(() => { suggestBox.style.display = 'none'; }, 150);
-});
 
 searchInput.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter') return;

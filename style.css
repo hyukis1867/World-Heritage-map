@@ -113,13 +113,22 @@ html, body, #map {
   top: 100%;
   left: 0;
   width: 200px;
+  max-height: 300px;      /* ← 追加 */
+  overflow-y: auto;       /* ← 追加 */
+  overscroll-behavior: contain;  /* ← 追加：マップへのスクロール伝播を防ぐ */
   background: #fff;
   border: 1px solid rgba(0,0,0,0.15);
   border-top: none;
   border-radius: 0 0 6px 6px;
   z-index: 999999;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
+  #search-suggest::-webkit-scrollbar { width: 4px; }
+  #search-suggest::-webkit-scrollbar-track { background: transparent; }
+  #search-suggest::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+
 .suggest-item {
   padding: 8px 10px;
   font-size: 13px;
