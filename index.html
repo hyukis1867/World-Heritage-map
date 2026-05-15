@@ -822,16 +822,16 @@ function showSuggests(keyword) {
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
 const nkw = normalizeText(kw);
-const ddDisplayName = (d.ddName || d.heritageName).replace(/<br\s*\/?>/gi, '');
+const ddDisplayName = d.ddName || d.heritageName; // <br>は除去しない
 const displayName = (
-  (d.ddName && normalizeText(d.ddName).includes(nkw)) ? ddDisplayName :
-  (d.heritageName && normalizeText(d.heritageName).includes(nkw)) ? ddDisplayName :
+  (d.ddName && normalizeText(d.ddName.replace(/<br\s*\/?>/gi, '')).includes(nkw)) ? ddDisplayName :
+  (d.heritageName && normalizeText(d.heritageName.replace(/<br\s*\/?>/gi, '')).includes(nkw)) ? ddDisplayName :
   (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
   (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
   (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
   ddDisplayName
-).replace(/<br\s*\/?>/gi, '');
+); // .replace()しない
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
