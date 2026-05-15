@@ -822,13 +822,13 @@ function showSuggests(keyword) {
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
 const nkw = normalizeText(kw);
+const ddDisplayName = (d.ddName || d.heritageName).replace(/<br\s*\/?>/gi, '');
 const displayName = (
-  (d.ddName && normalizeText(d.ddName).includes(nkw)) ? d.ddName :
   (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
   (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
   (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
-  d.ddName || d.heritageName
+  ddDisplayName
 ).replace(/<br\s*\/?>/gi, '');
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
