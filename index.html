@@ -641,10 +641,12 @@ map.addListener('idle', () => {
             ddOpen('heritage-list');
           });
 
-          // 外側クリックで閉じる
           document.addEventListener('click', e => {
-            if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal')) ddClose();
-          });
+  if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal') && !e.target.closest('#search-box')) ddClose();
+  if (!e.target.closest('#search-box')) {
+    suggestBox.style.display = 'none';
+  }
+});
 
           function getFlagEmojiFromName(countryName) {
             const code = countryCodeMap[countryName];
@@ -857,9 +859,6 @@ searchInput.addEventListener('input', () => {
   showSuggests(keyword);
 });
 
-searchInput.addEventListener('blur', () => {
-  setTimeout(() => { suggestBox.style.display = 'none'; }, 150);
-});
 
 searchInput.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter') return;
