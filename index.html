@@ -830,7 +830,7 @@ const displayName = (
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
   d.ddName || d.heritageName
 ).replace(/<br\s*\/?>/gi, '');
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchend="event.preventDefault(); handleSuggestClick(${i})">
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
@@ -872,7 +872,7 @@ searchInput.addEventListener('keydown', (e) => {
   const results = getScoredResults(keyword);
   if (results.length === 0) return;
   const d = results[0];
-  jumpToHeritage(d.country, d.id, d.localNameJP || d.heritageName);
+  jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
 });
 
         });
@@ -993,50 +993,48 @@ searchInput.addEventListener('keydown', (e) => {
       });
     }
 
-    function jumpToHeritage(country, id, heritageName, localNameJP, hira) {
-  const suggestBox = document.getElementById('search-suggest');
-  suggestBox.style.display = 'none';
-  const groupMarkers = markers.filter(m =>
-    String(m.customData.id) === String(id) && m.customData.country === country
-  );
-  if (groupMarkers.length === 0) return;
-  isSearchMode = true;
-  markers.forEach(m => m.map = null);
-  groupMarkers.forEach(m => m.map = map);
-  refreshCluster();
+    function jumpToHeritage(country, id, targetLocalNameJP, targetHira, targetHeritageName) {
+      const suggestBox = document.getElementById('search-suggest');
+      suggestBox.style.display = 'none';
+      const groupMarkers = markers.filter(m =>
+        m.customData.id == id && m.customData.country == country
+      );
+      if (groupMarkers.length === 0) return;
+      isSearchMode = true;
+      markers.forEach(m => m.map = null);
+      groupMarkers.forEach(m => m.map = map);
+      refreshCluster();
 
-  // heritageName・localNameJP・hiraで完全一致検索
-  const mainMarker = groupMarkers.find(m =>
-    m.customData.heritageName === heritageName
-  ) || groupMarkers.find(m =>
-    localNameJP && m.customData.localNameJP === localNameJP
-  ) || groupMarkers.find(m =>
-    hira && m.customData.hira === hira
-  ) || groupMarkers[0];
+      // localNameJP → hira → heritageName の順で完全一致検索
+      const mainMarker =
+        groupMarkers.find(m => targetLocalNameJP && m.customData.localNameJP === targetLocalNameJP) ||
+        groupMarkers.find(m => targetHira && m.customData.hira === targetHira) ||
+        groupMarkers.find(m => targetHeritageName && m.customData.heritageName === targetHeritageName) ||
+        groupMarkers[0];
 
-  const latLng  = mainMarker.position;
-  const offsetY = 150;
-  const scale   = Math.pow(2, map.getZoom());
-  const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
-  const pixelOffset = new google.maps.Point(0, offsetY / scale);
-  const newCenter   = map.getProjection().fromPointToLatLng(
-    new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
-  );
-  map.panTo(newCenter);
-  setTimeout(() => { showInfo(mainMarker, true); }, 200);
-}
+      const latLng  = mainMarker.position;
+      const offsetY = 150;
+      const scale   = Math.pow(2, map.getZoom());
+      const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
+      const pixelOffset = new google.maps.Point(0, offsetY / scale);
+      const newCenter   = map.getProjection().fromPointToLatLng(
+        new google.maps.Point(worldCoordinateCenter.x, worldCoordinateCenter.y - pixelOffset.y)
+      );
+      map.panTo(newCenter);
+      setTimeout(() => { showInfo(mainMarker, true); }, 200);
+    }
 
     function handleSuggestClick(index) {
-  const suggestBox = document.getElementById('search-suggest');
-  const results = suggestBox._results;
-  if (!results || !results[index]) return;
-  const d = results[index];
-  isSearchMode = true;
-  document.getElementById('search-input').blur();
-  setTimeout(() => {
-    jumpToHeritage(d.country, d.id, d.heritageName, d.localNameJP, d.hira);
-  }, 50);
-}
+      const suggestBox = document.getElementById('search-suggest');
+      const results = suggestBox._results;
+      if (!results || !results[index]) return;
+      const d = results[index];
+      isSearchMode = true;
+      document.getElementById('search-input').blur();
+      setTimeout(() => {
+        jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
+      }, 50);
+    }
 
     function clearSearch() {
       const searchInput = document.getElementById('search-input');
