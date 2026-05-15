@@ -122,6 +122,13 @@ html, body, #map {
   border-radius: 0 0 6px 6px;
   z-index: 999999;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+  #search-suggest::-webkit-scrollbar { width: 4px; }
+  #search-suggest::-webkit-scrollbar-track { background: transparent; }
+  #search-suggest::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+  
 }
 .suggest-item {
   padding: 8px 10px;
