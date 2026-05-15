@@ -411,6 +411,7 @@ idCountMap[key]++;
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
   const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
+  const suggestName = columns[18]?.trim() || "";  // 候補表示名（19列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -419,13 +420,8 @@ idCountMap[key]++;
 
   heritageData.push({
   id, region, country, heritageName, lat, lng,
-  type, year,
-  localNameJP,
-  hira,
-  localLangName,
-  localNameEN,
-  grade, imageUrl, credit,
-  ddName,
+  type, year, localNameJP, hira, localLangName, localNameEN,
+  grade, imageUrl, credit, ddName, suggestName,  // ← suggestName追加
   num
 });
 
@@ -822,15 +818,16 @@ function showSuggests(keyword) {
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
 const nkw = normalizeText(kw);
+const ddDisplayName = d.suggestName || d.ddName || d.heritageName;
 const displayName = (
-  (d.ddName && normalizeText(d.ddName).includes(nkw)) ? d.ddName :
+  (ddDisplayName && normalizeText(ddDisplayName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? ddDisplayName :
   (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
   (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
   (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
-  d.ddName || d.heritageName
-).replace(/<br\s*\/?>/gi, '');
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="handleSuggestClick(${i})">
+  ddDisplayName
+); // .replace()しない
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
@@ -872,7 +869,7 @@ searchInput.addEventListener('keydown', (e) => {
   const results = getScoredResults(keyword);
   if (results.length === 0) return;
   const d = results[0];
-  jumpToHeritage(d.country, d.id, d.localNameJP || d.heritageName);
+  jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
 });
 
         });
@@ -993,7 +990,7 @@ searchInput.addEventListener('keydown', (e) => {
       });
     }
 
-    function jumpToHeritage(country, id, targetName) {
+    function jumpToHeritage(country, id, targetLocalNameJP, targetHira, targetHeritageName) {
       const suggestBox = document.getElementById('search-suggest');
       suggestBox.style.display = 'none';
       const groupMarkers = markers.filter(m =>
@@ -1004,13 +1001,14 @@ searchInput.addEventListener('keydown', (e) => {
       markers.forEach(m => m.map = null);
       groupMarkers.forEach(m => m.map = map);
       refreshCluster();
-      const mainMarker = (targetName
-        ? groupMarkers.find(m =>
-            [m.customData.heritageName, m.customData.localNameJP,
-             m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
-              .some(v => v && v === targetName)
-          )
-        : null) || groupMarkers[0];
+
+      // localNameJP → hira → heritageName の順で完全一致検索
+      const mainMarker =
+        groupMarkers.find(m => targetLocalNameJP && m.customData.localNameJP === targetLocalNameJP) ||
+        groupMarkers.find(m => targetHira && m.customData.hira === targetHira) ||
+        groupMarkers.find(m => targetHeritageName && m.customData.heritageName === targetHeritageName) ||
+        groupMarkers[0];
+
       const latLng  = mainMarker.position;
       const offsetY = 150;
       const scale   = Math.pow(2, map.getZoom());
@@ -1028,7 +1026,11 @@ searchInput.addEventListener('keydown', (e) => {
       const results = suggestBox._results;
       if (!results || !results[index]) return;
       const d = results[index];
-      jumpToHeritage(d.country, d.id, d.localNameJP || d.heritageName);
+      isSearchMode = true;
+      document.getElementById('search-input').blur();
+      setTimeout(() => {
+        jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
+      }, 50);
     }
 
     function clearSearch() {
