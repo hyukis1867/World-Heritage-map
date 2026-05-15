@@ -1005,7 +1005,7 @@ searchInput.addEventListener('keydown', (e) => {
       groupMarkers.forEach(m => m.map = map);
       refreshCluster();
       // キーワードにマッチするマーカーを優先（ひらがな含む）
-      const keyword = normalizeText(document.getElementById('search-input').value.trim());
+      const keyword = normalizeText(targetName || document.getElementById('search-input').value.trim());
       const mainMarker = groupMarkers.find(m =>
         [m.customData.heritageName, m.customData.localNameJP,
          m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
@@ -1028,13 +1028,12 @@ searchInput.addEventListener('keydown', (e) => {
   const results = suggestBox._results;
   if (!results || !results[index]) return;
   const d = results[index];
-  // iOSでblurが先に発火してisSearchModeがリセットされないよう、
-  // 先にisSearchModeをtrueにしてからジャンプ
+  // キーワードをここで保存（blur後に失われる前に）
+  const savedKeyword = document.getElementById('search-input').value;
   isSearchMode = true;
-  // searchInputのblurによるマーカーリセットを防ぐ
   document.getElementById('search-input').blur();
   setTimeout(() => {
-    jumpToHeritage(d.country, d.id, d.localNameJP || d.heritageName);
+    jumpToHeritage(d.country, d.id, savedKeyword);
   }, 50);
 }
 
