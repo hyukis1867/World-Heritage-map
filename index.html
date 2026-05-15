@@ -830,7 +830,7 @@ const displayName = (
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
   d.ddName || d.heritageName
 ).replace(/<br\s*\/?>/gi, '');
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
