@@ -830,7 +830,7 @@ const displayName = (
   (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
   d.ddName || d.heritageName
 ).replace(/<br\s*\/?>/gi, '');
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="handleSuggestClick(${i})">
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchend="event.preventDefault(); handleSuggestClick(${i})">
       <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
@@ -997,20 +997,20 @@ searchInput.addEventListener('keydown', (e) => {
       const suggestBox = document.getElementById('search-suggest');
       suggestBox.style.display = 'none';
       const groupMarkers = markers.filter(m =>
-        m.customData.id == id && m.customData.country == country
+        String(m.customData.id) === String(id) && m.customData.country === country
       );
       if (groupMarkers.length === 0) return;
       isSearchMode = true;
       markers.forEach(m => m.map = null);
       groupMarkers.forEach(m => m.map = map);
       refreshCluster();
-      const mainMarker = (targetName
-        ? groupMarkers.find(m =>
-            [m.customData.heritageName, m.customData.localNameJP,
-             m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
-              .some(v => v && v === targetName)
-          )
-        : null) || groupMarkers[0];
+      // キーワードにマッチするマーカーを優先（ひらがな含む）
+      const keyword = normalizeText(document.getElementById('search-input').value.trim());
+      const mainMarker = groupMarkers.find(m =>
+        [m.customData.heritageName, m.customData.localNameJP,
+         m.customData.hira, m.customData.localLangName, m.customData.localNameEN]
+          .some(v => v && normalizeText(v).includes(keyword))
+      ) || groupMarkers[0];
       const latLng  = mainMarker.position;
       const offsetY = 150;
       const scale   = Math.pow(2, map.getZoom());
