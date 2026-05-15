@@ -813,7 +813,7 @@ function showSuggests(keyword) {
   const searchInput = document.getElementById('search-input');
   const suggestBox  = document.getElementById('search-suggest');
   if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const results = getScoredResults(keyword).slice(0, 5);
+  const results = getScoredResults(keyword).slice(0, 10);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
