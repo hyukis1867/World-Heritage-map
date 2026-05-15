@@ -411,6 +411,7 @@ idCountMap[key]++;
   const imageUrl = columns[14]?.trim();
   const credit = columns[16]?.trim();
   const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
+  const suggestName = columns[18]?.trim() || "";  // 候補表示名（19列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -419,13 +420,8 @@ idCountMap[key]++;
 
   heritageData.push({
   id, region, country, heritageName, lat, lng,
-  type, year,
-  localNameJP,
-  hira,
-  localLangName,
-  localNameEN,
-  grade, imageUrl, credit,
-  ddName,
+  type, year, localNameJP, hira, localLangName, localNameEN,
+  grade, imageUrl, credit, ddName, suggestName,  // ← suggestName追加
   num
 });
 
@@ -822,10 +818,9 @@ function showSuggests(keyword) {
   suggestBox.innerHTML = results.map((d, i) => {
     const kw = searchInput.value.trim();
 const nkw = normalizeText(kw);
-const ddDisplayName = d.ddName || d.heritageName; // <br>は除去しない
+const ddDisplayName = d.suggestName || d.ddName || d.heritageName;
 const displayName = (
-  (d.ddName && normalizeText(d.ddName.replace(/<br\s*\/?>/gi, '')).includes(nkw)) ? ddDisplayName :
-  (d.heritageName && normalizeText(d.heritageName.replace(/<br\s*\/?>/gi, '')).includes(nkw)) ? ddDisplayName :
+  (ddDisplayName && normalizeText(ddDisplayName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? ddDisplayName :
   (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
   (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
   (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
