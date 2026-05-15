@@ -156,11 +156,13 @@
     // クラスタ・マーカー表示更新
     // ============================================================
     function refreshCluster() {
-      if (!markerCluster) return;
-      const visibleMarkers = markers.filter(m => m.getVisible());
-      markerCluster.clearMarkers();
-      markerCluster.addMarkers(visibleMarkers);
-    }
+  if (!markerCluster) return;
+
+  const visibleMarkers = markers.filter(m => m.map !== null);
+
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
+}
 
 let lastBounds = null;
 
@@ -848,9 +850,9 @@ searchInput.addEventListener('input', () => {
     const selectedRegion  = getDDRegion();
     const selectedCountry = getDDCountry();
     markers.forEach(m => {
-      if (selectedCountry)     m.setVisible(m.customData.country === selectedCountry);
-      else if (selectedRegion) m.setVisible(m.customData.region  === selectedRegion);
-      else                     m.setVisible(true);
+      if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+      else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+      else                     m.map = map;
     });
     refreshCluster();
     return;
@@ -999,8 +1001,8 @@ searchInput.addEventListener('keydown', (e) => {
       );
       if (groupMarkers.length === 0) return;
       isSearchMode = true;
-      markers.forEach(m => m.setVisible(false));
-      groupMarkers.forEach(m => m.setVisible(true));
+      markers.forEach(m => m.map = null);
+      groupMarkers.forEach(m => m.map = map);
       refreshCluster();
       const mainMarker = (targetName
         ? groupMarkers.find(m =>
@@ -1042,9 +1044,9 @@ searchInput.addEventListener('keydown', (e) => {
       const selectedRegion  = getDDRegion();
       const selectedCountry = getDDCountry();
       markers.forEach(m => {
-        if (selectedCountry)     m.setVisible(m.customData.country === selectedCountry);
-        else if (selectedRegion) m.setVisible(m.customData.region  === selectedRegion);
-        else                     m.setVisible(true);
+        if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+        else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+        else                     m.map = map;
       });
       refreshCluster();
     }
