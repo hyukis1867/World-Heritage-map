@@ -113,6 +113,9 @@ html, body, #map {
   top: 100%;
   left: 0;
   width: 200px;
+  max-height: 300px;      /* ← 追加 */
+  overflow-y: auto;       /* ← 追加 */
+  overscroll-behavior: contain;  /* ← 追加：マップへのスクロール伝播を防ぐ */
   background: #fff;
   border: 1px solid rgba(0,0,0,0.15);
   border-top: none;
