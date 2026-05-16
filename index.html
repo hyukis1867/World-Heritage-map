@@ -794,11 +794,16 @@ function getScoredResults(keyword) {
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      const nameA = a.data.hira || a.data.localNameJP || a.data.heritageName;
-      const nameB = b.data.hira || b.data.localNameJP || b.data.heritageName;
-      return nameA.localeCompare(nameB, 'ja');
-    })
+  if (b.score !== a.score) return b.score - a.score;
+  // 同じIDの場合はnum（CSV行順）で並べる
+  if (a.data.id === b.data.id && a.data.country === b.data.country) {
+    return Number(a.data.num) - Number(b.data.num);
+  }
+  // 異なるIDは五十音順
+  const nameA = a.data.hira || a.data.localNameJP || a.data.heritageName;
+  const nameB = b.data.hira || b.data.localNameJP || b.data.heritageName;
+  return nameA.localeCompare(nameB, 'ja');
+})
     .map(item => item.data);
 }
 
