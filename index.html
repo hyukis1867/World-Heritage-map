@@ -602,11 +602,11 @@ function updateMarkers() {
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
 
-    const isVisible = marker.map !== null;
-    if (isVisible !== shouldBeVisible) {
-      marker.map = shouldBeVisible ? map : null;
-      changed = true;
-    }
+    // 表示中のマーカーは触らない。非表示にするだけ。
+if (marker.map !== null && !shouldBeVisible) {
+  marker.map = null;
+  changed = true;
+}
   });
   if (changed) scheduleClusterUpdate();
 }
