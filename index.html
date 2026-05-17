@@ -610,7 +610,7 @@ function updateMarkers() {
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    try { marker.setVisible(shouldBeVisible); } catch(e) {}
+    marker.setVisible(shouldBeVisible);
   });
 
   scheduleClusterUpdate();
@@ -1069,5 +1069,4 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
-
 
