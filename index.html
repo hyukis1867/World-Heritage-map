@@ -794,17 +794,20 @@ function getScoredResults(keyword) {
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
-  if (b.score !== a.score) return b.score - a.score;
-  // 同じIDの場合はnum（CSV行順）で並べる
-  if (a.data.id === b.data.id && a.data.country === b.data.country) {
-    return Number(a.data.num) - Number(b.data.num);
-  }
-  // 異なるIDは遺産名の五十音順
-// hiraがある場合はhira、ない場合はsuggestName→ddName→heritageNameをひらがな変換して比較
-const getNameA = a.data.hira || normalizeText(a.data.suggestName || a.data.ddName || a.data.heritageName || '');
-const getNameB = b.data.hira || normalizeText(b.data.suggestName || b.data.ddName || b.data.heritageName || '');
-return getNameA.localeCompare(getNameB, 'ja');
-})
+      if (b.score !== a.score) return b.score - a.score;
+      // 同じIDの場合はnum（CSV行順）で並べる
+      if (a.data.id === b.data.id && a.data.country === b.data.country) {
+        return Number(a.data.num) - Number(b.data.num);
+      }
+      // 異なるIDはhiraを優先、なければsuggestName/ddName/heritageNameをnormalizeして比較
+      const nameA = a.data.hira
+        ? a.data.hira
+        : normalizeText(a.data.suggestName || a.data.ddName || a.data.heritageName || '');
+      const nameB = b.data.hira
+        ? b.data.hira
+        : normalizeText(b.data.suggestName || b.data.ddName || b.data.heritageName || '');
+      return nameA.localeCompare(nameB, 'ja');
+    })
     .map(item => item.data);
 }
 
