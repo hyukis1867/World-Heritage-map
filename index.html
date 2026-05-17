@@ -802,11 +802,11 @@ targets.forEach(t => {
       }
       // suggestNameHiraがあればそれを優先、なければlocalNameJP→heritageNameをnormalizeして比較
       const getKey = d => {
-        if (d.suggestNameHira) return d.suggestNameHira;
-        const base = d.localNameJP || d.suggestName || d.ddName || d.heritageName || '';
-        return normalizeText(base.replace(/<br\s*\/?>/gi, ''));
-      };
-      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
+  if (d.suggestNameHira) return d.suggestNameHira;
+  const base = d.localNameJP || d.suggestName || d.ddName || d.heritageName || '';
+  return normalizeText(base.replace(/<br\s*\/?>/gi, ''));
+};
+return getKey(a.data).localeCompare(getKey(b.data), 'ja', { sensitivity: 'base' });
     })
     .map(item => item.data);
 }
