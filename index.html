@@ -612,9 +612,18 @@ function updateMarkers() {
 }
 
 // 初回 + 地図操作後
-google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 let updateTimer = null;
+let isZooming = false;
+
+map.addListener('zoom_changed', () => {
+  isZooming = true;
+});
+
 map.addListener('idle', () => {
+  if (isZooming) {
+    isZooming = false;
+    return; // ズーム後はupdateMarkersを呼ばない
+  }
   if (updateTimer) clearTimeout(updateTimer);
   updateTimer = setTimeout(updateMarkers, 150);
 });
