@@ -581,49 +581,45 @@ marker.content.addEventListener("mouseleave", () => {
 
 function updateMarkers() {
   if (isSearchMode) return;
+
   const bounds = map.getBounds();
   if (!bounds) return;
+
   if (!boundsChangedSignificantly(bounds)) return;
   lastBounds = bounds;
 
-  const selectedRegion  = getDDRegion();
+  const selectedRegion = getDDRegion();
   const selectedCountry = getDDCountry();
+
   const buffer = 0.3;
+
   const extendedBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(bounds.getSouthWest().lat() - buffer, bounds.getSouthWest().lng() - buffer),
-    new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
+    new google.maps.LatLng(
+      bounds.getSouthWest().lat() - buffer,
+      bounds.getSouthWest().lng() - buffer
+    ),
+    new google.maps.LatLng(
+      bounds.getNorthEast().lat() + buffer,
+      bounds.getNorthEast().lng() + buffer
+    )
   );
 
-  let changed = false;
   markers.forEach(marker => {
     const pos = marker.position;
     let shouldBeVisible = true;
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-
-    // 表示中のマーカーは触らない。非表示にするだけ。
-if (marker.map !== null && !shouldBeVisible) {
-  marker.map = null;
-  changed = true;
-}
+    marker.setVisible(shouldBeVisible);
   });
-  if (changed) scheduleClusterUpdate();
+
+  scheduleClusterUpdate();
 }
 
 // 初回 + 地図操作後
+google.maps.event.addListenerOnce(map, 'idle', updateMarkers);
 let updateTimer = null;
-let isZooming = false;
-
-map.addListener('zoom_changed', () => {
-  isZooming = true;
-});
-
 map.addListener('idle', () => {
-  if (isZooming) {
-    isZooming = false;
-    return; // ズーム後はupdateMarkersを呼ばない
-  }
   if (updateTimer) clearTimeout(updateTimer);
   updateTimer = setTimeout(updateMarkers, 150);
 });
