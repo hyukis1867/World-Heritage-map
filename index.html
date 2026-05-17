@@ -581,39 +581,34 @@ marker.content.addEventListener("mouseleave", () => {
 
 function updateMarkers() {
   if (isSearchMode) return;
-
   const bounds = map.getBounds();
   if (!bounds) return;
-
   if (!boundsChangedSignificantly(bounds)) return;
   lastBounds = bounds;
 
-  const selectedRegion = getDDRegion();
+  const selectedRegion  = getDDRegion();
   const selectedCountry = getDDCountry();
-
   const buffer = 0.3;
-
   const extendedBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(
-      bounds.getSouthWest().lat() - buffer,
-      bounds.getSouthWest().lng() - buffer
-    ),
-    new google.maps.LatLng(
-      bounds.getNorthEast().lat() + buffer,
-      bounds.getNorthEast().lng() + buffer
-    )
+    new google.maps.LatLng(bounds.getSouthWest().lat() - buffer, bounds.getSouthWest().lng() - buffer),
+    new google.maps.LatLng(bounds.getNorthEast().lat() + buffer, bounds.getNorthEast().lng() + buffer)
   );
 
+  let changed = false;
   markers.forEach(marker => {
     const pos = marker.position;
     let shouldBeVisible = true;
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    marker.setVisible(shouldBeVisible);
-  });
 
-  scheduleClusterUpdate();
+    const isVisible = marker.map !== null;
+    if (isVisible !== shouldBeVisible) {
+      marker.map = shouldBeVisible ? map : null;
+      changed = true;
+    }
+  });
+  if (changed) scheduleClusterUpdate();
 }
 
 // 初回 + 地図操作後
