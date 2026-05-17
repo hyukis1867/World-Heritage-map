@@ -201,13 +201,13 @@ function boundsChangedSignificantly(newBounds) {
 
 function normalizeText(str) {
   if (!str) return '';
-
   return str
     .toLowerCase()
-    .normalize('NFKC') // 全角→半角など
+    .normalize('NFKC')
+    .replace(/ヴ/g, 'ゔ')  // ヴはカタカナ範囲外なので個別変換
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    ); // カタカナ→ひらがな
+    );
 }
 
 function removeCircleNumber(str) {
@@ -786,26 +786,23 @@ function getScoredResults(keyword) {
   .filter(Boolean)
   .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
       let score = 0;
-      targets.forEach(t => {
-        if (t.startsWith(keyword)) score += 100;
-        else if (t.includes(keyword)) score += 10;
-      });
+      let matched = false;
+targets.forEach(t => {
+  if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
+  else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
+});
       return { data: d, score };
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // 同じIDの場合はnum（CSV行順）で並べる
-      if (a.data.id === b.data.id && a.data.country === b.data.country) {
-        return Number(a.data.num) - Number(b.data.num);
-      }
-      // suggestNameHiraがあればそれを優先、なければlocalNameJP→heritageNameをnormalizeして比較
-      const getKey = d => {
-        if (d.suggestNameHira) return d.suggestNameHira;
-        const base = d.localNameJP || d.suggestName || d.ddName || d.heritageName || '';
-        return normalizeText(base.replace(/<br\s*\/?>/gi, ''));
-      };
-      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
+      const nameA = normalizeText(
+  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
+);
+const nameB = normalizeText(
+  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
+);
+return nameA.localeCompare(nameB, 'ja');
     })
     .map(item => item.data);
 }
@@ -1072,3 +1069,4 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
+
