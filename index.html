@@ -201,13 +201,13 @@ function boundsChangedSignificantly(newBounds) {
 
 function normalizeText(str) {
   if (!str) return '';
-
   return str
     .toLowerCase()
-    .normalize('NFKC') // 全角→半角など
+    .normalize('NFKC')
+    .replace(/ヴ/g, 'ゔ')  // ← 追加
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    ); // カタカナ→ひらがな
+    );
 }
 
 function removeCircleNumber(str) {
@@ -250,8 +250,8 @@ function removeCircleNumber(str) {
   <strong>${data.heritageName}${numberLabel}</strong>
   ${data.state       ? `<div class="infowindow-state">${data.state}</div>`        : ''}
   ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>`     : ''}
-  ${(data.hira && !(data.country === "日本" && !data.localNameJP))
-    ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
+  ${(data.hira && (data.country === "日本" || data.country === "中華人民共和国"))
+  ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
   ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
   ${data.localNameEN   ? `<div class="infowindow-en">${data.localNameEN}</div>`      : ''}
   ${data.imageUrl ? `
