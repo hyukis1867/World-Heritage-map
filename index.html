@@ -605,13 +605,15 @@ function updateMarkers() {
   );
 
   markers.forEach(marker => {
-    const pos = marker.position;
-    let shouldBeVisible = true;
-    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
-    if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
-    if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
+  const pos = marker.position;
+  let shouldBeVisible = true;
+  if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+  if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
+  if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
+  try {
     marker.setVisible(shouldBeVisible);
-  });
+  } catch(e) {}
+});
 
   scheduleClusterUpdate();
 }
@@ -1069,4 +1071,5 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
+
 
