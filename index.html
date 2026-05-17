@@ -201,13 +201,13 @@ function boundsChangedSignificantly(newBounds) {
 
 function normalizeText(str) {
   if (!str) return '';
+
   return str
     .toLowerCase()
-    .normalize('NFKC')
-    .replace(/ヴ/g, 'ゔ')  // ← 追加
+    .normalize('NFKC') // 全角→半角など
     .replace(/[ァ-ン]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    );
+    ); // カタカナ→ひらがな
 }
 
 function removeCircleNumber(str) {
@@ -250,8 +250,8 @@ function removeCircleNumber(str) {
   <strong>${data.heritageName}${numberLabel}</strong>
   ${data.state       ? `<div class="infowindow-state">${data.state}</div>`        : ''}
   ${data.localNameJP ? `<div class="infowindow-jp">${data.localNameJP}</div>`     : ''}
-  ${(data.hira && (data.country === "日本" || data.country === "中華人民共和国"))
-  ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
+  ${(data.hira && !(data.country === "日本" && !data.localNameJP))
+    ? `<div class="infowindow-hira">${data.hira}</div>` : ''}
   ${data.localLangName ? `<div class="infowindow-local">${data.localLangName}</div>` : ''}
   ${data.localNameEN   ? `<div class="infowindow-en">${data.localNameEN}</div>`      : ''}
   ${data.imageUrl ? `
@@ -412,7 +412,6 @@ idCountMap[key]++;
   const credit = columns[16]?.trim();
   const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
   const suggestName = columns[18]?.trim() || "";  // 候補表示名（19列目）
-  const suggestNameHira = columns[19]?.trim() || "";  // 候補表示名のふりがな（20列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -422,7 +421,7 @@ idCountMap[key]++;
   heritageData.push({
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, hira, localLangName, localNameEN,
-  grade, imageUrl, credit, ddName, suggestName, suggestNameHira,  // ← suggestName追加
+  grade, imageUrl, credit, ddName, suggestName,  // ← suggestName追加
   num
 });
 
@@ -796,13 +795,13 @@ function getScoredResults(keyword) {
     .filter(item => item.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // 同じIDの場合はnum（CSV行順）で並べる
-      if (a.data.id === b.data.id && a.data.country === b.data.country) {
-        return Number(a.data.num) - Number(b.data.num);
-      }
-      const nameA = a.data.suggestNameHira || a.data.hira || normalizeText(a.data.suggestName || a.data.ddName || a.data.heritageName || '');
-      const nameB = b.data.suggestNameHira || b.data.hira || normalizeText(b.data.suggestName || b.data.ddName || b.data.heritageName || '');
-      return nameA.localeCompare(nameB, 'ja');
+      const nameA = normalizeText(
+  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
+);
+const nameB = normalizeText(
+  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
+);
+return nameA.localeCompare(nameB, 'ja');
     })
     .map(item => item.data);
 }
