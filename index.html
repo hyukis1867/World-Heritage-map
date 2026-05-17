@@ -795,13 +795,17 @@ function getScoredResults(keyword) {
     .filter(item => item.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      const nameA = normalizeText(
-  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
-);
-const nameB = normalizeText(
-  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
-);
-return nameA.localeCompare(nameB, 'ja');
+      // 同じIDの場合はnum（CSV行順）で並べる
+      if (a.data.id === b.data.id && a.data.country === b.data.country) {
+        return Number(a.data.num) - Number(b.data.num);
+      }
+      // suggestNameHiraがあればそれを優先、なければlocalNameJP→heritageNameをnormalizeして比較
+      const getKey = d => {
+        if (d.suggestNameHira) return d.suggestNameHira;
+        const base = d.localNameJP || d.suggestName || d.ddName || d.heritageName || '';
+        return normalizeText(base.replace(/<br\s*\/?>/gi, ''));
+      };
+      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
     })
     .map(item => item.data);
 }
