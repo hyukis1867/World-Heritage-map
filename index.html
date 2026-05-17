@@ -610,7 +610,7 @@ function updateMarkers() {
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    marker.map = shouldBeVisible ? map : null;
+    marker.setVisible(shouldBeVisible);
   });
 
   scheduleClusterUpdate();
@@ -796,12 +796,13 @@ targets.forEach(t => {
     .filter(item => item.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      if (a.data.id === b.data.id && a.data.country === b.data.country) {
-        return Number(a.data.num) - Number(b.data.num);
-      }
-      const getKey = d => d.suggestNameHira
-        || normalizeText(d.localNameJP || d.suggestName || d.ddName || d.heritageName || '');
-      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
+      const nameA = normalizeText(
+  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
+);
+const nameB = normalizeText(
+  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
+);
+return nameA.localeCompare(nameB, 'ja');
     })
     .map(item => item.data);
 }
