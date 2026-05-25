@@ -102,6 +102,7 @@
     let isPinned = false;
     let isSearchMode = false;
     let globalUniqueIDs = new Set();
+    let touchStartY = 0;
 
     let idCountMap = {};
     const countryCodeMap = {};
@@ -780,31 +781,62 @@ const clearBtn    = document.getElementById('search-clear');
 const suggestBox  = document.getElementById('search-suggest');
 
 function getScoredResults(keyword) {
-  return heritageData
-    .map(d => {
-      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName]
-  .filter(Boolean)
-  .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
-      let score = 0;
-      let matched = false;
-targets.forEach(t => {
-  if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
-  else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
-});
-      return { data: d, score };
-    })
-    .filter(item => item.score > 0)
+  const hitMap = new Map();
+
+  heritageData.forEach(d => {
+    const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName, d.suggestName]
+      .filter(Boolean)
+      .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
+    let score = 0;
+    let matched = false;
+    targets.forEach(t => {
+      if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
+      else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
+    });
+    if (score === 0) return;
+
+    const hitFields = {};
+    [
+      ['heritageName', d.heritageName],
+      ['localNameJP', d.localNameJP],
+      ['hira', d.hira],
+      ['localLangName', d.localLangName],
+      ['localNameEN', d.localNameEN],
+      ['ddName', d.ddName],
+      ['suggestName', d.suggestName],
+    ].forEach(([field, val]) => {
+      if (val && normalizeText(val.replace(/<br\s*\/?>/gi,'')).includes(keyword)) {
+        hitFields[field] = val;
+      }
+    });
+
+    const key = `${d.country}_${d.id}`;
+    const existing = hitMap.get(key);
+    if (!existing) {
+      hitMap.set(key, { data: d, score, hitFields });
+    } else if (score > existing.score) {
+      hitMap.set(key, { data: d, score, hitFields });
+    } else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
+      hitMap.set(key, { data: d, score, hitFields });
+    }
+  });
+
+  return Array.from(hitMap.values())
     .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      const nameA = normalizeText(
-  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
-);
-const nameB = normalizeText(
-  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
-);
-return nameA.localeCompare(nameB, 'ja');
-    })
-    .map(item => item.data);
+  if (b.score !== a.score) return b.score - a.score;
+  // ヒットした列をソートキーに使う
+  const getKey = item => {
+    const hf = item.hitFields;
+    const d  = item.data;
+    if (hf.suggestName)    return normalizeText(d.suggestName.replace(/<br\s*\/?>/gi,''));
+    if (hf.ddName)         return normalizeText(d.ddName.replace(/<br\s*\/?>/gi,''));
+    if (hf.heritageName)   return normalizeText(d.heritageName.replace(/<br\s*\/?>/gi,''));
+    if (hf.localNameJP)    return normalizeText(d.localNameJP);
+    if (hf.hira)           return normalizeText(d.hira);
+    return normalizeText(d.heritageName || '');
+  };
+  return getKey(a).localeCompare(getKey(b), 'ja');
+})
 }
 
 function highlightText(text, keyword) {
@@ -820,26 +852,36 @@ function showSuggests(keyword) {
   const searchInput = document.getElementById('search-input');
   const suggestBox  = document.getElementById('search-suggest');
   if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const results = getScoredResults(keyword).slice(0, 10);
-  if (results.length === 0) { suggestBox.style.display = 'none'; return; }
-  suggestBox.innerHTML = results.map((d, i) => {
+  const allResults = getScoredResults(keyword).slice(0, 10);
+  if (allResults.length === 0) { suggestBox.style.display = 'none'; return; }
+
+  suggestBox.innerHTML = allResults.map((item, i) => {
+    const d  = item.data;
     const kw = searchInput.value.trim();
-const nkw = normalizeText(kw);
-const ddDisplayName = d.suggestName || d.ddName || d.heritageName;
-const displayName = (
-  (ddDisplayName && normalizeText(ddDisplayName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? ddDisplayName :
-  (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
-  (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
-  (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
-  (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
-  ddDisplayName
-); // .replace()しない
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
-      <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
+    const hf = item.hitFields;
+
+    let displayName;
+    if (hf.suggestName)    displayName = d.suggestName;
+    else if (hf.ddName)    displayName = d.ddName;
+    else if (hf.heritageName) displayName = d.heritageName;
+    else if (hf.localNameJP)  displayName = d.localNameJP;
+    else if (hf.hira)         displayName = d.hira;
+    else if (hf.localLangName) displayName = d.localLangName;
+    else if (hf.localNameEN)   displayName = d.localNameEN;
+    else displayName = d.suggestName || d.ddName || d.heritageName;
+
+    const total = idCountMap[`${d.country}_${d.id}`] || 1;
+    const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
+    const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
+    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
+
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
+      <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
   }).join('');
-  suggestBox._results = results;
+
+  suggestBox._results = allResults.map(item => item.data);
   suggestBox.style.display = 'block';
 }
 
@@ -872,7 +914,7 @@ searchInput.addEventListener('keydown', (e) => {
   suggestBox.style.display = 'none';
   const results = getScoredResults(keyword);
   if (results.length === 0) return;
-  const d = results[0];
+  const d = results[0].data;
   jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
 });
 
