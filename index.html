@@ -913,7 +913,7 @@ searchInput.addEventListener('keydown', (e) => {
   suggestBox.style.display = 'none';
   const results = getScoredResults(keyword);
   if (results.length === 0) return;
-  const d = results[0];
+  const d = results[0].data;
   jumpToHeritage(d.country, d.id, d.localNameJP, d.hira, d.heritageName);
 });
 
