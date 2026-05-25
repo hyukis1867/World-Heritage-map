@@ -780,36 +780,29 @@ const clearBtn    = document.getElementById('search-clear');
 const suggestBox  = document.getElementById('search-suggest');
 
 function getScoredResults(keyword) {
-  // 同一IDの先頭行だけに絞る
-  const seen = new Set();
-  const filtered = heritageData.filter(d => {
-    const key = `${d.country}_${d.id}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
-  return filtered
+  return heritageData
     .map(d => {
-      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName, d.suggestName]
-        .filter(Boolean)
-        .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
+      const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName]
+  .filter(Boolean)
+  .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
       let score = 0;
       let matched = false;
-      targets.forEach(t => {
-        if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
-        else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
-      });
+targets.forEach(t => {
+  if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
+  else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
+});
       return { data: d, score };
     })
     .filter(item => item.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // heritageName優先、同じなら localNameJP
-      const getKey = d => normalizeText(
-        (d.heritageName || '').replace(/<br\s*\/?>/gi, '')
-      ) || normalizeText(d.localNameJP || '');
-      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
+      const nameA = normalizeText(
+  a.data.hira || a.data.localNameJP || a.data.suggestName || a.data.ddName || a.data.heritageName || ''
+);
+const nameB = normalizeText(
+  b.data.hira || b.data.localNameJP || b.data.suggestName || b.data.ddName || b.data.heritageName || ''
+);
+return nameA.localeCompare(nameB, 'ja');
     })
     .map(item => item.data);
 }
@@ -830,25 +823,19 @@ function showSuggests(keyword) {
   const results = getScoredResults(keyword).slice(0, 10);
   if (results.length === 0) { suggestBox.style.display = 'none'; return; }
   suggestBox.innerHTML = results.map((d, i) => {
-    const kw  = searchInput.value.trim();
-    const nkw = normalizeText(kw);
-    // 表示名：ヒットした列を優先、なければheritageName
-    const displayName = (
-      (d.suggestName && normalizeText(d.suggestName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? d.suggestName :
-      (d.ddName && normalizeText(d.ddName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? d.ddName :
-      (d.heritageName && normalizeText(d.heritageName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? d.heritageName :
-      (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
-      (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
-      (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
-      (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
-      d.suggestName || d.ddName || d.heritageName
-    );
-    // 複数地点の場合は (1/total) を付与
-    const total = idCountMap[`${d.country}_${d.id}`] || 1;
-    const numLabel = total > 1 ? ` (1/${total})` : '';
-    const displayWithNum = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchend="event.preventDefault(); handleSuggestClick(${i})">
-      <div class="suggest-item-name">${highlightText(displayWithNum, kw)}</div>
+    const kw = searchInput.value.trim();
+const nkw = normalizeText(kw);
+const ddDisplayName = d.suggestName || d.ddName || d.heritageName;
+const displayName = (
+  (ddDisplayName && normalizeText(ddDisplayName.replace(/<br\s*\/?>/gi,'')).includes(nkw)) ? ddDisplayName :
+  (d.localNameJP && normalizeText(d.localNameJP).includes(nkw)) ? d.localNameJP :
+  (d.hira && normalizeText(d.hira).includes(nkw)) ? d.hira :
+  (d.localLangName && normalizeText(d.localLangName).includes(nkw)) ? d.localLangName :
+  (d.localNameEN && normalizeText(d.localNameEN).includes(nkw)) ? d.localNameEN :
+  ddDisplayName
+); // .replace()しない
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})">
+      <div class="suggest-item-name">${highlightText(displayName, searchInput.value.trim())}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
   }).join('');
