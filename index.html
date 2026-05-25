@@ -822,12 +822,20 @@ function getScoredResults(keyword) {
 
   return Array.from(hitMap.values())
     .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      const getKey = d => normalizeText(
-        (d.heritageName || '').replace(/<br\s*\/?>/gi, '')
-      ) || normalizeText(d.localNameJP || '');
-      return getKey(a.data).localeCompare(getKey(b.data), 'ja');
-    });
+  if (b.score !== a.score) return b.score - a.score;
+  // ヒットした列をソートキーに使う
+  const getKey = item => {
+    const hf = item.hitFields;
+    const d  = item.data;
+    if (hf.suggestName)    return normalizeText(d.suggestName.replace(/<br\s*\/?>/gi,''));
+    if (hf.ddName)         return normalizeText(d.ddName.replace(/<br\s*\/?>/gi,''));
+    if (hf.heritageName)   return normalizeText(d.heritageName.replace(/<br\s*\/?>/gi,''));
+    if (hf.localNameJP)    return normalizeText(d.localNameJP);
+    if (hf.hira)           return normalizeText(d.hira);
+    return normalizeText(d.heritageName || '');
+  };
+  return getKey(a).localeCompare(getKey(b), 'ja');
+})
 }
 
 function highlightText(text, keyword) {
@@ -1102,4 +1110,5 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
+
 
