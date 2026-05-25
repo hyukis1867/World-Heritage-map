@@ -102,6 +102,7 @@
     let isPinned = false;
     let isSearchMode = false;
     let globalUniqueIDs = new Set();
+    let touchStartY = 0;
 
     let idCountMap = {};
     const countryCodeMap = {};
@@ -874,7 +875,7 @@ function showSuggests(keyword) {
     const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
     const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
 
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchend="event.preventDefault(); handleSuggestClick(${i})">
+    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
       <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
     </div>`;
@@ -1110,5 +1111,4 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
-
 
