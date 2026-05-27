@@ -312,14 +312,14 @@ html, body, #map {
 
 .dd-item-badge {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 11px;
+  font-size: 10px;
   margin-right: 4px;
   margin-top: 1px;
 }
