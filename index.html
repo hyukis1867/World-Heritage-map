@@ -912,6 +912,7 @@ searchInput.addEventListener('keydown', (e) => {
   const keyword = normalizeText(searchInput.value.trim());
   if (!keyword) return;
   suggestBox.style.display = 'none';
+  searchInput.blur();
   const results = getScoredResults(keyword);
   if (results.length === 0) return;
   const d = results[0].data;
