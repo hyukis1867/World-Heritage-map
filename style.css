@@ -331,12 +331,12 @@ html, body, #map {
 /* PC（幅600px以上）では遺産リストの文字を小さく */
 @media (min-width: 600px) {
   .dd-item {
-    font-size: 11px;
+    font-size: 12px;
   }
   .dd-item-badge {
     width: 18px;
     height: 18px;
-    font-size: 10px;
+    font-size: 9px;
   }
   .dd-list {
     max-height: 300px;
