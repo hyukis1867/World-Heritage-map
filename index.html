@@ -433,7 +433,7 @@ idCountMap[key]++;
   // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
   if (!countryHeritageMap[country][id]) {
-    countryHeritageMap[country][id] = { id, heritageName, grade, ddName };
+    countryHeritageMap[country][id] = { id, heritageName, grade, ddName, type };
   } else {
     const prev = countryHeritageMap[country][id];
     const merged = new Set([
@@ -927,7 +927,7 @@ searchInput.addEventListener('keydown', (e) => {
       if (!country || !countryHeritageMap[country]) return;
       const heritages = Object.values(countryHeritageMap[country])
         .sort((a, b) => Number(a.id) - Number(b.id));
-      heritages.forEach(({ id, heritageName, grade, ddName }) => {
+      heritages.forEach(({ id, heritageName, grade, ddName, type }) => {
         const displayName = ddName
           ? ddName
           : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
@@ -939,7 +939,8 @@ searchInput.addEventListener('keydown', (e) => {
           item.style.background = gradeColors[selectedGrade];
         }
         item.dataset.value = `${country}.${id}`;
-        item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
+        const badgeColor = iconColors[type] || 'gray';
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor};">${id}</span><span class="dd-item-name">${displayName}</span>`;
         item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
         list.appendChild(item);
       });
