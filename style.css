@@ -327,3 +327,22 @@ html, body, #map {
   padding: 0;            /* ← 追加 */
   box-sizing: border-box; /* ← 追加 */  
 }
+
+/* PC（幅600px以上）では遺産リストの文字を小さく */
+@media (min-width: 600px) {
+  .dd-item {
+    font-size: 11px;
+  }
+  .dd-item-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+  .dd-list {
+    max-height: 300px;
+  }
+  #heritage-list {
+    width: 240px;
+  }
+}
+
