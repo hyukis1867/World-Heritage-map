@@ -322,4 +322,8 @@ html, body, #map {
   font-size: 9px;
   margin-right: 4px;
   margin-top: 1px;
+  line-height: 1;        /* ← 追加 */
+  text-align: center;    /* ← 追加 */
+  padding: 0;            /* ← 追加 */
+  box-sizing: border-box; /* ← 追加 */  
 }
