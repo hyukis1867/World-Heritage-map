@@ -712,10 +712,18 @@ map.addListener('idle', () => {
 
           // 国リスト構築
           function buildCountryList(region) {
-            const list = document.getElementById('country-list');
-            list.innerHTML = '';
-            if (!region || !regionCountryMap[region]) return;
-            Array.from(regionCountryMap[region]).forEach(country => {
+  const list = document.getElementById('country-list');
+  list.innerHTML = '';
+  if (!region || !regionCountryMap[region]) return;
+
+  // 「国を選択」項目を先頭に追加
+  const allItem = document.createElement('div');
+  allItem.className = 'dd-item';
+  allItem.textContent = '-- 国を選択 --';
+  allItem.addEventListener('click', () => onCountrySelect(''));
+  list.appendChild(allItem);
+
+  Array.from(regionCountryMap[region]).forEach(country => {
               if (!country || !country.trim()) return;
               const idCount = regionCountryIDsMap[region][country]?.size || 0;
               const item = document.createElement('div');
@@ -1112,4 +1120,9 @@ list.appendChild(item);
 
 </body>
 </html>
+
+
+
+
+
 
