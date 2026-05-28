@@ -117,7 +117,7 @@
 
     // 遺産マップと級カラー（グローバル）
     let countryHeritageMap = {};
-    const gradeColors = { '1':'#a0d8ef', '2':'#C8E86A', '3':'#fff3b8', '4':'#E8440A' };
+    const gradeColors = { '1':'#bde0fe', '2':'#C8E86A', '3':'#fff3b8', '4':'#ffc8dd' };
 
     function ddOpen(listId) {
       ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
@@ -712,10 +712,18 @@ map.addListener('idle', () => {
 
           // 国リスト構築
           function buildCountryList(region) {
-            const list = document.getElementById('country-list');
-            list.innerHTML = '';
-            if (!region || !regionCountryMap[region]) return;
-            Array.from(regionCountryMap[region]).forEach(country => {
+  const list = document.getElementById('country-list');
+  list.innerHTML = '';
+  if (!region || !regionCountryMap[region]) return;
+
+  // 「国を選択」項目を先頭に追加
+  const allItem = document.createElement('div');
+  allItem.className = 'dd-item';
+  allItem.textContent = '-- 国を選択 --';
+  allItem.addEventListener('click', () => onCountrySelect(''));
+  list.appendChild(allItem);
+
+  Array.from(regionCountryMap[region]).forEach(country => {
               if (!country || !country.trim()) return;
               const idCount = regionCountryIDsMap[region][country]?.size || 0;
               const item = document.createElement('div');
@@ -873,7 +881,7 @@ function showSuggests(keyword) {
     const total = idCountMap[`${d.country}_${d.id}`] || 1;
     const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
     const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
+    const displayFinal = (displayName || '') + numLabel;
 
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
@@ -1112,6 +1120,7 @@ list.appendChild(item);
 
 </body>
 </html>
+
 
 
 
