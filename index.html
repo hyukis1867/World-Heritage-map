@@ -936,8 +936,9 @@ searchInput.addEventListener('keydown', (e) => {
         item.className = 'dd-item';
         if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
         if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
-          item.style.background = gradeColors[selectedGrade];
-        }
+  item.style.background = gradeColors[selectedGrade];
+  item.style.backgroundClip = 'padding-box';
+}
         item.dataset.value = `${country}.${id}`;
         const badgeColor = iconColors[type] || 'gray';
 item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor};">${id}</span><span class="dd-item-name">${displayName}</span>`;
@@ -1113,5 +1114,7 @@ item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor};">
 
 </body>
 </html>
+
+
 
 
