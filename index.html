@@ -934,16 +934,14 @@ searchInput.addEventListener('keydown', (e) => {
         const grades = grade ? grade.split(',') : [];
         const item = document.createElement('div');
         item.className = 'dd-item';
-        if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
-        if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
-  item.style.background = gradeColors[selectedGrade];
-  item.style.backgroundClip = 'padding-box';
-}
-        item.dataset.value = `${country}.${id}`;
-        const badgeColor = iconColors[type] || 'gray';
-item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor};">${id}</span><span class="dd-item-name">${displayName}</span>`;
-        item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
-        list.appendChild(item);
+if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
+item.dataset.value = `${country}.${id}`;
+const badgeColor = iconColors[type] || 'gray';
+const nameBg = (selectedGrade !== '-' && grades.includes(selectedGrade))
+  ? `style="background:${gradeColors[selectedGrade]}; flex:1; padding:0 2px;"` : `style="flex:1;"`;
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
+item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
+list.appendChild(item);
       });
     }
 
@@ -1114,6 +1112,7 @@ item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor};">
 
 </body>
 </html>
+
 
 
 
