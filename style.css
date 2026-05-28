@@ -310,4 +310,39 @@ html, body, #map {
 .dd-list::-webkit-scrollbar-track { background: transparent; }
 .dd-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
 
+.dd-item-badge {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 9px;
+  margin-right: 4px;
+  margin-top: 1px;
+  line-height: 1;        /* ← 追加 */
+  text-align: center;    /* ← 追加 */
+  padding: 0;            /* ← 追加 */
+  box-sizing: border-box; /* ← 追加 */  
+}
+
+/* PC（幅600px以上）では遺産リストの文字を小さく */
+@media (min-width: 600px) {
+  .dd-item {
+    font-size: 12px;
+  }
+  .dd-item-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+  .dd-list {
+    max-height: 300px;
+  }
+  #heritage-list {
+    width: 200px;
+  }
+}
 

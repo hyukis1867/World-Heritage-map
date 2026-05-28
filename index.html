@@ -433,7 +433,7 @@ idCountMap[key]++;
   // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
   if (!countryHeritageMap[country][id]) {
-    countryHeritageMap[country][id] = { id, heritageName, grade, ddName };
+    countryHeritageMap[country][id] = { id, heritageName, grade, ddName, type };
   } else {
     const prev = countryHeritageMap[country][id];
     const merged = new Set([
@@ -927,21 +927,21 @@ searchInput.addEventListener('keydown', (e) => {
       if (!country || !countryHeritageMap[country]) return;
       const heritages = Object.values(countryHeritageMap[country])
         .sort((a, b) => Number(a.id) - Number(b.id));
-      heritages.forEach(({ id, heritageName, grade, ddName }) => {
+      heritages.forEach(({ id, heritageName, grade, ddName, type }) => {
         const displayName = ddName
           ? ddName
           : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
         const grades = grade ? grade.split(',') : [];
         const item = document.createElement('div');
         item.className = 'dd-item';
-        if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
-        if (selectedGrade !== '-' && grades.includes(selectedGrade)) {
-          item.style.background = gradeColors[selectedGrade];
-        }
-        item.dataset.value = `${country}.${id}`;
-        item.innerHTML = `<span class="dd-item-id">${id}｜</span><span class="dd-item-name">${displayName}</span>`;
-        item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
-        list.appendChild(item);
+if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
+item.dataset.value = `${country}.${id}`;
+const badgeColor = iconColors[type] || 'gray';
+const nameBg = (selectedGrade !== '-' && grades.includes(selectedGrade))
+  ? `style="background:${gradeColors[selectedGrade]}; flex:1; padding:0 2px;"` : `style="flex:1;"`;
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
+item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
+list.appendChild(item);
       });
     }
 
@@ -962,7 +962,8 @@ searchInput.addEventListener('keydown', (e) => {
       const displayName = heritage?.ddName
       ? heritage.ddName.replace(/<br\s*\/?>/gi, ' ')
       : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
-      document.getElementById('heritage-selected').textContent = `${id}｜${displayName}`;
+      const badgeColor = iconColors[heritage?.type] || 'gray';
+      document.getElementById('heritage-selected').innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; margin-right:4px; display:inline-flex; vertical-align:middle;">${id}</span>${displayName}`;
 
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
@@ -1111,4 +1112,8 @@ searchInput.addEventListener('keydown', (e) => {
 
 </body>
 </html>
+
+
+
+
 
