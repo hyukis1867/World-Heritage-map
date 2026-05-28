@@ -873,7 +873,7 @@ function showSuggests(keyword) {
     const total = idCountMap[`${d.country}_${d.id}`] || 1;
     const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
     const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
+    const displayFinal = (displayName || '') + numLabel;
 
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
@@ -1112,6 +1112,7 @@ list.appendChild(item);
 
 </body>
 </html>
+
 
 
 
