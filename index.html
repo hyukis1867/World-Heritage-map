@@ -324,6 +324,16 @@ function removeCircleNumber(str) {
       });
       map.addListener('zoom_changed', () => {
   localStorage.setItem('mapZoom', map.getZoom());
+
+map.addListener('click', () => {
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+    lastOpenedMarker = null;
+    isPinned = false;
+  }
+});
+
   tooltip.style.display = 'none'; // ← 追加
 });
 
@@ -1120,6 +1130,11 @@ list.appendChild(item);
 
 </body>
 </html>
+
+
+
+
+
 
 
 
