@@ -871,7 +871,7 @@ function showSuggests(keyword) {
   const searchInput = document.getElementById('search-input');
   const suggestBox  = document.getElementById('search-suggest');
   if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const allResults = getScoredResults(keyword).slice(0, 10);
+  const allResults = getScoredResults(keyword).slice(0, 20);
   if (allResults.length === 0) { suggestBox.style.display = 'none'; return; }
 
   suggestBox.innerHTML = allResults.map((item, i) => {
