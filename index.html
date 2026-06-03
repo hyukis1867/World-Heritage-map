@@ -829,15 +829,23 @@ function getScoredResults(keyword) {
       }
     });
 
-    const key = `${d.country}_${d.id}`;
-    const existing = hitMap.get(key);
-    if (!existing) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score > existing.score) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
-      hitMap.set(key, { data: d, score, hitFields });
-    }
+    const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
+const isLocalHit = !!(hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
+
+const key = isMainHit && !isLocalHit
+  ? `${d.country}_${d.id}`
+  : isLocalHit
+    ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
+    : `${d.country}_${d.id}`;
+
+const existing = hitMap.get(key);
+if (!existing) {
+  hitMap.set(key, { data: d, score, hitFields });
+} else if (score > existing.score) {
+  hitMap.set(key, { data: d, score, hitFields });
+} else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
+  hitMap.set(key, { data: d, score, hitFields });
+}
   });
 
   return Array.from(hitMap.values())
@@ -871,7 +879,7 @@ function showSuggests(keyword) {
   const searchInput = document.getElementById('search-input');
   const suggestBox  = document.getElementById('search-suggest');
   if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const allResults = getScoredResults(keyword).slice(0, 20);
+  const allResults = getScoredResults(keyword).slice(0, 10);
   if (allResults.length === 0) { suggestBox.style.display = 'none'; return; }
 
   suggestBox.innerHTML = allResults.map((item, i) => {
@@ -1131,6 +1139,8 @@ list.appendChild(item);
 
 </body>
 </html>
+
+
 
 
 
