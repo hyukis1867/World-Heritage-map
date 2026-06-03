@@ -832,11 +832,10 @@ function getScoredResults(keyword) {
     const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
 const isLocalHit = !!(hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
 
-const key = isMainHit && !isLocalHit
-  ? `${d.country}_${d.id}`
-  : isLocalHit
-    ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
-    : `${d.country}_${d.id}`;
+// localNameJPヒットはメイン名称ヒットより優先
+const key = isLocalHit
+  ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
+  : `${d.country}_${d.id}`;
 
 const existing = hitMap.get(key);
 if (!existing) {
@@ -1139,6 +1138,7 @@ list.appendChild(item);
 
 </body>
 </html>
+
 
 
 
