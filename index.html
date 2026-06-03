@@ -324,7 +324,16 @@ function removeCircleNumber(str) {
       });
       map.addListener('zoom_changed', () => {
   localStorage.setItem('mapZoom', map.getZoom());
-  tooltip.style.display = 'none'; // ← 追加
+  tooltip.style.display = 'none';
+});
+
+map.addListener('click', () => {
+  if (infoWindow) {
+    infoWindow.close();
+    infoWindow = null;
+    lastOpenedMarker = null;
+    isPinned = false;
+  }
 });
 
       Promise.all([
@@ -413,6 +422,7 @@ idCountMap[key]++;
   const credit = columns[16]?.trim();
   const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
   const suggestName = columns[18]?.trim() || "";  // 候補表示名（19列目）
+  const suggestLocalNameJP = columns[19]?.trim() || "";  // 文字検索用当地名（20列目）
   const num = columns[columns.length - 1];   
 
   // 複数級対応（内部はカンマで結合して保持）
@@ -422,7 +432,7 @@ idCountMap[key]++;
   heritageData.push({
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, hira, localLangName, localNameEN,
-  grade, imageUrl, credit, ddName, suggestName,  // ← suggestName追加
+  grade, imageUrl, credit, ddName, suggestName, suggestLocalNameJP,  // ← suggestName追加
   num
 });
 
@@ -807,6 +817,7 @@ function getScoredResults(keyword) {
     [
       ['heritageName', d.heritageName],
       ['localNameJP', d.localNameJP],
+      ['suggestLocalNameJP', d.suggestLocalNameJP],
       ['hira', d.hira],
       ['localLangName', d.localLangName],
       ['localNameEN', d.localNameEN],
@@ -818,15 +829,22 @@ function getScoredResults(keyword) {
       }
     });
 
-    const key = `${d.country}_${d.id}`;
-    const existing = hitMap.get(key);
-    if (!existing) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score > existing.score) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
-      hitMap.set(key, { data: d, score, hitFields });
-    }
+    const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
+const isLocalHit = !!(hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
+
+// localNameJPヒットはメイン名称ヒットより優先
+const key = isLocalHit
+  ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
+  : `${d.country}_${d.id}`;
+
+const existing = hitMap.get(key);
+if (!existing) {
+  hitMap.set(key, { data: d, score, hitFields });
+} else if (score > existing.score) {
+  hitMap.set(key, { data: d, score, hitFields });
+} else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
+  hitMap.set(key, { data: d, score, hitFields });
+}
   });
 
   return Array.from(hitMap.values())
@@ -872,7 +890,7 @@ function showSuggests(keyword) {
     if (hf.suggestName)    displayName = d.suggestName;
     else if (hf.ddName)    displayName = d.ddName;
     else if (hf.heritageName) displayName = d.heritageName;
-    else if (hf.localNameJP)  displayName = d.localNameJP;
+    else if (hf.localNameJP)  displayName = d.suggestLocalNameJP || d.localNameJP;
     else if (hf.hira)         displayName = d.hira;
     else if (hf.localLangName) displayName = d.localLangName;
     else if (hf.localNameEN)   displayName = d.localNameEN;
@@ -1120,6 +1138,8 @@ list.appendChild(item);
 
 </body>
 </html>
+
+
 
 
 
