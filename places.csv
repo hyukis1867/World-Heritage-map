@@ -417,15 +417,15 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.1427,102.4175,自然遺産,2006,四川省 雅安市 芦山県 / 大邑県,黒水河自然保護区,こくすいが しぜんほごく,四川大熊猫栖息地 / 黑水河自然保护区,Sichuan Giant Panda Sanctuaries<br>Heishuihe Nature Reserve,,,,,,,,5
 33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.4632,102.9278,自然遺産,2006,四川省 康定県,金湯孔玉自然保護区,きんとうこうぎょく しぜんほごく,四川大熊猫栖息地 / 金汤孔玉自然保护区,Sichuan Giant Panda Sanctuaries<br>Jintang - Kongyu Nature Reserve,,,,,,,,6
 33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,29.9264,102.9967,自然遺産,2006,四川省 汶川県,草坡自然保護区,そうは しぜんほごく,四川大熊猫栖息地 / 草坡自然保护区,Sichuan Giant Panda Sanctuaries<br>Caopo Nature Reserve,,,,,,,,7
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8958,103.5934,自然遺産,2006,四川省 都江堰市,青城山 - 都江堰風景名勝区,せいじょうさん・とこうえん ふうけいめいしょうく,四川大熊猫栖息地 / 青城山 - 都江堰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Qingcheng - Dujiangyan Scenic Area,,,,,,,,8
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2522,103.0930,自然遺産,2006,四川省 邛崍市,邛崃天台山風景名勝区,きょうらいてんだいさん ふうけいめいしょうく,四川大熊猫栖息地 / 邛崃天台山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Tiantai (Qionglai) Scenic Area,,,,,,,,9
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1146,102.8896,自然遺産,2006,四川省 小金県,四姑娘山風景名勝区,しこじょうさん ふうけいめいしょうく,四川大熊猫栖息地 / 四姑娘山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Siguniang Scenic Area,,,,,,,,10
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6581,103.2090,自然遺産,2006,四川省 大邑県,西嶺雪山風景名勝区,せいれいせつざん ふうけいめいしょうく,四川大熊猫栖息地 / 西岭雪山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Xilingxueshan Scenic Area,,,,,,,,11
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8208,103.4450,自然遺産,2006,四川省 崇州市,鶏冠山 - 九竜溝風景名勝区,けいかんざん・きゅうりゅうこう ふうけいめいしょうく,四川大熊猫栖息地 / 鸡冠山 - 九龙沟风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiguan - Jiulonggou Scenic Area,,,,,,,,12
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6840,102.7472,自然遺産,2006,四川省 宝興県,夾金山風景名勝区,きょうきんざん ふうけいめいしょうく,四川大熊猫栖息地 / 夹金山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiajin Scenic Area,,,,,,,,13
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.6114,102.8186,自然遺産,2006,四川省 理県,米亜羅風景名勝区,べいあら ふうけいめいしょうく,四川大熊猫栖息地 / 米亚罗风景名胜区,Sichuan Giant Panda Sanctuaries<br>Miyaluo Scenic Area,,,,,,,,14
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6796,103.2145,自然遺産,2006,四川省 芦山県,霊鷲山—大雪峰風景名勝区,れいじゅさん・だいせっぽう ふうけいめいしょうく,四川大熊猫栖息地 / 灵鹫山 - 大雪峰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Lingjiu - Daxuefeng Scenic Area,,,,,,,,15
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.0829,103.0732,自然遺産,2006,四川省 天全県,二郎山風景名勝区,じろうざん ふうけいめいしょうく,四川大熊猫栖息地 / 二郎山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Erlang Scenic Area,,,,,,,,16
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8958,103.5934,自然遺産,2006,四川省 都江堰市,青城山 - 都江堰風景名勝区,せいじょうさん・とこうえん,四川大熊猫栖息地 / 青城山 - 都江堰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Qingcheng - Dujiangyan Scenic Area,,,,,,,,8
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2522,103.0930,自然遺産,2006,四川省 邛崍市,邛崃天台山風景名勝区,きょうらいてんだいさ,四川大熊猫栖息地 / 邛崃天台山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Tiantai (Qionglai) Scenic Area,,,,,,,,9
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1146,102.8896,自然遺産,2006,四川省 小金県,四姑娘山風景名勝区,しこじょうさん,四川大熊猫栖息地 / 四姑娘山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Siguniang Scenic Area,,,,,,,,10
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6581,103.2090,自然遺産,2006,四川省 大邑県,西嶺雪山風景名勝区,せいれいせつざん,四川大熊猫栖息地 / 西岭雪山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Xilingxueshan Scenic Area,,,,,,,,11
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8208,103.4450,自然遺産,2006,四川省 崇州市,鶏冠山 - 九竜溝風景名勝区,けいかんざん・きゅうりゅうこう,四川大熊猫栖息地 / 鸡冠山 - 九龙沟风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiguan - Jiulonggou Scenic Area,,,,,,,,12
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6840,102.7472,自然遺産,2006,四川省 宝興県,夾金山風景名勝区,きょうきんざん,四川大熊猫栖息地 / 夹金山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiajin Scenic Area,,,,,,,,13
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.6114,102.8186,自然遺産,2006,四川省 理県,米亜羅風景名勝区,べいあら,四川大熊猫栖息地 / 米亚罗风景名胜区,Sichuan Giant Panda Sanctuaries<br>Miyaluo Scenic Area,,,,,,,,14
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6796,103.2145,自然遺産,2006,四川省 芦山県,霊鷲山—大雪峰風景名勝区,れいじゅさん・だいせっぽう,四川大熊猫栖息地 / 灵鹫山 - 大雪峰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Lingjiu - Daxuefeng Scenic Area,,,,,,,,15
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.0829,103.0732,自然遺産,2006,四川省 天全県,二郎山風景名勝区,じろうざん,四川大熊猫栖息地 / 二郎山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Erlang Scenic Area,,,,,,,,16
 34,アジア,中華人民共和国,開平楼閣と村落,22.3568,112.6139,文化遺産,2007,広東省 開平市,迎龍楼と三門里村,げいりゅうろう と さんもんりそん,迎龙楼和三门里村,Kaiping Diaolou and Villages<br>Yinglong Lou (at Sanmenli Village),1,,,,,,,1
 34,アジア,中華人民共和国,開平楼閣と村落,22.3734,112.5788,文化遺産,2007,広東省 開平市,自力村と法氏灯楼,じりつそん と ほうしとうろう,自立村和方氏灯楼,Kaiping Diaolou and Villages<br>Zili Village and the Fang Clan Watch Tower,,,,,,,,2
 34,アジア,中華人民共和国,開平楼閣と村落,22.2895,112.5704,文化遺産,2007,広東省 開平市,馬降龍村群,ばこうりゅうそんちょうろうぐん,马降龙村碉楼群,Kaiping Diaolou and Villages<br>Majianlong Village Cluster,,,,,,,,3
@@ -1253,11 +1253,11 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 12,欧州,オーストリア共和国,ヨーロッパの大温泉都市群,48.0099,16.2336,文化遺産,2021,ニーダーエスターライヒ州,バーデン・バイ・ウィーン,,,The Great Spa Towns of Europe<br>Baden bei Wien,,AT_12_Baden_bei_Wien_01.jpg,,Photo by Uoaei1 (CC BY-SA 4.0),,,,
 1,欧州,北マケドニア共和国,オフリド地域の<br>自然遺産および文化遺産,41.10928112226,20.7863206591817,複合遺産,1979,オフリド地方,聖ヨハネ・カネオ聖堂,,,Natural and Cultural Heritage of the Ohrid region,,MK_01_Ohrid_01.jpg,,Photo by kallerna (CC BY-SA 4.0),オフリド地域の自然遺産<br>および文化遺産,,,
 2,欧州,北マケドニア共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,41.7632,20.5910,自然遺産,2021,オフリド地方,ドラボカ・レカ,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Dlaboka Reka,,MK_02_Dlaboka_Reka_01.jpg,,Photo by Ehrlich91 (CC BY-SA 4.0),カルパチア山脈と<br>ヨーロッパ地域の<br>古代および原生ブナ林,,,
-1,欧州,ジョージア共和国,ゲラティ修道院,42.2946,42.7681,文化遺産,1994,イメレティ州 クタイシ,,,,Gelati Monastery,,,,,,,,
-2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8423,44.7209,文化遺産,1994,ムツヘタ＝ムティアネティ州,スヴェティツホヴェリ大聖堂,,,Historical Monuments of Mtskheta<br>Svetitskhoveli Cathedral,,,,,,,,1
-2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8464,44.7183,文化遺産,1994,ムツヘタ＝ムティアネティ州,サムタヴロ教会・修道院,,,Historical Monuments of Mtskheta<br>Samtavro Church and Monastery,,,,,,,,2
-2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8383,44.7334,文化遺産,1994,ムツヘタ＝ムティアネティ州,ムツヘティス・ジワリ,,,Historical Monuments of Mtskheta<br>Mtskhetis Jvari<br>(The Church of the Holy Cross - Mtskheta),,,,,,,,3
-3,欧州,ジョージア共和国,上スヴァネティ,42.9139,43.0089,文化遺産,1996,サメグレロ＝ゼモ・スヴァネティ州,スヴァネティ,,,Upper Svaneti,,,,,,,,
+1,欧州,ジョージア共和国,ゲラティ修道院,42.2946,42.7681,文化遺産,1994,イメレティ州 クタイシ,,,,Gelati Monastery,,GE_01_Gelati_Monastery_01.jpg,,Photo by Herbert Frank (CC BY-SA 2.0),,,,
+2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8423,44.7209,文化遺産,1994,ムツヘタ＝ムティアネティ州,スヴェティツホヴェリ大聖堂,,,Historical Monuments of Mtskheta<br>Svetitskhoveli Cathedral,,GE_02_Svetitskhoveli_Cathedral_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),,,,1
+2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8464,44.7183,文化遺産,1994,ムツヘタ＝ムティアネティ州,サムタヴロ教会・修道院,,,Historical Monuments of Mtskheta<br>Samtavro Church and Monastery,,GE_02_Samtavro_Church_01.jpg,,Photo by Marcin Konsek CC0 via Wikimedia Commons,,,,2
+2,欧州,ジョージア共和国,ムツヘタの歴史的建造物群,41.8383,44.7334,文化遺産,1994,ムツヘタ＝ムティアネティ州,ムツヘティス・ジュワリ,,,Historical Monuments of Mtskheta<br>Mtskhetis Jvari<br>(The Church of the Holy Cross - Mtskheta),,GE_02_Mtskhetis_Jvari_01.jpg,,Photo by MaxBenidze (CC BY-SA 4.0),,,,3
+3,欧州,ジョージア共和国,上スヴァネティ,42.9139,43.0089,文化遺産,1996,サメグレロ＝ゼモ・スヴァネティ州,スヴァネティ,,,Upper Svaneti,,GE_03_Upper_Svaneti_01.jpg,,Photo by hr.icio (CC BY-SA 2.0),,,,
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,41.7020,41.9511,自然遺産,2021,アジャリア自治共和国,キントリシ＝ムティララ（国立公園）,,,Colchic Rainforests and Wetlands<br>Kintrishi - Mtirala,,,,,,,,1
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,41.8619,41.8015,自然遺産,2021,クヴェモ・カルトリ州,イスパニ,,,Colchic Rainforests and Wetlands<br>Ispani,,,,,,,,2
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,42.0531,41.7387,自然遺産,2021,グリア州,グリゴレティ,,,Colchic Rainforests and Wetlands<br>Grigoleti,,,,,,,,3
