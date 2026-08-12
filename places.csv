@@ -1265,7 +1265,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,42.1567,41.8199,自然遺産,2021,アブハジア自治共和国,ピチョラ,,,Colchic Rainforests and Wetlands<br>Pitshora,,,,,,,,5
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,42.2407,41.6660,自然遺産,2021,ナバダ地域,ナバダ,,,Colchic Rainforests and Wetlands<br>Nabada,,,,,,,,6
 4,欧州,ジョージア共和国,コルキスの雨林・湿地群,42.2993,41.6622,自然遺産,2021,アジャリア自治共和国,チュリア,,,Colchic Rainforests and Wetlands<br>Churia,,,,,,,,7
-1,欧州,スイス連邦,ザンクト・ガレン修道院,47.4234,9.3776,文化遺産,1983,ザンクト・ガレン州 ザンクト・ガレン,,,,Abbey of St.Gallen,,CH_01_St_Gallen_01.jpg,,Photo by Petar MARJANOVIC (CC BY-SA 3.0),,,,
+1,欧州,スイス連邦,ザンクト・ガレン修道院,47.4234,9.3776,文化遺産,1983,ザンクト・ガレン州,,,,Abbey of St.Gallen,,CH_01_St_Gallen_01.jpg,,Photo by Petar MARJANOVIC (CC BY-SA 3.0),,,,
 2,欧州,スイス連邦,ミュスタイアの<br>ベネディクト会ザンクト・ヨハン修道院,46.6295,10.4480,文化遺産,1983,グラウビュンデン州 ミュスタイア村,,,,Benedictine Convent of St John at Müstair,1,CH_02_Müstair_01.jpg,,Photo by Tobikuehn (CC BY-SA 3.0),ミュスタイアの<br>ベネディクト会ザンクト・ヨハン修道院,,,
 3,欧州,スイス連邦,ベルン旧市街,46.9479,7.4502,文化遺産,1983,ベルン州,ベルン,,,Old City of Berne,,CH_03_Berne_01.jpg,,Photo by Francisco Conde Sánchez (CC BY-SA 3.0),,,,
 4,欧州,スイス連邦,ベリンツォーナ旧市街にある<br>３つの城・要塞及び城壁,46.1931,9.0225,文化遺産,2000,ティチーノ州 ベリンツォーナ,グランデ城,,,"Three Castles, Defensive Wall and Ramparts of<br>the Market-Town of Bellinzona<br>Castel Grande",1,CH_04_Castel_Grande_01.jpg,,Photo by Tilman2007 (CC BY-SA 4.0),,,,1
@@ -1274,13 +1274,16 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 4,欧州,スイス連邦,ベリンツォーナ旧市街にある<br>３つの城・要塞及び城壁,46.1904,9.0218,文化遺産,2000,ティチーノ州 ベリンツォーナ,城壁（ドガーナ通り方面）,,,Rempart du bourg (Via Dogana),,CH_04_Via_Dogana_01.jpg,,Photo by Tilman2007 (CC BY-SA 4.0),,,,4
 4,欧州,スイス連邦,ベリンツォーナ旧市街にある<br>３つの城・要塞及び城壁,46.1925,9.0249,文化遺産,2000,ティチーノ州 ベリンツォーナ,城壁（スタツィオーネ通り方面）,,,Rempart du bourg (Viale Stazione),,,,,,,,5
 5,欧州,スイス連邦,スイス・アルプス<br>ユングフラウ－アレッチ,46.4998,8.0332,自然遺産,2001,ベルン州 / ヴァレー州,,,,Swiss Alps Jungfrau-Aletsch,,CH_05_Aletsch_01.jpg,,Photo by Giles Laurent (CC BY-SA 4.0),,,,
-6,欧州,スイス連邦,サン・ジョルジョ山,45.9136469874614,8.94980974488784,自然遺産,2003,ティチーノ州,,,,Monte San Giorgio,,,,,,,,
+6,欧州,スイス連邦,サン・ジョルジョ山,45.9136469874614,8.94980974488784,自然遺産,2003,ティチーノ州,,,,Monte San Giorgio,,CH_06_Monte_San_Giorgio_01.jpg,,Photo by F Ceragioli (CC BY-SA 3.0),,,,
 7,欧州,スイス連邦,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,47.2279,7.4122,自然遺産,2007,ベルン州,ベットラハストックの森,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Forêt de la Bettlachstock,,,,,カルパチア山脈と<br>ヨーロッパ地域の<br>古代および原生ブナ林,,,1
 7,欧州,スイス連邦,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,46.2635,8.6530,自然遺産,2007,ティチーノ州,ロダーノ渓谷、ブサイおよびソラディーノ森林保護区,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Valli di Lodano /<br>Busai and Soladino Forest Reserves,,,,,,,,2
-8,欧州,スイス連邦,ラヴォー地区のブドウ畑,46.4919,6.7461,文化遺産,2007,ヴォー州 レマン湖畔,,,,Lavaux / Vineyard Terraces,2,,,,,,,
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4983,9.8463,文化遺産,2008,グラウビュンデン州,アルブラ線・ベルニナ線サンモリッツ駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>St.Moritz,,,,,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と<br>周辺の景観,,1
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6982,9.4405,文化遺産,2008,グラウビュンデン州,アルブラ線トゥジス駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Thusis,,,,,,,,2
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.2542228021715,10.1278678458395,文化遺産,2008,グラウビュンデン州,ブルージオのループ橋,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Brusio spiral viaduct,,CH_09_Brusio_spiral_viaduct_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,3
+8,欧州,スイス連邦,ラヴォー地区のブドウ畑,46.4919,6.7461,文化遺産,2007,ヴォー州 レマン湖畔,,,,Lavaux / Vineyard Terraces,2,CH_08_Lavaux_Vineyard_Terraces_01.jpg,,Photo by Lorenz Poffet (CC BY-SA 4.0),,,,
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4983,9.8463,文化遺産,2008,グラウビュンデン州,アルブラ線・ベルニナ線サンモリッツ駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>St.Moritz,,CH_09_St_Moritz_01.jpg,,Photo by Zwantzig (CC BY-SA 4.0),レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と<br>周辺の景観,,1
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6982,9.4405,文化遺産,2008,グラウビュンデン州,アルブラ線トゥジス駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Thusis,,CH_09_Thusis_01.jpg,,"Photo by Clemenspool, CC0, via Wikimedia Commons",,,,2
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4076349793211,10.0200040373199,文化遺産,2008,グラウビュンデン州,氷河湖ラーゴ・ビアンコ湖畔（ベルニナ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Lago Bianco,,CH_09_Lago_Bianco_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,3
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6792523674037,9.53036066744336,文化遺産,2008,グラウビュンデン州,ソリス橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Soliser Viadukt,,CH_09_Soliser_Viadukt_01.jpg,,Photo by Хрюша (CC BY-SA 3.0),,,,4
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6808981034393,9.67609732961859,文化遺産,2008,グラウビュンデン州,ラントヴァッサー橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Landwasser Viaduct,,CH_09_Landwasser_Viaduct_01.jpg,,Photo by Luca Gerber (CC BY-SA 4.0),,,,5
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.2542228021715,10.1278678458395,文化遺産,2008,グラウビュンデン州,ブルージオのループ橋（ベルニナ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Brusio spiral viaduct,,CH_09_Brusio_spiral_viaduct_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,6
 10,欧州,スイス連邦,サルドーナ地殻変動地帯,46.9165,9.2500,文化遺産,2008,グラウビュンデン州,,,,Swiss Tectonic Arena Sardona,1,,,,,サルドーナ地殻変動地帯,,
 11,欧州,スイス連邦,ラ・ショー＝ド＝フォン／ル・ロクル、<br>時計製造の町,47.1038,6.8327,文化遺産,2009,ヌーシャテル州,ラ・ショー＝ド＝フォン,,,Watchmaking Town Planning<br>La Chaux-de-Fonds,,,,,,ラ・ショー＝ド＝フォン／ル・ロクル、時計製造の町,,1
 11,欧州,スイス連邦,ラ・ショー＝ド＝フォン／ル・ロクル、<br>時計製造の町,47.0581,6.7495,文化遺産,2009,ヌーシャテル州,ル・ロクル,,,Watchmaking Town Planning<br>Le Locle,,,,,,,,2
