@@ -1,6 +1,6 @@
 ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,州/県,当地名 (localNameJP),ひらがな読み (hira),当地言語名 (localLangName),当地英語名（localNameEN）,級,thumbUrl,fullUrl,credit,プルダウン表記（ddName）,文字検索表記（suggestName）,文字検索当地名表示（suggestLocalNameJP）,番号
-1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.9022,12.4582,文化遺産,1980,ラツィオ州,教皇領,,,Properties of the Holy See<br>in that City Enjoying Extraterritorial Rights,"3,2",VA_01_Properties_of_the_Holy_See_01.jpg,,Photo by AMANO Jun-ichi (CC BY-SA 3.0),,,,
-1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.8587,12.4761,文化遺産,1980,ラツィオ州,サン・パオロ・フオーリ・レ・ムーラ大聖堂,,,San Paolo Fuori le Mura,,VA_01_San_Paolo_Fuori_le_Mura_01.jpg,,Photo by Philippe Golaz (CC BY-SA 3.0),,,,
+1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.9022,12.4582,文化遺産,1980,ラツィオ州,教皇領,,,Properties of the Holy See<br>in that City Enjoying Extraterritorial Rights,"3,2",VA_01_Properties_of_the_Holy_See_01.jpg,,Photo by AMANO Jun-ichi (CC BY-SA 3.0),,,,1
+1,欧州,バチカン市国,ローマの歴史地区、教皇領の建造物群およびサン・パオロ・フオーリ・レ・ムーラ大聖堂,41.8587,12.4761,文化遺産,1980,ラツィオ州,サン・パオロ・フオーリ・レ・ムーラ大聖堂,,,San Paolo Fuori le Mura,,VA_01_San_Paolo_Fuori_le_Mura_01.jpg,,Photo by Philippe Golaz (CC BY-SA 3.0),,,,2
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,45.8910,10.1784,文化遺産,1979,ロンバルディア州,アルケオロージコ・ディ・ルイネ公園,,,Rock Drawings in Valcamonica<br>Parco Comunale di Luine di Darfo-Boario Terme,1,,,,,ヴァル・カモニカの岩絵群,,1
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0307,10.3389,文化遺産,1979,ロンバルディア州,アルケオロージコ・ナツィオナーレ・<br>デイ・マッシ・ディ・チェンモ公園,,,Rock Drawings in Valcamonica<br>Parco Archeologico Nazionale<br>dei Massi di Cemmo,,,,,,,,2
 1,欧州,イタリア共和国,ヴァル・カモニカの岩絵群,46.0349,10.3430,文化遺産,1979,ロンバルディア州,アルケオロージコ・コムナーレ・<br>ディ・セラディナ＝ベドリナ公園,,,Rock Drawings in Valcamonica<br>Parco Archeologico Comunale<br>di Seradina-Bedolina in Capo di Ponte,,,,,,,,3
@@ -1063,10 +1063,10 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5238,33.5008,文化遺産,2013,セヴァストポリ,ベルマン峡谷のホーラ区画,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot in Berman’s Gully,,,,,,,,3
 6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5260,33.5466,文化遺産,2013,セヴァストポリ,ベズイミアニ高地のホーラ区画,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the Bezymyannaya Height,,,,,,,,4
 6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5708,33.4774,文化遺産,2013,セヴァストポリ,ストレレツカヤ峡谷のホーラ区画,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot in the Streletskaya Gully,,,,,,,,5
-6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5641,33.4113,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート１,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula – part I,,,,,,,,6
-6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5622,33.4097,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート２,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula – part II,,,,,,,,7
-6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5605,33.4083,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート３,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula,,,,,,,,8
-7,欧州,ウクライナ,ポーランド、ウクライナの<br>カルパチア地方の木造教会,49.3477,23.4992,文化遺産,2013,リヴィウ州,ドロホブィチの聖ゲオルギオス聖堂,,,Wooden Tserkvas of the Carpathian Region<br>in Poland and Ukraine<br>Drohobych - Tserkva of Saint George,,UA_07_Drohobych_01.jpg,,Photo by Viacheslav Galievskyi (CC BY-SA 4.0),,,,1
+6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5641,33.4113,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート１,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula – part I,,,,,,マヤチヌイ半島地峡部の<br>ホーラ区画パート１,,6
+6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5622,33.4097,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート２,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula – part II,,,,,,マヤチヌイ半島地峡部の<br>ホーラ区画パート２,,7
+6,欧州,ウクライナ,古代都市タウリカ・ヘルソネソスと<br>そのホーラ,44.5605,33.4083,文化遺産,2013,セヴァストポリ,マヤチヌイ半島地峡部のホーラ区画パート３,,,Ancient City of Tauric Chersonese and its Chora<br>Chora plot on the isthmus<br>of the Mayachny Peninsula,,,,,,マヤチヌイ半島地峡部の<br>ホーラ区画パート３,,8
+7,欧州,ウクライナ,ポーランド、ウクライナの<br>カルパチア地方の木造教会,49.3477,23.4992,文化遺産,2013,リヴィウ州,ドロホブィチの聖ゲオルギオス聖堂,,,Wooden Tserkvas of the Carpathian Region<br>in Poland and Ukraine<br>Drohobych - Tserkva of Saint George,,UA_07_Drohobych_01.jpg,,Photo by Viacheslav Galievskyi (CC BY-SA 4.0),,ドロホブィチの<br>聖ゲオルギオス聖堂,,1
 7,欧州,ウクライナ,ポーランド、ウクライナの<br>カルパチア地方の木造教会,48.9154,23.1088,文化遺産,2013,リヴィウ州,マトキフの生神女集会聖堂<br>（聖ドミトロ教会）,,,Wooden Tserkvas of the Carpathian Region<br>in Poland and Ukraine<br>Matkiv - Tserkva of the Synaxis<br>of the Blessed Virgin Mary,,UA_07_Matkiv_01.jpg,,Photo by Demmarcos (CC BY-SA 4.0),,,,2
 7,欧州,ウクライナ,ポーランド、ウクライナの<br>カルパチア地方の木造教会,48.4986,25.0112,文化遺産,2013,イヴァーノ・フランキフシク州,ニジニー・ヴァルビシュの生神女誕生聖堂,,,Wooden Tserkvas of the Carpathian Region<br>in Poland and Ukraine<br>Nyzhniy Verbizh - Tserkva of the Nativity<br>of the Blessed Virgin Mary,,UA_07_Nyzhniy_Verbizh_01.jpg,,Photo by Neovitaha777 (CC BY-SA 4.0),,,,3
 7,欧州,ウクライナ,ポーランド、ウクライナの<br>カルパチア地方の木造教会,50.2086,23.5508,文化遺産,2013,リヴィウ州,ポテリチの聖神降臨聖堂,,,Wooden Tserkvas of the Carpathian Region<br>in Poland and Ukraine<br>Potelych -<br>Tserkva of the Descent of the Holy Spirit,,UA_07_Potelych_01.jpg,,Photo by Андрій Банний (CC BY-SA 4.0),,,,4
@@ -1280,12 +1280,12 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 8,欧州,スイス連邦,ラヴォー地区のブドウ畑,46.4919,6.7461,文化遺産,2007,ヴォー州 レマン湖畔,,,,Lavaux / Vineyard Terraces,2,CH_08_Lavaux_Vineyard_Terraces_01.jpg,,Photo by Lorenz Poffet (CC BY-SA 4.0),,,,
 9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4983,9.8463,文化遺産,2008,グラウビュンデン州,アルブラ線・ベルニナ線サンモリッツ駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>St.Moritz,,CH_09_St_Moritz_01.jpg,,Photo by Zwantzig (CC BY-SA 4.0),レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と<br>周辺の景観,,1
 9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6982,9.4405,文化遺産,2008,グラウビュンデン州,アルブラ線トゥジス駅,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Thusis,,CH_09_Thusis_01.jpg,,"Photo by Clemenspool, CC0, via Wikimedia Commons",,,,2
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4076349793211,10.0200040373199,文化遺産,2008,グラウビュンデン州,氷河湖ラーゴ・ビアンコ湖畔（ベルニナ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Lago Bianco,,CH_09_Lago_Bianco_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,3
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6792523674037,9.53036066744336,文化遺産,2008,グラウビュンデン州,ソリス橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Soliser Viadukt,,CH_09_Soliser_Viadukt_01.jpg,,Photo by Хрюша (CC BY-SA 3.0),,,,4
-9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6808981034393,9.67609732961859,文化遺産,2008,グラウビュンデン州,ラントヴァッサー橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Landwasser Viaduct,,CH_09_Landwasser_Viaduct_01.jpg,,Photo by Luca Gerber (CC BY-SA 4.0),,,,5
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6792523674037,9.53036066744336,文化遺産,2008,グラウビュンデン州,ソリス橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Soliser Viadukt,,CH_09_Soliser_Viadukt_01.jpg,,Photo by Хрюша (CC BY-SA 3.0),,,,3
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.6808981034393,9.67609732961859,文化遺産,2008,グラウビュンデン州,ラントヴァッサー橋（アルブラ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Landwasser Viaduct,,CH_09_Landwasser_Viaduct_01.jpg,,Photo by Luca Gerber (CC BY-SA 4.0),,,,4
+9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.4076349793211,10.0200040373199,文化遺産,2008,グラウビュンデン州,氷河湖ラーゴ・ビアンコ湖畔（ベルニナ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Lago Bianco,,CH_09_Lago_Bianco_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,5
 9,欧州,スイス連邦,レーティッシュ鉄道：<br>アルブラ線・ベルニナ線と周辺の景観,46.2542228021715,10.1278678458395,文化遺産,2008,グラウビュンデン州,ブルージオのループ橋（ベルニナ線）,,,Rhaetian Railway<br>in the Albula/Bernina Landscapes<br>Brusio spiral viaduct,,CH_09_Brusio_spiral_viaduct_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 3.0),,,,6
-10,欧州,スイス連邦,サルドーナ地殻変動地帯,46.9165,9.2500,文化遺産,2008,グラウビュンデン州,,,,Swiss Tectonic Arena Sardona,1,,,,,サルドーナ地殻変動地帯,,
-11,欧州,スイス連邦,ラ・ショー＝ド＝フォン／ル・ロクル、<br>時計製造の町,47.1038,6.8327,文化遺産,2009,ヌーシャテル州,ラ・ショー＝ド＝フォン,,,Watchmaking Town Planning<br>La Chaux-de-Fonds,,,,,,ラ・ショー＝ド＝フォン／ル・ロクル、時計製造の町,,1
+10,欧州,スイス連邦,サルドーナ地殻変動地帯,46.9165,9.2500,文化遺産,2008,グラウビュンデン州,,,,Swiss Tectonic Arena Sardona,1,CH_10_Sardona_01.jpg,,Photo by Hans G. Oberlack (CC BY-SA 3.0),,サルドーナ地殻変動地帯,,
+11,欧州,スイス連邦,ラ・ショー＝ド＝フォン／ル・ロクル、<br>時計製造の町,47.1038,6.8327,文化遺産,2009,ヌーシャテル州,ラ・ショー＝ド＝フォン,,,Watchmaking Town Planning<br>La Chaux-de-Fonds,,CH_11_La_Chaux_de_Fonds_01.jpg,,Photo by Aline Henchoz (CC BY-SA 4.0),,ラ・ショー＝ド＝フォン／ル・ロクル、時計製造の町,,1
 11,欧州,スイス連邦,ラ・ショー＝ド＝フォン／ル・ロクル、<br>時計製造の町,47.0581,6.7495,文化遺産,2009,ヌーシャテル州,ル・ロクル,,,Watchmaking Town Planning<br>Le Locle,,,,,,,,2
 12,欧州,スイス連邦,アルプス山系の<br>先史時代杭上住居跡群,47.2772,8.2066,文化遺産,2011,ザンクト・ガレン州,エーゲルモース,,,Prehistoric Pile Dwellings around the Alps<br>Ägelmoos,,,,,アルプス山系の<br>先史時代杭上住居跡群,,,1
 12,欧州,スイス連邦,アルプス山系の<br>先史時代杭上住居跡群,47.3169,8.2009,文化遺産,2011,ヴァレー州,リエジ,,,Prehistoric Pile Dwellings around the Alps<br>Riesi,,,,,,,,2
@@ -1345,15 +1345,15 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 12,欧州,スイス連邦,アルプス山系の<br>先史時代杭上住居跡群,47.3661,8.5440,文化遺産,2011,チューリッヒ州 チューリッヒ湖,グロッセ・シュタット／<br>クライナー・ハフナー,,,Prehistoric Pile Dwellings around the Alps<br>Grosse Stadt Kleiner Hafner,,,,,,,,56
 13,欧州,スイス連邦,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への顕著な貢献,46.4684,6.8293,文化遺産,2016,ヴォー州 レマン湖畔,レマン湖畔の小さな家,,,"The Architectural Work of Le Corbusier,<br>an Outstanding Contribution<br>to the Modern Movement<br>Petite villa au bord du lac Léman",,,,,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への<br>顕著な貢献,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への顕著な貢献,,1
 13,欧州,スイス連邦,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への顕著な貢献,46.2002,6.1562,文化遺産,2016,ジュネーヴ州 レマン湖,イムーブル・クラルテ,,,"The Architectural Work of Le Corbusier,<br>an Outstanding Contribution<br>to the Modern Movement<br>Immeuble Clarté",,,,,,,,2
-1,欧州,スウェーデン王国,ドロットニングホルムの王領地,59.3216,17.8868,文化遺産,1991,ストックホルム県,,,,Royal Domain of Drottningholm,2,,,,ドロットニングホルムの<br>王領地,,,
-2,欧州,スウェーデン王国,ビルカとホーヴゴーデン,59.3328,17.5446,文化遺産,1993,ストックホルム市,ビルカ,,,Birka and Hovgården<br>Birka,1,,,,,,,1
-2,欧州,スウェーデン王国,ビルカとホーヴゴーデン,59.3610,17.5316,文化遺産,1993,ストックホルム市,ホーヴゴーデン,,,Birka and Hovgården<br>Hovgården,,,,,,,,2
-3,欧州,スウェーデン王国,エンゲルスベリの製鉄所,59.9676,16.0084,文化遺産,1993,ヴェストマンランド県,エンゲルスベリ,,,Engelsberg Ironworks,1,,,,,,,
-4,欧州,スウェーデン王国,タヌムの線刻画群,58.6999,11.3360,文化遺産,1994,ヴェストラ・イェータランド県,,,,Rock Carvings in Tanum,1,,,,,,,
-5,欧州,スウェーデン王国,スクーグシュルコゴーデン,59.2712,18.1027,文化遺産,1994,ストックホルム市,,,,Skogskyrkogården,2,,,,,,,
-6,欧州,スウェーデン王国,ハンザ同盟都市ヴィスビュー,57.6416,18.2958,文化遺産,1995,ゴットランド島,,,,Hanseatic Town of Visby,1,,,,ハンザ同盟都市<br>ヴィスビュー,ハンザ同盟都市ヴィスビュー,,
-7,欧州,スウェーデン王国,ルーレオーのガンメルスタードの教会街,65.6455,22.0302,文化遺産,1996,ノールボッテン県 ルーレオー,,,,Church Town of Gammelstad / Luleå,1,,,,,ルーレオーの<br>ガンメルスタードの教会街,,
-8,欧州,スウェーデン王国,ラポニアン・エリア,67.3325,17.5828,複合遺産,1996,ノールボッテン県 ラップランド,,,,Laponian Area,2,,,,,,,
+1,欧州,スウェーデン王国,ドロットニングホルムの王領地,59.3216,17.8868,文化遺産,1991,ストックホルム県,,,,Royal Domain of Drottningholm,2,SE_01_Drottningholm_01.jpg,,Photo by CEphoto (CC BY-SA 3.0),ドロットニングホルムの<br>王領地,,,
+2,欧州,スウェーデン王国,ビルカとホーヴゴーデン,59.3328,17.5446,文化遺産,1993,ストックホルム市 ビョルケー島,ビルカ,,,Birka and Hovgården<br>Birka,1,SE_02_Birka_01.jpg,,Photo by Arild Vågen (CC BY-SA 4.0),,,,1
+2,欧州,スウェーデン王国,ビルカとホーヴゴーデン,59.3610,17.5316,文化遺産,1993,ストックホルム市 アデルスエー島,ホーヴゴーデン,,,Birka and Hovgården<br>Hovgården,,SE_02_Hovgården_01.jpg,,Photo by Arild Vågen (CC BY-SA 3.0),,,,2
+3,欧州,スウェーデン王国,エンゲルスベリの製鉄所,59.9676,16.0084,文化遺産,1993,ヴェストマンランド県,エンゲルスベリ,,,Engelsberg Ironworks,1,SE_03_Engelsberg_01.jpg,,Photo by Jürgen Howaldt (CC BY-SA 2.0),,,,
+4,欧州,スウェーデン王国,タヌムの線刻画群,58.6999,11.3360,文化遺産,1994,ヴェストラ・イェータランド県,,,,Rock Carvings in Tanum,1,SE_04_Tanum_01.jpg,,Photo by FrDr (CC BY-SA 4.0),,,,
+5,欧州,スウェーデン王国,スクーグシュルコゴーデン,59.2712,18.1027,文化遺産,1994,ストックホルム市,,,,Skogskyrkogården,2,SE_05_Skogskyrkogården_01.jpg,,Photo by ArildV (CC BY-SA 4.0),,,,
+6,欧州,スウェーデン王国,ハンザ同盟都市ヴィスビュー,57.6416,18.2958,文化遺産,1995,ゴットランド島,,,,Hanseatic Town of Visby,1,SE_06_Visby_01.jpg,,Photo by ArildV (CC BY-SA 4.0),ハンザ同盟都市<br>ヴィスビュー,ハンザ同盟都市ヴィスビュー,,
+7,欧州,スウェーデン王国,ルーレオーのガンメルスタードの教会街,65.6455,22.0302,文化遺産,1996,ノールボッテン県 ルーレオー,,,,Church Town of Gammelstad / Luleå,1,SE_07_Gammelstad_01.jpg,,Photo by Gammelstad1 (CC BY-SA 4.0),,ルーレオーの<br>ガンメルスタードの教会街,,
+8,欧州,スウェーデン王国,ラポニア地域（サーメ人地域）,67.3325,17.5828,複合遺産,1996,ノールボッテン県 ラップランド,,,,Laponian Area,2,,,,,,,
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1611,15.5865,文化遺産,1998,ブレーキンゲ県,カールスクローナとトロッソ島,,,Naval Port of Karlskrona<br>Karlskrona and the Island of Trossö,1,,,,,,,1
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1654,15.6039,文化遺産,1998,ブレーキンゲ県,ミョールナルホルメン島,,,Naval Port of Karlskrona<br>Mjölnarholmen,,,,,,,,2
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1588,15.6140,文化遺産,1998,ブレーキンゲ県,コホルメン島,,,Naval Port of Karlskrona<br>Koholmen,,,,,,,,3
