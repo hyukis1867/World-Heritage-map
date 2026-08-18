@@ -1388,19 +1388,19 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 3,欧州,英国,ジャイアンツ・コーズウェーと<br>コーズウェー海岸,55.2407,-6.5115,自然遺産,1986,北アイルランド,,,,Giant's Causeway and Causeway Coast,2,GB_03_Giants_Causeway_01.jpg,,Photo by Chmee2 (CC BY-SA 3.0),,ジャイアンツ・コーズウェーとコーズウェー海岸,,
 4,欧州,英国,アイアンブリッジ峡谷,52.6272,-2.4854,文化遺産,1986,イングランド / シュロップシャー州,,,,Ironbridge Gorge,3,GB_04_Ironbridge_Gorge_01.jpg,,Photo by Tk420 (CC BY-SA 3.0),,,,
 5,欧州,英国,セント・キルダ島,57.8130,-8.5686,複合遺産,1986,スコットランド,,,,St Kilda,1,,,,,,,
-6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.1788,-1.8262,文化遺産,1986,イングランド / ウィルトシャー州,ストーンヘンジと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Stonehenge and Associated Monuments","3,2",,,,,ストーンヘンジ、エーヴベリーと関連する遺跡群,,1
-6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.4288,-1.8548,文化遺産,1986,イングランド / ウィルトシャー州,エーヴベリーと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Avebury and Associated Monuments",,,,,,,,2
-7,欧州,英国,ファウンティンズ修道院遺跡群を含む<br>スタッドリー王立公園,54.1160,-1.5730,文化遺産,1986,イングランド / ノースヨークシャー州,構成１,,,Studley Royal Park including the Ruins of<br>Fountains Abbey<br>Component 1,1,,,,,,,1
-7,欧州,英国,ファウンティンズ修道院遺跡群を含む<br>スタッドリー王立公園,54.1088,-1.5883,文化遺産,1986,イングランド / ノースヨークシャー州,構成２,,,Studley Royal Park including the Ruins of<br>Fountains Abbey<br>Component 2,,,,,,,,2
-8,欧州,英国,ブレナム宮殿,51.8413,-1.3609,文化遺産,1987,イングランド / オックスフォードシャー州,,,,Blenheim Palace,1,,,,,,,
-9,欧州,英国,バース市街,51.3811,-2.3592,文化遺産,1987,イングランド / サマセット州,,,,City of Bath,,,,,,,,
-10,欧州,英国,ローマ帝国の国境線,54.9769,-1.6612,文化遺産,1987,イングランド / ノーサンバーランド州,ハドリアヌスの長城（ウォール・マイル5）<br>－ラザフォード校の運動場内にある城壁区間,,,Hadrian's Wall in wall mile 5 / sections of wall<br>in playing field of Rutherford School,2,,,,,,,
-11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4993,-0.1273,文化遺産,1987,イングランド / ロンドン,ウェストミンスター寺院,,,Palace of Westminster and Westminster Abbey<br>including Saint Margaret’s ChurchWestminster Abbey,"3,2",,,,ウェストミンスター宮殿、<br>ウェストミンスター寺院<br>および聖マーガレット教会,,,1
-11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4994,-0.1248,文化遺産,1987,イングランド / ロンドン,ウェストミンスター宮殿,,,Palace of Westminster ,,,,,,,,2
-11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4999,-0.1267,文化遺産,1987,イングランド / ロンドン,聖マーガレット教会,,,Saint Margaret’s Church,,,,,,,,3
-12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2797,1.0827,文化遺産,1988,イングランド / ケント州 カンタベリー,カンタベリー大聖堂,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>Canterbury Cathedral",,,,,カンタベリー大聖堂、<br>聖オーガスティン大修道院<br>および聖マーティン教会,,,1
-12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2781,1.0882,文化遺産,1988,イングランド / ケント州 カンタベリー,聖オーガスティン修道院,,,St. Augustine's Abbey,,,,,,,,2
-12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2780,1.0937,文化遺産,1988,イングランド / ケント州 カンタベリー,聖マーティン教会,,,St. Martin's Church,,,,,,,,3
+6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.1788,-1.8262,文化遺産,1986,イングランド / ウィルトシャー州,ストーンヘンジと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Stonehenge and Associated Monuments","3,2",GB_06_Stonehenge_01.jpg,,Photo by Cody Logan (CC BY-SA 4.0),,ストーンヘンジ、エーヴベリーと関連する遺跡群,,1
+6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.4288,-1.8548,文化遺産,1986,イングランド / ウィルトシャー州,エーヴベリーと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Avebury and Associated Monuments",,GB_06_Avebury_01.jpg,,Photo by MikPeach (CC BY-SA 4.0),,,,2
+7,欧州,英国,ファウンティンズ修道院遺跡群を含む<br>スタッドリー王立公園,54.1160,-1.5730,文化遺産,1986,イングランド / ノースヨークシャー州,スタッドリー王立公園,,,Studley Royal Park including the Ruins of<br>Fountains Abbey<br>Component 1,1,GB_07_Studley_Royal_Park_01.jpg,,Photo by Jooniur (CC BY-SA 4.0),,,,1
+7,欧州,英国,ファウンティンズ修道院遺跡群を含む<br>スタッドリー王立公園,54.1093530588483,-1.58182687261977,文化遺産,1986,イングランド / ノースヨークシャー州,ファウンティンズ修道院遺跡,,,Studley Royal Park including the Ruins of<br>Fountains Abbey<br>Component 2,,GB_07_Fountains_Abbey_01.jpg,,Photo by Mike Peel (CC BY-SA 4.0),,,,2
+8,欧州,英国,ブレナム宮殿,51.8413,-1.3609,文化遺産,1987,イングランド / オックスフォードシャー州,,,,Blenheim Palace,1,GB_08_Blenheim_Palace_01.jpg,,Photo by Balon Greyjoy (CC BY-SA 4.0),,,,
+9,欧州,英国,バース市街,51.3811,-2.3592,文化遺産,1987,イングランド / サマセット州,,,,City of Bath,,GB_09_City_of_Bath_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),,,,
+10,欧州,英国,ローマ帝国の国境線,54.9769,-1.6612,文化遺産,1987,イングランド / ノーサンバーランド州,ハドリアヌスの長城（ウォール・マイル5）<br>－ラザフォード校の運動場内にある城壁区間,,,Hadrian's Wall in wall mile 5 / sections of wall<br>in playing field of Rutherford School,2,GB_10_Hadrians_Wall_01.jpg,,Photo by Steven Fruitsmaak (CC BY-SA 4.0),,,,
+11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4993,-0.1273,文化遺産,1987,イングランド / ロンドン,ウェストミンスター寺院,,,Palace of Westminster and Westminster Abbey<br>including Saint Margaret’s Church<br>Westminster Abbey,"3,2",GB_11_Westminster_Abbey_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),ウェストミンスター宮殿、<br>ウェストミンスター寺院<br>および聖マーガレット教会,,,1
+11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4994,-0.1248,文化遺産,1987,イングランド / ロンドン,ウェストミンスター宮殿,,,Palace of Westminster and Westminster Abbey<br>including Saint Margaret’s Church<br>Palace of Westminster ,,GB_11_Palace_of_Westminster_01.jpg,,Photo by Mike Peel (CC BY-SA 4.0),,,,2
+11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4999,-0.1267,文化遺産,1987,イングランド / ロンドン,聖マーガレット教会,,,Palace of Westminster and Westminster Abbey<br>including Saint Margaret’s Church<br>Saint Margaret’s Church,,GB_11_Saint_Margarets_Church_01.jpg,,Photo by Ermell (CC BY-SA 4.0),,,,3
+12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2797,1.0827,文化遺産,1988,イングランド / ケント州 カンタベリー,カンタベリー大聖堂,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>Canterbury Cathedral",,GB_12_Canterbury_Cathedral_01.jpg,,Photo by Hans Musil (CC BY-SA 4.0),カンタベリー大聖堂、<br>聖オーガスティン大修道院<br>および聖マーティン教会,,,1
+12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2781,1.0882,文化遺産,1988,イングランド / ケント州 カンタベリー,聖オーガスティン修道院,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>St. Augustine's Abbey",,,,,,,,2
+12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2780,1.0937,文化遺産,1988,イングランド / ケント州 カンタベリー,聖マーティン教会,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>St. Martin's Church",,,,,,,,3
 13,欧州,英国,ヘンダーソン島,-24.3793,-128.3247,自然遺産,1988,ピトアケン諸島,,,,Henderson Island,1,,,,,,,
 14,欧州,英国,ロンドン塔,51.5080,-0.0760,文化遺産,1988,イングランド / ロンドン,,,,Tower of London,,,,,,,,
 15,欧州,英国,ゴフ島および<br>インアクセシブル島,-40.3205,-9.9362,自然遺産,1995,アゾレス諸島,ゴフ島野生生物保護区,,,Gough and Inaccessible Islands<br>Gough Island Wildlife Reserve,1,,,,ゴフ島および<br>インアクセシブル島,,,1
@@ -1622,7 +1622,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 6,欧州,ノルウェー王国,シュトゥルーヴェの測地弧,69.9385,23.3603,文化遺産,2005,トロムス・オ・フィンマルク県,リッレ・ライパス／ライパス,,,Struve Geodetic Arc<br>LILLE - REIPAS Raipas,,,,,,,,2
 6,欧州,ノルウェー王国,シュトゥルーヴェの測地弧,69.6644,23.6022,文化遺産,2005,トロムス・オ・フィンマルク県,ロフディシュヨッキ／ルヴディードチョッカ,,,Struve Geodetic Arc<br>LOHDIZHJOKKI Luvdiidcohkka,,,,,,,,3
 6,欧州,ノルウェー王国,シュトゥルーヴェの測地弧,69.0284,23.3059,文化遺産,2005,トロムス・オ・フィンマルク県,ベリャッツ・ヴァーラ／<br>バエッリャスヴァッリ,,,Struve Geodetic Arc<br>BÄLJATZ - VAARA Baelljasvarri,,,,,,,,4
-7,欧州,ノルウェー王国,西ノルウェーフィヨルド群：<br>ガイランゲルフィヨルドと<br>ネーロイフィヨルド,62.1143,6.9497,自然遺産,2005,モレ・オ・ロムスダール県,ガイランゲルフィヨルド地域,,,West Norwegian Fjords –<br> Geirangerfjord and Nærøyfjord<br>Geirangerfjord Area,3,,,,,,,1
+7,欧州,ノルウェー王国,西ノルウェーフィヨルド群：<br>ガイランゲルフィヨルドと<br>ネーロイフィヨルド,62.1143,6.9497,自然遺産,2005,モレ・オ・ロムスダール県,ガイランゲルフィヨルド地域,,,West Norwegian Fjords –<br> Geirangerfjord and Nærøyfjord<br>Geirangerfjord Area,3,,,,西ﾉﾙｳｪｰのフィヨルド群,,,1
 7,欧州,ノルウェー王国,西ノルウェーフィヨルド群：<br>ガイランゲルフィヨルドと<br>ネーロイフィヨルド,60.9157,6.9996,自然遺産,2005,ヴェストラン県,ネーロイフィヨルド地域,,,West Norwegian Fjords –<br> Geirangerfjord and Nærøyfjord<br>Nærøyfjord Area,,,,,,,,2
 8,欧州,ノルウェー王国,リューカン＝ノトデン産業遺産群,59.8785,8.5936,文化遺産,2015,ヴェストラン県,リューカン＝ノトデン産業遺産群,,,Rjukan - Notodden Industrial Heritage Site,2,,,,,,,
 1,欧州,ハンガリー,ブダペストのドナウ河岸とブダ城地区<br>およびアンドラーシ通り,47.4955,19.0399,文化遺産,1987,ブダペスト首都圏,ブダペストのドナウ河岸とブダ城地区,,,Budapest / the Banks of the Danube and<br>the Buda Castle Quarter,2,,,,ブダペストのドナウ河岸<br>とブダ城地区および<br>アンドラーシ通り,,,1
