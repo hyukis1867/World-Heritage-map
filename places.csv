@@ -1361,7 +1361,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1413,15.5945,文化遺産,1998,ブレーキンゲ県,ゴッドナット要塞塔,,,Naval Port of Karlskrona<br>Godnatt,,SE_09_Godnatt_01.jpg,,Photo by Henrik Sendelbach (CC BY-SA 3.0),,,,5
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1416,15.5454,文化遺産,1998,ブレーキンゲ県,クルホルメン要塞塔,,,Naval Port of Karlskrona<br>Kurrholmen,,SE_09_Kurrholmen_01.jpg,,Photo by Sannamw (CC BY-SA 4.0),,,,6
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1693,15.5765,文化遺産,1998,ブレーキンゲ県,ユンカー島,,,Naval Port of Karlskrona<br>Ljungskär,,SE_09_Ljungskär_01.jpg,,Photo by Boatbuilder (CC BY-SA 3.0),,,,7
-9,欧州,スウェーデン王国,カールスクローナの軍港,56.1970,15.6598,文化遺産,1998,ブレーキンゲ県,リッケビーのクラウン水車場<br>（クロヌックヴァルネン）,,,Naval Port of Karlskrona<br>Crown Mill at Lyckeby (Kronokvarnen),,,,,,,,8
+9,欧州,スウェーデン王国,カールスクローナの軍港,56.1970,15.6598,文化遺産,1998,ブレーキンゲ県,リッケビーのクラウン水車場<br>（クロヌックヴァルネン）,,,Naval Port of Karlskrona<br>Crown Mill at Lyckeby (Kronokvarnen),,SE_09_Kronokvarnen_01.jpg,,Photo by Boatbuilder (CC BY-SA 3.0),,,,8
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1090,15.5872,文化遺産,1998,ブレーキンゲ県,クングスホルメン要塞<br>（クングスホルメン島）,,,Naval Port of Karlskrona<br>Kungsholms Fort (Kungsholmen),,SE_09_Kungsholms_Fort_01.jpg,,Photo by Patrik Nylin (CC BY-SA 4.0),,,,9
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.1103,15.5643,文化遺産,1998,ブレーキンゲ県,ドロットニングカース要塞,,,Naval Port of Karlskrona<br>Drottningskärs Citadel (Kastellet),,SE_09_Drottningskärs_Citadel_01.jpg,,Photo by L.G.foto (CC BY-SA 4.0),,,,10
 9,欧州,スウェーデン王国,カールスクローナの軍港,56.2014,15.5728,文化遺産,1998,ブレーキンゲ県,スケルヴァ邸,,,Naval Port of Karlskrona<br>Skärva,,SE_09_Skärva_01.jpg,,Photo by Sendelbach (CC BY-SA 3.0),,,,11
@@ -1380,13 +1380,13 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 15,欧州,スウェーデン王国,ヘルシングランドの装飾農場家屋群,61.7961,14.6348,文化遺産,2012,イィムトランド県,ボルトン・ウーア、フォーゲルハ,,,Decorated Farmhouses of Hälsingland<br>Bortom Åa / Fågelsjö,,,,,,,,5
 15,欧州,スウェーデン王国,ヘルシングランドの装飾農場家屋群,61.9305,15.8776,文化遺産,2012,ヘルシングランド地方,ボンマシュ、レツボ,,,Decorated Farmhouses of Hälsingland<br>Bommars / Letsbo,,,,,,,,6
 15,欧州,スウェーデン王国,ヘルシングランドの装飾農場家屋群,61.2724,16.9936,文化遺産,2012,イェヴレボリ県,イェリック・アンデシュ、アスケスタ,,,Decorated Farmhouses of Hälsingland<br>Erik Anders / Askesta,,,,,,,,7
-1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,53.2648,-4.0897,文化遺産,1986,ウェールズ / アングルシー島,ビューマリス城,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Beaumaris Castle,,,,,グウィネズの<br>エドワード１世の城群と<br>市壁群,,,1
+1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,53.2648,-4.0897,文化遺産,1986,ウェールズ / アングルシー島,ビューマリス城,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Beaumaris Castle,,GB_01_Beaumaris_Castle_01.jpg,,Photo by Mike Peel (CC BY-SA 4.0),グウィネズの<br>エドワード１世の城群と<br>市壁群,,,1
 1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,53.1393,-4.2769,文化遺産,1986,ウェールズ / スノードニア国立公園,カーナーヴォン城と市壁,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Caernarfon Castle and Town Walls,,,,,,,,2
-1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,53.2800,-3.8256,文化遺産,1986,ウェールズ / デンビーシャー沿岸,コンウィ城と市壁,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Conwy Castle and Town Walls,,,,,,,,3
-1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,52.8599,-4.1088,文化遺産,1986,ウェールズ / グウィネズ州 カーナヴォン,ハーレフ城,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Harlech Castle,,,,,,,,4
-2,欧州,英国,ダラム城と大聖堂,54.7732,-1.5763,文化遺産,1986,イングランド / ダラム州,,,,Durham Castle and Cathedral,,,,,,,,
-3,欧州,英国,ジャイアンツ・コーズウェーと<br>コーズウェー海岸,55.2407,-6.5115,自然遺産,1986,北アイルランド,,,,Giant's Causeway and Causeway Coast,2,,,,,ジャイアンツ・コーズウェーとコーズウェー海岸,,
-4,欧州,英国,アイアンブリッジ峡谷,52.6272,-2.4854,文化遺産,1986,イングランド / シュロップシャー州,,,,Ironbridge Gorge,3,,,,,,,
+1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,53.2800,-3.8256,文化遺産,1986,ウェールズ / デンビーシャー沿岸,コンウィ城と市壁,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Conwy Castle and Town Walls,,GB_01_Conwy_Castle_01.jpg,,Photo by Llywelyn2000 (CC BY-SA 4.0),,,,3
+1,欧州,英国,グウィネズの<br>エドワード１世の城群と市壁群,52.8599,-4.1088,文化遺産,1986,ウェールズ / グウィネズ州 カーナヴォン,ハーレフ城,,,Castles and Town Walls of<br>King Edward in Gwynedd<br>Harlech Castle,,GB_01_Harlech_Castle_01.jpg,,Photo by Llywelyn2000 (CC BY-SA 4.0),,,,4
+2,欧州,英国,ダラム城と大聖堂,54.7732,-1.5763,文化遺産,1986,イングランド / ダラム州,,,,Durham Castle and Cathedral,,GB_02_Durham_01.jpg,,Photo by Carla Brain (CC BY-SA 4.0),,,,
+3,欧州,英国,ジャイアンツ・コーズウェーと<br>コーズウェー海岸,55.2407,-6.5115,自然遺産,1986,北アイルランド,,,,Giant's Causeway and Causeway Coast,2,GB_03_Giants_Causeway_01.jpg,,Photo by Chmee2 (CC BY-SA 3.0),,ジャイアンツ・コーズウェーとコーズウェー海岸,,
+4,欧州,英国,アイアンブリッジ峡谷,52.6272,-2.4854,文化遺産,1986,イングランド / シュロップシャー州,,,,Ironbridge Gorge,3,GB_04_Ironbridge_Gorge_01.jpg,,Photo by Tk420 (CC BY-SA 3.0),,,,
 5,欧州,英国,セント・キルダ島,57.8130,-8.5686,複合遺産,1986,スコットランド,,,,St Kilda,1,,,,,,,
 6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.1788,-1.8262,文化遺産,1986,イングランド / ウィルトシャー州,ストーンヘンジと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Stonehenge and Associated Monuments","3,2",,,,,ストーンヘンジ、エーヴベリーと関連する遺跡群,,1
 6,欧州,英国,ストーンヘンジ、エーヴベリーと<br>関連する遺跡群,51.4288,-1.8548,文化遺産,1986,イングランド / ウィルトシャー州,エーヴベリーと関連する遺跡群,,,"Stonehenge, Avebury and Associated Sites<br>Avebury and Associated Monuments",,,,,,,,2
