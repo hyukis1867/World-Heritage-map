@@ -1400,19 +1400,19 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 11,欧州,英国,ウェストミンスター宮殿、<br>ウェストミンスター寺院および<br>聖マーガレット教会,51.4999,-0.1267,文化遺産,1987,イングランド / ロンドン,聖マーガレット教会,,,Palace of Westminster and Westminster Abbey<br>including Saint Margaret’s Church<br>Saint Margaret’s Church,,GB_11_Saint_Margarets_Church_01.jpg,,Photo by Ermell (CC BY-SA 4.0),,,,3
 12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2797,1.0827,文化遺産,1988,イングランド / ケント州 カンタベリー,カンタベリー大聖堂,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>Canterbury Cathedral",,GB_12_Canterbury_Cathedral_01.jpg,,Photo by Hans Musil (CC BY-SA 4.0),カンタベリー大聖堂、<br>聖オーガスティン大修道院<br>および聖マーティン教会,,,1
 12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2781,1.0882,文化遺産,1988,イングランド / ケント州 カンタベリー,聖オーガスティン修道院,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>St. Augustine's Abbey",,,,,,,,2
-12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2780,1.0937,文化遺産,1988,イングランド / ケント州 カンタベリー,聖マーティン教会,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>St. Martin's Church",,,,,,,,3
-13,欧州,英国,ヘンダーソン島,-24.3793,-128.3247,自然遺産,1988,ピトアケン諸島,,,,Henderson Island,1,,,,,,,
-14,欧州,英国,ロンドン塔,51.5080,-0.0760,文化遺産,1988,イングランド / ロンドン,,,,Tower of London,,,,,,,,
-15,欧州,英国,ゴフ島および<br>インアクセシブル島,-40.3205,-9.9362,自然遺産,1995,アゾレス諸島,ゴフ島野生生物保護区,,,Gough and Inaccessible Islands<br>Gough Island Wildlife Reserve,1,,,,ゴフ島および<br>インアクセシブル島,,,1
-15,欧州,英国,ゴフ島および<br>インアクセシブル島,-37.3012,-12.6799,自然遺産,1995,トリスタンダクーニャ,インアクセシブル島,,,Gough and Inaccessible Islands<br>Inaccessible Island,,,,,,,,2
-16,欧州,英国,エディンバラの旧市街と新市街,55.9529,-3.1889,文化遺産,1995,スコットランド / エディンバラ市,,,,Old and New Towns of Edinburgh,2,,,,エディンバラの<br>旧市街と新市街,,,
-17,欧州,英国,海事都市グリニッジ,51.4768,-0.0005,文化遺産,1997,イングランド / ロンドン,,,,Maritime Greenwich,1,,,,,,,
-18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,58.9964,-3.1881,文化遺産,1999,スコットランド / オークニー諸島,メイズハウ,,,Heart of Neolithic Orkney<br>Maes Howe,,,,,オークニー諸島の<br>新石器時代遺跡中心地,,,1
-18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,58.9940,-3.2080,文化遺産,1999,スコットランド / オークニー諸島,ストーンズ・オブ・ステネス,,,Heart of Neolithic Orkney<br>Stones of Stenness,,,,,,,,2
-18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,59.0014,-3.2297,文化遺産,1999,スコットランド / オークニー諸島,リング・オブ・ブロッガー,,,Heart of Neolithic Orkney<br>Ring of Brogar,,,,,,,,3
-18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,59.0487,-3.3417,文化遺産,1999,スコットランド / オークニー諸島,スカラ・ブレイ,,,Heart of Neolithic Orkney<br>Skara Brae,,,,,,,,4
-19,欧州,英国,ブレナヴォン産業景観,51.7760,-3.0902,文化遺産,2000,ウェールズ / グエント州,,,,Blaenavon Industrial Landscape,1,,,,,,,
-20,欧州,英国,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,32.3817,-64.6767,文化遺産,2000,バミューダ諸島,歴史都市セント・ジョージ,,,"Historic Town of St George and<br>Related Fortifications, Bermuda<br>Historic Town of St George",1,,,,バミューダ諸島：歴史的都市セント・ジョージ<br>および関連要塞群,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,,1
+12,欧州,英国,カンタベリー大聖堂、<br>聖オーガスティン大修道院および<br>聖マーティン教会,51.2780,1.0937,文化遺産,1988,イングランド / ケント州 カンタベリー,聖マーティン教会,,,"Canterbury Cathedral, St Augustine's Abbey,<br>and St Martin's Church<br>St. Martin's Church",,GB_12_St_Martins_Church_01.jpg,,Photo by Jowaninpensans (CC BY-SA 4.0),,,,3
+13,欧州,英国,ヘンダーソン島,-24.3793,-128.3247,自然遺産,1988,ピトアケン諸島,,,,Henderson Island,1,GB_13_Henderson_Island_01.jpg,,Photo by Ron Van Oers (CC BY-SA 3.0),,,,
+14,欧州,英国,ロンドン塔,51.5080,-0.0760,文化遺産,1988,イングランド / ロンドン,,,,Tower of London,,GB_14_Tower_of_London_01.jpg,,Photo by Bob Collowan (CC BY-SA 3.0),,,,
+15,欧州,英国,ゴフ島および<br>インアクセシブル島,-40.3205,-9.9362,自然遺産,1995,アゾレス諸島,ゴフ島野生生物保護区,,,Gough and Inaccessible Islands<br>Gough Island Wildlife Reserve,1,GB_15_Gough_Island_01.jpg,,Photo by Ron Van Oers (CC BY-SA 3.0),ゴフ島および<br>インアクセシブル島,,,1
+15,欧州,英国,ゴフ島および<br>インアクセシブル島,-37.3012,-12.6799,自然遺産,1995,トリスタンダクーニャ,インアクセシブル島,,,Gough and Inaccessible Islands<br>Inaccessible Island,,GB_15_Inaccessible_sland_01.jpg,,Photo by Warrenmck (CC BY-SA 4.0),,,,2
+16,欧州,英国,エディンバラの旧市街と新市街,55.9529,-3.1889,文化遺産,1995,スコットランド / エディンバラ市,,,,Old and New Towns of Edinburgh,2,GB_16_Edinburgh_01.jpg,,Photo by Ermell (CC BY-SA 4.0),エディンバラの<br>旧市街と新市街,,,
+17,欧州,英国,海事都市グリニッジ,51.4768,-0.0005,文化遺産,1997,イングランド / ロンドン,,,,Maritime Greenwich,1,GB_17_Greenwich_01.jpg,,Photo by Gareth James (CC BY-SA 2.0),,,,
+18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,58.9964,-3.1881,文化遺産,1999,スコットランド / オークニー諸島,メイズハウ,,,Heart of Neolithic Orkney<br>Maes Howe,,GB_18_Maes_Howe_01.jpg,,Photo by Beep boop beep (CC BY-SA 4.0),オークニー諸島の<br>新石器時代遺跡中心地,,,1
+18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,58.9940,-3.2080,文化遺産,1999,スコットランド / オークニー諸島,ストーンズ・オブ・ステネス,,,Heart of Neolithic Orkney<br>Stones of Stenness,,GB_18_Stones_of_Stenness_01.jpg,,Photo by Ymblanter (CC BY-SA 4.0),,,,2
+18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,59.0014,-3.2297,文化遺産,1999,スコットランド / オークニー諸島,リング・オブ・ブロッガー,,,Heart of Neolithic Orkney<br>Ring of Brogar,,GB_18_Ring_of_Brogar_01.jpg,,Photo by Ekrem Canli (CC BY-SA 4.0),,,,3
+18,欧州,英国,オークニー諸島の<br>新石器時代遺跡中心地,59.0487,-3.3417,文化遺産,1999,スコットランド / オークニー諸島,スカラ・ブレイ,,,Heart of Neolithic Orkney<br>Skara Brae,,GB_18_Skara_Brae_01.jpg,,Photo by Dg-505 (CC BY-SA 3.0),,,,4
+19,欧州,英国,ブレナヴォン産業景観,51.7760,-3.0902,文化遺産,2000,ウェールズ / グエント州,,,,Blaenavon Industrial Landscape,1,GB_19_Blaenavon_01.jpg,,Photo by Loco Steve (CC BY-SA 2.0),,,,
+20,欧州,英国,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,32.3817,-64.6767,文化遺産,2000,バミューダ諸島,歴史都市セント・ジョージ,,,"Historic Town of St George and<br>Related Fortifications, Bermuda<br>Historic Town of St George",1,GB_20_Historic_Town_of_St_George_01.jpg,,Photo by Captain-tucker (CC BY-SA 3.0),バミューダ諸島：歴史的都市セント・ジョージ<br>および関連要塞群,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,,1
 20,欧州,英国,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,32.3409,-64.6723,文化遺産,2000,バミューダ諸島,デヴォンシャー要塞,,,"Historic Town of St George and<br>Related Fortifications, Bermuda<br>Devonshire Redoubt",,,,,,,,2
 20,欧州,英国,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,32.3400,-64.6731,文化遺産,2000,バミューダ諸島,ランドウォード城砦,,,"Historic Town of St George and<br>Related Fortifications, Bermuda<br>Landward Fort",,,,,,,,3
 20,欧州,英国,バミューダ諸島：<br>歴史的都市セント・ジョージ<br>および関連要塞群,32.3410,-64.6696,文化遺産,2000,バミューダ諸島,シーウォード城砦（キング城）,,,"Historic Town of St George and<br>Related Fortifications, Bermuda<br>Seaward Fort (King's Castle)",,,,,,,,4
@@ -1446,8 +1446,8 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 22,欧州,英国,ドーセットおよび<br>東デヴォン海岸,50.6150,-2.1651,自然遺産,2001,イングランド / ドーセット州,ボーリーズ・コーヴから<br>ペヴェリル・ポイント,,,Dorset and East Devon Coast<br>Bowleaze Cove to Peveril Point,,,,,,,,7
 22,欧州,英国,ドーセットおよび<br>東デヴォン海岸,50.6382,-1.9271,自然遺産,2001,イングランド / ドーセット州,ニュー・スワネージから<br>スタッドランド・ベイ,,,Dorset and East Devon Coast<br>New Swanage to Studland Bay,,,,,,,,8
 23,欧州,英国,ニュー・ラナーク,55.6636,-3.7823,文化遺産,2001,スコットランド / サウス・ラナークシャー州,,,,New Lanark,3,,,,,,,
-24,欧州,英国,ソルテア,53.8388,-1.7891,文化遺産,2001,イングランド / ウェストヨークシャー州,,,,Saltaire,1,,,,,,,
-25,欧州,英国,キュー王立植物園,51.4787,-0.2955,文化遺産,2003,イングランド / ロンドン,,,,Royal Botanic Gardens / Kew,,,,,,,,
+24,欧州,英国,ソルテア,53.8388,-1.7891,文化遺産,2001,イングランド / ウェストヨークシャー州,,,,Saltaire,1,GB_24_Saltaire_01.jpg,,Photo by Tim Green (CC BY-SA 2.0),,,,
+25,欧州,英国,キュー王立植物園,51.4787,-0.2955,文化遺産,2003,イングランド / ロンドン,,,,Royal Botanic Gardens / Kew,,GB_25_Kew_01.jpg,,Photo by Mike Peel (CC BY-SA 4.0),,,,
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.1240,-5.6902,文化遺産,2006,イングランド / コーンウォール州,セント・ジャスト鉱区,,,Cornwall and West Devon Mining Landscape<br>St Just Mining District,1,,,,,コーンウォールと<br>ウェストデヴォンの鉱山風景,,1
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.1859,-5.4232,文化遺産,2006,イングランド / コーンウォール州,ヘイル港,,,Cornwall and West Devon Mining Landscape<br>The Port of Hayle,,,,,,,,2
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.1330,-5.3832,文化遺産,2006,イングランド / コーンウォール州,トレゴニングとグウィニア鉱区,,,Cornwall and West Devon Mining Landscape<br>Tregonning and Gwinear Mining Districts,,,,,,,,3
@@ -1465,13 +1465,13 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.5030,-4.4485,文化遺産,2006,イングランド / コーンウォール州,キャラドン鉱区,,,Cornwall and West Devon Mining Landscape<br>Caradon Mining District,,,,,,,,15
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.5181,-4.2170,文化遺産,2006,イングランド / コーンウォール州,タマー・バレー鉱区,,,Cornwall and West Devon Mining Landscape<br>Tamar Valley Mining District,,,,,,,,16
 26,欧州,英国,コーンウォールとウェストデヴォンの<br>鉱山風景,50.5494,-4.1468,文化遺産,2006,イングランド / コーンウォール州,タヴィストック,,,Cornwall and West Devon Mining Landscape<br>Tavistock,,,,,,,,17
-27,欧州,英国,ポントカサステ水路橋と運河,52.9704,-3.0877,文化遺産,2009,ウェールズ /フリントシャー州,,,,Pontcysyllte Aqueduct and Canal,1,,,,ポントカサステ水路橋と<br>運河,,,
-28,欧州,英国,モラヴィア教会の入植地群,54.8543,-6.3305,文化遺産,2024,北アイルランド / アントリム州,グレースヒル,,,Gracehill,,,,,,,,
-29,欧州,英国,フォース橋,56.0011,-3.3888,文化遺産,2015,スコットランド / エディンバラ市,,,,The Forth Bridge,2,,,,,,,
-30,欧州,英国,ゴーハムの洞窟群,36.1203,-5.3420,文化遺産,2016,ジブラルタル,,,,Gorham's Cave Complex,1,,,,,,,
-31,欧州,英国,イギリス湖水地方,54.462573184841000,-3.085771001546250,文化遺産,2017,イングランド / カンブリア州,,,,The English Lake District,2,,,,,,,
-32,欧州,英国,ジョドレル・バンク天文台,53.2366,-2.3084,文化遺産,2019,イングランド / チェシャー州,,,,Jodrell Bank Observatory,,,,,,,,
-33,欧州,英国,ヨーロッパの大温泉都市群,51.3810,-2.3596,文化遺産,2021,イングランド / サマセット州,バース市街,,,The Great Spa Towns of Europe<br>City of Bath,,,,,,,,
+27,欧州,英国,ポントカサステ水路橋と運河,52.9704,-3.0877,文化遺産,2009,ウェールズ /フリントシャー州,,,,Pontcysyllte Aqueduct and Canal,1,GB_27_Pontcysyllte_01.jpg,,Photo by DronePics.Wales (CC BY-SA 4.0),ポントカサステ水路橋と<br>運河,,,
+28,欧州,英国,モラヴィア教会の入植地群,54.8543,-6.3305,文化遺産,2024,北アイルランド / アントリム州,グレースヒル,,,Gracehill,,GB_28_Gracehill_01.jpg,,Photo by Bryn Holmes (CC BY-SA 2.0),,,,
+29,欧州,英国,フォース橋,56.0011,-3.3888,文化遺産,2015,スコットランド / エディンバラ市,,,,The Forth Bridge,2,GB_29_Forth_Bridge_01.jpg,,Photo by Kabelleger / David Gubler (CC BY-SA 4.0),,,,
+30,欧州,英国,ゴーハムの洞窟群,36.1203,-5.3420,文化遺産,2016,ジブラルタル,,,,Gorham's Cave Complex,1,GB_30_Gorhams_Cave_01.jpg,,Photo by Visit Gibraltar (CC BY-SA 2.0),,,,
+31,欧州,英国,イギリス湖水地方,54.462573184841000,-3.085771001546250,文化遺産,2017,イングランド / カンブリア州,,,,The English Lake District,2,GB_31_Lake_District_01.jpg,,Photo by Diliff (CC BY-SA 3.0),,,,
+32,欧州,英国,ジョドレル・バンク天文台,53.2366,-2.3084,文化遺産,2019,イングランド / チェシャー州,,,,Jodrell Bank Observatory,,GB_32_Jodrell_Bank_01.jpg,,Photo by Mike Peel (CC BY-SA 4.0),,,,
+33,欧州,英国,ヨーロッパの大温泉都市群,51.3810,-2.3596,文化遺産,2021,イングランド / サマセット州,バース市街,,,The Great Spa Towns of Europe<br>City of Bath,,GB_33_Great_Spa_Towns_Bath_01.jpg,,Photo by Diliff (CC BY-SA 3.0),,,,
 34,欧州,英国,ウェールズ北西部の<br>スレート関連景観,53.1761,-4.0736,文化遺産,2021,ウェールズ / アングルシー州,ペンリン採石場とベセスダ、<br>オグウェン渓谷～ペンリン港,,,The Slate Landscape of Northwest Wales<br>Penrhyn Slate Quarry and Bethesd and<br>the Ogwen Valley to Port Penrhyn,,,,,ウェールズ北西部の<br>スレート関連景観,,,1
 34,欧州,英国,ウェールズ北西部の<br>スレート関連景観,53.1232,-4.1053,文化遺産,2021,ウェールズ / アングルシー州,ディノルウィグ採石場の山岳景観,,,The Slate Landscape of Northwest Wales<br>Dinorwig Slate Quarry Mountain Landscape,,,,,,,,2
 34,欧州,英国,ウェールズ北西部の<br>スレート関連景観,53.0566,-4.2361,文化遺産,2021,ウェールズ / グウィネズ州,ナントスレ渓谷採石場の景観,,,The Slate Landscape of Northwest Wales<br>Nantlle Valley Slate Quarry Landscape,,,,,,,,3
@@ -1487,7 +1487,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 35,欧州,英国,フロー・カントリー,58.3797,-3.2277,自然遺産,2024,スコットランド / オークニー諸島,オリクレット,,,The Flow Country<br>Oliclett,,,,,,,,7
 1,欧州,スロバキア共和国,バンスカー・シュティアヴニツァの<br>歴史都市と近隣の工業建築物群,48.4595,18.8925,文化遺産,1993,バンスカー・ビストリツァ県,,,,Historic Town of Banská Štiavnica and<br>the Technical Monuments in its Vicinity,1,,,,,バンスカー・シュティアヴニツァの歴史都市と近隣の工業建築物群,,
 2,欧州,スロバキア共和国,レヴォチャ、スピシュスキー城<br>およびその関連する文化財,49.0255,20.5899,文化遺産,1993,プレショフ県,レヴォチャとマイスター・パヴォルの作品,,,"Levoča, Spišský Hrad and<br>the Associated Cultural Monuments<br>Levoča and the work of Master Paul in Spiš",1,,,,,レヴォチャ、スピシュスキー城およびその関連する文化財,,1
-2,欧州,スロバキア共和国,レヴォチャ、スピシュスキー城<br>およびその関連する文化財,48.9993,20.7675,文化遺産,1993,プレショフ県,スピシュスキー城と関連の文化財,,,"Levoča, Spišský Hrad and<br>the Associated Cultural Monuments<br>Spišský Hrad<br>and the its Associated Cultural Monuments",,,,,,,,2
+2,欧州,スロバキア共和国,レヴォチャ、スピシュスキー城<br>およびその関連する文化財,48.9993,20.7675,文化遺産,1993,プレショフ県,スピシュスキー城と関連の文化財,,,"Levoča, Spišský Hrad and<br>the Associated Cultural Monuments<br>Spišský Hrad<br>and the its Associated Cultural Monuments",,SK_02_Spissky_Hrad_01.jpg,,Photo by Jakub Hałun (CC BY-SA 4.0),,,,2
 3,欧州,スロバキア共和国,ヴルコリニェツ,49.0388,19.2780,文化遺産,1993,ジリナ県,,,,Vlkolínec,1,,,,,,,
 4,欧州,スロバキア共和国,アグテレック・カルストと<br>スロバキア・カルストの洞窟群,48.5341,20.4948,自然遺産,1995,コシツェ県,シリツァ近郊の洞窟群,,,Caves of Aggtelek Karst and Slovak Karst<br>Component neighbouring Silica,1,,,,アグテレック・カルストとスロバキア・カルスト<br>の洞窟群,アグテレック・カルストと<br>スロバキア・カルストの<br>洞窟群,,1
 4,欧州,スロバキア共和国,アグテレック・カルストと<br>スロバキア・カルストの洞窟群,48.6768,20.9762,自然遺産,1995,コシツェ県,ヤソフ近郊の洞窟群,,,Caves of Aggtelek Karst and Slovak Karst<br>Component neighbouring Jasov,,,,,,,,2
