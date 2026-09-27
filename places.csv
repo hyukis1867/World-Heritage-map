@@ -1577,12 +1577,12 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 17,欧州,チェコ共和国,ジャテツとザーツ・ホップの景観,50.3201,13.6200,文化遺産,2023,ウースーチー州,ザーツ・ホップの景観,,,Žatec and the Landscape of Saaz Hops<br>Saaz Hop Landscape,,,,,,ジャテツと<br>ザーツ・ホップの景観,,1
 17,欧州,チェコ共和国,ジャテツとザーツ・ホップの景観,50.3268,13.5458,文化遺産,2023,ウースーチー州,ジャーテツ,,,Žatec and the Landscape of Saaz Hops<br>Žatec,,,,,,,,2
 1,欧州,デンマーク王国,イェリング墳墓群、<br>ルーン文字石碑群と教会,55.7565,9.4195,文化遺産,1994,中央ユトランド地域,,,,Jelling Mounds / Runic Stones and Church,1,,,,イェリング墳墓群、<br>ルーン文字石碑群と教会,,,
-2,欧州,デンマーク王国,ロスキレ大聖堂,55.6426,12.0797,文化遺産,1995,デンマーク首都地域 シェラン島,,,,Roskilde Cathedral,1,,,,,,,
-3,欧州,デンマーク王国,クロンボー城,56.0391,12.6217,文化遺産,2000,デンマーク首都地域 ヘルシンゲル,,,,Kronborg Castle,4,,,,,,,
-4,欧州,デンマーク王国,イルリサット・アイスフィヨルド,69.1556,-50.6442,自然遺産,2004,グリーンランド,,,,Ilulissat Icefjord,2,,,,イルリサット・<br>アイスフィヨルド,,,
+2,欧州,デンマーク王国,ロスキレの大聖堂,55.6426,12.0797,文化遺産,1995,デンマーク首都地域 シェラン島,,,,Roskilde Cathedral,1,DK_02_Roskilde_Cathedral_01.jpg,,Photo by CucombreLibre (CC BY-SA 4.0),,,,
+3,欧州,デンマーク王国,クロンボー城,56.0391,12.6217,文化遺産,2000,デンマーク首都地域 ヘルシンゲル,,,,Kronborg Castle,4,DK_03_Kronborg_Castle_01.jpg,,Photo by David Castor CC0 via Wikimedia Commons,,,,
+4,欧州,デンマーク王国,イルリサット・アイスフィヨルド,69.1556,-50.6442,自然遺産,2004,グリーンランド,,,,Ilulissat Icefjord,2,DK_04_Ilulissat_Icefjord_01.jpg,,Photo by Christoph Strässler (CC BY-SA 4.0),イルリサット・<br>アイスフィヨルド,,,
 5,欧州,デンマーク王国,ワッデン海,54.6064,8.4661,自然遺産,2009,北ユトランド地域 シェラン島,シュレースヴィヒ＝<br>ホルシュタイン・ワッデン海国立公園／<br>デンマーク・ワッデン海<br>自然・野生生物保護区パート１,,,Wadden Sea<br>National Park Wadden Sea Schleswig-Holstein /<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part I,2,,,,,,,1
 5,欧州,デンマーク王国,ワッデン海,55.4953,8.1876,自然遺産,2009,南デンマーク地域,デンマーク・ワッデン海<br>自然・野生生物保護区パート２,,,Wadden Sea<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part II,,,,,,,,2
-6,欧州,デンマーク王国,ステウンス・クリント,55.2787,12.4461,自然遺産,2014,デンマーク首都地域 シェラン島,ステウンス・クリント,,,Stevns Klint,2,,,,,,,
+6,欧州,デンマーク王国,ステウンス・クリント,55.2787,12.4461,自然遺産,2014,デンマーク首都地域 シェラン島,ステウンス・クリント,,,Stevns Klint,2,DK_06_Stevns_Klint_01.jpg,,Photo by kallerna (CC BY-SA 4.0),,,,
 7,欧州,デンマーク王国,モラヴィア教会の入植地群,55.3557,9.4809,文化遺産,2015,南デンマーク地域,クリスチャンスフェルド,,,Christiansfeld,1,,,,,モラヴィア教会の入植地群,,
 8,欧州,デンマーク王国,シェラン島北部の<br>パル・フォルス式狩猟の景観,55.9127,12.3582,文化遺産,2015,デンマーク首都地域 シェラン島,ストア・ディアヘーヴ,,,The par force hunting landscape in North Zealand<br>Store Dyrehave,1,,,,,,,1
 8,欧州,デンマーク王国,シェラン島北部の<br>パル・フォルス式狩猟の景観,55.9846,12.3034,文化遺産,2015,デンマーク首都地域 シェラン島,グリブスコフ,,,The par force hunting landscape in North Zealand<br>Gribskov,,,,,,,,2
@@ -2044,3 +2044,11 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 6,欧州,フランス共和国,アミアンの大聖堂,49.8945,2.3020,文化遺産,1981,オー＝ド＝フランス地域 ソンム県,,,Cathédrale d'Amiens,Amiens Cathedral,,FR_06_Amiens_Cathedral_01.jpg,,Photo by Raimond Spekking (CC BY-SA 4.0),,,,
 7,欧州,フランス共和国,アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,43.6777,4.6309,文化遺産,1981,プロヴァンス地方 プーシュ＝デュ＝ローヌ県,,,Arles / monuments romains et romans,Arles / Roman and Romanesque Monuments,2,FR_07_Arles_Roman_and_Romanesque_Monuments_01.jpg,,Photo by Chensiyuan (CC BY-SA 4.0),アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,,,
 8,欧州,フランス共和国,フォントネーのシトー会修道院,47.6396,4.3894,文化遺産,1981,ブルゴーニュ地方 コート＝ドール県,,,Abbaye cistercienne de Fontenay,Cistercian Abbey of Fontenay,1,FR_08_Cistercian_Abbey_of_Fontenay_01.jpg,,Photo by FrDr (CC BY-SA 4.0),フォントネーの<br>シトー会修道院,,,
+1,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,城壁都市バクー：シルヴァンシャー宮殿、乙女の塔,40.3665431331671,49.8330406692574,文化遺産,2000,バクー市,,,,Walled City of Baku with the Shirvanshah's Palace and Maiden Tower,,,,,,,,
+2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アートの文化的景観,40.1854664706698,49.3621986443409,文化遺産,2007,バクー市,ジンギンダグ山・ヤズルテペ丘,,,Gobustan Rock Art Cultural Landscape<br>Jinghindagh mountain –Yazylytepe hill,,,,,,,,
+2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アートの文化的景観,40.1125217965752,49.3818961895896,文化遺産,2007,バクー市,ボユクダシュ山,,,Gobustan Rock Art Cultural Landscape<br>Boyukdash mountain,,,,,,,,
+2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アートの文化的景観,40.0580932442815,49.395993193499,文化遺産,2007,バクー市,キチクダシュ山,,,Gobustan Rock Art Cultural Landscape<br>Kichikdash mountain,,,,,,,,
+3,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,シェキ歴史地区とハーン宮殿,41.2041674780848,47.1972385741443,文化遺産,2019,シェキ市,,,,Historic Centre of Sheki with the Khan’s Palace,,,,,,,,
+4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.7542089581489,48.6825120823759,自然遺産,2019,レンカラン地区,ダンギャバンド（北部ヒルカン国立公園）,,,Hyrcanian Forests<br>Dangyaband (Northern HNP),,,,,,,,
+4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.4538999596119,48.67907310114,自然遺産,2019,アスタラ地区,イスティスチャイ渓谷（南部ヒルカン国立公園）,,,Hyrcanian Forests<br>İstisuchay Valley (Southern HNP),,,,,,,,
+5,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,キナリグ人の文化的景観と移牧の道「カッチ・ヨル」,40.7057861068054,48.8853892675962,文化遺産,2023,グバ地区,ヒルナグ村,,,Cultural Landscape of Khinalig People and “Köç Yolu” Transhumance Route,,,,,,,,
