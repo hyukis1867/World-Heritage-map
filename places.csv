@@ -1138,8 +1138,8 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 5,欧州,オランダ王国,Ir.D.F.ヴァウダヘマール<br>［D.F.ヴァウダ蒸気水揚げポンプ場］,52.8463,5.6797,文化遺産,1998,フレヴォラント州 レンメル,,,,Ir.D.F. Woudagemaal<br>(D.F. Wouda Steam Pumping Station),1,NL_05_Ir_D_F_01.jpg,,Photo by Ellywa (CC BY-SA 4.0),,,,
 6,欧州,オランダ王国,ドゥローフマーケライ・デ・<br>ベームステル［ベームステル干拓地］,52.5491,4.9144,文化遺産,1999,北ホラント州,ベームスター,,,Droogmakerij de Beemster (Beemster Polder),1,,,,ドゥローフマーケライ・デ・ベームステル<br>［ベームステル干拓地］,,,
 7,欧州,オランダ王国,リートフェルト設計のシュレーダー邸,52.0853,5.1475,文化遺産,2000,ユトレヒト州 ユトレヒト,,,,Rietveld Schröderhuis (Rietveld Schröder House),,NL_07_Rietveld_Schroderhuis_01.jpg,,Photo by Luis Guillermo R. (CC BY-SA 4.0),リートフェルト設計の<br>シュレーダー邸,,,
-8,欧州,オランダ王国,ワッデン海,53.3907,5.6658,自然遺産,2009,フリースラント州 / フローニンゲン州,ワッデン海に関する主要計画決定（PKB）<br>第I部,,,Wadden Sea<br>Key Planning Decision (PKB) Wadden Sea / part I,2,,,,,,,1
-8,欧州,オランダ王国,ワッデン海,53.3664,6.8964,自然遺産,2009,フリースラント州 / フローニンゲン州,ワッデン海に関する主要計画決定（PKB）<br>第II部,,,Wadden Sea<br>Key Planning Decision (PKB) Wadden Sea / part II,,,,,,,,2
+8,欧州,オランダ王国,ワッデン海,53.3907,5.6658,自然遺産,2009,フリースラント州 / フローニンゲン州,ワッデン海に関する主要計画決定（PKB）<br>（パート１）,,,Wadden Sea<br>Key Planning Decision (PKB) Wadden Sea / part I,2,,,,,,,1
+8,欧州,オランダ王国,ワッデン海,53.3664,6.8964,自然遺産,2009,フリースラント州 / フローニンゲン州,ワッデン海に関する主要計画決定（PKB）<br>（パート２）,,,Wadden Sea<br>Key Planning Decision (PKB) Wadden Sea / part II,,,,,,,,2
 9,欧州,オランダ王国,アムステルダムのシンゲル運河内の<br>17世紀の環状運河地区,52.3674,4.8975,文化遺産,2010,アムステルダム,シンゲル運河内の17世紀の環状運河地区,,,Seventeenth-Century Canal Ring Area<br>of Amsterdam inside the Singelgracht,,,,,,アムステルダムのシンゲル運河内の17世紀の環状運河地区,,
 10,欧州,オランダ王国,ファン・ネレ工場,51.9240,4.4326,文化遺産,2014,南ホラント州 ロッテルダム,,,,Van Nellefabriek,2,NL_10_Van_Nellefabriek_01.jpg,,Photo by Choinowski (CC BY-SA 4.0),,,,
 11,欧州,オランダ王国,慈善の入植地群,52.8572,6.1672,文化遺産,2021,ドレンテ州,フレーデリクスオールト /<br>ウィルヘルミーナオールト,,,Colonies of Benevolence<br>Frederiksoord - Wilhelminaoord,1,,,,,,,1
@@ -1580,8 +1580,8 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 2,欧州,デンマーク王国,ロスキレの大聖堂,55.6426,12.0797,文化遺産,1995,デンマーク首都地域 シェラン島,,,,Roskilde Cathedral,1,DK_02_Roskilde_Cathedral_01.jpg,,Photo by CucombreLibre (CC BY-SA 4.0),,,,
 3,欧州,デンマーク王国,クロンボー城,56.0391,12.6217,文化遺産,2000,デンマーク首都地域 ヘルシンゲル,,,,Kronborg Castle,4,DK_03_Kronborg_Castle_01.jpg,,Photo by David Castor CC0 via Wikimedia Commons,,,,
 4,欧州,デンマーク王国,イルリサット・アイスフィヨルド,69.1556,-50.6442,自然遺産,2004,グリーンランド,,,,Ilulissat Icefjord,2,DK_04_Ilulissat_Icefjord_01.jpg,,Photo by Christoph Strässler (CC BY-SA 4.0),イルリサット・<br>アイスフィヨルド,,,
-5,欧州,デンマーク王国,ワッデン海,54.6064,8.4661,自然遺産,2009,北ユトランド地域 シェラン島,シュレースヴィヒ＝<br>ホルシュタイン・ワッデン海国立公園／<br>デンマーク・ワッデン海<br>自然・野生生物保護区パート１,,,Wadden Sea<br>National Park Wadden Sea Schleswig-Holstein /<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part I,2,,,,,,,1
-5,欧州,デンマーク王国,ワッデン海,55.4953,8.1876,自然遺産,2009,南デンマーク地域,デンマーク・ワッデン海<br>自然・野生生物保護区パート２,,,Wadden Sea<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part II,,,,,,,,2
+5,欧州,デンマーク王国,ワッデン海,54.6064,8.4661,自然遺産,2009,北ユトランド地域 シェラン島,シュレースヴィヒ＝<br>ホルシュタイン・ワッデン海国立公園／<br>デンマーク・ワッデン海<br>自然・野生生物保護区（パート１）,,,Wadden Sea<br>National Park Wadden Sea Schleswig-Holstein /<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part I,2,,,,,,,1
+5,欧州,デンマーク王国,ワッデン海,55.4953,8.1876,自然遺産,2009,南デンマーク地域,デンマーク・ワッデン海<br>自然・野生生物保護区（パート２）,,,Wadden Sea<br>Danish Wadden Sea Nature and Wildlife Reserve /<br>part II,,,,,,,,2
 6,欧州,デンマーク王国,ステウンス・クリント,55.2787,12.4461,自然遺産,2014,デンマーク首都地域 シェラン島,ステウンス・クリント,,,Stevns Klint,2,DK_06_Stevns_Klint_01.jpg,,Photo by kallerna (CC BY-SA 4.0),,,,
 7,欧州,デンマーク王国,モラヴィア教会の入植地群,55.3557,9.4809,文化遺産,2015,南デンマーク地域,クリスチャンスフェルド,,,Moravian Church Settlements<br>Christiansfeld,1,DK_07_Christiansfeld_01.jpg,,Photo by JEK (CC BY-SA 4.0),,モラヴィア教会の入植地群,,
 8,欧州,デンマーク王国,シェラン島北部の<br>パル・フォルス式狩猟の景観,55.9127,12.3582,文化遺産,2015,デンマーク首都地域 シェラン島,ストア・ディアヘーヴ,,,The par force hunting landscape in North Zealand<br>Store Dyrehave,1,DK_08_Store_Dyrehave_01.jpg,,Photo by Ramblersen (CC BY-SA 4.0),,,,1
@@ -2145,3 +2145,38 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 29,欧州,ドイツ連邦共和国,ムスカウ公園 /<br>ムジャコフスキ公園,51.5468927942178,14.7230645112722,文化遺産,2004,ザクセン州,,,,Muskauer Park / Park Mużakowski,,,,,,,,
 30,欧州,ドイツ連邦共和国,ブレーメンのマルクト広場にある市庁舎とローラント像,53.0758154378557,8.80717139182623,文化遺産,2004,ブレーメン州,,,,Town Hall and Roland<br>on the Marketplace of Bremen,,,,,ブレーメンの<br>マルクト広場にある市庁舎<br>とローラント像,,,
 31,欧州,ドイツ連邦共和国,レーゲンスブルク旧市街と<br>シュタットアムホーフ,49.0192006815077,12.0985032377677,文化遺産,2006,バイエルン州,,,,Old town of Regensburg with Stadtamhof,,,,,,,,
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,54.5525613426401,13.6599124198586,自然遺産,2007,メクレンブルク＝フォアポンメルン州,ヤスムント国立公園,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Jasmund,,,,,,,,1
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,53.3407457924439,13.2050788632835,自然遺産,2007,メクレンブルク＝フォアポンメルン州,ゼーラハン,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Serrahn,,,,,,,,2
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,52.9923876098074,13.8523129699942,自然遺産,2007,ブランデンブルク州,グルムジン,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Grumsin,,,,,,,,3
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,51.0835389349581,10.4161298382638,自然遺産,2007,テューリンゲン州,ハイニヒ,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Hainich,,,,,,,,4
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,51.149521465729,8.97364856789175,自然遺産,2007,ヘッセン州,ケラーヴァルト,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Kellerwald,,,,,,,,5
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.4110751654765,13.5675953768241,文化遺産,2008,ベルリン州,ガルテンシュタット・ファルケンベルク,,,Berlin Modernism Housing Estates<br>Gartenstadt Flakenberg,,,,,,,,1
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5601443883747,13.3495685667865,文化遺産,2008,ベルリン州,ジードルング・シラーパルク,,,Berlin Modernism Housing Estates<br>Siedlung Schillerpark,,,,,,,,2
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.448225421093,13.4485732626536,文化遺産,2008,ベルリン州,グロースジードルング・ブリッツ（馬蹄形集合住宅）,,,Berlin Modernism Housing Estates<br>Großsiedlung Britz (Hufeisensiedlung),,,,,,,,3
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5466041770027,13.4325060269992,文化遺産,2008,ベルリン州,ヴォーンシュタット・カール・レギーン,,,Berlin Modernism Housing Estates<br>Wohnstadt Carl Legien,,,,,,,,4
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5688897758614,13.3525232503101,文化遺産,2008,ベルリン州,ヴァイセ・シュタット,,,Berlin Modernism Housing Estates<br>Weiße Stadt,,,,,,,,5
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5397809440349,13.275995662571,文化遺産,2008,ベルリン州,グロースジードルング・ジーメンスシュタット（リング形集合住宅）,,,Berlin Modernism Housing Estates<br>Goßsiedlung Siemensstadt (Ringsiedlung),,,,,,,,6
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.4497235840111,13.2555786751135,文化遺産,2008,ベルリン州,ヴァルトジードルング・ツェーレンドルフ,,,Berlin Modernism Housing Estates<br>Waldsiedlung Zehlendorf,,,,,,,,7
+34,欧州,ドイツ連邦共和国,ワッデン海,53.2739753714166,7.16355620984864,自然遺産,2009,ニーダーザクセン州,ワッデン海に関する主要計画決定（PKB）<br>（パート３）,,,"Key Planning Decision (PKB) Wadden Sea, part III",,,,,,,,1
+34,欧州,ドイツ連邦共和国,ワッデン海,53.6948814189559,7.33271935480991,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート2）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part II ",,,,,,,,2
+34,欧州,ドイツ連邦共和国,ワッデン海,53.6266901498115,8.26383722320376,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート3）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part III",,,,,,,,3
+34,欧州,ドイツ連邦共和国,ワッデン海,53.8819866260373,8.36769360535884,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート4）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part IV",,,,,,,,4
+35,欧州,ドイツ連邦共和国,アルフェルトのファグス工場,51.9840001660679,9.81208074337328,文化遺産,2011,ニーダーザクセン州,,,,Fagus Factory in Alfeld,,,,,,,,
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,1
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,2
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,3
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,4
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,5
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,6
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,7
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,8
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,9
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,10
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,11
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,12
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,13
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,14
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,15
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,16
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,17
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,,,文化遺産,2011,,,,,Prehistoric Pile Dwellings around the Alps<br>,,,,,,,,18
