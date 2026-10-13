@@ -2044,6 +2044,11 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 6,欧州,フランス共和国,アミアンの大聖堂,49.8945,2.3020,文化遺産,1981,オー＝ド＝フランス地域 ソンム県,,,Cathédrale d'Amiens,Amiens Cathedral,,FR_06_Amiens_Cathedral_01.jpg,,Photo by Raimond Spekking (CC BY-SA 4.0),,,,
 7,欧州,フランス共和国,アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,43.6777,4.6309,文化遺産,1981,プロヴァンス地方 プーシュ＝デュ＝ローヌ県,,,Arles / monuments romains et romans,Arles / Roman and Romanesque Monuments,2,FR_07_Arles_Roman_and_Romanesque_Monuments_01.jpg,,Photo by Chensiyuan (CC BY-SA 4.0),アルル、ローマ遺跡と<br>ロマネスク様式の建造物群,,,
 8,欧州,フランス共和国,フォントネーのシトー会修道院,47.6396,4.3894,文化遺産,1981,ブルゴーニュ地方 コート＝ドール県,,,Abbaye cistercienne de Fontenay,Cistercian Abbey of Fontenay,1,FR_08_Cistercian_Abbey_of_Fontenay_01.jpg,,Photo by FrDr (CC BY-SA 4.0),フォントネーの<br>シトー会修道院,,,
+9,欧州,フランス共和国,フォンテーヌブロー宮殿と庭園,48.4021252302306,2.69984674473784,文化遺産,1981,セーヌ＝エ＝マルヌ県,,,Palais et parc de Fontainebleau,Palace and Park of Fontainebleau,,,,,,,,
+10,欧州,フランス共和国,オランジュのローマ劇場とその周辺及び凱旋門,44.1357886489551,4.80882632834397,文化遺産,1981,ヴォクリューズ県,ローマ劇場,,,"Roman Theatre and its Surroundings and the ""Triumphal Arch"" of Orange<br>Théâtre antique",,,,,,,,1
+10,欧州,フランス共和国,オランジュのローマ劇場とその周辺及び凱旋門,44.1421159007988,4.8048005711769,文化遺産,1981,ヴォクリューズ県,凱旋門,,,"Roman Theatre and its Surroundings and the ""Triumphal Arch"" of Orange<br>Arc de triomphe",,,,,,,,2
+11,欧州,フランス共和国,サラン・レ・バン大製塩所から<br>アルケ・スナン王立製塩所までの<br>天日塩生産所,47.0333795404487,5.77749456152532,文化遺産,1982,ブルゴーニュ＝フランシュ＝コンテ地方,アルケ・スナン王立製塩所,,,"From the Great Saltworks of Salins-les-Bains to the Royal Saltworks of Arc-et-Senans, the Production of Open-pan Salt<br>Saline Royale d’Arc - et - Senans",,,,,,,,1
+11,欧州,フランス共和国,サラン・レ・バン大製塩所から<br>アルケ・スナン王立製塩所までの<br>天日塩生産所,46.9370742593786,5.87669257800647,文化遺産,1982,ブルゴーニュ＝フランシュ＝コンテ地方,サラン・レ・バン大製塩所,,,"From the Great Saltworks of Salins-les-Bains to the Royal Saltworks of Arc-et-Senans, the Production of Open-pan Salt<br>Saline de Salins - les - Bains",,,,,,,,2
 1,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,城壁都市バクー：<br>シルヴァンシャー宮殿、乙女の塔,40.3665431331671,49.8330406692574,文化遺産,2000,バクー市,,,,Walled City of Baku with the Shirvanshah's Palace<br>and Maiden Tower,,AZ_01_Shirvanshahs_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),城壁都市バクー：<br>ｼﾙｳﾞｧﾝｼｬｰ宮殿、乙女の塔,,,
 2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アート<br>の文化的景観,40.1854664706698,49.3621986443409,文化遺産,2007,バクー市,ジンギンダグ山・ヤズルテペ丘,,,Gobustan Rock Art Cultural Landscape<br>Jinghindagh mountain –Yazylytepe hill,,,,,,,,1
 2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アート<br>の文化的景観,40.1125217965752,49.3818961895896,文化遺産,2007,バクー市,ボユクダシュ山,,,Gobustan Rock Art Cultural Landscape<br>Boyukdash mountain,,,,,,,,2
@@ -2062,15 +2067,15 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 2,アジア,アフガニスタン,バーミヤン渓谷の文化的景観と<br>古代遺跡群 ,34.8109740987853,66.8434522179307,文化遺産,2003,バーミヤン州,カライ・カファリ A,,,Cultural Landscape and Archaeological Remains of the Bamiyan Valley<br>Qallay Kaphari A,,,,,,,,6
 2,アジア,アフガニスタン,バーミヤン渓谷の文化的景観と<br>古代遺跡群 ,34.8128129996116,66.8502874592005,文化遺産,2003,バーミヤン州,カライ・カファリ B,,,Cultural Landscape and Archaeological Remains of the Bamiyan Valley<br>Qallay Kaphari B,,,,,,,,7
 2,アジア,アフガニスタン,バーミヤン渓谷の文化的景観と<br>古代遺跡群 ,34.8326190934338,67.8391169339317,文化遺産,2003,バーミヤン州,シャフリ・ゴルゴラ（嘆きの街）,,,Cultural Landscape and Archaeological Remains of the Bamiyan Valley<br>Shahr-i-Ghulghulah,,AF_02_Ghulghulah_01.jpg,,Photo by EFarid (CC BY-SA 4.0),,シャフリ・ゴルゴラ<br>（嘆きの街）,,8
-1,欧州,ドイツ連邦共和国,アーヘン大聖堂,50.774692429101,6.08391549494929,文化遺産,1978,ノルトライン＝ヴェストファーレン州,,,,Aachen Cathedral,,,,,,,,
+1,欧州,ドイツ連邦共和国,アーヘン大聖堂,50.774692429101,6.08391549494929,文化遺産,1978,ノルトライン＝ヴェストファーレン州,,,,Aachen Cathedral,2,,,,,,,
 2,欧州,ドイツ連邦共和国,シュパイアー大聖堂,49.3172217450234,8.44280024862411,文化遺産,1981,ラインラント＝プファルツ州,,,,Speyer Cathedral,,,,,,,,
-3,欧州,ドイツ連邦共和国,ヴュルツブルク司教館、<br>その庭園群と広場,49.7926884402419,9.93920465469518,文化遺産,1981,バイエルン州,ヴュルツブルク司教館,,,Würzburg Residence with the Court Gardens<br>and Residence Square<br>Residenz,,,,,ヴュルツブルク司教館、<br>その庭園群と広場,,,1
+3,欧州,ドイツ連邦共和国,ヴュルツブルク司教館、<br>その庭園群と広場,49.7926884402419,9.93920465469518,文化遺産,1981,バイエルン州,ヴュルツブルク司教館,,,Würzburg Residence with the Court Gardens<br>and Residence Square<br>Residenz,2,,,,ヴュルツブルク司教館、<br>その庭園群と広場,,,1
 3,欧州,ドイツ連邦共和国,ヴュルツブルク司教館、<br>その庭園群と広場,49.7943381647649,9.93888569941897,文化遺産,1981,バイエルン州,ローゼンバッハ庭園,,,Würzburg Residence with the Court Gardens<br>and Residence Square<br>Rosenbach Park,,,,,,,,2
-4,欧州,ドイツ連邦共和国,ヴィースの巡礼教会,47.680527968049,10.9003774588355,文化遺産,1983,バイエルン州,,,,Pilgrimage Church of Wies,,,,,,,,
-5,欧州,ドイツ連邦共和国,ブリュールのアウグストゥスブルク城と<br>ファルケンルスト,50.8278273634098,6.90828533300287,文化遺産,1984,ノルトライン＝ヴェストファーレン州,,,,Castles of Augustusburg and Falkenlust at Brühl,,,,,ブリュールの<br>アウグストゥスブルク城と<br>ファルケンルスト,,,
-6,欧州,ドイツ連邦共和国,ヒルデスハイムの聖マリア大聖堂と<br>聖ミカエル教会,52.1528784401226,9.94344460085334,文化遺産,1985,ニーダーザクセン州,聖ミカエル教会,,,St Mary's Cathedral and<br>St Michael's Church at Hildesheim<br>St Michael's Lutheran Church,,,,,,,,1
+4,欧州,ドイツ連邦共和国,ヴィースの巡礼教会,47.680527968049,10.9003774588355,文化遺産,1983,バイエルン州,,,,Pilgrimage Church of Wies,2,,,,,,,
+5,欧州,ドイツ連邦共和国,ブリュールのアウグストゥスブルク城と<br>ファルケンルスト,50.8278273634098,6.90828533300287,文化遺産,1984,ノルトライン＝ヴェストファーレン州,,,,Castles of Augustusburg and Falkenlust at Brühl,1,,,,ブリュールの<br>アウグストゥスブルク城と<br>ファルケンルスト,,,
+6,欧州,ドイツ連邦共和国,ヒルデスハイムの聖マリア大聖堂と<br>聖ミカエル教会,52.1528784401226,9.94344460085334,文化遺産,1985,ニーダーザクセン州,聖ミカエル教会,,,St Mary's Cathedral and<br>St Michael's Church at Hildesheim<br>St Michael's Lutheran Church,1,,,,,,,1
 6,欧州,ドイツ連邦共和国,ヒルデスハイムの聖マリア大聖堂と<br>聖ミカエル教会,52.1489923410808,9.94697925965955,文化遺産,1985,ニーダーザクセン州,聖マリア大聖堂,,,St Mary's Cathedral and St Michael's Church at Hildesheim<br>St Mary's Catholic Cathedral,,,,,,,,2
-7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7480518212753,6.64908948312664,文化遺産,1986,ラインラント＝プファルツ州,円形劇場（アンフィテアトルム）,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Ampitheatre",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,1
+7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7480518212753,6.64908948312664,文化遺産,1986,ラインラント＝プファルツ州,円形劇場（アンフィテアトルム）,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Ampitheatre",1,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,1
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7518606796183,6.6264610316426,文化遺産,1986,ラインラント＝プファルツ州,モーゼル川の橋,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Moselle Bridge",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,2
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7500181413453,6.63019731858134,文化遺産,1986,ラインラント＝プファルツ州,バルバラ浴場,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Barbara Baths",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,3
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7091171185972,6.54952699812124,文化遺産,1986,ラインラント＝プファルツ州,イゲルの円柱,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Igel Column",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,4
@@ -2079,16 +2084,16 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.753492724905,6.64340036570189,文化遺産,1986,ラインラント＝プファルツ州,アウラ・パラティナ<br>（コンスタンティヌスのバシリカ）,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Aula Palatina (Basilica)",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,7
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7562121811415,6.64356401802138,文化遺産,1986,ラインラント＝プファルツ州,ペテロ大聖堂（トリーア大聖堂）,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Cathedral",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,,,8
 7,欧州,ドイツ連邦共和国,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,49.7558098057215,6.64308352921206,文化遺産,1986,ラインラント＝プファルツ州,聖母教会（リープフラウエン教会）,,,"Roman Monuments, Cathedral of<br>St Peter and Church of Our Lady in Trier<br>Church of Our Lady (Liebfrauenkirche) ",,,,,トリーアのローマ遺跡群、<br>聖ペテロ大聖堂と聖母教会,聖母教会<br>（リープフラウエン教会）,,9
-8,欧州,ドイツ連邦共和国,ローマ帝国の国境線,50.5039476162467,7.3190327866143,文化遺産,1987,,,,,Frontiers of the Roman Empire,,,,,,,,
-9,欧州,ドイツ連邦共和国,ハンザ同盟都市リューベック,53.8741301578866,10.690592690811,文化遺産,1987,シュレースヴィヒ＝ホルシュタイン州,ブルク修道院からエージディエン通りまで,,,Hanseatic City of Lübeck<br>Zone 1: Burgkloster - Aegidienstrasse,,,,,ハンザ同盟都市<br>リューベック,,,1
+8,欧州,ドイツ連邦共和国,ローマ帝国の国境線,50.5039476162467,7.3190327866143,文化遺産,1987,,,,,Frontiers of the Roman Empire,2,,,,,,,
+9,欧州,ドイツ連邦共和国,ハンザ同盟都市リューベック,53.8741301578866,10.690592690811,文化遺産,1987,シュレースヴィヒ＝ホルシュタイン州,ブルク修道院からエージディエン通りまで,,,Hanseatic City of Lübeck<br>Zone 1: Burgkloster - Aegidienstrasse,3,,,,ハンザ同盟都市<br>リューベック,,,1
 9,欧州,ドイツ連邦共和国,ハンザ同盟都市リューベック,53.8608897224916,10.6859132375184,文化遺産,1987,シュレースヴィヒ＝ホルシュタイン州,聖ペトリ教会からリューベック大聖堂まで,,,Hanseatic City of Lübeck<br>Zone 2: Petrikirche - Dom zu Lübeck,,,,,ハンザ同盟都市<br>リューベック,,,2
 9,欧州,ドイツ連邦共和国,ハンザ同盟都市リューベック,53.8678108236833,10.6847955532424,文化遺産,1987,シュレースヴィヒ＝ホルシュタイン州,聖マリア教会、市庁舎（ラートハウス）、<br>市場広場（マルクト広場）,,,"Hanseatic City of Lübeck<br>Zone 3: Marienkirche, Rathaus, Marktplatz",,,,,ハンザ同盟都市<br>リューベック,,,3
-10,欧州,ドイツ連邦共和国,ポツダムとベルリンの宮殿群と公園群,52.3998166795279,13.0332367375118,文化遺産,1990,ブランデンブルク州,,,,Palaces and Parks of Potsdam and Berlin,,,,,ポツダムと<br>ベルリンの宮殿群と公園群,,,
-11,欧州,ドイツ連邦共和国,ロルシュ修道院とアルテンミュンスター,49.6535215239576,8.569464726916,文化遺産,1991,ヘッセン州,ロルシュ修道院,,,Abbey and Altenmünster of Lorsch<br>Kloster Lorsch,,,,,ロルシュ修道院と<br>アルテンミュンスター,,,1
+10,欧州,ドイツ連邦共和国,ポツダムとベルリンの宮殿群と公園群,52.3998166795279,13.0332367375118,文化遺産,1990,ブランデンブルク州,,,,Palaces and Parks of Potsdam and Berlin,2,,,,ポツダムと<br>ベルリンの宮殿群と公園群,,,
+11,欧州,ドイツ連邦共和国,ロルシュ修道院とアルテンミュンスター,49.6535215239576,8.569464726916,文化遺産,1991,ヘッセン州,ロルシュ修道院,,,Abbey and Altenmünster of Lorsch<br>Kloster Lorsch,1,,,,ロルシュ修道院と<br>アルテンミュンスター,,,1
 11,欧州,ドイツ連邦共和国,ロルシュ修道院とアルテンミュンスター,49.6571788413989,8.57689966946803,文化遺産,1991,ヘッセン州,アルテンミュンスター,,,Abbey and Altenmünster of Lorsch<br>Ruine Altenmuster,,,,,ロルシュ修道院と<br>アルテンミュンスター,,,2
-12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8900394762425,10.4193751737843,文化遺産,1992,ニーダーザクセン州,ランメルスベルク鉱山とゴスラー歴史地区,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Mines of Rammelsberg<br>and Historic Town of Goslar",,,,,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,,,1
+12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8900394762425,10.4193751737843,文化遺産,1992,ニーダーザクセン州,ランメルスベルク鉱山とゴスラー歴史地区,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Mines of Rammelsberg<br>and Historic Town of Goslar",1,,,,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,,,1
 12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8199166477869,10.3398559802583,文化遺産,1992,ニーダーザクセン州,オーバーハルツ水利管理システム,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Upper Harz Water Management System",,,,,,,,2
-13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.0009432743477,8.81290991982642,文化遺産,1993,バーデン＝ヴュルテンベルク州,マウルブロン修道院,,,Maulbronn Monastery Complex<br>Maulbronn Monastery,,,,,,,,1
+13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.0009432743477,8.81290991982642,文化遺産,1993,バーデン＝ヴュルテンベルク州,マウルブロン修道院,,,Maulbronn Monastery Complex<br>Maulbronn Monastery,1,,,,,,,1
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.993500324164,8.76052463501758,文化遺産,1993,バーデン＝ヴュルテンベルク州,アールキステン池,,,Maulbronn Monastery Complex<br>Aalkisten Pond,,,,,,,,2
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.9931876505988,8.77004393270692,文化遺産,1993,バーデン＝ヴュルテンベルク州,アシュベルク池,,,Maulbronn Monastery Complex<br>Pond at Aschberg,,,,,,,,3
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.9981597112657,8.77156343411591,文化遺産,1993,バーデン＝ヴュルテンベルク州,エルフィンガーホーフ池,,,Maulbronn Monastery Complex<br>Pond at Elfingerhof,,,,,,,,4
@@ -2108,11 +2113,11 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.0124701838659,8.84114214655398,文化遺産,1993,バーデン＝ヴュルテンベルク州,小ロイト池,,,Maulbronn Monastery Complex<br>Small Reut Pond,,,,,,,,18
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.012995272869,8.81994351919756,文化遺産,1993,バーデン＝ヴュルテンベルク州,連結水路網,,,Maulbronn Monastery Complex<br>Connecting ditch system,,,,,,,,19
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.9975942497565,8.85165628919109,文化遺産,1993,バーデン＝ヴュルテンベルク州,ハンベルク水路,,,Maulbronn Monastery Complex<br>Hamberg Ditch,,,,,,,,20
-14,欧州,ドイツ連邦共和国,バンベルク市街,49.8916382794558,10.8888887337299,文化遺産,1993,バイエルン州,,,,Town of Bamberg,,,,,,,,
-15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7888536709972,11.1427802937585,文化遺産,1994,ザクセン＝アンハルト州,クヴェドリンブルクの旧市街と新市街,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Old and new towns of Quedlinburg",,,,,,,,1
+14,欧州,ドイツ連邦共和国,バンベルク市街,49.8916382794558,10.8888887337299,文化遺産,1993,バイエルン州,,,,Town of Bamberg,1,,,,,,,
+15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7888536709972,11.1427802937585,文化遺産,1994,ザクセン＝アンハルト州,クヴェドリンブルクの旧市街と新市街,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Old and new towns of Quedlinburg",1,,,,,,,1
 15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7847477232075,11.1303262504159,文化遺産,1994,ザクセン＝アンハルト州,聖ヴィペルティ教会,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Church of St. Wiperti",,,,,,,,2
-16,欧州,ドイツ連邦共和国,フェルクリンゲン製鉄所,49.2486676638207,6.84429492948151,文化遺産,1994,ザールラント州,,,,Völklingen Ironworks,,,,,,,,
-17,欧州,ドイツ連邦共和国,メッセル化石採掘場,49.9180743603748,8.75731641005928,自然遺産,1995,ヘッセン州,,,,Messel Pit Fossil Site,,,,,,,,
+16,欧州,ドイツ連邦共和国,フェルクリンゲン製鉄所,49.2486676638207,6.84429492948151,文化遺産,1994,ザールラント州,,,,Völklingen Ironworks,1,,,,,,,
+17,欧州,ドイツ連邦共和国,メッセル化石採掘場,49.9180743603748,8.75731641005928,自然遺産,1995,ヘッセン州,,,,Messel Pit Fossil Site,1,,,,,,,
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,50.9745367490462,11.3290878827916,文化遺産,1996,テューリンゲン州 ワイマール,旧美術学校,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>The Former School of Art",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,1
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,50.974750889908,11.328182227436,文化遺産,1996,テューリンゲン州 ワイマール,旧応用美術学校,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>The former School of Applied Art",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,2
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,50.9738131305562,11.3394421584213,文化遺産,1996,テューリンゲン州 ワイマール,ハウス・アム・ホルン,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>The House Am Horn",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,3
@@ -2124,45 +2129,45 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,51.800990898156,12.2424060788699,文化遺産,1996,ザクセン＝アンハルト州 デッサウ,バルコニー付き住宅（ミッテルブライト6番地）,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>House with Balcony access - Mittelbreite 6",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,9
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,51.8009923285585,12.2442188279086,文化遺産,1996,ザクセン＝アンハルト州 デッサウ,バルコニー付き住宅（ミッテルブライト14番地）,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>House with Balcony access - Mittelbreite 14",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,10
 18,欧州,ドイツ連邦共和国,ワイマール、デッサウ及びベルナウの<br>バウハウスとその関連遺産群,52.7065832234216,13.5440414646689,文化遺産,1996,ザクセン＝アンハルト州 デッサウ,ADGB労働組合学校,,,"Bauhaus and its Sites in Weimar, Dessau and Bernau<br>The ADGB Trade Union School",,,,,ワイマール、デッサウ及び<br>ベルナウのバウハウスと<br>その関連遺産群,,,11
-19,欧州,ドイツ連邦共和国,ケルン大聖堂,50.941319087209,6.95763132077708,文化遺産,1996,ノルトライン＝ヴェストファーレン州,,,,Cologne Cathedral,,,,,,,,
-20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.5269200623355,11.5500800310879,文化遺産,1996,ザクセン＝アンハルト州 アイスレーベン,ルターの生家,,,Luther Memorials in Eisleben and Wittenberg<br>Luther's birthplace,,,,,,,,1
+19,欧州,ドイツ連邦共和国,ケルン大聖堂,50.941319087209,6.95763132077708,文化遺産,1996,ノルトライン＝ヴェストファーレン州,,,,Cologne Cathedral,2,,,,,,,
+20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.5269200623355,11.5500800310879,文化遺産,1996,ザクセン＝アンハルト州 アイスレーベン,ルターの生家,,,Luther Memorials in Eisleben and Wittenberg<br>Luther's birthplace,3,,,,,,,1
 20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.5280438061201,11.5444582057604,文化遺産,1996,ザクセン＝アンハルト州 アイスレーベン,ルター晩年の家,,,Luther Memorials in Eisleben and Wittenberg<br>The house in which Luther died,,,,,,,,2
 20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.8644702936009,12.6526441240847,文化遺産,1996,ザクセン＝アンハルト州 ヴィッテンベルク,ルター・ホール（ルターの部屋）,,,Luther Memorials in Eisleben and Wittenberg<br>Luther Hall,,,,,,ルター・ホール<br>（ルターの部屋）,,3
 20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.8646827696142,12.6509450458309,文化遺産,1996,ザクセン＝アンハルト州 ヴィッテンベルク,メランヒトンの家,,,Luther Memorials in Eisleben and Wittenberg<br>Melanchthon’s house,,,,,,,,4
 20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.8665776986539,12.6448723608224,文化遺産,1996,ザクセン＝アンハルト州 ヴィッテンベルク,町の教会（聖マリア聖堂）,,,Luther Memorials in Eisleben and Wittenberg<br>The Town Church,,,,,,,,5
 20,欧州,ドイツ連邦共和国,アイスレーベンとヴィッテンベルクの<br>ルター記念建造物群,51.8660305595891,12.6375354198341,文化遺産,1996,ザクセン＝アンハルト州 ヴィッテンベルク,ヴィッテンベルク城の付属聖堂,,,Luther Memorials in Eisleben and Wittenberg<br>The Castle Church,,,,,,,,6
 21,欧州,ドイツ連邦共和国,古典主義の都ワイマール,50.9775298037456,11.3285174940822,文化遺産,1998,テューリンゲン州,,,,Classical Weimar,,,,,,,,
-22,欧州,ドイツ連邦共和国,ベルリンの<br>ムゼウムスインゼル（博物館島）,52.5197896206987,13.3985742992706,文化遺産,1999,ベルリン州,,,,"Museumsinsel (Museum Island), Berlin",,,,,,,,
-23,欧州,ドイツ連邦共和国,ヴァルトブルク城,50.9660752567689,10.3064674288729,文化遺産,1999,テューリンゲン州,,,,Wartburg Castle,,,,,,,,
-24,欧州,ドイツ連邦共和国,デッサウ・ヴェルリッツの庭園王国,51.8454120258618,12.4218446875784,文化遺産,2000,ザクセン＝アンハルト州,ヴェルリッツの公園群,,,Garden Kingdom of Dessau-Wörlitz<br>Parks of Wörlitz,,,,,デッサウ・ヴェルリッツの<br>庭園王国,,,1
+22,欧州,ドイツ連邦共和国,ベルリンの<br>ムゼウムスインゼル（博物館島）,52.5197896206987,13.3985742992706,文化遺産,1999,ベルリン州,,,,"Museumsinsel (Museum Island), Berlin",1,,,,,,,
+23,欧州,ドイツ連邦共和国,ヴァルトブルク城,50.9660752567689,10.3064674288729,文化遺産,1999,テューリンゲン州,,,,Wartburg Castle,1,,,,,,,
+24,欧州,ドイツ連邦共和国,デッサウ・ヴェルリッツの庭園王国,51.8454120258618,12.4218446875784,文化遺産,2000,ザクセン＝アンハルト州,ヴェルリッツの公園群,,,Garden Kingdom of Dessau-Wörlitz<br>Parks of Wörlitz,1,,,,デッサウ・ヴェルリッツの<br>庭園王国,,,1
 24,欧州,ドイツ連邦共和国,デッサウ・ヴェルリッツの庭園王国,51.8274762517521,12.2387147025827,文化遺産,2000,ザクセン＝アンハルト州,デッサウの歴史的墓地,,,Garden Kingdom of Dessau-Wörlitz<br>Historical Graveyard Dessau,,,,,デッサウ・ヴェルリッツの<br>庭園王国,,,2
 24,欧州,ドイツ連邦共和国,デッサウ・ヴェルリッツの庭園王国,51.8060037701285,12.1508450563198,文化遺産,2000,ザクセン＝アンハルト州,モジクカウ宮殿,,,Garden Kingdom of Dessau-Wörlitz<br>Palace Mosigkau,,,,,デッサウ・ヴェルリッツの<br>庭園王国,,,3
 25,欧州,ドイツ連邦共和国,修道院の島ライヒェナウ,47.6985230639962,9.06196365896075,文化遺産,2000,バーデン＝ヴュルテンベルク州,,,,Monastic Island of Reichenau,,,,,,,,
-26,欧州,ドイツ連邦共和国,エッセンの<br>ツォルフェライン炭坑業遺産群,51.4858723360692,7.04227271846664,文化遺産,2001,ノルトライン＝ヴェストファーレン州,,,,Zollverein Coal Mine Industrial Complex in Essen,,,,,,,,
-27,欧州,ドイツ連邦共和国,シュトラールズントおよびヴィスマール<br>の歴史地区,54.3153764219286,13.090476524407,文化遺産,2002,メクレンブルク＝フォアポンメルン州,シュトラールズント,,,Historic Centres of Stralsund and Wismar<br>Stralsund,,,,,シュトラールズントおよび<br>ヴィスマールの歴史地区,,,1
+26,欧州,ドイツ連邦共和国,エッセンの<br>ツォルフェライン炭坑業遺産群,51.4858723360692,7.04227271846664,文化遺産,2001,ノルトライン＝ヴェストファーレン州,,,,Zollverein Coal Mine Industrial Complex in Essen,4,,,,,,,
+27,欧州,ドイツ連邦共和国,シュトラールズントおよびヴィスマール<br>の歴史地区,54.3153764219286,13.090476524407,文化遺産,2002,メクレンブルク＝フォアポンメルン州,シュトラールズント,,,Historic Centres of Stralsund and Wismar<br>Stralsund,1,,,,シュトラールズントおよび<br>ヴィスマールの歴史地区,,,1
 27,欧州,ドイツ連邦共和国,シュトラールズントおよびヴィスマール<br>の歴史地区,53.8915302341055,11.4661105655888,文化遺産,2002,メクレンブルク＝フォアポンメルン州,ヴィスマール,,,Historic Centres of Stralsund and Wismar<br>Wismar,,,,,シュトラールズントおよび<br>ヴィスマールの歴史地区,,,2
 28,欧州,ドイツ連邦共和国,ライン渓谷中流上部,50.1565470768133,7.70824452299107,文化遺産,2002,ラインラント＝プファルツ州<br>ヘッセン州,,,,Upper Middle Rhine Valley,,,,,,,,
-29,欧州,ドイツ連邦共和国,ムスカウ公園 /<br>ムジャコフスキ公園,51.5468927942178,14.7230645112722,文化遺産,2004,ザクセン州,,,,Muskauer Park / Park Mużakowski,,,,,ムスカウ公園 /<br>ムジャコフスキ公園,,,
-30,欧州,ドイツ連邦共和国,ブレーメンのマルクト広場にある市庁舎とローラント像,53.0758154378557,8.80717139182623,文化遺産,2004,ブレーメン州,,,,Town Hall and Roland<br>on the Marketplace of Bremen,,,,,ブレーメンの<br>マルクト広場にある市庁舎<br>とローラント像,,,
-31,欧州,ドイツ連邦共和国,レーゲンスブルク旧市街と<br>シュタットアムホーフ,49.0192006815077,12.0985032377677,文化遺産,2006,バイエルン州,,,,Old town of Regensburg with Stadtamhof,,,,,,,,
-32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,54.5525613426401,13.6599124198586,自然遺産,2007,メクレンブルク＝フォアポンメルン州,ヤスムント国立公園,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Jasmund,,,,,カルパチア山脈と<br>ヨーロッパ地域の<br>古代および原生ブナ林,,,1
+29,欧州,ドイツ連邦共和国,ムスカウ公園 /<br>ムジャコフスキ公園,51.5468927942178,14.7230645112722,文化遺産,2004,ザクセン州,,,,Muskauer Park / Park Mużakowski,2,,,,ムスカウ公園 /<br>ムジャコフスキ公園,,,
+30,欧州,ドイツ連邦共和国,ブレーメンのマルクト広場にある市庁舎とローラント像,53.0758154378557,8.80717139182623,文化遺産,2004,ブレーメン州,,,,Town Hall and Roland<br>on the Marketplace of Bremen,1,,,,ブレーメンの<br>マルクト広場にある市庁舎<br>とローラント像,,,
+31,欧州,ドイツ連邦共和国,レーゲンスブルク旧市街と<br>シュタットアムホーフ,49.0192006815077,12.0985032377677,文化遺産,2006,バイエルン州,,,,Old town of Regensburg with Stadtamhof,1,,,,,,,
+32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,54.5525613426401,13.6599124198586,自然遺産,2007,メクレンブルク＝フォアポンメルン州,ヤスムント国立公園,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Jasmund,2,,,,カルパチア山脈と<br>ヨーロッパ地域の<br>古代および原生ブナ林,,,1
 32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,53.3407457924439,13.2050788632835,自然遺産,2007,メクレンブルク＝フォアポンメルン州,ゼーラハン,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Serrahn,,,,,,,,2
 32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,52.9923876098074,13.8523129699942,自然遺産,2007,ブランデンブルク州,グルムジン,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Grumsin,,,,,,,,3
 32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,51.0835389349581,10.4161298382638,自然遺産,2007,テューリンゲン州,ハイニヒ,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Hainich,,,,,,,,4
 32,欧州,ドイツ連邦共和国,カルパチア山脈とヨーロッパ地域の<br>古代および原生ブナ林,51.149521465729,8.97364856789175,自然遺産,2007,ヘッセン州,ケラーヴァルト,,,Ancient and Primeval Beech Forests of<br>the Carpathians and Other Regions of Europe<br>Kellerwald,,,,,,,,5
-33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.4110751654765,13.5675953768241,文化遺産,2008,ベルリン州,ガルテンシュタット・ファルケンベルク,,,Berlin Modernism Housing Estates<br>Gartenstadt Flakenberg,,,,,ベルリンの<br>モダニズム集合住宅群,,,1
+33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.4110751654765,13.5675953768241,文化遺産,2008,ベルリン州,ガルテンシュタット・ファルケンベルク,,,Berlin Modernism Housing Estates<br>Gartenstadt Flakenberg,2,,,,ベルリンの<br>モダニズム集合住宅群,,,1
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5601443883747,13.3495685667865,文化遺産,2008,ベルリン州,ジードルング・シラーパルク,,,Berlin Modernism Housing Estates<br>Siedlung Schillerpark,,,,,,,,2
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.448225421093,13.4485732626536,文化遺産,2008,ベルリン州,グロースジードルング・ブリッツ（馬蹄形集合住宅）,,,Berlin Modernism Housing Estates<br>Großsiedlung Britz (Hufeisensiedlung),,,,,,,,3
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5466041770027,13.4325060269992,文化遺産,2008,ベルリン州,ヴォーンシュタット・カール・レギーン,,,Berlin Modernism Housing Estates<br>Wohnstadt Carl Legien,,,,,,,,4
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5688897758614,13.3525232503101,文化遺産,2008,ベルリン州,ヴァイセ・シュタット,,,Berlin Modernism Housing Estates<br>Weiße Stadt,,,,,,,,5
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.5397809440349,13.275995662571,文化遺産,2008,ベルリン州,グロースジードルング・ジーメンスシュタット（リング形集合住宅）,,,Berlin Modernism Housing Estates<br>Goßsiedlung Siemensstadt (Ringsiedlung),,,,,,,,6
 33,欧州,ドイツ連邦共和国,ベルリンのモダニズム集合住宅群,52.4497235840111,13.2555786751135,文化遺産,2008,ベルリン州,ヴァルトジードルング・ツェーレンドルフ,,,Berlin Modernism Housing Estates<br>Waldsiedlung Zehlendorf,,,,,,,,7
-34,欧州,ドイツ連邦共和国,ワッデン海,53.2739753714166,7.16355620984864,自然遺産,2009,ニーダーザクセン州,ワッデン海に関する主要計画決定（PKB）<br>（パート３）,,,"Key Planning Decision (PKB) Wadden Sea, part III",,,,,,,,1
+34,欧州,ドイツ連邦共和国,ワッデン海,53.2739753714166,7.16355620984864,自然遺産,2009,ニーダーザクセン州,ワッデン海に関する主要計画決定（PKB）<br>（パート３）,,,"Key Planning Decision (PKB) Wadden Sea, part III",2,,,,,,,1
 34,欧州,ドイツ連邦共和国,ワッデン海,53.6948814189559,7.33271935480991,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート2）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part II ",,,,,,,,2
 34,欧州,ドイツ連邦共和国,ワッデン海,53.6266901498115,8.26383722320376,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート3）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part III",,,,,,,,3
 34,欧州,ドイツ連邦共和国,ワッデン海,53.8819866260373,8.36769360535884,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート4）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part IV",,,,,,,,4
-35,欧州,ドイツ連邦共和国,アルフェルトのファグス工場,51.9840001660679,9.81208074337328,文化遺産,2011,ニーダーザクセン州,,,,Fagus Factory in Alfeld,,,,,アルフェルトの<br>ファグス工場,,,
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6611816084249,8.93855237860896,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴァンゲン（ヒンターホルン）,,,Prehistoric Pile Dwellings around the Alps<br>Wangen - Hinterhorn ,,,,,アルプス山系の<br>先史時代杭上住居跡群,,,1
+35,欧州,ドイツ連邦共和国,アルフェルトのファグス工場,51.9840001660679,9.81208074337328,文化遺産,2011,ニーダーザクセン州,,,,Fagus Factory in Alfeld,1,,,,アルフェルトの<br>ファグス工場,,,
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6611816084249,8.93855237860896,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴァンゲン（ヒンターホルン）,,,Prehistoric Pile Dwellings around the Alps<br>Wangen - Hinterhorn ,1,,,,アルプス山系の<br>先史時代杭上住居跡群,,,1
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6947912763398,9.00519477080074,文化遺産,2011,バーデン＝ヴュルテンベルク州,ホルンシュタート（ヘルンレ）,,,Prehistoric Pile Dwellings around the Alps<br>Hornstaad - Hörnle,,,,,,,,2
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7096024241189,9.07978051012509,文化遺産,2011,バーデン＝ヴュルテンベルク州,アレンスバッハ・シュトランドバート,,,Prehistoric Pile Dwellings around the Alps<br>Allensbach - Strandbad,,,,,,,,3
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6744540312568,9.12139000407511,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴォルマティンゲン（ランゲンライン）,,,Prehistoric Pile Dwellings around the Alps<br>Wollmatingen - Langenrain,,,,,,,,4
@@ -2181,14 +2186,14 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.1422487797289,10.9512008303628,文化遺産,2011,バイエルン州,ウンフリートハウゼン,,,Prehistoric Pile Dwellings around the Alps<br>Unfriedshausen,,,,,,,,17
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.9415539111844,11.3093063189288,文化遺産,2011,バイエルン州,ローズ・アイランド,,,Prehistoric Pile Dwellings around the Alps<br>Rose Island,,,,,,,,18
 37,欧州,ドイツ連邦共和国,バイロイト辺境伯のオペラハウス,49.9443910019701,11.5787357146621,文化遺産,2012,バイエルン州,,,,Margravial Opera House Bayreuth,,,,,バイロイト辺境伯の<br>オペラハウス,,,
-38,欧州,ドイツ連邦共和国,ヴィルヘルムスヘーエ城公園,51.316122426136,9.39319085011802,文化遺産,2013,ヘッセン州,,,,Bergpark Wilhelmshöhe,,,,,ヴィルヘルムスヘーエ城<br>公園,,,
-39,欧州,ドイツ連邦共和国,コルヴァイのカロリング朝時代の<br>ヴェストヴェルク（西構え）と<br>キヴィタス（修道院都市遺構）,51.7785950087424,9.41006003910511,文化遺産,2014,ノルトライン＝ヴェストファーレン州,,,,Carolingian Westwork and Civitas Corvey,,,,,,,,
+38,欧州,ドイツ連邦共和国,ヴィルヘルムスヘーエ城公園,51.316122426136,9.39319085011802,文化遺産,2013,ヘッセン州,,,,Bergpark Wilhelmshöhe,1,,,,ヴィルヘルムスヘーエ城<br>公園,,,
+39,欧州,ドイツ連邦共和国,コルヴァイのカロリング朝時代の<br>ヴェストヴェルク（西構え）と<br>キヴィタス（修道院都市遺構）,51.7785950087424,9.41006003910511,文化遺産,2014,ノルトライン＝ヴェストファーレン州,,,,Carolingian Westwork and Civitas Corvey,1,,,,,,,
 40,欧州,ドイツ連邦共和国,モラヴィア教会の入植地群,51.0158201350329,14.7437308258199,文化遺産,2015,ザクセン州,ヘルンフート,,,Moravian Church Settlements<br>Herrnhut,,,,,,,,
-41,欧州,ドイツ連邦共和国,シュパイヒャーシュタット地区と<br>チリハウスのあるコントールハウス地区,53.5451556681692,9.99802418993196,文化遺産,2015,ハンブルク州,,,,Speicherstadt and Kontorhaus District with Chilehaus,,,,,シュパイヒャーシュタット<br>地区とチリハウスのある<br>コントールハウス地区,,,
-42,欧州,ドイツ連邦共和国,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への顕著な貢献,48.7998947550015,9.1777021180295,文化遺産,2016,バーデン＝ヴュルテンベルク州,ヴァイセンホーフ・ジードルングの住宅群,,,"The Architectural Work of Le Corbusier,<br>an Outstanding Contribution<br>to the Modern Movement<br>Maisons de la Weissenhof-Siedlung",,,,,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への<br>顕著な貢献,,,
+41,欧州,ドイツ連邦共和国,シュパイヒャーシュタット地区と<br>チリハウスのあるコントールハウス地区,53.5451556681692,9.99802418993196,文化遺産,2015,ハンブルク州,,,,Speicherstadt and Kontorhaus District with Chilehaus,1,,,,シュパイヒャーシュタット<br>地区とチリハウスのある<br>コントールハウス地区,,,
+42,欧州,ドイツ連邦共和国,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への顕著な貢献,48.7998947550015,9.1777021180295,文化遺産,2016,バーデン＝ヴュルテンベルク州,ヴァイセンホーフ・ジードルングの住宅群,,,"The Architectural Work of Le Corbusier,<br>an Outstanding Contribution<br>to the Modern Movement<br>Maisons de la Weissenhof-Siedlung","4,3,2",,,,ﾙ・ｺﾙﾋﾞｭｼﾞｴの建築作品：<br>近代建築運動への<br>顕著な貢献,,,
 43,欧州,ドイツ連邦共和国,シュヴァーベン・ジュラの<br>洞窟群と氷河期の芸術,48.3877138474363,9.76552381030407,文化遺産,2017,バーデン＝ヴュルテンベルク州,アッハ渓谷,,,Caves and Ice Age Art in the Swabian Jura<br>Ach Valley,,,,,シュヴァーベン・ジュラの<br>洞窟群と氷河期の芸術,,,
 43,欧州,ドイツ連邦共和国,シュヴァーベン・ジュラの<br>洞窟群と氷河期の芸術,48.5497838149878,10.1726954088067,文化遺産,2017,バーデン＝ヴュルテンベルク州,ローネ渓谷,,,Caves and Ice Age Art in the Swabian Jura<br>Lone Valley,,,,,,,,
-44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4559030747751,9.34621856551093,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,クルムヴァル：エリア４,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>Crooked Wall Area 4,,,,,,,,1
+44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4559030747751,9.34621856551093,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,クルムヴァル：エリア４,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>Crooked Wall Area 4,1,,,,,,,1
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4649371638978,9.38659777227852,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,クルムヴァル：エリア３〜４,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>Crooked Wall Areas 3 to 4,,,,,,,,2
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4619069562194,9.4539394357828,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,クルムヴァル：エリア１〜２<br>ハウプトヴァル：エリア4〜5,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>Crooked Wall Areas 1 to 2 Main Wall Areas 4 to 5,,,,,,,,3
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4781491270559,9.48904813908825,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,ハウプトヴァル：エリア２〜３,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>Main Wall Areas 2 to 3,,,,,,,,4
@@ -2210,7 +2215,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4808700560742,9.7469719886553,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,オスターヴァル：エリア１A〜１C,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>East Wall Area 1A to 1C,,,,,,,,20
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4763112016528,9.77326706831353,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,オスターヴァル：エリア２D,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>East Wall Area 2D,,,,,,,,21
 44,欧州,ドイツ連邦共和国,ヘーゼビューとダーネヴィルケの<br>考古学的境界線群,54.4766135263114,9.78275060218849,文化遺産,2018,シュレースヴィヒ＝ホルシュタイン州,オスターヴァル：エリア２E〜２F,,,Archaeological Border complex<br>of Hedeby and the Danevirke<br>East Wall Area 2E to 2F,,,,,,,,22
-45,欧州,ドイツ連邦共和国,ナウムブルク大聖堂,51.1547190329064,11.803922007955,文化遺産,2018,ザクセン＝アンハルト州,,,,Naumburg Cathedral,,,,,,,,
+45,欧州,ドイツ連邦共和国,ナウムブルク大聖堂,51.1547190329064,11.803922007955,文化遺産,2018,ザクセン＝アンハルト州,,,,Naumburg Cathedral,1,,,,,,,
 46,欧州,ドイツ連邦共和国,エルツゲビルゲ／<br>クルシュノホリ鉱業地域,50.8966886220191,13.6741479810675,文化遺産,2019,ザクセン州,ディポルディスヴァルト中世銀鉱業群,,,Erzgebirge/Krušnohoří Mining Region<br>Dippoldiswalde Medieval Silver Mines,,,,,エルツゲビルゲ／<br>クルシュノホリ鉱業地域,,,1
 46,欧州,ドイツ連邦共和国,エルツゲビルゲ／<br>クルシュノホリ鉱業地域,50.7640130458628,13.770470019292,文化遺産,2019,ザクセン州,アルテンベルク－ツィンヴァルトの鉱業景観,,,Erzgebirge/Krušnohoří Mining Region<br>Altenberg - Zinnwald Mining Landscape,,,,,,,,2
 46,欧州,ドイツ連邦共和国,エルツゲビルゲ／<br>クルシュノホリ鉱業地域,50.7841220237339,13.8215147707467,文化遺産,2019,ザクセン州,ラウェンシュタイン管理センター,,,Erzgebirge/Krušnohoří Mining Region<br>Lauenstein Administrative Centre,,,,,,,,3
@@ -2316,7 +2321,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,50.656337327226,7.14189615265181,文化遺産,2021,ノルトライン＝ヴェストファーレン州,コッテンフォルスト南部：ハイダーホーフ,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kottenforst Süd | Heiderhof,,,,,,,,61
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,50.5881817644486,6.77394032597672,文化遺産,2021,ノルトライン＝ヴェストファーレン州,イヴァースハイム,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Iversheim,,,,,,,,62
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,50.577964617223,7.23398197264562,文化遺産,2021,ラインラント＝プファルツ州,レマーゲン,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Remagen,,,,,,,,63
-50,欧州,ドイツ連邦共和国,ダルムシュタットのマチルデンフーエ<br>（マチルダの丘）,49.8763743739178,8.66749956022165,文化遺産,2021,ヘッセン州,1901年、1908年、1914年の展示場,,,"Mathildenhöhe Darmstadt<br>Exhibition grounds 1901, 1908, 1914",,,,,ダルムシュタットの<br>マチルデンフーエ<br>（マチルダの丘）,,,1
+50,欧州,ドイツ連邦共和国,ダルムシュタットのマチルデンフーエ<br>（マチルダの丘）,49.8763743739178,8.66749956022165,文化遺産,2021,ヘッセン州,1901年、1908年、1914年の展示場,,,"Mathildenhöhe Darmstadt<br>Exhibition grounds 1901, 1908, 1914",1,,,,ダルムシュタットの<br>マチルデンフーエ<br>（マチルダの丘）,,,1
 50,欧州,ドイツ連邦共和国,ダルムシュタットのマチルデンフーエ<br>（マチルダの丘）,49.8749514899029,8.66384404276144,文化遺産,2021,ヘッセン州,1904年の展示場,,,Mathildenhöhe Darmstadt<br>Exhibition grounds 1904,,,,,,,,2
 51,欧州,ドイツ連邦共和国,シュパイア、ヴォルムス、マインツの<br>シュム（ユダヤ人共同体）関連遺跡,49.3161694107749,8.43962221122606,文化遺産,2021,ラインラント＝プファルツ州,シュパイアのユダヤ人地区,,,"ShUM Sites of Speyer, Worms and Mainz<br>Speyer Jewry-Court",,,,,,シュパイア、ヴォルムス、<br>マインツの<br>シュム（ユダヤ人共同体）関連遺跡,,1
 51,欧州,ドイツ連邦共和国,シュパイア、ヴォルムス、マインツの<br>シュム（ユダヤ人共同体）関連遺跡,49.6335061349649,8.36630357474073,文化遺産,2021,ラインラント＝プファルツ州,ヴォルムスのシナゴーグ複合施設,,,"ShUM Sites of Speyer, Worms and Mainz<br>Worms Synagogue Compound",,,,,,,,2
