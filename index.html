@@ -830,13 +830,21 @@ function getScoredResults(keyword) {
     });
 
     const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
-    const isLocalHit = !!(hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
+const isLocalHit = !!(hitFields.localNameJP || hitFields.suggestLocalNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
 
-    // メイン名称にもヒットしている場合はIDでまとめる
-    // localNameJPのみヒットの場合は個別キー
-    const key = (!isMainHit && isLocalHit)
-      ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
-      : `${d.country}_${d.id}`;
+// 構成資産名にヒットした場合は、構成資産ごとに候補を分ける
+// 世界遺産の登録名称だけにヒットした場合は、従来どおりIDでまとめる
+const isComponentHit = !!(
+  hitFields.localNameJP ||
+  hitFields.suggestLocalNameJP ||
+  hitFields.hira ||
+  hitFields.localLangName ||
+  hitFields.localNameEN
+);
+
+const key = isComponentHit
+  ? `${d.country}_${d.id}_${d.localNameJP || d.suggestLocalNameJP || d.hira || d.num}`
+  : `${d.country}_${d.id}`;
 
     const existing = hitMap.get(key);
     if (!existing) {
@@ -871,11 +879,36 @@ function getScoredResults(keyword) {
 
 function highlightText(text, keyword) {
   if (!keyword || !text) return text || '';
-  const idx = normalizeText(text).indexOf(normalizeText(keyword));
-  if (idx === -1) return text;
-  return text.slice(0, idx)
-    + `<span style="color:#1a73e8;">${text.slice(idx, idx + keyword.length)}</span>`
-    + text.slice(idx + keyword.length);
+
+  const normalizedKeyword = normalizeText(keyword);
+  if (!normalizedKeyword) return text;
+
+  // <br> タグを保護して、文字部分だけを処理する
+  return text.split(/(<br\s*\/?>)/gi).map(part => {
+    if (/^<br\s*\/?>$/i.test(part)) {
+      return '<br>';
+    }
+
+    const chars = Array.from(part);
+
+    // 半角・全角変換による文字位置のずれを防ぐ
+    for (let start = 0; start < chars.length; start++) {
+      for (let end = start + 1; end <= chars.length; end++) {
+        const candidate = chars.slice(start, end).join('');
+
+        if (normalizeText(candidate) === normalizedKeyword) {
+          const startOffset = chars.slice(0, start).join('').length;
+          const endOffset = chars.slice(0, end).join('').length;
+
+          return part.slice(0, startOffset)
+            + `<span style="color:#1a73e8;">${part.slice(startOffset, endOffset)}</span>`
+            + part.slice(endOffset);
+        }
+      }
+    }
+
+    return part;
+  }).join('');
 }
 
 function showSuggests(keyword) {
@@ -903,7 +936,7 @@ function showSuggests(keyword) {
     const total = idCountMap[`${d.country}_${d.id}`] || 1;
     const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
     const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '') + numLabel;
+    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '<br>') + numLabel;
 
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
