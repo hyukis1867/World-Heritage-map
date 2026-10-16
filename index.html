@@ -871,44 +871,35 @@ function getScoredResults(keyword) {
 
 function highlightText(text, keyword) {
   if (!keyword || !text) return text || '';
-  const idx = normalizeText(text).indexOf(normalizeText(keyword));
-  if (idx === -1) return text;
-  return text.slice(0, idx)
-    + `<span style="color:#1a73e8;">${text.slice(idx, idx + keyword.length)}</span>`
-    + text.slice(idx + keyword.length);
-}
 
-function showSuggests(keyword) {
-  const searchInput = document.getElementById('search-input');
-  const suggestBox  = document.getElementById('search-suggest');
-  if (!keyword) { suggestBox.style.display = 'none'; return; }
-  const allResults = getScoredResults(keyword).slice(0, 10);
-  if (allResults.length === 0) { suggestBox.style.display = 'none'; return; }
+  const normalizedKeyword = normalizeText(keyword);
+  if (!normalizedKeyword) return text;
 
-  suggestBox.innerHTML = allResults.map((item, i) => {
-    const d  = item.data;
-    const kw = searchInput.value.trim();
-    const hf = item.hitFields;
+  // <br> タグを保護し、文字部分だけを処理する
+  return text.split(/(<br\s*\/?>)/gi).map(part => {
+    if (/^<br\s*\/?>$/i.test(part)) {
+      return '<br>';
+    }
 
-    let displayName;
-    if (hf.suggestName)    displayName = d.suggestName;
-    else if (hf.ddName)    displayName = d.ddName;
-    else if (hf.heritageName) displayName = d.heritageName;
-    else if (hf.localNameJP)  displayName = d.suggestLocalNameJP || d.localNameJP;
-    else if (hf.hira)         displayName = d.hira;
-    else if (hf.localLangName) displayName = d.localLangName;
-    else if (hf.localNameEN)   displayName = d.localNameEN;
-    else displayName = d.suggestName || d.ddName || d.heritageName;
+    const chars = Array.from(part);
 
-    const total = idCountMap[`${d.country}_${d.id}`] || 1;
-    const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
-    const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '<br>') + numLabel;
+    // 半角・全角変換後の文字位置のずれを避ける
+    for (let start = 0; start < chars.length; start++) {
+      for (let end = start + 1; end <= chars.length; end++) {
+        const candidate = chars.slice(start, end).join('');
 
-    return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
-      <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
-      <div class="suggest-item-sub">${d.country} ／ ${d.type}</div>
-    </div>`;
+        if (normalizeText(candidate) === normalizedKeyword) {
+          const startOffset = chars.slice(0, start).join('').length;
+          const endOffset = chars.slice(0, end).join('').length;
+
+          return part.slice(0, startOffset)
+            + `<span style="color:#1a73e8;">${part.slice(startOffset, endOffset)}</span>`
+            + part.slice(endOffset);
+        }
+      }
+    }
+
+    return part;
   }).join('');
 
   suggestBox._results = allResults.map(item => item.data);
