@@ -830,13 +830,21 @@ function getScoredResults(keyword) {
     });
 
     const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
-    const isLocalHit = !!(hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
+const isLocalHit = !!(hitFields.localNameJP || hitFields.suggestLocalNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
 
-    // メイン名称にもヒットしている場合はIDでまとめる
-    // localNameJPのみヒットの場合は個別キー
-    const key = (!isMainHit && isLocalHit)
-      ? `${d.country}_${d.id}_${d.localNameJP || d.hira || d.num}`
-      : `${d.country}_${d.id}`;
+// 構成資産名にヒットした場合は、構成資産ごとに候補を分ける
+// 世界遺産の登録名称だけにヒットした場合は、従来どおりIDでまとめる
+const isComponentHit = !!(
+  hitFields.localNameJP ||
+  hitFields.suggestLocalNameJP ||
+  hitFields.hira ||
+  hitFields.localLangName ||
+  hitFields.localNameEN
+);
+
+const key = isComponentHit
+  ? `${d.country}_${d.id}_${d.localNameJP || d.suggestLocalNameJP || d.hira || d.num}`
+  : `${d.country}_${d.id}`;
 
     const existing = hitMap.get(key);
     if (!existing) {
