@@ -829,11 +829,25 @@ function getScoredResults(keyword) {
       }
     });
 
-    const isMainHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
-const isLocalHit = !!(hitFields.localNameJP || hitFields.suggestLocalNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN);
+ const isMainHit = !!(
+  hitFields.heritageName ||
+  hitFields.ddName ||
+  hitFields.suggestName
+);
 
-// 構成資産名にヒットした場合は、構成資産ごとに候補を分ける
-// 世界遺産の登録名称だけにヒットした場合は、従来どおりIDでまとめる
+const isLocalHit = !!(
+  hitFields.localNameJP ||
+  hitFields.suggestLocalNameJP ||
+  hitFields.hira ||
+  hitFields.localLangName ||
+  hitFields.localNameEN
+);
+
+// 登録名称そのものに一致しているか
+const isPropertyNameHit = !!hitFields.heritageName;
+
+// 構成資産名に一致した場合は個別候補にする
+// ただし、登録名称そのものにも一致している場合はIDでまとめる
 const isComponentHit = !!(
   hitFields.localNameJP ||
   hitFields.suggestLocalNameJP ||
@@ -842,7 +856,7 @@ const isComponentHit = !!(
   hitFields.localNameEN
 );
 
-const key = isComponentHit
+const key = (isComponentHit && !isPropertyNameHit)
   ? `${d.country}_${d.id}_${d.localNameJP || d.suggestLocalNameJP || d.hira || d.num}`
   : `${d.country}_${d.id}`;
 
