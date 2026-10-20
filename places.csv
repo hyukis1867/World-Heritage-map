@@ -338,8 +338,8 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 2,アジア,中華人民共和国,万里の長城,40.3570,116.0207,文化遺産,1987,北京市,八達嶺,はったつれい,,八达岭 / The Great Wall - Badaling,"3,2",CN_02_Badaling_01.jpg,,Photo by Reinhold Möller Ermell (CC BY-SA 4.0),,,,1,万里の長城
 2,アジア,中華人民共和国,万里の長城,39.9676,119.7927,文化遺産,1987,河北省 秦皇島市,山海関,さんかいかん,,山海关 / The Great Wall - Shanhaiguan,,CN_02_Shanhaiguan_01.jpg,,Photo by Nyx Ning (CC BY-SA 3.0),,,,2,万里の長城
 2,アジア,中華人民共和国,万里の長城,39.8013,98.2224,文化遺産,1987,甘粛省 嘉峪関市,嘉峪関,かよくかん,,嘉峪关 / The Great Wall - Jiayuguan,,CN_02_Jiayuguan_01.jpg,,Photo by N509FZ (CC BY-SA 3.0),,,,3,万里の長城
-3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,39.9204,116.3968,文化遺産,1987,北京市,故宮,こきゅう,故宫,The Imperial Palace of the Ming<br>and Qing Dynasties,3,CN_03_The_Imperial_Palace_01.jpg,,Photo by 红烧腰果 (CC BY-SA 3.0),故宮：北京と瀋陽の<br>明・清王朝皇宮群,故宮：北京と瀋陽の<br>明・清王朝皇宮群,,1,故宮：北京と瀋陽の明・清王朝皇宮群
-3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,41.7982,123.4557,文化遺産,2004,遼寧省 瀋陽市,瀋陽故宮,しんようこきゅう,沈阳故宫,The Imperial Palace of the Qing Dynasty,,CN_03_Qing_Dynasty_01.jpg,,Photo by Techyan (CC BY-SA 4.0),,,,2,故宮：北京と瀋陽の明・清王朝皇宮群
+3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,39.9204,116.3968,文化遺産,1987,北京市,故宮,こきゅう,故宫,The Imperial Palace of the Ming<br>and Qing Dynasties,3,CN_03_The_Imperial_Palace_01.jpg,,Photo by 红烧腰果 (CC BY-SA 3.0),故宮：北京と瀋陽の<br>明・清王朝皇宮群,,,1,故宮：北京と瀋陽の<br>明・清王朝皇宮群
+3,アジア,中華人民共和国,故宮：<br>北京と瀋陽の明・清王朝皇宮群,41.7982,123.4557,文化遺産,2004,遼寧省 瀋陽市,瀋陽故宮,しんようこきゅう,沈阳故宫,The Imperial Palace of the Qing Dynasty,,CN_03_Qing_Dynasty_01.jpg,,Photo by Techyan (CC BY-SA 4.0),,,,2,故宮：北京と瀋陽の<br>明・清王朝皇宮群
 4,アジア,中華人民共和国,敦煌の莫高窟,40.0412,94.8091,文化遺産,1987,甘粛省 敦煌市,莫高窟,ばっこうくつ,,莫高窟 / Mogao Caves,3,CN_04_Mogao_Caves_01.jpg,,Photo by Hiroki Ogawa (CC BY-SA 3.0),,,,,敦煌の莫高窟
 5,アジア,中華人民共和国,秦の始皇帝陵と兵馬俑坑,34.3839,109.2808,文化遺産,1987,陕西省 西安市,秦の始皇帝陵と兵馬俑坑,しんのしこうてい と へいばようこう,秦始皇陵及兵马俑坑,Mausoleum of the First Qin Emperor,3,CN_05_Mausoleum_of_the_First_Qin_Emperor_01.jpg,,Photo by Ideophagous (CC BY-SA 4.0),,,,,秦の始皇帝陵と兵馬俑坑
 6,アジア,中華人民共和国,周口店の北京原人遺跡,39.6880,115.9285,文化遺産,1987,北京市,周口店の北京原人遺跡,しゅうこうてん の ぺきんげんじん いせき,周口店遗址,Peking Man Site at Zhoukoudian,1,CN_06_Peking_Man_Site_01.jpg,,Photo by Siyuwj (CC BY-SA 3.0),,,,,周口店の北京原人遺跡
@@ -372,7 +372,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 19,アジア,中華人民共和国,蘇州の古典園林,31.3161,120.6386,文化遺産,2000,江蘇省 蘇州市,芸圃,げいほ,艺圃,Classical Gardens of Suzhou<br>The Garden of Cultivation,,,,,,,,7,蘇州の古典園林
 19,アジア,中華人民共和国,蘇州の古典園林,31.1578,120.7201,文化遺産,2000,江蘇省 蘇州市,退思園,たいしえん,退思园 ,Classical Gardens of Suzhou<br>The Retreat & Reflection Garden,,,,,,,,8,蘇州の古典園林
 20,アジア,中華人民共和国,頤和園,39.9929,116.2733,文化遺産,1998,北京市,頤和園,いわえん,颐和园,Summer Palace(an Imperial Garden in Beijing),,CN_20_Summer_Palace_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,,,,頤和園
-21,アジア,中華人民共和国,天壇：北京の皇帝の祭壇,39.8822,116.4065,文化遺産,1998,北京市,天壇,てんだん,天坛,Temple of Heaven：an Imperial Sacrificial Altar,1,CN_21_Temple_of_Heaven_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,天壇：北京の皇帝の祭壇,,,天壇：北京の皇帝の祭壇
+21,アジア,中華人民共和国,天壇：北京の皇帝の祭壇,39.8822,116.4065,文化遺産,1998,北京市,天壇,てんだん,天坛,Temple of Heaven：an Imperial Sacrificial Altar,1,CN_21_Temple_of_Heaven_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,,,,天壇：北京の皇帝の祭壇
 22,アジア,中華人民共和国,武夷山,27.7245,117.7333,複合遺産,1999,福建省,武夷山 (Part 1),ぶいさん,,武夷山 / Mount Wuyi (Part 1),1,CN_22_Mount_Wuyi_01.jpg,,Photo by Windmemories (CC BY-SA 4.0),,,,1,武夷山
 22,アジア,中華人民共和国,武夷山,27.5551,118.0461,複合遺産,1999,福建省 南平市,南平市武夷山風景名勝区 (Part 2),なんぺいしぶいさんふうけいめいしょうく,,南平市武夷山风景名胜区 / Mount Wuyi (Part 2),,,,,,,,2,武夷山
 23,アジア,中華人民共和国,大足石刻,29.7121,105.7104,文化遺産,1999,重慶市 北山,大足石刻 北山,だいそくせっこく ほくざん,北山石刻,Dazu Shike Rock Carvings<br>Beishan Cliffside Carvings,1,CN_23_Beishan_Cliffside_Carvings_01.jpg,,Photo by JL Cogburn (CC BY-SA 2.0),,,,1,大足石刻
@@ -380,10 +380,10 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 23,アジア,中華人民共和国,大足石刻,29.6830,105.7198,文化遺産,1999,重慶市 南山,大足石刻 南山,だいそくせっこく なんざん,大足石刻 南山,Dazu Shike Rock Carvings<br>Nanshan Cliffside Carvings,,,,,,,,3,大足石刻
 23,アジア,中華人民共和国,大足石刻,29.5923,105.5774,文化遺産,1999,重慶市 石篆山,大足石刻 石篆山,だいそくせっこく せきてんざん,大足石刻 石篆山,Dazu Shike Rock Carvings<br>Shizhuanshan Cliffside Carvings,,,,,,,,4,大足石刻
 23,アジア,中華人民共和国,大足石刻,29.6330,105.8358,文化遺産,1999,重慶市 石門山,大足石刻 石門山,だいそくせっこく せきもんざん,大足石刻 石门山,Dazu Shike Rock Carvings<br>Shimenshan Cliffside Carvings,,,,,,,,5,大足石刻
-24,アジア,中華人民共和国,青城山と都江堰水利施設,31.0052,103.6075,文化遺産,2000,四川省 成都市,都江堰,とうこえん,,都江堰 / The Dujiangyan Irrigation System,1,,,,,青城山と都江堰水利施設,,1,青城山と都江堰水利施設
+24,アジア,中華人民共和国,青城山と都江堰水利施設,31.0052,103.6075,文化遺産,2000,四川省 成都市,都江堰,とうこえん,,都江堰 / The Dujiangyan Irrigation System,1,,,,,,,1,青城山と都江堰水利施設
 24,アジア,中華人民共和国,青城山と都江堰水利施設,30.9011,103.5712,文化遺産,2000,四川省 成都市,青城山,せいじょうざん,,青城山 / Mount Qingcheng,,,,,,,,2,青城山と都江堰水利施設
-25,アジア,中華人民共和国,安徽省南部の古村落：西逓・宏村,30.0040,117.9896,文化遺産,2000,安徽省 黄山市 黟県,宏村,こうそん,,Ancient Villages in Southern Anhui / Hongcun,1,CN_25_Hongcun_01.jpg,,Photo by 颐园新居 (CC BY-SA 4.0),安徽省南部の古村落：<br>西逓・宏村,安徽省南部の古村落：<br>西逓・宏村,,1,安徽省南部の古村落：西逓・宏村
-25,アジア,中華人民共和国,安徽省南部の古村落：西逓・宏村,29.9038,117.9954,文化遺産,2000,安徽省 黄山市 黟県,西逓,せいてい,西递,Ancient Villages in Southern Anhui / Xidi,,,,,,,,2,安徽省南部の古村落：西逓・宏村
+25,アジア,中華人民共和国,安徽省南部の古村落：西逓・宏村,30.0040,117.9896,文化遺産,2000,安徽省 黄山市 黟県,宏村,こうそん,,Ancient Villages in Southern Anhui / Hongcun,1,CN_25_Hongcun_01.jpg,,Photo by 颐园新居 (CC BY-SA 4.0),安徽省南部の古村落：<br>西逓・宏村,,,1,安徽省南部の古村落：<br>西逓・宏村
+25,アジア,中華人民共和国,安徽省南部の古村落：西逓・宏村,29.9038,117.9954,文化遺産,2000,安徽省 黄山市 黟県,西逓,せいてい,西递,Ancient Villages in Southern Anhui / Xidi,,,,,,,,2,安徽省南部の古村落：<br>西逓・宏村
 26,アジア,中華人民共和国,龍門石窟,34.5598,112.4678,文化遺産,2000,河南省 洛陽市,龍門石窟,りゅうもんせっくつ,,龙门石窟 / Longmen Grottoes,1,CN_26_Longmen_Grottoes_01.jpg,,Photo by Thebrainchamber1 (CC BY-SA 4.0),,,,,龍門石窟
 27,アジア,中華人民共和国,明・清朝の皇帝陵墓群,31.2021,112.6407,文化遺産,2000,湖北省 荊門市 / 鍾祥市,明顕陵,めいけんりょう,明显陵,Imperial Tombs of the Ming and Qing Dynasties<br>Xianling Tomb,1,,,,,,,1,明・清朝の皇帝陵墓群
 27,アジア,中華人民共和国,明・清朝の皇帝陵墓群,40.1857,117.6393,文化遺産,2000,河北省 唐山市,清東陵,しんとうりょう,清东陵,Imperial Tombs of the Ming and Qing Dynasties<br>Eastern Qing Tombs,,,,,,,,2,明・清朝の皇帝陵墓群
@@ -400,7 +400,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 27,アジア,中華人民共和国,明・清朝の皇帝陵墓群,41.8300,123.5911,文化遺産,2004,遼寧省 瀋陽市,清福陵,しんふくりょう,清福陵,Imperial Tombs of the Ming and Qing Dynasties<br>Fuling Tomb of the Qing Dynasty,,,,,,,,13,明・清朝の皇帝陵墓群
 27,アジア,中華人民共和国,明・清朝の皇帝陵墓群,41.8399,123.4281,文化遺産,2004,遼寧省 瀋陽市,清昭陵,しんしょうりょう,清昭陵,Imperial Tombs of the Ming and Qing Dynasties<br>Zhaoling Tomb of the Qing Dynasty,,,,,,,,14,明・清朝の皇帝陵墓群
 28,アジア,中華人民共和国,雲崗石窟,40.1115,113.1366,文化遺産,2001,山西省 大同市,雲崗石窟,うんこうせっくつ,,云冈石窟 / Yungang Grottoes,2,CN_28_Yungang_Grottoes_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,,,,雲崗石窟
-29,アジア,中華人民共和国,雲南保護地域の三江併流群,25.8499,98.8581,自然遺産,2003,雲南省,三江並流,さんこうへいりゅう,三江并流,Three Parallel Rivers of Yunnan Protected Areas,1,CN_29_Three_Parallel_Rivers_of_Yunnan_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,雲南保護地域の三江併流群,,,雲南保護地域の三江併流群
+29,アジア,中華人民共和国,雲南保護地域の三江併流群,25.8499,98.8581,自然遺産,2003,雲南省,三江並流,さんこうへいりゅう,三江并流,Three Parallel Rivers of Yunnan Protected Areas,1,CN_29_Three_Parallel_Rivers_of_Yunnan_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),,,,,雲南保護地域の三江併流群
 30,アジア,中華人民共和国,古代高句麗王国の都城と古墳群,41.3278,125.4174,文化遺産,2004,遼寧省 本渓市,五女山城,ごじょさんじょう,五女山城,Capital Cities and Tombs<br>of the Ancient Koguryo Kingdom<br>Wunu Mountain City,1,CN_30_Wunu_Mountain_City_01.jpg,,Photo by xiquinhosilva (CC BY-SA 2.0),古代高句麗王国の<br>都城と古墳群,,,1,古代高句麗王国の都城と古墳群
 30,アジア,中華人民共和国,古代高句麗王国の都城と古墳群,41.1213,126.1892,文化遺産,2004,吉林省 集安市,国内城,こくないじょう,国内城,Capital Cities and Tombs<br>of the Ancient Koguryo Kingdom<br>Guonei City,,,,,,,,2,古代高句麗王国の都城と古墳群
 30,アジア,中華人民共和国,古代高句麗王国の都城と古墳群,41.1564,126.1502,文化遺産,2004,吉林省 集安市,丸都山城,がんとさんじょう,丸都山城,Capital Cities and Tombs<br>of the Ancient Koguryo Kingdom<br>Wandu Mountain City,,,,,,,,3,古代高句麗王国の都城と古墳群
@@ -410,22 +410,22 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 31,アジア,中華人民共和国,マカオの歴史地区,22.1969,113.5499,文化遺産,2005,マカオ特別行政区,マカオの歴史地区（Zone 2）,,,澳门历史城区 / Historic Centre of Macao Zone 2<br>(Guia Hill),,,,,,,,2,マカオの歴史地区
 32,アジア,中華人民共和国,殷墟,36.1206,114.3250,文化遺産,2006,河南省 安陽市,殷墟宮殿宗廟遺址,いんきょ きゅうでんそうびょう いし,殷墟宮殿宗廟遺址,Yin Xu<br>Palace and Royal Ancestral Shrines Area,2,,,,,,,1,殷墟
 32,アジア,中華人民共和国,殷墟,36.1421,114.3097,文化遺産,2006,河南省 安陽市,殷墟王陵遺址,いんきょ おうりょう いし,殷墟王陵遺址,Yin Xu / Royal Tombs Area,,,,,,,,2,殷墟
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1383,103.1432,自然遺産,2006,四川省 汶川県,臥竜自然保護区,がりゅう しぜんほごく,四川大熊猫栖息地 / 卧龙自然保护区,Sichuan Giant Panda Sanctuaries<br>Wolong Nature Reserve,2,,,,四川省の<br>ｼﾞｬｲｱﾝﾄﾊﾟﾝﾀﾞ保護区群,四川省の<br>ジャイアントパンダ保護区群,,1,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.5653,102.8796,自然遺産,2006,四川省 宝興県,蜂桶寨自然保護区,ほうとうさい しぜんほごく,四川大熊猫栖息地 / 蜂桶寨自然保护区,Sichuan Giant Panda Sanctuaries<br>Fengtongzhai Nature Reserve,,,,,,,,2,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.0533,103.3206,自然遺産,2006,四川省 小金県,四姑娘山自然保護区,しこじょうさん しぜんほごく,四川大熊猫栖息地 / 四姑娘山自然保护区,Sichuan Giant Panda Sanctuaries<br>Siguniangshan Nature Reserve,,,,,,,,3,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2836,102.4876,自然遺産,2006,四川省 雅安市 天全県,喇叭河自然保護区,らっぱが しぜんほごく,四川大熊猫栖息地 / 喇叭河自然保护区,Sichuan Giant Panda Sanctuaries<br>Labahe Nature Reserve,,,,,,,,4,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.1427,102.4175,自然遺産,2006,四川省 雅安市 芦山県 / 大邑県,黒水河自然保護区,こくすいが しぜんほごく,四川大熊猫栖息地 / 黑水河自然保护区,Sichuan Giant Panda Sanctuaries<br>Heishuihe Nature Reserve,,,,,,,,5,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.4632,102.9278,自然遺産,2006,四川省 康定県,金湯孔玉自然保護区,きんとうこうぎょく しぜんほごく,四川大熊猫栖息地 / 金汤孔玉自然保护区,Sichuan Giant Panda Sanctuaries<br>Jintang - Kongyu Nature Reserve,,,,,,,,6,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,29.9264,102.9967,自然遺産,2006,四川省 汶川県,草坡自然保護区,そうは しぜんほごく,四川大熊猫栖息地 / 草坡自然保护区,Sichuan Giant Panda Sanctuaries<br>Caopo Nature Reserve,,,,,,,,7,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8958,103.5934,自然遺産,2006,四川省 都江堰市,青城山 - 都江堰風景名勝区,せいじょうさん・とこうえん,四川大熊猫栖息地 / 青城山 - 都江堰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Qingcheng - Dujiangyan Scenic Area,,,,,,,,8,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2522,103.0930,自然遺産,2006,四川省 邛崍市,邛崃天台山風景名勝区,きょうらいてんだいさ,四川大熊猫栖息地 / 邛崃天台山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Tiantai (Qionglai) Scenic Area,,,,,,,,9,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1146,102.8896,自然遺産,2006,四川省 小金県,四姑娘山風景名勝区,しこじょうさん,四川大熊猫栖息地 / 四姑娘山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Siguniang Scenic Area,,,,,,,,10,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6581,103.2090,自然遺産,2006,四川省 大邑県,西嶺雪山風景名勝区,せいれいせつざん,四川大熊猫栖息地 / 西岭雪山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Xilingxueshan Scenic Area,,,,,,,,11,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8208,103.4450,自然遺産,2006,四川省 崇州市,鶏冠山 - 九竜溝風景名勝区,けいかんざん・きゅうりゅうこう,四川大熊猫栖息地 / 鸡冠山 - 九龙沟风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiguan - Jiulonggou Scenic Area,,,,,,,,12,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6840,102.7472,自然遺産,2006,四川省 宝興県,夾金山風景名勝区,きょうきんざん,四川大熊猫栖息地 / 夹金山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiajin Scenic Area,,,,,,,,13,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.6114,102.8186,自然遺産,2006,四川省 理県,米亜羅風景名勝区,べいあら,四川大熊猫栖息地 / 米亚罗风景名胜区,Sichuan Giant Panda Sanctuaries<br>Miyaluo Scenic Area,,,,,,,,14,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6796,103.2145,自然遺産,2006,四川省 芦山県,霊鷲山—大雪峰風景名勝区,れいじゅさん・だいせっぽう,四川大熊猫栖息地 / 灵鹫山 - 大雪峰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Lingjiu - Daxuefeng Scenic Area,,,,,,,,15,四川省のジャイアントパンダ保護区群
-33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.0829,103.0732,自然遺産,2006,四川省 天全県,二郎山風景名勝区,じろうざん,四川大熊猫栖息地 / 二郎山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Erlang Scenic Area,,,,,,,,16,四川省のジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1383,103.1432,自然遺産,2006,四川省 汶川県,臥竜自然保護区,がりゅう しぜんほごく,四川大熊猫栖息地 / 卧龙自然保护区,Sichuan Giant Panda Sanctuaries<br>Wolong Nature Reserve,2,,,,四川省の<br>ｼﾞｬｲｱﾝﾄﾊﾟﾝﾀﾞ保護区群,,,1,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.5653,102.8796,自然遺産,2006,四川省 宝興県,蜂桶寨自然保護区,ほうとうさい しぜんほごく,四川大熊猫栖息地 / 蜂桶寨自然保护区,Sichuan Giant Panda Sanctuaries<br>Fengtongzhai Nature Reserve,,,,,,,,2,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.0533,103.3206,自然遺産,2006,四川省 小金県,四姑娘山自然保護区,しこじょうさん しぜんほごく,四川大熊猫栖息地 / 四姑娘山自然保护区,Sichuan Giant Panda Sanctuaries<br>Siguniangshan Nature Reserve,,,,,,,,3,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2836,102.4876,自然遺産,2006,四川省 雅安市 天全県,喇叭河自然保護区,らっぱが しぜんほごく,四川大熊猫栖息地 / 喇叭河自然保护区,Sichuan Giant Panda Sanctuaries<br>Labahe Nature Reserve,,,,,,,,4,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.1427,102.4175,自然遺産,2006,四川省 雅安市 芦山県 / 大邑県,黒水河自然保護区,こくすいが しぜんほごく,四川大熊猫栖息地 / 黑水河自然保护区,Sichuan Giant Panda Sanctuaries<br>Heishuihe Nature Reserve,,,,,,,,5,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.4632,102.9278,自然遺産,2006,四川省 康定県,金湯孔玉自然保護区,きんとうこうぎょく しぜんほごく,四川大熊猫栖息地 / 金汤孔玉自然保护区,Sichuan Giant Panda Sanctuaries<br>Jintang - Kongyu Nature Reserve,,,,,,,,6,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,29.9264,102.9967,自然遺産,2006,四川省 汶川県,草坡自然保護区,そうは しぜんほごく,四川大熊猫栖息地 / 草坡自然保护区,Sichuan Giant Panda Sanctuaries<br>Caopo Nature Reserve,,,,,,,,7,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8958,103.5934,自然遺産,2006,四川省 都江堰市,青城山 - 都江堰風景名勝区,せいじょうさん・とこうえん,四川大熊猫栖息地 / 青城山 - 都江堰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Qingcheng - Dujiangyan Scenic Area,,,,,,,,8,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.2522,103.0930,自然遺産,2006,四川省 邛崍市,邛崃天台山風景名勝区,きょうらいてんだいさ,四川大熊猫栖息地 / 邛崃天台山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Tiantai (Qionglai) Scenic Area,,,,,,,,9,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.1146,102.8896,自然遺産,2006,四川省 小金県,四姑娘山風景名勝区,しこじょうさん,四川大熊猫栖息地 / 四姑娘山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Siguniang Scenic Area,,,,,,,,10,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6581,103.2090,自然遺産,2006,四川省 大邑県,西嶺雪山風景名勝区,せいれいせつざん,四川大熊猫栖息地 / 西岭雪山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Xilingxueshan Scenic Area,,,,,,,,11,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.8208,103.4450,自然遺産,2006,四川省 崇州市,鶏冠山 - 九竜溝風景名勝区,けいかんざん・きゅうりゅうこう,四川大熊猫栖息地 / 鸡冠山 - 九龙沟风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiguan - Jiulonggou Scenic Area,,,,,,,,12,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6840,102.7472,自然遺産,2006,四川省 宝興県,夾金山風景名勝区,きょうきんざん,四川大熊猫栖息地 / 夹金山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Jiajin Scenic Area,,,,,,,,13,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,31.6114,102.8186,自然遺産,2006,四川省 理県,米亜羅風景名勝区,べいあら,四川大熊猫栖息地 / 米亚罗风景名胜区,Sichuan Giant Panda Sanctuaries<br>Miyaluo Scenic Area,,,,,,,,14,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.6796,103.2145,自然遺産,2006,四川省 芦山県,霊鷲山—大雪峰風景名勝区,れいじゅさん・だいせっぽう,四川大熊猫栖息地 / 灵鹫山 - 大雪峰风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Lingjiu - Daxuefeng Scenic Area,,,,,,,,15,四川省の<br>ジャイアントパンダ保護区群
+33,アジア,中華人民共和国,四川省の<br>ジャイアントパンダ保護区群,30.0829,103.0732,自然遺産,2006,四川省 天全県,二郎山風景名勝区,じろうざん,四川大熊猫栖息地 / 二郎山风景名胜区,Sichuan Giant Panda Sanctuaries<br>Mount Erlang Scenic Area,,,,,,,,16,四川省の<br>ジャイアントパンダ保護区群
 34,アジア,中華人民共和国,開平楼閣と村落,22.3568,112.6139,文化遺産,2007,広東省 開平市,迎龍楼と三門里村,げいりゅうろう と さんもんりそん,迎龙楼和三门里村,Kaiping Diaolou and Villages<br>Yinglong Lou (at Sanmenli Village),1,,,,,,,1,開平楼閣と村落
 34,アジア,中華人民共和国,開平楼閣と村落,22.3734,112.5788,文化遺産,2007,広東省 開平市,自力村と法氏灯楼,じりつそん と ほうしとうろう,自立村和方氏灯楼,Kaiping Diaolou and Villages<br>Zili Village and the Fang Clan Watch Tower,,,,,,,,2,開平楼閣と村落
 34,アジア,中華人民共和国,開平楼閣と村落,22.2895,112.5704,文化遺産,2007,広東省 開平市,馬降龍村群,ばこうりゅうそんちょうろうぐん,马降龙村碉楼群,Kaiping Diaolou and Villages<br>Majianlong Village Cluster,,,,,,,,3,開平楼閣と村落
