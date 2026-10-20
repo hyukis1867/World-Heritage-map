@@ -802,9 +802,16 @@ function getScoredResults(keyword) {
   const hitMap = new Map();
 
   heritageData.forEach(d => {
-    const clean = value => (value || '').replace(/<br\s*\/?>/gi, '');
-    const matches = value => !!value && normalizeText(clean(value)).includes(keyword);
-    const startsWith = value => !!value && normalizeText(clean(value)).startsWith(keyword);
+    const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName, d.suggestName]
+      .filter(Boolean)
+      .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
+    let score = 0;
+    let matched = false;
+    targets.forEach(t => {
+      if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
+      else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
+    });
+    if (score === 0) return;
 
     const hitFields = {};
     [
@@ -817,84 +824,71 @@ function getScoredResults(keyword) {
       ['ddName', d.ddName],
       ['suggestName', d.suggestName],
     ].forEach(([field, val]) => {
-      if (matches(val)) hitFields[field] = val;
+      if (val && normalizeText(val.replace(/<br\s*\/?>/gi,'')).includes(keyword)) {
+        hitFields[field] = val;
+      }
     });
 
-    if (Object.keys(hitFields).length === 0) return;
+ const isMainHit = !!(
+  hitFields.heritageName ||
+  hitFields.ddName ||
+  hitFields.suggestName
+);
 
-    // 登録遺産名と構成資産名を別候補として作る
-    const propertyHit = !!(hitFields.heritageName || hitFields.ddName || hitFields.suggestName);
-    const suggestLocalIsPropertyName = !!(
-      hitFields.suggestLocalNameJP && d.heritageName &&
-      normalizeText(clean(hitFields.suggestLocalNameJP)) === normalizeText(clean(d.heritageName))
-    );
-    const componentHit = !!(
-      hitFields.localNameJP || hitFields.hira || hitFields.localLangName || hitFields.localNameEN ||
-      (hitFields.suggestLocalNameJP && !suggestLocalIsPropertyName)
-    );
+const isLocalHit = !!(
+  hitFields.localNameJP ||
+  hitFields.suggestLocalNameJP ||
+  hitFields.hira ||
+  hitFields.localLangName ||
+  hitFields.localNameEN
+);
 
-    const scoreFor = fields => {
-      let score = 0;
-      Object.keys(fields).forEach(field => {
-        const value = fields[field];
-        if (!value) return;
-        if (startsWith(value)) score = Math.max(score, 100);
-        else if (matches(value)) score = Math.max(score, 10);
-      });
-      return score;
-    };
+// 登録名称そのものに一致しているか
+const isPropertyNameHit = !!hitFields.heritageName;
 
-    if (propertyHit) {
-      const propertyFields = {};
-      ['heritageName', 'ddName', 'suggestName'].forEach(field => {
-        if (hitFields[field]) propertyFields[field] = hitFields[field];
-      });
-      const key = `${d.country}_${d.id}_property`;
-      const score = scoreFor(propertyFields);
-      const existing = hitMap.get(key);
-      if (!existing || score > existing.score ||
-          (score === existing.score && Number(d.num) < Number(existing.data.num))) {
-        hitMap.set(key, { data: d, score, hitFields: propertyFields, resultKind: 'property' });
-      }
-    }
+// 構成資産名に一致した場合は個別候補にする
+// ただし、登録名称そのものにも一致している場合はIDでまとめる
+const isComponentHit = !!(
+  hitFields.localNameJP ||
+  hitFields.suggestLocalNameJP ||
+  hitFields.hira ||
+  hitFields.localLangName ||
+  hitFields.localNameEN
+);
 
-    if (componentHit) {
-      const componentFields = {};
-      ['localNameJP', 'suggestLocalNameJP', 'hira', 'localLangName', 'localNameEN'].forEach(field => {
-        if (hitFields[field]) componentFields[field] = hitFields[field];
-      });
-      const componentName = d.localNameJP || d.hira || d.localLangName || d.localNameEN || d.suggestLocalNameJP || d.num;
-      const key = `${d.country}_${d.id}_component_${normalizeText(clean(componentName))}`;
-      const score = scoreFor(componentFields);
-      const existing = hitMap.get(key);
-      if (!existing || score > existing.score ||
-          (score === existing.score && Number(d.num) < Number(existing.data.num))) {
-        hitMap.set(key, { data: d, score, hitFields: componentFields, resultKind: 'component' });
-      }
+const key = (isComponentHit && !isPropertyNameHit)
+  ? `${d.country}_${d.id}_${d.localNameJP || d.suggestLocalNameJP || d.hira || d.num}`
+  : `${d.country}_${d.id}`;
+
+    const existing = hitMap.get(key);
+    if (!existing) {
+      hitMap.set(key, { data: d, score, hitFields });
+    } else if (score > existing.score) {
+      hitMap.set(key, { data: d, score, hitFields });
+    } else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
+      hitMap.set(key, { data: d, score, hitFields });
     }
   });
 
-  return Array.from(hitMap.values()).sort((a, b) => {
-    if (b.score !== a.score) return b.score - a.score;
-    const getKey = item => {
-      const d = item.data;
-      const hf = item.hitFields;
-      if (item.resultKind === 'property') {
-        return normalizeText((d.heritageName || d.ddName || d.suggestName || '').replace(/<br\s*\/?>/gi, ''));
-      }
-      if (hf.localNameJP) return normalizeText(d.localNameJP || d.suggestLocalNameJP);
-      if (hf.suggestLocalNameJP) return normalizeText(d.suggestLocalNameJP);
-      if (hf.hira) return normalizeText(d.hira);
-      if (hf.localLangName) return normalizeText(d.localLangName);
-      if (hf.localNameEN) return normalizeText(d.localNameEN);
-      return normalizeText(d.localNameJP || '');
-    };
-    const keyA = getKey(a);
-    const keyB = getKey(b);
-    if (keyA !== keyB) return keyA.localeCompare(keyB, 'ja');
-    if (a.resultKind !== b.resultKind) return a.resultKind === 'property' ? -1 : 1;
-    return Number(a.data.num) - Number(b.data.num);
-  });
+  return Array.from(hitMap.values())
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const getKey = item => {
+        const hf = item.hitFields;
+        const d  = item.data;
+        if (hf.suggestName)  return normalizeText(d.suggestName.replace(/<br\s*\/?>/gi,''));
+        if (hf.ddName)       return normalizeText(d.ddName.replace(/<br\s*\/?>/gi,''));
+        if (hf.heritageName) return normalizeText(d.heritageName.replace(/<br\s*\/?>/gi,''));
+        if (hf.localNameJP)  return normalizeText(d.localNameJP);
+        if (hf.hira)         return normalizeText(d.hira);
+        return normalizeText(d.heritageName || '');
+      };
+      const keyA = getKey(a);
+      const keyB = getKey(b);
+      if (keyA !== keyB) return keyA.localeCompare(keyB, 'ja');
+      // 同じソートキーの場合はnum順
+      return Number(a.data.num) - Number(b.data.num);
+    })
 }
 
 function highlightText(text, keyword) {
@@ -944,17 +938,19 @@ function showSuggests(keyword) {
     const hf = item.hitFields;
 
     let displayName;
-    if (item.resultKind === 'property') {
-      // 登録遺産名候補は、検索用別名ではなく正式な登録名称を表示
-      displayName = d.heritageName || d.ddName || d.suggestName;
-    } else if (hf.localNameJP) displayName = d.localNameJP || d.suggestLocalNameJP;
-    else if (hf.suggestLocalNameJP) displayName = d.suggestLocalNameJP;
-    else if (hf.hira) displayName = d.hira;
+    if (hf.suggestName)    displayName = d.suggestName;
+    else if (hf.ddName)    displayName = d.ddName;
+    else if (hf.heritageName) displayName = d.heritageName;
+    else if (hf.localNameJP)  displayName = d.suggestLocalNameJP || d.localNameJP;
+    else if (hf.hira)         displayName = d.hira;
     else if (hf.localLangName) displayName = d.localLangName;
-    else if (hf.localNameEN) displayName = d.localNameEN;
-    else displayName = d.localNameJP || d.suggestLocalNameJP;
+    else if (hf.localNameEN)   displayName = d.localNameEN;
+    else displayName = d.suggestName || d.ddName || d.heritageName;
 
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '<br>');
+    const total = idCountMap[`${d.country}_${d.id}`] || 1;
+    const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
+    const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
+    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '<br>') + numLabel;
 
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
