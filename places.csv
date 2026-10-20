@@ -222,7 +222,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8092,11.2495,文化遺産,2013,トスカーナ州,ヴィッラ・ディ・カレッジ,,,Medici Villas and Gardens in Tuscany<br>Villa de Careggi,,,,,,,,3
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8057,11.2890,文化遺産,2013,トスカーナ州,ヴィッラ・メディチ・ア・フィエーゾレ,,,Medici Villas and Gardens in Tuscany<br>Villa Medici de Fiesole,,,,,,,,4
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8195,11.2283,文化遺産,2013,トスカーナ州,ヴィッラ・ディ・カステッロ,,,Medici Villas and Gardens in Tuscany<br>Villa de Castello,,,,,,,,5
-49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8174,11.0562,文化遺産,2013,トスカーナ州,ヴィッラ・ディ・ポッジョ・ア・カイアーノ,,,Medici Villas and Gardens in Tuscany<br>Villa de Poggio a Caiano,,,,,,,,6
+49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8174,11.0562,文化遺産,2013,トスカーナ州,ヴィッラ・ディ・ポッジョ・ア・カイアーノ,,,Medici Villas and Gardens in Tuscany<br>Villa de Poggio a Caiano,,,,,,ヴィッラ・ディ・<br>ポッジョ・ア・カイアーノ,,6
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.8186,11.2349,文化遺産,2013,トスカーナ州,ヴィッラ・ラ・ペトライア,,,Medici Villas and Gardens in Tuscany<br>Villa de la Petraia,,,,,,,,7
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.7624,11.2484,文化遺産,2013,トスカーナ州,ボーボリ庭園,,,Medici Villas and Gardens in Tuscany<br>Jardin de Boboli,,,,,,,,8
 49,欧州,イタリア共和国,トスカーナ地方の<br>メディチ家の別荘と庭園群,43.7587,10.8791,文化遺産,2013,トスカーナ州,ヴィッラ・ディ・チェッレート・グイディ,,,Medici Villas and Gardens in Tuscany<br>Villa de Cerreto Guidi,,,,,,,,9
@@ -1508,7 +1508,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 7,欧州,スロバキア共和国,カルパチア山脈地域の<br>スロバキア地区の木造教会群,48.6490,19.1554,文化遺産,2008,バンスカー・ビストリツァ県,フロンセクの鐘楼（アルティクラルニ教会）,,,Wooden Churches of the Slovak part of<br>the Carpathian Mountain Area<br>Hronsek (belfry),,SK_07_Hronsek_belfry_01.jpg,,Photo by Patrik Kunec (CC BY-SA 4.0),,,,11
 7,欧州,スロバキア共和国,カルパチア山脈地域の<br>スロバキア地区の木造教会群,49.3524,21.7077,文化遺産,2008,プレショフ県,ボドルジャルの木造教会<br>（聖ニコラオス教会）,,,Wooden Churches of the Slovak part of<br>the Carpathian Mountain Area<br>Bodruzal,,SK_07_Bodruzal_01.jpg,,Photo by Ingo Mehling (CC BY-SA 4.0),,,,12
 7,欧州,スロバキア共和国,カルパチア山脈地域の<br>スロバキア地区の木造教会群,49.3283,21.6266,文化遺産,2008,プレショフ県,ラドミロヴァの木造教会<br>（大天使聖ミカエル教会）,,,Wooden Churches of the Slovak part of<br>the Carpathian Mountain Area<br>Ladomirová,,SK_07_Ladomirova_01.jpg,,Photo by Sebastian Mierzwa (CC BY-SA 4.0),,,,13
-7,欧州,スロバキア共和国,カルパチア山脈地域の<br>スロバキア地区の木造教会群,48.8567,22.2966,文化遺産,2008,コシツェ県,ルスカー・ビストラの木造教会<br>（聖ニコラオス教会）,,,Wooden Churches of the Slovak part of<br>the Carpathian Mountain Area<br>Ruská Bystrá,,SK_07_Ruska_Bystra_01.jpg,,Photo by Henryk Bielamowicz (CC BY-SA 4.0),,ルスカー・ビストラの<br>木造教会（聖ニコラオス教会）,,14
+7,欧州,スロバキア共和国,カルパチア山脈地域の<br>スロバキア地区の木造教会群,48.8567,22.2966,文化遺産,2008,コシツェ県,ルスカー・ビストラの木造教会<br>（聖ニコラオス教会）,,,Wooden Churches of the Slovak part of<br>the Carpathian Mountain Area<br>Ruská Bystrá,,SK_07_Ruska_Bystra_01.jpg,,Photo by Henryk Bielamowicz (CC BY-SA 4.0),,ルスカー・ビストラの<br>木造教会<br>（聖ニコラオス教会）,,14
 8,欧州,スロバキア共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.0558,17.1491,文化遺産,2021,ブラチスラヴァ州,ルソフセ：ゲルラタ－ローマ駐屯地（砦）,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Rusovce – Gerulata /<br>rímsky vojenský tábor (kastel),1,SK_08_Gerulata_01.jpg,,Photo by Kawon Kez Sel CC0 via Wikimedia Commons,ローマ帝国の国境線<br>－ドナウ・リメス<br>［西セグメント］,,,1
 8,欧州,スロバキア共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.0561,17.1459,文化遺産,2021,ブラチスラヴァ州,ルソフセ：ゲルラタ－ハイポコーストと<br>埋葬地のある住宅,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Rusovce – Gerulata /<br>dom s hypocaustom a pohrebisko,,SK_08_dom_hypocaustom_01.jpg,,Photo by Amonet (CC BY-SA 3.0),,,,2
 8,欧州,スロバキア共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.0563,17.1473,文化遺産,2021,ブラチスラヴァ州,ルソフセ：ゲルラタ－ウィクス,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Rusovce – Gerulata / vicus,,,,,,ルソフセ：<br>ゲルラタ－ウィクス,,3
@@ -1701,14 +1701,14 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.4031,4.7633,文化遺産,1998,アントウェルペン州,ホーフストラテンのベギナージュ,,,Flemish Béguinages<br>Béguinage de Hoogstraten,1,,,,フランドル地方：<br>ベギン会施設群,ホーフストラテンの<br>ベギナージュ,,1
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.1282,4.5680,文化遺産,1998,アントウェルペン州,リールのベギナージュ,,,Flemish Béguinages<br>Béguinage de Lier (Lierre),,,,,,,,2
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0318,4.4745,文化遺産,1998,アントウェルペン州,メヘレンのグラン・ベギナージュ,,,Flemish Béguinages<br>Grand Béguinage de Mechelen (Malines),,,,,,メヘレンの<br>グラン・ベギナージュ,,3
-1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.3266,4.9430,文化遺産,1998,アントウェルペン州,トゥルンハウトのベギナージュ,,,Flemish Béguinages<br>Béguinage de Turnhout,,,,,,,,4
-1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.8215,5.1938,文化遺産,1998,リエージュ州,シント＝トロイデンのベギナージュ,,,Flemish Béguinages<br>Beguinage de Sint-Truiden (Saint Trond),,,,,,,,5
+1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.3266,4.9430,文化遺産,1998,アントウェルペン州,トゥルンハウトのベギナージュ,,,Flemish Béguinages<br>Béguinage de Turnhout,,,,,,トゥルンハウトの<br>ベギナージュ,,4
+1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.8215,5.1938,文化遺産,1998,リエージュ州,シント＝トロイデンのベギナージュ,,,Flemish Béguinages<br>Beguinage de Sint-Truiden (Saint Trond),,,,,,シント＝トロイデンの<br>ベギナージュ,,5
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.7792,5.4693,文化遺産,1998,リエージュ州,トンゲレンのベギナージュ,,,Flemish Béguinages<br>Béguinage de Tongeren (Tongres),,,,,,,,6
-1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0271,4.0977,文化遺産,1998,フラームス＝ブラバンド州,デンデルモンデのベギナージュ,,,Flemish Béguinages<br>Béguinage de Dendermonde (Termonde),,,,,,,,7
-1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0459,3.7363,文化遺産,1998,東フランデレン州,ヘントのプティ・ベギナージュ,,,Flemish Béguinages<br>Petit Béguinage de Gent (Gand),,,,,,,,8
+1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0271,4.0977,文化遺産,1998,フラームス＝ブラバンド州,デンデルモンデのベギナージュ,,,Flemish Béguinages<br>Béguinage de Dendermonde (Termonde),,,,,,デンデルモンデの<br>ベギナージュ,,7
+1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0459,3.7363,文化遺産,1998,東フランデレン州,ヘントのプティ・ベギナージュ,,,Flemish Béguinages<br>Petit Béguinage de Gent (Gand),,,,,,ヘントの<br>プティ・ベギナージュ,,8
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.0569,3.7476,文化遺産,1998,東フランデレン州,シント＝アマンドスベルグ /<br>ヘントのベギナージュ,,,Flemish Béguinages<br>Béguinage de Sint-Amandsberg /<br>Gent (Mont-Saint-Amand-lez-Gand),,,,,,,,9
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.9880,5.0608,文化遺産,1998,リンブルフ州,ディーストのベギナージュ,,,Flemish Béguinages<br>Béguinage de Diest,,,,,,,,10
-1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.8713,4.6974,文化遺産,1998,フラームス＝ブラバンド州,ルーヴェンのグラン・ベギナージュ,,,Flemish Béguinages<br>Grand Béguinage of Leuven (Louvain),,,,,,,,11
+1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.8713,4.6974,文化遺産,1998,フラームス＝ブラバンド州,ルーヴェンのグラン・ベギナージュ,,,Flemish Béguinages<br>Grand Béguinage of Leuven (Louvain),,,,,,ルーヴェンの<br>グラン・ベギナージュ,,11
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,51.2012,3.2233,文化遺産,1998,西フランデレン州,ブルッヘのベギナージュ,,,Flemish Béguinages<br>Béguinage de Bruges (Brugge),,,,,,,,12
 1,欧州,ベルギー王国,フランドル地方：<br>ベギン会施設群,50.8282,3.2674,文化遺産,1998,エノー州,コルトレイクのベギナージュ,,,Flemish Béguinages<br>Béguinage de Kortrijk (Courtrail),,,,,,,,13
 2,欧州,ベルギー王国,ブリュッセルのグラン＝プラス,50.8467,4.3524,文化遺産,1998,ブリュッセル,,,,La Grand-Place / Brussels,2,,,,ブリュッセルの<br>グラン＝プラス,,,
@@ -2148,13 +2148,28 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.3678225509667,3.08057228475011,文化遺産,1999,オー＝ド＝フランス地方 ノール県,ドゥエーのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Douai,,,,,,ドゥエーの<br>オテル・ド・ヴィルの鐘楼,,6
 26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,51.0356422318191,2.37618693082362,文化遺産,1999,オー＝ド＝フランス地方 ノール県,ダンケルクのサン＝エロワ教会の鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’église St-Eloi de Dunkerque,,,,,,ダンケルクの<br>サン＝エロワ教会の鐘楼,,7
 26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,51.0376715414804,2.37673997125295,文化遺産,1999,オー＝ド＝フランス地方 ノール県,ダンケルクのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Dunkerque,,,,,,ダンケルクの<br>オテル・ド・ヴィルの鐘楼,,8
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.9867636834415,2.12609609245187,文化遺産,1999,オー＝ド＝フランス地方 ノール県,グラヴリーヌの鐘楼,,,Belfries of Belgium and France<br>Beffroi de Gravelines,,,,,,,,9
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.6306163605203,3.06979401807157,文化遺産,1999,オー＝ド＝フランス地方 ノール県,リールのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Lille,,,,,,リールの<br>オテル・ド・ヴィルの鐘楼,,10
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.6150591456402,3.01482108498375,文化遺産,1999,オー＝ド＝フランス地方 ノール県,ロスのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Loos,,,,,,ロスの<br>オテル・ド・ヴィルの鐘楼,,11
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.6384325135973,2.39581465413237,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,エール＝シュル＝ラ＝リの<br>オテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville d’Aire-sur-la-Lys,,,,,,エール＝シュル＝ラ＝リの<br>オテル・ド・ヴィルの鐘楼,,12
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.2910754454362,2.77712497733366,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,アラスのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville d’Arras,,,,,,アラスの<br>オテル・ド・ヴィルの鐘楼,,13
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.5309778058448,2.63918811920796,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,ベテューヌの鐘楼,,,Belfries of Belgium and France<br>Beffroi de Béthune,,,,,,ベテューヌの鐘楼,,14
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.7250803923887,1.61318045251971,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,ブーローニュ＝シュル＝メールの<br>オテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Boulogne,,,,,,ブーローニュ＝シュル＝メールの<br>オテル・ド・ヴィルの鐘楼,,15
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.9529171225341,1.85433095417122,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,カレーのオテル・ド・ヴィルの鐘楼 ,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville de Calais,,,,,,カレーの<br>オテル・ド・ヴィルの鐘楼 ,,16
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.3730073822878,2.03626074921031,文化遺産,1999,オー＝ド＝フランス地方<br>パ＝ド＝カレー県,エダンのオテル・ド・ヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’Hôtel de Ville d’Hesdin,,,,,,エダンの<br>オテル・ド・ヴィルの鐘楼,,17
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.1072043895621,1.83295874864073,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,アブヴィルの鐘楼,,,Belfries of Belgium and France<br>Beffroi d’Abbeville,,,,,,,,18
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,49.8954846218513,2.29605419365718,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,アミアンの鐘楼,,,Belfries of Belgium and France<br>Beffroi d’Amiens,,,,,,,,19
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.1553422991306,2.34130320229564,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,デュランのメゾン・コミュナールの鐘楼,,,Belfries of Belgium and France<br>Beffroi de l’ancienne maison communale de Doullens,,,,,,デュランの<br>メゾン・コミュナールの鐘楼,,20
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.197074515913,2.41111406021851,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,リュシューの市門の鐘楼,,,Belfries of Belgium and France<br>Beffroi de porte de Lucheux,,,,,,リュシューの<br>市門の鐘楼,,21
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.2726808843999,1.66869505407433,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,リューの鐘楼,,,Belfries of Belgium and France<br>Beffroi de Rue,,,,,,,,22
+26,欧州,フランス共和国,ベルギーとフランスの鐘楼群,50.1342703233444,1.94637911966248,文化遺産,1999,オー＝ド＝フランス地方 ソンム県,サン＝リキエの鐘楼,,,Belfries of Belgium and France<br>Beffroi de Saint-Riquier,,,,,,,,23
 1,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,城壁都市バクー：<br>シルヴァンシャー宮殿、乙女の塔,40.3665431331671,49.8330406692574,文化遺産,2000,バクー市,,,,Walled City of Baku with the Shirvanshah's Palace<br>and Maiden Tower,,AZ_01_Shirvanshahs_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),城壁都市バクー：<br>ｼﾙｳﾞｧﾝｼｬｰ宮殿、乙女の塔,,,
 2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アート<br>の文化的景観,40.1854664706698,49.3621986443409,文化遺産,2007,バクー市,ジンギンダグ山・ヤズルテペ丘,,,Gobustan Rock Art Cultural Landscape<br>Jinghindagh mountain –Yazylytepe hill,,,,,,,,1
 2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アート<br>の文化的景観,40.1125217965752,49.3818961895896,文化遺産,2007,バクー市,ボユクダシュ山,,,Gobustan Rock Art Cultural Landscape<br>Boyukdash mountain,,,,,,,,2
 2,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ゴブスタン・ロック・アート<br>の文化的景観,40.0580932442815,49.395993193499,文化遺産,2007,バクー市,キチクダシュ山,,,Gobustan Rock Art Cultural Landscape<br>Kichikdash mountain,,,,,,,,3
 3,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,シェキ歴史地区とハーン宮殿,41.2041674780848,47.1972385741443,文化遺産,2019,シェキ市,,,,Historic Centre of Sheki with the Khan’s Palace,,,,,シェキ歴史地区と<br>ハーン宮殿,,,
-4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.7542089581489,48.6825120823759,自然遺産,2019,レンカラン地区,ダンギャバンド（北部ヒルカン国立公園）,,,Hyrcanian Forests<br>Dangyaband (Northern HNP),,,,,,,,1
-4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.4538999596119,48.67907310114,自然遺産,2019,アスタラ地区,イスティスチャイ渓谷（南部ヒルカン国立公園）,,,Hyrcanian Forests<br>İstisuchay Valley (Southern HNP),,,,,,,,2
+4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.7542089581489,48.6825120823759,自然遺産,2019,レンカラン地区,ダンギャバンド（北部ヒルカン国立公園）,,,Hyrcanian Forests<br>Dangyaband (Northern HNP),,,,,,ダンギャバンド<br>（北部ヒルカン国立公園）,,1
+4,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,ヒルカニア森林群,38.4538999596119,48.67907310114,自然遺産,2019,アスタラ地区,イスティスチャイ渓谷（南部ヒルカン国立公園）,,,Hyrcanian Forests<br>İstisuchay Valley (Southern HNP),,,,,,イスティスチャイ渓谷<br>（南部ヒルカン国立公園）,,2
 5,欧州,ｱｾﾞﾙﾊﾞｲｼﾞｬﾝ共和国,キナリグ人の文化的景観と<br>移牧の道「カッチ・ヨル」,40.7057861068054,48.8853892675962,文化遺産,2023,グバ地区 ヒルナグ村,,,,Cultural Landscape of Khinalig People<br>and “Köç Yolu” Transhumance Route,,,,,キナリグ人の文化的景観と<br>移牧の道「カッチ・ヨル」,,,
 1,欧州,サンマリノ共和国,サンマリノ歴史地区とティターノ山,43.932678650218,12.4517800815966,文化遺産,2008,サンマリノ市,,,,San Marino Historic Centre and Mount Titano,,,,,サンマリノ歴史地区と<br>ティターノ山,,,
 1,アジア,アフガニスタン,ジャームのミナレットと考古遺跡群,34.3963763056526,64.5158880718146,文化遺産,2002,ゴール州,ハリー川渓谷,,,Minaret and Archaeological Remains of Jam<br>Valley of Hari River including Minaret of Jam,1,AF_01_Minaret_01.jpg,,Photo by AhmadElhan (CC BY-SA 4.0),ジャームのミナレットと<br>考古遺跡群,,,
@@ -2191,7 +2206,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 11,欧州,ドイツ連邦共和国,ロルシュ修道院とアルテンミュンスター,49.6535215239576,8.569464726916,文化遺産,1991,ヘッセン州,ロルシュ修道院,,,Abbey and Altenmünster of Lorsch<br>Kloster Lorsch,1,,,,ロルシュ修道院と<br>アルテンミュンスター,,,1
 11,欧州,ドイツ連邦共和国,ロルシュ修道院とアルテンミュンスター,49.6571788413989,8.57689966946803,文化遺産,1991,ヘッセン州,アルテンミュンスター,,,Abbey and Altenmünster of Lorsch<br>Ruine Altenmuster,,,,,ロルシュ修道院と<br>アルテンミュンスター,,,2
 12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8900394762425,10.4193751737843,文化遺産,1992,ニーダーザクセン州,ランメルスベルク鉱山とゴスラー歴史地区,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Mines of Rammelsberg<br>and Historic Town of Goslar",1,,,,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,,,1
-12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8199166477869,10.3398559802583,文化遺産,1992,ニーダーザクセン州,オーバーハルツ水利管理システム,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Upper Harz Water Management System",,,,,,,,2
+12,欧州,ドイツ連邦共和国,ランメルスベルク鉱山、<br>ゴスラー歴史地区、<br>オーバーハルツ水利管理システム,51.8199166477869,10.3398559802583,文化遺産,1992,ニーダーザクセン州,オーバーハルツ水利管理システム,,,"Mines of Rammelsberg, Historic Town of Goslar<br>and Upper Harz Water Management System<br>Upper Harz Water Management System",,,,,,オーバーハルツ<br>水利管理システム,,2
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.0009432743477,8.81290991982642,文化遺産,1993,バーデン＝ヴュルテンベルク州,マウルブロン修道院,,,Maulbronn Monastery Complex<br>Maulbronn Monastery,1,,,,,,,1
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.993500324164,8.76052463501758,文化遺産,1993,バーデン＝ヴュルテンベルク州,アールキステン池,,,Maulbronn Monastery Complex<br>Aalkisten Pond,,,,,,,,2
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.9931876505988,8.77004393270692,文化遺産,1993,バーデン＝ヴュルテンベルク州,アシュベルク池,,,Maulbronn Monastery Complex<br>Pond at Aschberg,,,,,,,,3
@@ -2213,7 +2228,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,49.012995272869,8.81994351919756,文化遺産,1993,バーデン＝ヴュルテンベルク州,連結水路網,,,Maulbronn Monastery Complex<br>Connecting ditch system,,,,,,,,19
 13,欧州,ドイツ連邦共和国,マウルブロン修道院群,48.9975942497565,8.85165628919109,文化遺産,1993,バーデン＝ヴュルテンベルク州,ハンベルク水路,,,Maulbronn Monastery Complex<br>Hamberg Ditch,,,,,,,,20
 14,欧州,ドイツ連邦共和国,バンベルク市街,49.8916382794558,10.8888887337299,文化遺産,1993,バイエルン州,,,,Town of Bamberg,1,,,,,,,
-15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7888536709972,11.1427802937585,文化遺産,1994,ザクセン＝アンハルト州,クヴェドリンブルクの旧市街と新市街,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Old and new towns of Quedlinburg",1,,,,,,,1
+15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7888536709972,11.1427802937585,文化遺産,1994,ザクセン＝アンハルト州,クヴェドリンブルクの旧市街と新市街,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Old and new towns of Quedlinburg",1,,,,,クヴェドリンブルクの<br>旧市街と新市街,,1
 15,欧州,ドイツ連邦共和国,クヴェドリンブルクの聖堂参事会教会、<br>城と旧市街,51.7847477232075,11.1303262504159,文化遺産,1994,ザクセン＝アンハルト州,聖ヴィペルティ教会,,,"Collegiate Church, Castle and<br>Old Town of Quedlinburg<br>Church of St. Wiperti",,,,,,,,2
 16,欧州,ドイツ連邦共和国,フェルクリンゲン製鉄所,49.2486676638207,6.84429492948151,文化遺産,1994,ザールラント州,,,,Völklingen Ironworks,1,,,,,,,
 17,欧州,ドイツ連邦共和国,メッセル化石採掘場,49.9180743603748,8.75731641005928,自然遺産,1995,ヘッセン州,,,,Messel Pit Fossil Site,1,,,,,,,
@@ -2266,19 +2281,19 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 34,欧州,ドイツ連邦共和国,ワッデン海,53.6266901498115,8.26383722320376,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート3）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part III",,,,,,,,3
 34,欧州,ドイツ連邦共和国,ワッデン海,53.8819866260373,8.36769360535884,自然遺産,2009,ニーダーザクセン州,ニーダーザクセン・ワッデン海国立公園（パート4）,,,"Wadden Sea<br>National Park Wadden Sea Niedersachsen, part IV",,,,,,,,4
 35,欧州,ドイツ連邦共和国,アルフェルトのファグス工場,51.9840001660679,9.81208074337328,文化遺産,2011,ニーダーザクセン州,,,,Fagus Factory in Alfeld,1,,,,アルフェルトの<br>ファグス工場,,,
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6611816084249,8.93855237860896,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴァンゲン（ヒンターホルン）,,,Prehistoric Pile Dwellings around the Alps<br>Wangen - Hinterhorn ,1,,,,アルプス山系の<br>先史時代杭上住居跡群,,,1
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6947912763398,9.00519477080074,文化遺産,2011,バーデン＝ヴュルテンベルク州,ホルンシュタート（ヘルンレ）,,,Prehistoric Pile Dwellings around the Alps<br>Hornstaad - Hörnle,,,,,,,,2
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7096024241189,9.07978051012509,文化遺産,2011,バーデン＝ヴュルテンベルク州,アレンスバッハ・シュトランドバート,,,Prehistoric Pile Dwellings around the Alps<br>Allensbach - Strandbad,,,,,,,,3
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6744540312568,9.12139000407511,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴォルマティンゲン（ランゲンライン）,,,Prehistoric Pile Dwellings around the Alps<br>Wollmatingen - Langenrain,,,,,,,,4
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6656334759799,9.19403359693026,文化遺産,2011,バーデン＝ヴュルテンベルク州,コンスタンツ（ヒンターハウゼン）,,,Prehistoric Pile Dwellings around the Alps<br>Konstanz - Hinterhausen,,,,,,,,5
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.724555241571,9.17765100549295,文化遺産,2011,バーデン＝ヴュルテンベルク州,リッツェルシュテッテン（クレーヘンホルン32）,,,Prehistoric Pile Dwellings around the Alps<br>Litzelstetten - Krähenhorn 32,,,,,,,,6
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.8144809579141,9.03963519599385,文化遺産,2011,バーデン＝ヴュルテンベルク州,ボートマン（シャッヘン／レヒレ）,,,Prehistoric Pile Dwellings around the Alps<br>Bodman - Schachen / Löchle,,,,,,,,7
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7937023731675,9.1030134984507,文化遺産,2011,バーデン＝ヴュルテンベルク州,ジップリンゲン（オストハーフェン）,,,Prehistoric Pile Dwellings around the Alps<br>Sipplingen - Osthafen,,,,,,,,8
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7210683994714,9.22927266061341,文化遺産,2011,バーデン＝ヴュルテンベルク州,ウンターウールディンゲン（シュトレンヴィーゼン）,,,Prehistoric Pile Dwellings around the Alps<br>Unteruhldingen - Stollenwiesen,,,,,,,,9
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6611816084249,8.93855237860896,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴァンゲン（ヒンターホルン）,,,Prehistoric Pile Dwellings around the Alps<br>Wangen - Hinterhorn ,1,,,,アルプス山系の<br>先史時代杭上住居跡群,ヴァンゲン<br>（ヒンターホルン）,,1
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6947912763398,9.00519477080074,文化遺産,2011,バーデン＝ヴュルテンベルク州,ホルンシュタート（ヘルンレ）,,,Prehistoric Pile Dwellings around the Alps<br>Hornstaad - Hörnle,,,,,,ホルンシュタート<br>（ヘルンレ）,,2
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7096024241189,9.07978051012509,文化遺産,2011,バーデン＝ヴュルテンベルク州,アレンスバッハ・シュトランドバート,,,Prehistoric Pile Dwellings around the Alps<br>Allensbach - Strandbad,,,,,,アレンスバッハ・シュトランドバート,,3
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6744540312568,9.12139000407511,文化遺産,2011,バーデン＝ヴュルテンベルク州,ヴォルマティンゲン（ランゲンライン）,,,Prehistoric Pile Dwellings around the Alps<br>Wollmatingen - Langenrain,,,,,,ヴォルマティンゲン<br>（ランゲンライン）,,4
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.6656334759799,9.19403359693026,文化遺産,2011,バーデン＝ヴュルテンベルク州,コンスタンツ（ヒンターハウゼン）,,,Prehistoric Pile Dwellings around the Alps<br>Konstanz - Hinterhausen,,,,,,コンスタンツ<br>（ヒンターハウゼン）,,5
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.724555241571,9.17765100549295,文化遺産,2011,バーデン＝ヴュルテンベルク州,リッツェルシュテッテン（クレーヘンホルン32）,,,Prehistoric Pile Dwellings around the Alps<br>Litzelstetten - Krähenhorn 32,,,,,,リッツェルシュテッテン<br>（クレーヘンホルン32）,,6
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.8144809579141,9.03963519599385,文化遺産,2011,バーデン＝ヴュルテンベルク州,ボートマン（シャッヘン／レヒレ）,,,Prehistoric Pile Dwellings around the Alps<br>Bodman - Schachen / Löchle,,,,,,ボートマン<br>（シャッヘン／レヒレ）,,7
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7937023731675,9.1030134984507,文化遺産,2011,バーデン＝ヴュルテンベルク州,ジップリンゲン（オストハーフェン）,,,Prehistoric Pile Dwellings around the Alps<br>Sipplingen - Osthafen,,,,,,ジップリンゲン<br>（オストハーフェン）,,8
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.7210683994714,9.22927266061341,文化遺産,2011,バーデン＝ヴュルテンベルク州,ウンターウールディンゲン（シュトレンヴィーゼン）,,,Prehistoric Pile Dwellings around the Alps<br>Unteruhldingen - Stollenwiesen,,,,,,ウンターウールディンゲン<br>（シュトレンヴィーゼン）,,9
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.1191367465847,9.64097216456726,文化遺産,2011,バーデン＝ヴュルテンベルク州,エーデンアーレン,,,Prehistoric Pile Dwellings around the Alps<br>Ödenahlen,,,,,,,,10
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.1084857413895,9.62658830102311,文化遺産,2011,バーデン＝ヴュルテンベルク州,グルントヴィーゼン,,,Prehistoric Pile Dwellings around the Alps<br>Grundwiesen,,,,,,,,11
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.053335857276,9.64139836016982,文化遺産,2011,バーデン＝ヴュルテンベルク州,ジードルング・フォルシュナー,,,Prehistoric Pile Dwellings around the Alps<br>Siedlung Forschner,,,,,,,,12
-36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.9989551105864,9.68842212636889,文化遺産,2011,バーデン＝ヴュルテンベルク州,オルツロイテ（エンツィスホルツ）,,,Prehistoric Pile Dwellings around the Alps<br>Olzreute - Enzisholz,,,,,,,,13
+36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.9989551105864,9.68842212636889,文化遺産,2011,バーデン＝ヴュルテンベルク州,オルツロイテ（エンツィスホルツ）,,,Prehistoric Pile Dwellings around the Alps<br>Olzreute - Enzisholz,,,,,,オルツロイテ<br>（エンツィスホルツ）,,13
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,47.8886757049837,9.56848003895722,文化遺産,2011,バーデン＝ヴュルテンベルク州,シュレッケンゼー,,,Prehistoric Pile Dwellings around the Alps<br>Schreckensee,,,,,,,,14
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.4111312370685,9.92274078947159,文化遺産,2011,バーデン＝ヴュルテンベルク州,エーレンシュタイン,,,Prehistoric Pile Dwellings around the Alps<br>Ehrenstein,,,,,,,,15
 36,欧州,ドイツ連邦共和国,アルプス山系の<br>先史時代杭上住居跡群,48.1452484692229,10.9484373891313,文化遺産,2011,バイエルン州,ペステナッカー,,,Prehistoric Pile Dwellings around the Alps<br>Pestenacker,,,,,,,,16
@@ -2347,19 +2362,19 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0168340000883,12.1011323495592,文化遺産,2021,バイエルン州,レーゲンスブルク：要塞６,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Legionslager VI,,,,,,,,12
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0159509853021,12.1011141063138,文化遺産,2021,バイエルン州,レーゲンスブルク：要塞７,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Legionslager VII,,,,,,,,13
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0151229883628,12.1008186340248,文化遺産,2021,バイエルン州,レーゲンスブルク：要塞８,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Legionslager VIII,,,,,,,,14
-48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0195142956764,12.1008947899683,文化遺産,2021,バイエルン州,レーゲンスブルク・ニーダーミュンスター：<br>要塞,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg Niedermünster – Legionslager,,,,,,,,15
+48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0195142956764,12.1008947899683,文化遺産,2021,バイエルン州,レーゲンスブルク・ニーダーミュンスター：<br>要塞,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg Niedermünster – Legionslager,,,,,,レーゲンスブルク・ニーダーミュンスター：要塞,,15
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0198936381985,12.0879029250031,文化遺産,2021,バイエルン州,レーゲンスブルク：西カナバエ,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Westliche Canabae,,,,,,,,16
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0120758296047,12.0866036592787,文化遺産,2021,バイエルン州,レーゲンスブルク：東カナバエ,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Östliche Canabae,,,,,,,,17
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,49.0120656565463,12.0866073803672,文化遺産,2021,バイエルン州,レーゲンスブルク：大墓地,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Regensburg – Großes Gräberfeld,,,,,,,,18
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.8880159293404,12.5954683758298,文化遺産,2021,バイエルン州,シュトラウビング ：東砦,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Straubing – Ostkastell,,,,,,,,19
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.8863357849942,12.588221475831,文化遺産,2021,バイエルン州,シュトラウビング ：ザンクト・ペーター砦,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Straubing – Kastell St. Peter,,,,,,,,20
-48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.6670810902969,13.0827653684212,文化遺産,2021,バイエルン州,キュンツィング：アンフィテアトルム<br>（円形闘技場）とウィクス（民間集落）,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Künzing – Amphitheater und Vicus,,,,,,,,21
+48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.6670810902969,13.0827653684212,文化遺産,2021,バイエルン州,キュンツィング：アンフィテアトルム<br>（円形闘技場）とウィクス（民間集落）,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Künzing – Amphitheater und Vicus,,,,,,キュンツィング：アンフィテアトルム（円形闘技場）と<br>ウィクス（民間集落）,,21
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.5742870044624,13.4717321720457,文化遺産,2021,バイエルン州,パッサウ旧市街：砦,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Passau Altstadt – Kastell,,,,,,,,22
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.5699347770175,13.4621090879948,文化遺産,2021,バイエルン州,パッサウ・ボイオトロ：砦,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Passau Boiotro – Kastell,,,,,,,,23
 48,欧州,ドイツ連邦共和国,ローマ帝国の国境線－ドナウ・リメス<br>［西セグメント］,48.5745232638964,13.4977164004077,文化遺産,2021,バイエルン州,パッサウ・ハイバッハ：監視塔,,,Frontiers of the Roman Empire –<br>The Danube Limes (Western Segment)<br>Passau Haibach – Burgus,,,,,,,,24
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.841032411892,6.07825641429213,文化遺産,2021,ノルトライン＝ヴェストファーレン州,クレーヴェ（ケエケン）,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kleve - Keeken,,,,,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,,,1
-49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7909449720208,6.09299187003832,文化遺産,2021,ノルトライン＝ヴェストファーレン州,クレーヴェ（ライヒスヴァルト）：西部,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kleve - Reichswald | West,,,,,,,,2
-49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7912044369849,6.10581811603145,文化遺産,2021,ノルトライン＝ヴェストファーレン州,クレーヴェ（ライヒスヴァルト）：東部,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kleve - Reichswald | East,,,,,,,,3
+49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7909449720208,6.09299187003832,文化遺産,2021,ノルトライン＝ヴェストファーレン州,クレーヴェ（ライヒスヴァルト）：西部,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kleve - Reichswald | West,,,,,,クレーヴェ<br>（ライヒスヴァルト）：西部,,2
+49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7912044369849,6.10581811603145,文化遺産,2021,ノルトライン＝ヴェストファーレン州,クレーヴェ（ライヒスヴァルト）：東部,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kleve - Reichswald | East,,,,,,クレーヴェ<br>（ライヒスヴァルト）：東部,,3
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7768891161752,6.2388724607705,文化遺産,2021,ノルトライン＝ヴェストファーレン州,ティル　,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Till,,,,,,,,4
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.728814347284,6.28497558268097,文化遺産,2021,ノルトライン＝ヴェストファーレン州,カルカー（カルカーベルク）,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kalkar - Kalkarberg,,,,,,,,5
 49,欧州,ドイツ連邦共和国,ローマ帝国の境界線：<br>低地ゲルマニアのリメス,51.7138332893091,6.31889287632048,文化遺産,2021,ノルトライン＝ヴェストファーレン州,カルカー（ボンシェス・フェルト）,,,Frontiers of the Roman Empire –<br>The Lower German Limes<br>Kalkar - Bornsches Feld,,,,,,,,6
