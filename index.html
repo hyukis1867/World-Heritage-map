@@ -423,7 +423,8 @@ idCountMap[key]++;
   const ddName = columns[17]?.trim() || "";  // ドロップダウン表示名（18列目）
   const suggestName = columns[18]?.trim() || "";  // 候補表示名（19列目）
   const suggestLocalNameJP = columns[19]?.trim() || "";  // 文字検索用当地名（20列目）
-  const num = columns[columns.length - 1];   
+  const num = columns[20]?.trim() || "";   // 番号（21列目。searchName追加後も固定）
+  const searchName = columns[21]?.trim() || "";  // 正式名称の文字検索用（22列目）
 
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
@@ -432,8 +433,8 @@ idCountMap[key]++;
   heritageData.push({
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, hira, localLangName, localNameEN,
-  grade, imageUrl, credit, ddName, suggestName, suggestLocalNameJP,  // ← suggestName追加
-  num
+  grade, imageUrl, credit, ddName, suggestName, suggestLocalNameJP,
+  searchName, num
 });
 
   // regionCountryMap
@@ -799,96 +800,102 @@ const clearBtn    = document.getElementById('search-clear');
 const suggestBox  = document.getElementById('search-suggest');
 
 function getScoredResults(keyword) {
-  const hitMap = new Map();
+  const resultMap = new Map();
+  const clean = value => (value || '').replace(/<br\s*\/?>/gi, '');
+  const scoreFor = value => {
+    const normalized = normalizeText(clean(value));
+    if (!normalized || !normalized.includes(keyword)) return 0;
+    return normalized.startsWith(keyword) ? 100 : 10;
+  };
 
   heritageData.forEach(d => {
-    const targets = [d.heritageName, d.localNameJP, d.hira, d.localLangName, d.localNameEN, d.ddName, d.suggestName]
-      .filter(Boolean)
-      .map(v => normalizeText(v.replace(/<br\s*\/?>/gi, '')));
-    let score = 0;
-    let matched = false;
-    targets.forEach(t => {
-      if (t.startsWith(keyword) && !matched) { score += 100; matched = true; }
-      else if (t.includes(keyword) && !matched) { score += 10; matched = true; }
-    });
-    if (score === 0) return;
+    // 正式名称候補：searchNameだけを使い、同一遺産IDにつき1件にまとめる。
+    const propertyScore = scoreFor(d.searchName);
+    if (propertyScore) {
+      const key = `${d.country}_${d.id}_property`;
+      const existing = resultMap.get(key);
+      if (!existing || propertyScore > existing.score ||
+          (propertyScore === existing.score && Number(d.num || 0) < Number(existing.data.num || 0))) {
+        resultMap.set(key, {
+          data: d,
+          score: propertyScore,
+          displayType: 'property',
+          displayName: d.searchName,
+          hitFields: { searchName: true }
+        });
+      }
+    }
 
-    const hitFields = {};
-    [
-      ['heritageName', d.heritageName],
+    // 既存のドロップダウン表記も検索対象として維持（正式名称と同じ場合は重複表示しない）。
+    const ddScore = scoreFor(d.ddName);
+    if (ddScore && normalizeText(clean(d.ddName)) !== normalizeText(clean(d.searchName))) {
+      const key = `${d.country}_${d.id}_ddName`;
+      const existing = resultMap.get(key);
+      if (!existing || ddScore > existing.score ||
+          (ddScore === existing.score && Number(d.num || 0) < Number(existing.data.num || 0))) {
+        resultMap.set(key, {
+          data: d,
+          score: ddScore,
+          displayType: 'propertyAlias',
+          displayName: d.ddName,
+          hitFields: { ddName: true }
+        });
+      }
+    }
+
+    // 個別名候補：suggestNameを表示優先にし、従来の表示形式（<br>込み）を維持する。
+    const componentFields = [
+      ['suggestName', d.suggestName],
       ['localNameJP', d.localNameJP],
       ['suggestLocalNameJP', d.suggestLocalNameJP],
       ['hira', d.hira],
       ['localLangName', d.localLangName],
-      ['localNameEN', d.localNameEN],
-      ['ddName', d.ddName],
-      ['suggestName', d.suggestName],
-    ].forEach(([field, val]) => {
-      if (val && normalizeText(val.replace(/<br\s*\/?>/gi,'')).includes(keyword)) {
-        hitFields[field] = val;
+      ['localNameEN', d.localNameEN]
+    ];
+    const hitFields = {};
+    let componentScore = 0;
+    componentFields.forEach(([field, value]) => {
+      const score = scoreFor(value);
+      if (score) {
+        hitFields[field] = value;
+        componentScore = Math.max(componentScore, score);
       }
     });
+    if (!componentScore) return;
 
- const isMainHit = !!(
-  hitFields.heritageName ||
-  hitFields.ddName ||
-  hitFields.suggestName
-);
+    let componentDisplayName;
+    if (hitFields.suggestName) componentDisplayName = d.suggestName;
+    else if (hitFields.suggestLocalNameJP) componentDisplayName = d.suggestLocalNameJP;
+    else if (hitFields.localNameJP) componentDisplayName = d.localNameJP;
+    else if (hitFields.hira) componentDisplayName = d.hira;
+    else if (hitFields.localLangName) componentDisplayName = d.localLangName;
+    else componentDisplayName = d.localNameEN;
 
-const isLocalHit = !!(
-  hitFields.localNameJP ||
-  hitFields.suggestLocalNameJP ||
-  hitFields.hira ||
-  hitFields.localLangName ||
-  hitFields.localNameEN
-);
+    // suggestNameが正式名称と同じ文字列なら、同一候補の二重表示は避ける。
+    if (d.searchName && normalizeText(clean(componentDisplayName)) === normalizeText(clean(d.searchName))) return;
 
-// 登録名称そのものに一致しているか
-const isPropertyNameHit = !!hitFields.heritageName;
-
-// 構成資産名に一致した場合は個別候補にする
-// ただし、登録名称そのものにも一致している場合はIDでまとめる
-const isComponentHit = !!(
-  hitFields.localNameJP ||
-  hitFields.suggestLocalNameJP ||
-  hitFields.hira ||
-  hitFields.localLangName ||
-  hitFields.localNameEN
-);
-
-const key = (isComponentHit && !isPropertyNameHit)
-  ? `${d.country}_${d.id}_${d.localNameJP || d.suggestLocalNameJP || d.hira || d.num}`
-  : `${d.country}_${d.id}`;
-
-    const existing = hitMap.get(key);
-    if (!existing) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score > existing.score) {
-      hitMap.set(key, { data: d, score, hitFields });
-    } else if (score === existing.score && Number(d.num) < Number(existing.data.num)) {
-      hitMap.set(key, { data: d, score, hitFields });
+    const componentIdentity = normalizeText(clean(d.localNameJP || d.suggestLocalNameJP || d.suggestName || d.hira || d.localLangName || d.localNameEN || d.num));
+    const componentKey = `${d.country}_${d.id}_component_${componentIdentity}`;
+    const existing = resultMap.get(componentKey);
+    if (!existing || componentScore > existing.score ||
+        (componentScore === existing.score && Number(d.num || 0) < Number(existing.data.num || 0))) {
+      resultMap.set(componentKey, {
+        data: d,
+        score: componentScore,
+        displayType: 'component',
+        displayName: componentDisplayName,
+        hitFields
+      });
     }
   });
 
-  return Array.from(hitMap.values())
-    .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      const getKey = item => {
-        const hf = item.hitFields;
-        const d  = item.data;
-        if (hf.suggestName)  return normalizeText(d.suggestName.replace(/<br\s*\/?>/gi,''));
-        if (hf.ddName)       return normalizeText(d.ddName.replace(/<br\s*\/?>/gi,''));
-        if (hf.heritageName) return normalizeText(d.heritageName.replace(/<br\s*\/?>/gi,''));
-        if (hf.localNameJP)  return normalizeText(d.localNameJP);
-        if (hf.hira)         return normalizeText(d.hira);
-        return normalizeText(d.heritageName || '');
-      };
-      const keyA = getKey(a);
-      const keyB = getKey(b);
-      if (keyA !== keyB) return keyA.localeCompare(keyB, 'ja');
-      // 同じソートキーの場合はnum順
-      return Number(a.data.num) - Number(b.data.num);
-    })
+  return Array.from(resultMap.values()).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    const keyA = normalizeText(clean(a.displayName));
+    const keyB = normalizeText(clean(b.displayName));
+    if (keyA !== keyB) return keyA.localeCompare(keyB, 'ja');
+    return Number(a.data.num || 0) - Number(b.data.num || 0);
+  });
 }
 
 function highlightText(text, keyword) {
@@ -935,22 +942,10 @@ function showSuggests(keyword) {
   suggestBox.innerHTML = allResults.map((item, i) => {
     const d  = item.data;
     const kw = searchInput.value.trim();
-    const hf = item.hitFields;
-
-    let displayName;
-    if (hf.suggestName)    displayName = d.suggestName;
-    else if (hf.ddName)    displayName = d.ddName;
-    else if (hf.heritageName) displayName = d.heritageName;
-    else if (hf.localNameJP)  displayName = d.suggestLocalNameJP || d.localNameJP;
-    else if (hf.hira)         displayName = d.hira;
-    else if (hf.localLangName) displayName = d.localLangName;
-    else if (hf.localNameEN)   displayName = d.localNameEN;
-    else displayName = d.suggestName || d.ddName || d.heritageName;
-
+    const displayName = item.displayName || '';
     const total = idCountMap[`${d.country}_${d.id}`] || 1;
-    const isMainName = !!(hf.suggestName || hf.ddName || hf.heritageName);
-    const numLabel = (total > 1 && isMainName && String(d.num) === '1') ? ` (1/${total})` : '';
-    const displayFinal = (displayName || '').replace(/<br\s*\/?>/gi, '<br>') + numLabel;
+    const numLabel = (total > 1 && (item.displayType === 'property' || item.displayType === 'propertyAlias') && String(d.num) === '1') ? ` (1/${total})` : '';
+    const displayFinal = displayName.replace(/<br\s*\/?>/gi, '<br>') + numLabel;
 
     return `<div class="suggest-item" onmousedown="handleSuggestClick(${i})" ontouchstart="touchStartY=event.touches[0].clientY" ontouchend="if(Math.abs(event.changedTouches[0].clientY-touchStartY)<10){event.preventDefault();handleSuggestClick(${i})}">
       <div class="suggest-item-name">${highlightText(displayFinal, kw)}</div>
