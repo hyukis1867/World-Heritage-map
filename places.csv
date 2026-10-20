@@ -454,15 +454,15 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 37,アジア,中華人民共和国,三清山国立公園,28.9100,118.0676,自然遺産,2008,江西省 上饒市玉山県 / 徳興市,三清山風景名勝区,さんせいざん,三清山风景名胜区,Mount Sanqingshan National Park,1,,,,,,,,三清山国立公園
 38,アジア,中華人民共和国,五台山,38.9678,113.5908,文化遺産,2009,山西省 忻州市,五台山 - 台懐,ごだいさん - たいかい,台怀,Mount Wutai / Taihuai,1,,,,,,,1,五台山
 38,アジア,中華人民共和国,五台山,38.8702,113.3939,文化遺産,2009,山西省 忻州市,五台山 - 佛光寺,ごだいさん - ぶっこうじ,,Mount Wutai / Foguang Temple,,,,,,,,2,五台山
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4503,113.0743,文化遺産,2010,河南省 郑州市 / 登封市,太室闕,たいしけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Taishi Que Gates,1,,,,登封の歴史的建造物群<br>- 天地之中,,,1,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4571,113.0741,文化遺産,2010,河南省 郑州市 / 登封市,中岳廟,ちゅうがくびょう,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Zhongue Temple,,,,,,,,2,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4975,112.9827,文化遺産,2010,河南省 郑州市 / 登封市,少室阙,しょうしけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Shaoshi Que Gates,,,,,,,,3,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4728,113.0470,文化遺産,2010,河南省 郑州市 / 登封市,啓母闕,けいぼけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Qimu Que Gates,,,,,,,,4,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.5003,113.0224,文化遺産,2010,河南省 郑州市 / 登封市,嵩岳寺塔,すうがくじとう,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Songye Temple Pagoda,,,,,,,,5,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.5071,112.9355,文化遺産,2010,河南省 郑州市 / 登封市,少林寺建築群,しょうりんじけんちくぐん,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Architectural Complex of Shaolin Temple,,,,,,,,6,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4920,113.0049,文化遺産,2010,河南省 郑州市 / 登封市,会善寺,かいぜんじ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Huishan Temple,,,,,,,,7,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4792,113.0336,文化遺産,2010,河南省 郑州市 / 登封市,嵩陽書院,すうようしょいん,嵩阳书院,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Songyang Academy of Classical Learning,,,,,,,,8,登封の歴史的建造物群 - 天地之中
-39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4005,113.1471,文化遺産,2010,河南省 郑州市 / 登封市,周公測景台と観星台,しゅうこうそっけいだい と かんせいだい,周公测景台和观星台,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Observatory,,,,,,,,9,登封の歴史的建造物群 - 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4503,113.0743,文化遺産,2010,河南省 郑州市 / 登封市,太室闕,たいしけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Taishi Que Gates,1,,,,登封の歴史的建造物群<br>- 天地之中,,,1,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4571,113.0741,文化遺産,2010,河南省 郑州市 / 登封市,中岳廟,ちゅうがくびょう,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Zhongue Temple,,,,,,,,2,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4975,112.9827,文化遺産,2010,河南省 郑州市 / 登封市,少室阙,しょうしけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Shaoshi Que Gates,,,,,,,,3,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4728,113.0470,文化遺産,2010,河南省 郑州市 / 登封市,啓母闕,けいぼけつ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Qimu Que Gates,,,,,,,,4,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.5003,113.0224,文化遺産,2010,河南省 郑州市 / 登封市,嵩岳寺塔,すうがくじとう,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Songye Temple Pagoda,,,,,,,,5,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.5071,112.9355,文化遺産,2010,河南省 郑州市 / 登封市,少林寺建築群,しょうりんじけんちくぐん,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Architectural Complex of Shaolin Temple,,,,,,,,6,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4920,113.0049,文化遺産,2010,河南省 郑州市 / 登封市,会善寺,かいぜんじ,,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Huishan Temple,,,,,,,,7,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4792,113.0336,文化遺産,2010,河南省 郑州市 / 登封市,嵩陽書院,すうようしょいん,嵩阳书院,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Songyang Academy of Classical Learning,,,,,,,,8,登封の歴史的建造物群<br>- 天地之中
+39,アジア,中華人民共和国,登封の歴史的建造物群 - 天地之中,34.4005,113.1471,文化遺産,2010,河南省 郑州市 / 登封市,周公測景台と観星台,しゅうこうそっけいだい と かんせいだい,周公测景台和观星台,Historic Monuments of Dengfeng in<br>“The Centre of Heaven and Earth”<br>Observatory,,,,,,,,9,登封の歴史的建造物群<br>- 天地之中
 40,アジア,中華人民共和国,中国の丹霞地形,28.3693,105.7941,自然遺産,2010,貴州省 赤水市,赤水風景名勝区,せきすい,赤水西部,China Danxia / Chishui-West Section,1,,,,,,,1,中国の丹霞地形
 40,アジア,中華人民共和国,中国の丹霞地形,28.4213,106.0424,自然遺産,2010,貴州省 赤水市,赤水杪欏国家級自然保護区,せきすいびょうら,赤水東部,China Danxia / Chishui-East Section,,,,,,,,2,中国の丹霞地形
 40,アジア,中華人民共和国,中国の丹霞地形,28.5016,106.4086,自然遺産,2010,貴州省 赤水市,習水亜熱帯常緑樹林国家級自然保護区,しゅうすい,赤水東部,China Danxia / Chishui-East Section,,,,,,,,3,中国の丹霞地形
