@@ -425,6 +425,9 @@ idCountMap[key]++;
   const suggestLocalNameJP = columns[19]?.trim() || "";  // 文字検索用当地名（20列目）
   const num = columns[20]?.trim() || "";   // 番号（21列目。searchName追加後も固定）
   const searchName = columns[21]?.trim() || "";  // 正式名称の文字検索用（22列目）
+  const suggestHira = columns[22]?.trim() || "";
+
+
 
   // 複数級対応（内部はカンマで結合して保持）
   const gradeArray = gradeRaw.replace(/["']/g,'').split(/[、,／\/]/).map(g => g.trim()).filter(g => g!=='');
@@ -434,7 +437,7 @@ idCountMap[key]++;
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, hira, localLangName, localNameEN,
   grade, imageUrl, credit, ddName, suggestName, suggestLocalNameJP,
-  searchName, num
+  searchName, suggestHira, num
 });
 
   // regionCountryMap
@@ -867,7 +870,7 @@ function getScoredResults(keyword) {
     if (hitFields.suggestName) componentDisplayName = d.suggestName;
     else if (hitFields.suggestLocalNameJP) componentDisplayName = d.suggestLocalNameJP;
     else if (hitFields.localNameJP) componentDisplayName = d.localNameJP;
-    else if (hitFields.hira) componentDisplayName = d.hira;
+    else if (hitFields.hira) componentDisplayName = d.suggestHira || d.hira;
     else if (hitFields.localLangName) componentDisplayName = d.localLangName;
     else componentDisplayName = d.localNameEN;
 
