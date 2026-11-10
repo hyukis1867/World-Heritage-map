@@ -448,7 +448,7 @@ idCountMap[key]++;
   // countryHeritageMap: 同一IDはマージする（以前の仕様を維持）
   if (!countryHeritageMap[country]) countryHeritageMap[country] = {};
   if (!countryHeritageMap[country][id]) {
-    countryHeritageMap[country][id] = { id, heritageName, grade, ddName, type };
+    countryHeritageMap[country][id] = { id, heritageName, grade, ddName, type, danger };
   } else {
     const prev = countryHeritageMap[country][id];
     const merged = new Set([
@@ -457,6 +457,7 @@ idCountMap[key]++;
     ]);
     prev.grade = Array.from(merged).join(',');
     if (!prev.ddName && ddName) prev.ddName = ddName;
+    if (danger === "1") prev.danger = "1";
   }
 
   globalUniqueIDs.add(id);
@@ -1005,7 +1006,7 @@ searchInput.addEventListener('keydown', (e) => {
       if (!country || !countryHeritageMap[country]) return;
       const heritages = Object.values(countryHeritageMap[country])
         .sort((a, b) => Number(a.id) - Number(b.id));
-      heritages.forEach(({ id, heritageName, grade, ddName, type }) => {
+      heritages.forEach(({ id, heritageName, grade, ddName, type, danger }) => {
         const displayName = ddName
           ? ddName
           : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
@@ -1017,7 +1018,7 @@ item.dataset.value = `${country}.${id}`;
 const badgeColor = iconColors[type] || 'gray';
 const nameBg = (selectedGrade !== '-' && grades.includes(selectedGrade))
   ? `style="background:${gradeColors[selectedGrade]}; flex:1; padding:0 2px;"` : `style="flex:1;"`;
-item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; box-shadow:${danger === "1" ? "0 0 0 2px #D32F2F" : "none"}; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
 item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
 list.appendChild(item);
       });
@@ -1041,7 +1042,7 @@ list.appendChild(item);
       ? heritage.ddName.replace(/<br\s*\/?>/gi, ' ')
       : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
       const badgeColor = iconColors[heritage?.type] || 'gray';
-      document.getElementById('heritage-selected').innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; margin-right:4px; display:inline-flex; vertical-align:middle;">${id}</span>${displayName}`;
+      document.getElementById('heritage-selected').innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; box-shadow:${heritage?.danger === "1" ? "0 0 0 2px #D32F2F" : "none"}; margin-right:4px; display:inline-flex; vertical-align:middle;">${id}</span>${displayName}`;
 
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
