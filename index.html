@@ -426,6 +426,7 @@ idCountMap[key]++;
   const num = columns[20]?.trim() || "";   // 番号（21列目。searchName追加後も固定）
   const searchName = columns[21]?.trim() || "";  // 正式名称の文字検索用（22列目）
   const suggestHira = columns[22]?.trim() || "";
+  const danger = columns[23]?.trim() || "";
 
 
 
@@ -437,7 +438,7 @@ idCountMap[key]++;
   id, region, country, heritageName, lat, lng,
   type, year, localNameJP, hira, localLangName, localNameEN,
   grade, imageUrl, credit, ddName, suggestName, suggestLocalNameJP,
-  searchName, suggestHira, num
+  searchName, suggestHira, num, danger
 });
 
   // regionCountryMap
@@ -487,6 +488,7 @@ markerEl.style.justifyContent = "center";
 markerEl.style.color = "white";
 markerEl.style.fontSize = "12px";
 markerEl.style.border = "1px solid white";
+markerEl.style.boxShadow = danger === "1" ? "0 0 0 3px #D32F2F" : "none";
 
 markerEl.textContent = label;
 
@@ -507,6 +509,7 @@ const key = `${country}_${id}`;
 marker.customData = {
   id, region, country, heritageName, lat, lng,
   type, year,
+  danger,
   state,
   localNameJP,
   hira,
