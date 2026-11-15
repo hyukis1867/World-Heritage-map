@@ -346,3 +346,17 @@ html, body, #map {
   }
 }
 
+
+
+/* PWA / mobile viewport adjustments: existing map and controls are preserved */
+@supports (height: 100dvh) {
+  html, body, #map {
+    height: 100dvh;
+  }
+}
+
+/* Keep the controls clear of the iPhone notch and status bar in standalone mode */
+#dropdown-container {
+  top: calc(env(safe-area-inset-top, 0px) + 10px);
+  left: calc(env(safe-area-inset-left, 0px) + 10px);
+}
