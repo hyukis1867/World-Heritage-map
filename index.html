@@ -1057,7 +1057,7 @@ list.appendChild(item);
       markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
 
       const latLng  = targetMarker.position;
-      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 80 : 150;
+      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
       const scale   = Math.pow(2, map.getZoom());
       const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
       const pixelOffset = new google.maps.Point(0, offsetY / scale);
@@ -1143,7 +1143,7 @@ list.appendChild(item);
         groupMarkers[0];
 
       const latLng  = mainMarker.position;
-      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 80 : 150;
+      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
       const scale   = Math.pow(2, map.getZoom());
       const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
       const pixelOffset = new google.maps.Point(0, offsetY / scale);
