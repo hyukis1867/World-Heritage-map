@@ -265,7 +265,7 @@ function removeCircleNumber(str) {
   ${data.imageUrl ? `
     <div style="margin:6px 0; text-align:center;">
       <img src="${thumbUrl}"
-        style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+        style="max-width:250px; max-height:${window.matchMedia('(max-width: 768px)').matches ? '180px' : 'none'}; width:auto; height:auto; border-radius:6px; cursor:pointer;"
         onclick="openImageModal('${fullUrl}')"
         onerror="this.src='${fullUrl}'">
     </div>` : ''}
