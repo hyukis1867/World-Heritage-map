@@ -163,64 +163,29 @@
     // ============================================================
     // クラスタ・マーカー表示更新
     // ============================================================
-    // MarkerClustererが管理するマーカー集合を独立して保持する。
-// AdvancedMarkerElementのmapはクラスタリング中にMarkerClusterer自身がnullへ変更するため、
-// mapの値から登録済みマーカーを判定してはいけない。
-let clustererMarkers = new Set();
-let lastClusterZoom = null;
+    function refreshCluster() {
+  if (!markerCluster) return;
 
+  const visibleMarkers = markers.filter(m => m.map !== null);
 
-function syncClusterMarkers(targetMarkers) {
-  if (!markerCluster) return false;
-
-  const nextMarkers = new Set(targetMarkers);
-  const markersToRemove = [];
-  const markersToAdd = [];
-
-  clustererMarkers.forEach(marker => {
-    if (!nextMarkers.has(marker)) markersToRemove.push(marker);
-  });
-
-  nextMarkers.forEach(marker => {
-    if (!clustererMarkers.has(marker)) markersToAdd.push(marker);
-  });
-
-  if (markersToRemove.length) {
-    markerCluster.removeMarkers(markersToRemove, true);
-  }
-  if (markersToAdd.length) {
-    markerCluster.addMarkers(markersToAdd, true);
-  }
-
-  // 診断：集合が本当に入れ替わっているか、ID単位で確認する。
-  const changed = markersToRemove.length > 0 || markersToAdd.length > 0;
-  if (changed) {
-    const markerKey = marker => {
-      const d = marker.customData || {};
-      return `${d.country || "?"}_${d.id || "?"}_${d.num || ""}`;
-    };
-    console.log('[Cluster診断] 集合差分', {
-      beforeCount: clustererMarkers.size,
-      nextCount: nextMarkers.size,
-      removedCount: markersToRemove.length,
-      addedCount: markersToAdd.length,
-      removed: markersToRemove.map(markerKey),
-      added: markersToAdd.map(markerKey)
-    });
-    markerCluster.render();
-    lastClusterZoom = map ? map.getZoom() : null;
-  } else {
-    console.log('[Cluster診断] 集合差分なし', {
-      markerCount: nextMarkers.size,
-      zoom: map ? map.getZoom() : null
-    });
-  }
-
-  clustererMarkers = nextMarkers;
-  return changed;
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
 }
 
 let lastBounds = null;
+
+let clusterUpdateScheduled = false;
+
+function scheduleClusterUpdate() {
+  if (clusterUpdateScheduled) return;
+
+  clusterUpdateScheduled = true;
+
+  requestAnimationFrame(() => {
+    refreshCluster();
+    clusterUpdateScheduled = false;
+  });
+}
 
 
 function boundsChangedSignificantly(newBounds) {
@@ -343,13 +308,6 @@ function removeCircleNumber(str) {
     }
 
     window.initMap = function () {
-      // markerclustererライブラリ読み込み後に定義する（外部scriptより前では参照できない）。
-      // 標準のidle自動再描画を止め、必要な場合だけクラスタを更新する。
-      class StableMarkerClusterer extends markerClusterer.MarkerClusterer {
-        onAdd() {
-          this.render();
-        }
-      }
   map = new google.maps.Map(document.getElementById('map'), {
   center: {lat: 41.9028, lng: 12.4964},
   zoom: 12,
@@ -679,7 +637,7 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          markerCluster = new StableMarkerClusterer({
+          markerCluster = new markerClusterer.MarkerClusterer({
   map,
   markers,
   maxZoom: 10,
@@ -689,58 +647,18 @@ marker.content.addEventListener("mouseleave", () => {
   }
 });
 
-// 初期状態では、生成済み全マーカーがクラスタラーに登録されている。
-clustererMarkers = new Set(markers);
-lastClusterZoom = map.getZoom();
-
-// ===== 一時診断ログ：クラスタ点滅の原因調査用（動作ロジックは変更しない） =====
-{
-  const originalRender = markerCluster.render.bind(markerCluster);
-  let renderCallCount = 0;
-  markerCluster.render = function () {
-    renderCallCount++;
-    console.log(`[Cluster診断] render #${renderCallCount}`, {
-      zoom: map.getZoom(),
-      markerCount: clustererMarkers.size,
-      callStack: new Error().stack
-    });
-    return originalRender();
-  };
-
-  const algorithm = markerCluster.algorithm;
-  if (algorithm && typeof algorithm.calculate === 'function') {
-    const originalCalculate = algorithm.calculate.bind(algorithm);
-    algorithm.calculate = function (input) {
-      const result = originalCalculate(input);
-      console.log('[Cluster診断] algorithm.calculate', {
-        changed: result.changed,
-        clusterCount: result.clusters?.length,
-        markerCount: input.markers?.length,
-        zoom: input.map?.getZoom()
-      });
-      return result;
-    };
-  }
-
-  google.maps.event.addListener(markerCluster, 'clusteringbegin', () => {
-    console.log('[Cluster診断] clusteringbegin');
-  });
-  google.maps.event.addListener(markerCluster, 'clusteringend', () => {
-    console.log('[Cluster診断] clusteringend');
-  });
-  console.log('[Cluster診断] 診断ログ有効');
-}
-// ===== 診断ログここまで =====
-
 function updateMarkers() {
   if (isSearchMode) return;
 
   const bounds = map.getBounds();
   if (!bounds) return;
+
+  if (!boundsChangedSignificantly(bounds)) return;
   lastBounds = bounds;
 
   const selectedRegion = getDDRegion();
   const selectedCountry = getDDCountry();
+
   const buffer = 0.3;
 
   const extendedBounds = new google.maps.LatLngBounds(
@@ -754,24 +672,16 @@ function updateMarkers() {
     )
   );
 
-  // mapプロパティは直接変更せず、クラスタラーに登録する集合そのものを更新する。
-  // idleのたびに範囲を判定するが、実際の再クラスタリングは集合に差分がある場合だけ。
-  const targetMarkers = markers.filter(marker => {
-    if (!extendedBounds.contains(marker.position)) return false;
-    if (selectedRegion && marker.customData.region !== selectedRegion) return false;
-    if (selectedCountry && marker.customData.country !== selectedCountry) return false;
-    return true;
+  markers.forEach(marker => {
+    const pos = marker.position;
+    let shouldBeVisible = true;
+    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+    if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
+    if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
+    marker.setVisible(shouldBeVisible);
   });
 
-  const membershipChanged = syncClusterMarkers(targetMarkers);
-  const currentZoom = map.getZoom();
-
-  // パンだけで対象集合が変わらない場合は再描画しない。
-  // ズームが変わった場合だけ、同じマーカー集合でクラスタを再計算する。
-  if (!membershipChanged && currentZoom !== lastClusterZoom) {
-    markerCluster.render();
-    lastClusterZoom = currentZoom;
-  }
+  scheduleClusterUpdate();
 }
 
 // 初回 + 地図操作後
@@ -860,8 +770,11 @@ map.addListener('idle', () => {
             document.getElementById('country-box').style.display  = region ? 'block' : 'none';
             document.getElementById('heritage-box').style.display = 'none';
 
-            syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+            markers.forEach(m => {
+              m.map = (!region || m.customData.region === region) ? map : null;
+            });
             buildCountryList(region);
+            refreshCluster();
           }
 
           // 国リスト構築
@@ -907,9 +820,9 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
 
             if (country) {
-              syncClusterMarkers(markers.filter(m => m.customData.country === country));
+              markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
             } else {
-              syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+              markers.forEach(m => { m.map = (!region || m.customData.region === region) ? map : null; });
             }
 
             buildHeritageList(country);
@@ -918,6 +831,7 @@ map.addListener('idle', () => {
               const capitalCoords = getCapitalLatLng(country);
               if (capitalCoords) map.panTo(capitalCoords);
             }
+            refreshCluster();
           }
 
           // 遺産リスト構築
@@ -1109,11 +1023,12 @@ searchInput.addEventListener('input', () => {
     lastOpenedMarker = null;
     const selectedRegion  = getDDRegion();
     const selectedCountry = getDDCountry();
-    syncClusterMarkers(markers.filter(m => {
-      if (selectedCountry) return m.customData.country === selectedCountry;
-      if (selectedRegion) return m.customData.region === selectedRegion;
-      return true;
-    }));
+    markers.forEach(m => {
+      if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+      else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+      else                     m.map = map;
+    });
+    refreshCluster();
     return;
   }
   showSuggests(keyword);
@@ -1181,7 +1096,7 @@ list.appendChild(item);
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
 
-      syncClusterMarkers(markers.filter(m => m.customData.country === country));
+      markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
 
       const latLng  = targetMarker.position;
       const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
@@ -1193,6 +1108,7 @@ list.appendChild(item);
       );
       map.panTo(newCenter);
       setTimeout(() => { showInfo(targetMarker, true); }, 200);
+      refreshCluster();
     }
 
     function toggleGradeDD() {
@@ -1257,7 +1173,9 @@ list.appendChild(item);
       );
       if (groupMarkers.length === 0) return;
       isSearchMode = true;
-      syncClusterMarkers(groupMarkers);
+      markers.forEach(m => m.map = null);
+      groupMarkers.forEach(m => m.map = map);
+      refreshCluster();
 
       // localNameJP → hira → heritageName の順で完全一致検索
       const mainMarker =
@@ -1302,11 +1220,12 @@ list.appendChild(item);
       lastOpenedMarker = null;
       const selectedRegion  = getDDRegion();
       const selectedCountry = getDDCountry();
-      syncClusterMarkers(markers.filter(m => {
-        if (selectedCountry) return m.customData.country === selectedCountry;
-        if (selectedRegion) return m.customData.region === selectedRegion;
-        return true;
-      }));
+      markers.forEach(m => {
+        if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+        else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+        else                     m.map = map;
+      });
+      refreshCluster();
     }
 
   </script>
