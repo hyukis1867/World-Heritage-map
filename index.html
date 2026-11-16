@@ -608,8 +608,8 @@ idCountMap[key]++;
                 if (!markerIndex.has(key)) markerIndex.set(key, marker);
 
                 // 一度に処理しすぎないよう、50件ごとに画面へ処理を返す
-                if ((i + 1) % 50 === 0) {
-                  await new Promise(resolve => setTimeout(resolve, 0));
+                if ((i + 1) % 25 === 0) {
+                  await new Promise(resolve => setTimeout(resolve, 16));
                 }
               }
 
@@ -621,6 +621,20 @@ idCountMap[key]++;
               await task;
             } finally {
               generatingRegions.delete(region);
+            }
+          }
+
+          // マーカーの地図への登録・解除も小分けにして、スマホの操作停止を防ぐ
+          async function applyMarkerMaps(predicate, batchSize = 40) {
+            for (let i = 0; i < markers.length; i += batchSize) {
+              const end = Math.min(i + batchSize, markers.length);
+              for (let j = i; j < end; j++) {
+                const marker = markers[j];
+                marker.map = predicate(marker) ? map : null;
+              }
+              if (end < markers.length) {
+                await new Promise(resolve => setTimeout(resolve, 16));
+              }
             }
           }
 
@@ -691,7 +705,7 @@ function updateMarkers() {
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    marker.setVisible(shouldBeVisible);
+    marker.map = shouldBeVisible ? map : null;
   });
 
   scheduleClusterUpdate();
@@ -784,14 +798,13 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = 'none';
 
             // 地域未選択ではマーカーを表示しない。選択時に対象地域だけ生成する。
-            markers.forEach(m => { m.map = null; });
+            await applyMarkerMaps(() => false);
             if (region) {
               await ensureMarkersForRegion(region);
               // 生成中に別の地域へ切り替わっていたら、古い地域を表示しない
               if (ddState.region !== region) return;
-              markers.forEach(m => {
-                m.map = m.customData.region === region ? map : null;
-              });
+              await applyMarkerMaps(m => m.customData.region === region);
+              if (ddState.region !== region) return;
             }
             buildCountryList(region);
             refreshCluster();
@@ -824,7 +837,7 @@ map.addListener('idle', () => {
           }
 
           // 国選択
-          function onCountrySelect(country) {
+          async function onCountrySelect(country) {
             ddClose();
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
@@ -840,10 +853,11 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
 
             if (country) {
-              markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
+              await applyMarkerMaps(m => m.customData.country === country);
             } else {
-              markers.forEach(m => { m.map = (!region || m.customData.region === region) ? map : null; });
+              await applyMarkerMaps(m => !region || m.customData.region === region);
             }
+            if (ddState.country !== country || ddState.region !== region) return;
 
             buildHeritageList(country);
 
