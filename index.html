@@ -1067,7 +1067,7 @@ item.dataset.value = `${country}.${id}`;
 const badgeColor = iconColors[type] || 'gray';
 const nameBg = (selectedGrade !== '-' && grades.includes(selectedGrade))
   ? `style="background:${gradeColors[selectedGrade]}; flex:1; padding:0 2px;"` : `style="flex:1;"`;
-item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; box-shadow:${danger === "1" ? "0 0 0 2px #D32F2F" : "none"}; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; border:${danger === "1" ? "2px solid #D32F2F" : "none"}; box-sizing:border-box; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
 item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
 list.appendChild(item);
       });
@@ -1091,7 +1091,7 @@ list.appendChild(item);
       ? heritage.ddName.replace(/<br\s*\/?>/gi, ' ')
       : removeCircleNumber((heritage?.heritageName || '').replace(/<br\s*\/?>/gi, ''));
       const badgeColor = iconColors[heritage?.type] || 'gray';
-      document.getElementById('heritage-selected').innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; box-shadow:${heritage?.danger === "1" ? "0 0 0 2px #D32F2F" : "none"}; margin-right:4px; display:inline-flex; vertical-align:middle;">${id}</span>${displayName}`;
+      document.getElementById('heritage-selected').innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; border:${heritage?.danger === "1" ? "2px solid #D32F2F" : "none"}; box-sizing:border-box; margin-right:4px; display:inline-flex; vertical-align:middle;">${id}</span>${displayName}`;
 
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
