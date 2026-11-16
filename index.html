@@ -192,11 +192,28 @@ function syncClusterMarkers(targetMarkers) {
     markerCluster.addMarkers(markersToAdd, true);
   }
 
-  // 追加・削除があった場合だけ、1回まとめてクラスタを再計算する。
+  // 診断：集合が本当に入れ替わっているか、ID単位で確認する。
   const changed = markersToRemove.length > 0 || markersToAdd.length > 0;
   if (changed) {
+    const markerKey = marker => {
+      const d = marker.customData || {};
+      return `${d.country || "?"}_${d.id || "?"}_${d.num || ""}`;
+    };
+    console.log('[Cluster診断] 集合差分', {
+      beforeCount: clustererMarkers.size,
+      nextCount: nextMarkers.size,
+      removedCount: markersToRemove.length,
+      addedCount: markersToAdd.length,
+      removed: markersToRemove.map(markerKey),
+      added: markersToAdd.map(markerKey)
+    });
     markerCluster.render();
     lastClusterZoom = map ? map.getZoom() : null;
+  } else {
+    console.log('[Cluster診断] 集合差分なし', {
+      markerCount: nextMarkers.size,
+      zoom: map ? map.getZoom() : null
+    });
   }
 
   clustererMarkers = nextMarkers;
