@@ -676,6 +676,45 @@ marker.content.addEventListener("mouseleave", () => {
 clustererMarkers = new Set(markers);
 lastClusterZoom = map.getZoom();
 
+// ===== 一時診断ログ：クラスタ点滅の原因調査用（動作ロジックは変更しない） =====
+{
+  const originalRender = markerCluster.render.bind(markerCluster);
+  let renderCallCount = 0;
+  markerCluster.render = function () {
+    renderCallCount++;
+    console.log(`[Cluster診断] render #${renderCallCount}`, {
+      zoom: map.getZoom(),
+      markerCount: clustererMarkers.size,
+      callStack: new Error().stack
+    });
+    return originalRender();
+  };
+
+  const algorithm = markerCluster.algorithm;
+  if (algorithm && typeof algorithm.calculate === 'function') {
+    const originalCalculate = algorithm.calculate.bind(algorithm);
+    algorithm.calculate = function (input) {
+      const result = originalCalculate(input);
+      console.log('[Cluster診断] algorithm.calculate', {
+        changed: result.changed,
+        clusterCount: result.clusters?.length,
+        markerCount: input.markers?.length,
+        zoom: input.map?.getZoom()
+      });
+      return result;
+    };
+  }
+
+  google.maps.event.addListener(markerCluster, 'clusteringbegin', () => {
+    console.log('[Cluster診断] clusteringbegin');
+  });
+  google.maps.event.addListener(markerCluster, 'clusteringend', () => {
+    console.log('[Cluster診断] clusteringend');
+  });
+  console.log('[Cluster診断] 診断ログ有効');
+}
+// ===== 診断ログここまで =====
+
 function updateMarkers() {
   if (isSearchMode) return;
 
