@@ -527,8 +527,9 @@ wrapper.style.justifyContent = "center";
 wrapper.style.cursor = "pointer";
 
 const markerEl = document.createElement("div");
-markerEl.style.width = "28px";
-markerEl.style.height = "28px";
+// 危機遺産は赤い外枠を含めた全体サイズが通常マーカーと同じになるよう調整
+markerEl.style.width = danger === "1" ? "22px" : "28px";
+markerEl.style.height = danger === "1" ? "22px" : "28px";
 markerEl.style.borderRadius = "50%";
 markerEl.style.background = color;
 markerEl.style.display = "flex";
