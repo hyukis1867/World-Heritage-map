@@ -672,16 +672,35 @@ function updateMarkers() {
     )
   );
 
+  let visibilityChanged = false;
+
   markers.forEach(marker => {
     const pos = marker.position;
     let shouldBeVisible = true;
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    marker.map = shouldBeVisible ? map : null;
+
+    // 初回はMarkerClusterer自身の表示状態を尊重し、画面外だけを除外する。
+    // 2回目以降は、表示対象の内外が切り替わったマーカーだけを更新する。
+    if (marker._withinUpdateBounds === undefined) {
+      marker._withinUpdateBounds = shouldBeVisible;
+      if (!shouldBeVisible && marker.map !== null) {
+        marker.map = null;
+        visibilityChanged = true;
+      }
+    } else if (marker._withinUpdateBounds !== shouldBeVisible) {
+      marker._withinUpdateBounds = shouldBeVisible;
+      marker.map = shouldBeVisible ? map : null;
+      visibilityChanged = true;
+    }
   });
 
-  scheduleClusterUpdate();
+  // 全マーカーのclear/addは行わない。対象が変わったときだけ再計算する。
+  // MarkerClustererは地図のidle時にも自動でrenderする。
+  if (visibilityChanged && markerCluster) {
+    markerCluster.render();
+  }
 }
 
 // 初回 + 地図操作後
