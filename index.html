@@ -388,7 +388,7 @@ map.addListener('click', () => {
   fetch('places.csv').then(r => r.text()),
   fetch('countries.csv').then(r => r.text())
 ])
-.then(async ([placesCsv, countriesCsv]) => {
+.then(([placesCsv, countriesCsv]) => {
 
 const countryRows = countriesCsv.trim().split('\n').slice(1);
 
@@ -449,9 +449,7 @@ idCountMap[key]++;
   );
 }
 
-          // マーカー生成を小分けにし、スマホの画面操作を止めない
-          for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-  const row = rows[rowIndex];
+          rows.forEach(row => {
   const columns = parseCSVLine(row);
   const id = columns[0].trim();
   const region = columns[1].trim();
@@ -516,127 +514,102 @@ idCountMap[key]++;
   if (!regionCountryIDsMap[region][country]) regionCountryIDsMap[region][country] = new Set();
   regionCountryIDsMap[region][country].add(id);
 
+  // マーカー生成（元の挙動を保持）
+  const label = id.toString();
+  const color = iconColors[type] || "gray";
+const wrapper = document.createElement("div");
 
-} // 遺産データの準備完了（この時点ではマーカーを生成しない）
+wrapper.style.width = "36px";
+wrapper.style.height = "36px";
+wrapper.style.display = "flex";
+wrapper.style.alignItems = "center";
+wrapper.style.justifyContent = "center";
+wrapper.style.cursor = "pointer";
 
-          // 地域が選択されたときだけ、その地域のマーカーを段階的に生成する
-          const generatedRegions = new Set();
-          const generatingRegions = new Map();
+const markerEl = document.createElement("div");
+// 危機遺産は赤い外枠を含めた全体サイズが通常マーカーと同じになるよう調整
+markerEl.style.width = danger === "1" ? "22px" : "28px";
+markerEl.style.height = danger === "1" ? "22px" : "28px";
+markerEl.style.borderRadius = "50%";
+markerEl.style.background = color;
+markerEl.style.display = "flex";
+markerEl.style.alignItems = "center";
+markerEl.style.justifyContent = "center";
+markerEl.style.color = "white";
+markerEl.style.fontSize = "12px";
+markerEl.style.border = "1px solid white";
+markerEl.style.boxShadow = danger === "1" ? "0 0 0 3px #D32F2F" : "none";
 
-          async function ensureMarkersForRegion(region) {
-            if (!region || generatedRegions.has(region)) return;
-            if (generatingRegions.has(region)) return generatingRegions.get(region);
+markerEl.textContent = label;
 
-            const task = (async () => {
-              const regionData = heritageData.filter(d => d.region === region);
+markerEl.style.transform = "translateY(8px)";
 
-              for (let i = 0; i < regionData.length; i++) {
-                const d = regionData[i];
-                if (!Number.isFinite(d.lat) || !Number.isFinite(d.lng)) continue;
+// 合体
+wrapper.appendChild(markerEl);
 
-                const label = String(d.id);
-                const color = iconColors[d.type] || 'gray';
-                const wrapper = document.createElement('div');
-                wrapper.style.width = '36px';
-                wrapper.style.height = '36px';
-                wrapper.style.display = 'flex';
-                wrapper.style.alignItems = 'center';
-                wrapper.style.justifyContent = 'center';
-                wrapper.style.cursor = 'pointer';
+const marker = new google.maps.marker.AdvancedMarkerElement({
+  position: { lat, lng },
+  map,
+  content: wrapper   // ← ここが重要
+});
 
-                const markerEl = document.createElement('div');
-                markerEl.style.width = d.danger === '1' ? '22px' : '28px';
-                markerEl.style.height = d.danger === '1' ? '22px' : '28px';
-                markerEl.style.borderRadius = '50%';
-                markerEl.style.background = color;
-                markerEl.style.display = 'flex';
-                markerEl.style.alignItems = 'center';
-                markerEl.style.justifyContent = 'center';
-                markerEl.style.color = 'white';
-                markerEl.style.fontSize = '12px';
-                markerEl.style.border = '1px solid white';
-                markerEl.style.boxShadow = d.danger === '1' ? '0 0 0 3px #D32F2F' : 'none';
-                markerEl.textContent = label;
-                markerEl.style.transform = 'translateY(8px)';
-                wrapper.appendChild(markerEl);
 
-                const marker = new google.maps.marker.AdvancedMarkerElement({
-                  position: { lat: d.lat, lng: d.lng },
-                  map: null,
-                  content: wrapper
-                });
+const key = `${country}_${id}`;
 
-                const key = `${d.country}_${d.id}`;
-                marker.customData = {
-                  id: d.id, region: d.region, country: d.country,
-                  heritageName: d.heritageName, lat: d.lat, lng: d.lng,
-                  type: d.type, year: d.year, danger: d.danger,
-                  state: d.state, localNameJP: d.localNameJP, hira: d.hira,
-                  localLangName: d.localLangName, localNameEN: d.localNameEN,
-                  grade: d.grade, imageUrl: d.imageUrl, credit: d.credit,
-                  num: d.num, total: idCountMap[key]
-                };
+marker.customData = {
+  id, region, country, heritageName, lat, lng,
+  type, year,
+  danger,
+  state,
+  localNameJP,
+  hira,
+  localLangName,
+  localNameEN,
+  grade, imageUrl, credit,
+  num,
+  total: idCountMap[key]
+};
 
-                marker.addListener('click', () => {
-                  if (lastOpenedMarker === marker && isPinned) {
-                    if (infoWindow) {
-                      infoWindow.close();
-                      infoWindow = null;
-                      lastOpenedMarker = null;
-                      isPinned = false;
-                    }
-                  } else {
-                    showInfo(marker, true);
-                  }
-                });
+  marker.addListener('click', () => {
+  if (lastOpenedMarker === marker && isPinned) {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow = null;
+      lastOpenedMarker = null;
+      isPinned = false;
+    }
+  } else {
+    showInfo(marker, true); // ← クリックは固定
+  }
+});
 
-                marker.content.addEventListener('mouseenter', () => {
-                  if (isPinned) return;
-                  const data = marker.customData;
-                  tooltip.innerHTML = `${data.heritageName}${data.localNameJP ? `<br>${data.localNameJP}` : ''}`;
-                  tooltip.style.display = 'block';
-                });
-                marker.content.addEventListener('mousemove', e => {
-                  tooltip.style.left = e.pageX + 10 + 'px';
-                  tooltip.style.top = e.pageY - 30 + 'px';
-                });
-                marker.content.addEventListener('mouseleave', () => {
-                  tooltip.style.display = 'none';
-                });
 
-                markers.push(marker);
-                if (!markerIndex.has(key)) markerIndex.set(key, marker);
+marker.content.addEventListener("mouseenter", (e) => {
+  if (isPinned) return;
 
-                // 一度に処理しすぎないよう、50件ごとに画面へ処理を返す
-                if ((i + 1) % 25 === 0) {
-                  await new Promise(resolve => setTimeout(resolve, 16));
-                }
-              }
+  const data = marker.customData;
 
-              generatedRegions.add(region);
-            })();
+  tooltip.innerHTML =
+  `${data.heritageName}
+   ${data.localNameJP ? `<br>${data.localNameJP}` : ''}`;
+  tooltip.style.display = "block";
+});
 
-            generatingRegions.set(region, task);
-            try {
-              await task;
-            } finally {
-              generatingRegions.delete(region);
-            }
-          }
+marker.content.addEventListener("mousemove", (e) => {
+  tooltip.style.left = e.pageX + 10 + "px";
+  tooltip.style.top = e.pageY - 30 + "px";
+});
 
-          // マーカーの地図への登録・解除も小分けにして、スマホの操作停止を防ぐ
-          async function applyMarkerMaps(predicate, batchSize = 40) {
-            for (let i = 0; i < markers.length; i += batchSize) {
-              const end = Math.min(i + batchSize, markers.length);
-              for (let j = i; j < end; j++) {
-                const marker = markers[j];
-                marker.map = predicate(marker) ? map : null;
-              }
-              if (end < markers.length) {
-                await new Promise(resolve => setTimeout(resolve, 16));
-              }
-            }
-          }
+marker.content.addEventListener("mouseleave", () => {
+  tooltip.style.display = "none";
+});
+
+ markers.push(marker);
+ if (!markerIndex.has(key)) {
+  markerIndex.set(key, marker);
+}
+
+}); // rows.forEach
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
@@ -666,7 +639,7 @@ idCountMap[key]++;
 
           markerCluster = new markerClusterer.MarkerClusterer({
   map,
-  markers: [],
+  markers,
   maxZoom: 10,
   onClusterClick: (event) => {
     // ★クラスタクリック完全無効化
@@ -701,11 +674,11 @@ function updateMarkers() {
 
   markers.forEach(marker => {
     const pos = marker.position;
-    let shouldBeVisible = !!selectedRegion;
+    let shouldBeVisible = true;
     if (!extendedBounds.contains(pos)) shouldBeVisible = false;
     if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
     if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
-    marker.map = shouldBeVisible ? map : null;
+    marker.setVisible(shouldBeVisible);
   });
 
   scheduleClusterUpdate();
@@ -779,7 +752,7 @@ map.addListener('idle', () => {
           }
 
           // 地域選択
-          async function onRegionSelect(region) {
+          function onRegionSelect(region) {
             ddClose();
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
@@ -797,15 +770,9 @@ map.addListener('idle', () => {
             document.getElementById('country-box').style.display  = region ? 'block' : 'none';
             document.getElementById('heritage-box').style.display = 'none';
 
-            // 地域未選択ではマーカーを表示しない。選択時に対象地域だけ生成する。
-            await applyMarkerMaps(() => false);
-            if (region) {
-              await ensureMarkersForRegion(region);
-              // 生成中に別の地域へ切り替わっていたら、古い地域を表示しない
-              if (ddState.region !== region) return;
-              await applyMarkerMaps(m => m.customData.region === region);
-              if (ddState.region !== region) return;
-            }
+            markers.forEach(m => {
+              m.map = (!region || m.customData.region === region) ? map : null;
+            });
             buildCountryList(region);
             refreshCluster();
           }
@@ -837,7 +804,7 @@ map.addListener('idle', () => {
           }
 
           // 国選択
-          async function onCountrySelect(country) {
+          function onCountrySelect(country) {
             ddClose();
             if (infoWindow) { infoWindow.close(); infoWindow = null; }
             lastOpenedMarker = null;
@@ -853,11 +820,10 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
 
             if (country) {
-              await applyMarkerMaps(m => m.customData.country === country);
+              markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
             } else {
-              await applyMarkerMaps(m => !region || m.customData.region === region);
+              markers.forEach(m => { m.map = (!region || m.customData.region === region) ? map : null; });
             }
-            if (ddState.country !== country || ddState.region !== region) return;
 
             buildHeritageList(country);
 
@@ -1060,7 +1026,7 @@ searchInput.addEventListener('input', () => {
     markers.forEach(m => {
       if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
       else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
-      else                     m.map = null;
+      else                     m.map = map;
     });
     refreshCluster();
     return;
@@ -1107,7 +1073,7 @@ list.appendChild(item);
       });
     }
 
-    async function onHeritageSelect(value) {
+    function onHeritageSelect(value) {
       const listEl = document.getElementById('region-list');
       ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
         const el = document.getElementById(id);
@@ -1116,9 +1082,6 @@ list.appendChild(item);
       if (!value) return;
       const [country, id] = value.split('.');
       if (!country || !id) return;
-      const targetData = heritageData.find(d => d.country === country && d.id === id);
-      if (!targetData) return;
-      await ensureMarkersForRegion(targetData.region);
       const targetMarker = markerIndex.get(`${country}_${id}`);
       if (!targetMarker) return;
 
@@ -1202,12 +1165,9 @@ list.appendChild(item);
       });
     }
 
-    async function jumpToHeritage(country, id, targetLocalNameJP, targetHira, targetHeritageName) {
+    function jumpToHeritage(country, id, targetLocalNameJP, targetHira, targetHeritageName) {
       const suggestBox = document.getElementById('search-suggest');
       suggestBox.style.display = 'none';
-      const targetData = heritageData.find(d => d.country === country && d.id == id);
-      if (!targetData) return;
-      await ensureMarkersForRegion(targetData.region);
       const groupMarkers = markers.filter(m =>
         m.customData.id == id && m.customData.country == country
       );
@@ -1263,7 +1223,7 @@ list.appendChild(item);
       markers.forEach(m => {
         if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
         else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
-        else                     m.map = null;
+        else                     m.map = map;
       });
       refreshCluster();
     }
