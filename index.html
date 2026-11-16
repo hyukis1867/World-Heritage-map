@@ -167,9 +167,18 @@
 // AdvancedMarkerElementのmapはクラスタリング中にMarkerClusterer自身がnullへ変更するため、
 // mapの値から登録済みマーカーを判定してはいけない。
 let clustererMarkers = new Set();
+let lastClusterZoom = null;
+
+// MarkerClusterer標準のidle自動再描画を止め、必要な場合だけ更新する。
+// 地図のパンだけではクラスタの地理的位置は変わらないため、再描画しない。
+class StableMarkerClusterer extends markerClusterer.MarkerClusterer {
+  onAdd() {
+    this.render();
+  }
+}
 
 function syncClusterMarkers(targetMarkers) {
-  if (!markerCluster) return;
+  if (!markerCluster) return false;
 
   const nextMarkers = new Set(targetMarkers);
   const markersToRemove = [];
@@ -191,11 +200,14 @@ function syncClusterMarkers(targetMarkers) {
   }
 
   // 追加・削除があった場合だけ、1回まとめてクラスタを再計算する。
-  if (markersToRemove.length || markersToAdd.length) {
+  const changed = markersToRemove.length > 0 || markersToAdd.length > 0;
+  if (changed) {
     markerCluster.render();
+    lastClusterZoom = map ? map.getZoom() : null;
   }
 
   clustererMarkers = nextMarkers;
+  return changed;
 }
 
 let lastBounds = null;
@@ -650,7 +662,7 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          markerCluster = new markerClusterer.MarkerClusterer({
+          markerCluster = new StableMarkerClusterer({
   map,
   markers,
   maxZoom: 10,
@@ -662,6 +674,7 @@ marker.content.addEventListener("mouseleave", () => {
 
 // 初期状態では、生成済み全マーカーがクラスタラーに登録されている。
 clustererMarkers = new Set(markers);
+lastClusterZoom = map.getZoom();
 
 function updateMarkers() {
   if (isSearchMode) return;
@@ -694,7 +707,15 @@ function updateMarkers() {
     return true;
   });
 
-  syncClusterMarkers(targetMarkers);
+  const membershipChanged = syncClusterMarkers(targetMarkers);
+  const currentZoom = map.getZoom();
+
+  // パンだけで対象集合が変わらない場合は再描画しない。
+  // ズームが変わった場合だけ、同じマーカー集合でクラスタを再計算する。
+  if (!membershipChanged && currentZoom !== lastClusterZoom) {
+    markerCluster.render();
+    lastClusterZoom = currentZoom;
+  }
 }
 
 // 初回 + 地図操作後
