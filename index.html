@@ -2,8 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>世界遺産マップ</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="世界遺産マップ">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
  
 <link rel="stylesheet" href="style.css">
 
@@ -258,7 +265,7 @@ function removeCircleNumber(str) {
   ${data.imageUrl ? `
     <div style="margin:6px 0; text-align:center;">
       <img src="${thumbUrl}"
-        style="max-width:250px; width:auto; height:auto; border-radius:6px; cursor:pointer;"
+        style="max-width:250px; max-height:${window.matchMedia('(max-width: 768px)').matches ? '180px' : 'none'}; width:auto; height:auto; border-radius:6px; cursor:pointer;"
         onclick="openImageModal('${fullUrl}')"
         onerror="this.src='${fullUrl}'">
     </div>` : ''}
@@ -1050,7 +1057,7 @@ list.appendChild(item);
       markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
 
       const latLng  = targetMarker.position;
-      const offsetY = 150;
+      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
       const scale   = Math.pow(2, map.getZoom());
       const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
       const pixelOffset = new google.maps.Point(0, offsetY / scale);
@@ -1136,7 +1143,7 @@ list.appendChild(item);
         groupMarkers[0];
 
       const latLng  = mainMarker.position;
-      const offsetY = 150;
+      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
       const scale   = Math.pow(2, map.getZoom());
       const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latLng);
       const pixelOffset = new google.maps.Point(0, offsetY / scale);
