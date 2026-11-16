@@ -388,7 +388,7 @@ map.addListener('click', () => {
   fetch('places.csv').then(r => r.text()),
   fetch('countries.csv').then(r => r.text())
 ])
-.then(([placesCsv, countriesCsv]) => {
+.then(async ([placesCsv, countriesCsv]) => {
 
 const countryRows = countriesCsv.trim().split('\n').slice(1);
 
@@ -449,7 +449,9 @@ idCountMap[key]++;
   );
 }
 
-          rows.forEach(row => {
+          // マーカー生成を小分けにし、スマホの画面操作を止めない
+          for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+  const row = rows[rowIndex];
   const columns = parseCSVLine(row);
   const id = columns[0].trim();
   const region = columns[1].trim();
@@ -609,7 +611,11 @@ marker.content.addEventListener("mouseleave", () => {
   markerIndex.set(key, marker);
 }
 
-}); // rows.forEach
+  // 50件ごとにブラウザへ処理を返し、描画・タップ操作の機会を作る
+  if ((rowIndex + 1) % 50 === 0) {
+    await new Promise(resolve => setTimeout(resolve, 0));
+  }
+} // マーカー生成ループ
 
           // --- ここで regionCountryMap 内の国リストを「読み」でソートして置き換える ---
           for (const region in regionCountryMap) {
