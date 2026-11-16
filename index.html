@@ -82,7 +82,7 @@
         type="text"
         id="search-input"
         placeholder="🔍 キーワードで検索"
-        style="width:100%; font-size:14px; box-sizing:border-box; padding-right:28px;">
+        style="width:100%; font-size:16px; box-sizing:border-box; padding-right:28px;">
       <button id="search-clear" onclick="clearSearch()" style="
         display:none;
         position:absolute;
@@ -317,6 +317,37 @@ function removeCircleNumber(str) {
   mapTypeControl: false,
   streetViewControl: false
 });
+
+      // 小さな地図／航空写真切り替えボタン
+      const mapTypeButton = document.createElement('button');
+      mapTypeButton.type = 'button';
+      mapTypeButton.className = 'map-type-toggle';
+      mapTypeButton.textContent = '航空写真';
+      mapTypeButton.setAttribute('aria-label', '航空写真に切り替え');
+      mapTypeButton.title = '航空写真に切り替え';
+      mapTypeButton.addEventListener('click', () => {
+        const isSatellite = map.getMapTypeId() === 'satellite';
+        map.setMapTypeId(isSatellite ? 'roadmap' : 'satellite');
+        mapTypeButton.textContent = isSatellite ? '航空写真' : '通常地図';
+        mapTypeButton.setAttribute('aria-label', isSatellite ? '航空写真に切り替え' : '通常地図に切り替え');
+        mapTypeButton.title = isSatellite ? '航空写真に切り替え' : '通常地図に切り替え';
+      });
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(mapTypeButton);
+
+      // ドロップダウン内だけ、2本指ピンチによる画面拡大を抑止
+      const dropdownContainer = document.getElementById('dropdown-container');
+      if (dropdownContainer && !dropdownContainer.dataset.pinchGuard) {
+        dropdownContainer.dataset.pinchGuard = 'true';
+        dropdownContainer.addEventListener('touchmove', (event) => {
+          if (event.touches && event.touches.length > 1) event.preventDefault();
+        }, { passive: false });
+      }
+      document.addEventListener('gesturestart', (event) => {
+        const target = event.target;
+        if (target instanceof Element && target.closest('#dropdown-container')) {
+          event.preventDefault();
+        }
+      }, { passive: false, capture: true });
 
       const savedCenter = localStorage.getItem('mapCenter');
       const savedZoom = localStorage.getItem('mapZoom');

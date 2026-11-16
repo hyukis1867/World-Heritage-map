@@ -360,3 +360,28 @@ html, body, #map {
   top: calc(env(safe-area-inset-top, 0px) + 10px);
   left: calc(env(safe-area-inset-left, 0px) + 10px);
 }
+
+/* 今回追加：地図／航空写真切り替えボタン */
+.map-type-toggle {
+  margin: 0 0 14px 10px;
+  padding: 6px 9px;
+  border: 1px solid rgba(0,0,0,0.22);
+  border-radius: 5px;
+  background: rgba(255,255,255,0.92);
+  color: #222;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ドロップダウン上でのブラウザ画面ピンチ拡大を抑え、縦スクロールは維持 */
+#dropdown-container {
+  touch-action: pan-y;
+}
+
+#search-input {
+  font-size: 16px !important;
+}
