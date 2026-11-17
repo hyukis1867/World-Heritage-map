@@ -163,47 +163,29 @@
     // ============================================================
     // クラスタ・マーカー表示更新
     // ============================================================
-    // MarkerClustererが管理するマーカー集合を独立して保持する。
-// AdvancedMarkerElementのmapはクラスタリング中にMarkerClusterer自身がnullへ変更するため、
-// mapの値から登録済みマーカーを判定してはいけない。
-let clustererMarkers = new Set();
-let lastClusterZoom = null;
+    function refreshCluster() {
+  if (!markerCluster) return;
 
+  const visibleMarkers = markers.filter(m => m.map !== null);
 
-function syncClusterMarkers(targetMarkers) {
-  if (!markerCluster) return false;
-
-  const nextMarkers = new Set(targetMarkers);
-  const markersToRemove = [];
-  const markersToAdd = [];
-
-  clustererMarkers.forEach(marker => {
-    if (!nextMarkers.has(marker)) markersToRemove.push(marker);
-  });
-
-  nextMarkers.forEach(marker => {
-    if (!clustererMarkers.has(marker)) markersToAdd.push(marker);
-  });
-
-  if (markersToRemove.length) {
-    markerCluster.removeMarkers(markersToRemove, true);
-  }
-  if (markersToAdd.length) {
-    markerCluster.addMarkers(markersToAdd, true);
-  }
-
-  // 追加・削除があった場合だけ、1回まとめてクラスタを再計算する。
-  const changed = markersToRemove.length > 0 || markersToAdd.length > 0;
-  if (changed) {
-    markerCluster.render();
-    lastClusterZoom = map ? map.getZoom() : null;
-  }
-
-  clustererMarkers = nextMarkers;
-  return changed;
+  markerCluster.clearMarkers();
+  markerCluster.addMarkers(visibleMarkers);
 }
 
 let lastBounds = null;
+
+let clusterUpdateScheduled = false;
+
+function scheduleClusterUpdate() {
+  if (clusterUpdateScheduled) return;
+
+  clusterUpdateScheduled = true;
+
+  requestAnimationFrame(() => {
+    refreshCluster();
+    clusterUpdateScheduled = false;
+  });
+}
 
 
 function boundsChangedSignificantly(newBounds) {
@@ -326,13 +308,6 @@ function removeCircleNumber(str) {
     }
 
     window.initMap = function () {
-      // markerclustererライブラリ読み込み後に定義する（外部scriptより前では参照できない）。
-      // 標準のidle自動再描画を止め、必要な場合だけクラスタを更新する。
-      class StableMarkerClusterer extends markerClusterer.MarkerClusterer {
-        onAdd() {
-          this.render();
-        }
-      }
   map = new google.maps.Map(document.getElementById('map'), {
   center: {lat: 41.9028, lng: 12.4964},
   zoom: 12,
@@ -662,54 +637,28 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          markerCluster = new StableMarkerClusterer({
+          markerCluster = new markerClusterer.MarkerClusterer({
   map,
   markers,
   maxZoom: 10,
-  // クラスタだけ従来型Markerで描画するテスト。
-  // 個別の世界遺産マーカー（AdvancedMarkerElement）は変更しない。
-  // AdvancedMarkerElementの再配置・衝突判定によるちらつきかを切り分ける。
-  renderer: {
-    render: ({ count, position }, stats) => {
-      const color = count > Math.max(10, stats.clusters.markers.mean)
-        ? "#ff0000"
-        : "#0000ff";
-      const svg = `<svg fill="${color}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="50" height="50">
-        <circle cx="120" cy="120" opacity=".6" r="70" />
-        <circle cx="120" cy="120" opacity=".3" r="90" />
-        <circle cx="120" cy="120" opacity=".2" r="110" />
-        <text x="50%" y="50%" style="fill:#fff" text-anchor="middle" font-size="50" dominant-baseline="middle" font-family="roboto,arial,sans-serif">${count}</text>
-      </svg>`;
-      return new google.maps.Marker({
-        position,
-        title: `Cluster of ${count} markers`,
-        zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
-        icon: {
-          url: `data:image/svg+xml;base64,${window.btoa(svg)}`,
-          anchor: new google.maps.Point(25, 25)
-        }
-      });
-    }
-  },
   onClusterClick: (event) => {
     // ★クラスタクリック完全無効化
     event.stop();
   }
 });
 
-// 初期状態では、生成済み全マーカーがクラスタラーに登録されている。
-clustererMarkers = new Set(markers);
-lastClusterZoom = map.getZoom();
-
 function updateMarkers() {
   if (isSearchMode) return;
 
   const bounds = map.getBounds();
   if (!bounds) return;
+
+  if (!boundsChangedSignificantly(bounds)) return;
   lastBounds = bounds;
 
   const selectedRegion = getDDRegion();
   const selectedCountry = getDDCountry();
+
   const buffer = 0.3;
 
   const extendedBounds = new google.maps.LatLngBounds(
@@ -723,24 +672,16 @@ function updateMarkers() {
     )
   );
 
-  // mapプロパティは直接変更せず、クラスタラーに登録する集合そのものを更新する。
-  // idleのたびに範囲を判定するが、実際の再クラスタリングは集合に差分がある場合だけ。
-  const targetMarkers = markers.filter(marker => {
-    if (!extendedBounds.contains(marker.position)) return false;
-    if (selectedRegion && marker.customData.region !== selectedRegion) return false;
-    if (selectedCountry && marker.customData.country !== selectedCountry) return false;
-    return true;
+  markers.forEach(marker => {
+    const pos = marker.position;
+    let shouldBeVisible = true;
+    if (!extendedBounds.contains(pos)) shouldBeVisible = false;
+    if (selectedRegion  && marker.customData.region  !== selectedRegion)  shouldBeVisible = false;
+    if (selectedCountry && marker.customData.country !== selectedCountry) shouldBeVisible = false;
+    marker.setVisible(shouldBeVisible);
   });
 
-  const membershipChanged = syncClusterMarkers(targetMarkers);
-  const currentZoom = map.getZoom();
-
-  // パンだけで対象集合が変わらない場合は再描画しない。
-  // ズームが変わった場合だけ、同じマーカー集合でクラスタを再計算する。
-  if (!membershipChanged && currentZoom !== lastClusterZoom) {
-    markerCluster.render();
-    lastClusterZoom = currentZoom;
-  }
+  scheduleClusterUpdate();
 }
 
 // 初回 + 地図操作後
@@ -829,8 +770,11 @@ map.addListener('idle', () => {
             document.getElementById('country-box').style.display  = region ? 'block' : 'none';
             document.getElementById('heritage-box').style.display = 'none';
 
-            syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+            markers.forEach(m => {
+              m.map = (!region || m.customData.region === region) ? map : null;
+            });
             buildCountryList(region);
+            refreshCluster();
           }
 
           // 国リスト構築
@@ -876,9 +820,9 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
 
             if (country) {
-              syncClusterMarkers(markers.filter(m => m.customData.country === country));
+              markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
             } else {
-              syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+              markers.forEach(m => { m.map = (!region || m.customData.region === region) ? map : null; });
             }
 
             buildHeritageList(country);
@@ -887,6 +831,7 @@ map.addListener('idle', () => {
               const capitalCoords = getCapitalLatLng(country);
               if (capitalCoords) map.panTo(capitalCoords);
             }
+            refreshCluster();
           }
 
           // 遺産リスト構築
@@ -1078,11 +1023,12 @@ searchInput.addEventListener('input', () => {
     lastOpenedMarker = null;
     const selectedRegion  = getDDRegion();
     const selectedCountry = getDDCountry();
-    syncClusterMarkers(markers.filter(m => {
-      if (selectedCountry) return m.customData.country === selectedCountry;
-      if (selectedRegion) return m.customData.region === selectedRegion;
-      return true;
-    }));
+    markers.forEach(m => {
+      if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+      else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+      else                     m.map = map;
+    });
+    refreshCluster();
     return;
   }
   showSuggests(keyword);
@@ -1150,7 +1096,7 @@ list.appendChild(item);
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
 
-      syncClusterMarkers(markers.filter(m => m.customData.country === country));
+      markers.forEach(m => { m.map = (m.customData.country === country) ? map : null; });
 
       const latLng  = targetMarker.position;
       const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
@@ -1162,6 +1108,7 @@ list.appendChild(item);
       );
       map.panTo(newCenter);
       setTimeout(() => { showInfo(targetMarker, true); }, 200);
+      refreshCluster();
     }
 
     function toggleGradeDD() {
@@ -1226,7 +1173,9 @@ list.appendChild(item);
       );
       if (groupMarkers.length === 0) return;
       isSearchMode = true;
-      syncClusterMarkers(groupMarkers);
+      markers.forEach(m => m.map = null);
+      groupMarkers.forEach(m => m.map = map);
+      refreshCluster();
 
       // localNameJP → hira → heritageName の順で完全一致検索
       const mainMarker =
@@ -1271,11 +1220,12 @@ list.appendChild(item);
       lastOpenedMarker = null;
       const selectedRegion  = getDDRegion();
       const selectedCountry = getDDCountry();
-      syncClusterMarkers(markers.filter(m => {
-        if (selectedCountry) return m.customData.country === selectedCountry;
-        if (selectedRegion) return m.customData.region === selectedRegion;
-        return true;
-      }));
+      markers.forEach(m => {
+        if (selectedCountry)     m.map = (m.customData.country === selectedCountry) ? map : null;
+        else if (selectedRegion) m.map = (m.customData.region  === selectedRegion)  ? map : null;
+        else                     m.map = map;
+      });
+      refreshCluster();
     }
 
   </script>
