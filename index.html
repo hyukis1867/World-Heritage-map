@@ -666,6 +666,31 @@ marker.content.addEventListener("mouseleave", () => {
   map,
   markers,
   maxZoom: 10,
+  // クラスタだけ従来型Markerで描画するテスト。
+  // 個別の世界遺産マーカー（AdvancedMarkerElement）は変更しない。
+  // AdvancedMarkerElementの再配置・衝突判定によるちらつきかを切り分ける。
+  renderer: {
+    render: ({ count, position }, stats) => {
+      const color = count > Math.max(10, stats.clusters.markers.mean)
+        ? "#ff0000"
+        : "#0000ff";
+      const svg = `<svg fill="${color}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="50" height="50">
+        <circle cx="120" cy="120" opacity=".6" r="70" />
+        <circle cx="120" cy="120" opacity=".3" r="90" />
+        <circle cx="120" cy="120" opacity=".2" r="110" />
+        <text x="50%" y="50%" style="fill:#fff" text-anchor="middle" font-size="50" dominant-baseline="middle" font-family="roboto,arial,sans-serif">${count}</text>
+      </svg>`;
+      return new google.maps.Marker({
+        position,
+        title: `Cluster of ${count} markers`,
+        zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
+        icon: {
+          url: `data:image/svg+xml;base64,${window.btoa(svg)}`,
+          anchor: new google.maps.Point(25, 25)
+        }
+      });
+    }
+  },
   onClusterClick: (event) => {
     // ★クラスタクリック完全無効化
     event.stop();
