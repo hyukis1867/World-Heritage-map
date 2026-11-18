@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>世界遺産マップ</title>
+  <title>世界遺産マップ（表示範囲クラスタリングテスト）</title>
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="世界遺産マップ">
-  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest-main-test.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
  
@@ -330,7 +330,14 @@ function removeCircleNumber(str) {
       // 標準のidle自動再描画を止め、必要な場合だけクラスタを更新する。
       class StableMarkerClusterer extends markerClusterer.MarkerClusterer {
         onAdd() {
-          this.render();
+          // Viewport algorithm needs valid map bounds/projection.
+          // During the first attachment these may not be ready yet;
+          // updateMarkers() performs the first render on the map's idle event.
+          const attachedMap = this.getMap();
+          const projection = this.getProjection();
+          if (attachedMap && attachedMap.getBounds() && projection) {
+            this.render();
+          }
         }
       }
   map = new google.maps.Map(document.getElementById('map'), {
@@ -414,7 +421,6 @@ map.addListener('click', () => {
   fetch('countries.csv').then(r => r.text())
 ])
 .then(([placesCsv, countriesCsv]) => {
-
 const countryRows = countriesCsv.trim().split('\n').slice(1);
 
 const countryDisplayMap = {};  // ← グローバル変数に追加してもOK
@@ -574,8 +580,9 @@ wrapper.appendChild(markerEl);
 
 const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
-  map,
-  content: wrapper   // ← ここが重要
+  // 初期生成時には地図へ直接載せず、クラスタラーに表示を任せる
+  map: null,
+  content: wrapper
 });
 
 
@@ -662,10 +669,13 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
+          // テスト版：表示範囲＋余白内のマーカーを対象にクラスタリングする。
+          // maxZoom は元コードでも MarkerClusterer 直下では有効になっていなかったため、
+          // 今回は実効値を変えず、アルゴリズムだけを切り替える。
           markerCluster = new StableMarkerClusterer({
   map,
   markers,
-  maxZoom: 10,
+  algorithm: new markerClusterer.SuperClusterViewportAlgorithm({}),
   onClusterClick: (event) => {
     // ★クラスタクリック完全無効化
     event.stop();
@@ -677,7 +687,15 @@ clustererMarkers = new Set(markers);
 lastClusterZoom = map.getZoom();
 
 function updateMarkers() {
-  if (isSearchMode) return;
+  if (isSearchMode) {
+    // 検索中はマーカー集合(絞り込み)は変えず、
+    // 移動後の表示範囲に合わせてクラスタだけ再計算する
+    if (map.getBounds()) {
+      markerCluster.render();
+      lastClusterZoom = map.getZoom();
+    }
+    return;
+  }
 
   const bounds = map.getBounds();
   if (!bounds) return;
@@ -697,13 +715,13 @@ function updateMarkers() {
   });
 
   const membershipChanged = syncClusterMarkers(targetMarkers);
-  const currentZoom = map.getZoom();
 
-  // パンだけで対象集合が変わらない場合は再描画しない。
-  // ズームが変わった場合だけ、同じマーカー集合でクラスタを再計算する。
-  if (!membershipChanged && currentZoom !== lastClusterZoom) {
+  // 表示範囲型アルゴリズムでは、パンでも対象ビューポートが変わる。
+  // マーカー集合に変更がなかった場合も、idle後にクラスタを再計算する。
+  // membershipChanged が true の場合は syncClusterMarkers 内ですでに render 済み。
+  if (!membershipChanged) {
     markerCluster.render();
-    lastClusterZoom = currentZoom;
+    lastClusterZoom = map.getZoom();
   }
 }
 
@@ -1244,7 +1262,7 @@ list.appendChild(item);
 
   </script>
 
-  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js">
+  <script src="https://unpkg.com/@googlemaps/markerclusterer@2.6.2/dist/index.min.js">
   </script>
 
   <script async defer
