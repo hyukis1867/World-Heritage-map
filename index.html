@@ -685,23 +685,12 @@ function updateMarkers() {
 
   const selectedRegion = getDDRegion();
   const selectedCountry = getDDCountry();
-  const buffer = 0.3;
 
-  const extendedBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(
-      bounds.getSouthWest().lat() - buffer,
-      bounds.getSouthWest().lng() - buffer
-    ),
-    new google.maps.LatLng(
-      bounds.getNorthEast().lat() + buffer,
-      bounds.getNorthEast().lng() + buffer
-    )
-  );
-
-  // mapプロパティは直接変更せず、クラスタラーに登録する集合そのものを更新する。
-  // idleのたびに範囲を判定するが、実際の再クラスタリングは集合に差分がある場合だけ。
+  // 表示範囲によるマーカーの追加・削除は行わない。
+  // SuperClusterAlgorithm は全世界の座標からクラスタを計算するため、
+  // パンのたびに登録マーカー集合を変える必要はない。
+  // 地域・国の絞り込みだけを反映し、パン時の不要なrenderを防ぐ。
   const targetMarkers = markers.filter(marker => {
-    if (!extendedBounds.contains(marker.position)) return false;
     if (selectedRegion && marker.customData.region !== selectedRegion) return false;
     if (selectedCountry && marker.customData.country !== selectedCountry) return false;
     return true;
