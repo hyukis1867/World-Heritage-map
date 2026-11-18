@@ -581,8 +581,9 @@ wrapper.appendChild(markerEl);
 
 const marker = new google.maps.marker.AdvancedMarkerElement({
   position: { lat, lng },
-  map,
-  content: wrapper   // ← ここが重要
+  // 初期生成時には地図へ直接載せず、クラスタラーに表示を任せる
+  map: null,
+  content: wrapper
 });
 
 
