@@ -1,0 +1,17 @@
+{
+  "id": "./index-viewport-diagnostic.html",
+  "name": "世界遺産マップ 診断用",
+  "short_name": "遺産マップ診断",
+  "start_url": "./index-viewport-diagnostic.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
