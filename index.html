@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>世界遺産マップ（表示範囲クラスタリングテスト）</title>
+  <title>世界遺産マップ</title>
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="世界遺産マップ">
-  <link rel="manifest" href="manifest-main-test.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
  
@@ -339,6 +338,66 @@ function removeCircleNumber(str) {
             this.render();
           }
         }
+render() {
+          const map = this.getMap();
+          if (!(map instanceof google.maps.Map) || !map.getProjection()) return;
+
+          const { clusters, changed } = this.algorithm.calculate({
+            markers: this.markers, map, mapCanvasProjection: this.getProjection(),
+          });
+          if (changed === false) return;
+
+          // 構成マーカーが同じクラスタは、丸アイコンを作り直さず再利用する
+          const cache = this._groupCache || (this._groupCache = new Map());
+          const ids = this._markerIds || (this._markerIds = new WeakMap());
+          this._idSeq = this._idSeq || 0;
+          const idOf = m => {
+            let i = ids.get(m);
+            if (i === undefined) { i = ++this._idSeq; ids.set(m, i); }
+            return i;
+          };
+
+          const stats = new markerClusterer.ClusterStats(this.markers, clusters);
+          const singles = new Set();
+          clusters.forEach(c => { if (c.markers.length === 1) singles.add(c.markers[0]); });
+
+          // 前回は単体表示だったが、今回はクラスタに入るマーカーを外す
+          (this.clusters || []).forEach(c => {
+            if (c.marker && c.markers.length === 1 && !singles.has(c.marker)) c.marker.map = null;
+          });
+
+          const usedKeys = new Set();
+          clusters.forEach(cluster => {
+            if (cluster.markers.length === 1) {
+              cluster.marker = cluster.markers[0];
+            } else {
+              const key = cluster.markers.map(idOf).sort((a, b) => a - b).join(',');
+              usedKeys.add(key);
+              let gm = cache.get(key);
+              if (!gm) {
+                gm = this.renderer.render(cluster, stats, map);
+                if (this.onClusterClick) {
+                  gm.addListener('gmp-click', (event) => {
+                    google.maps.event.trigger(this, 'click', cluster);
+                    this.onClusterClick(event, cluster, map);
+                  });
+                }
+                cache.set(key, gm);
+              }
+              cluster.marker = gm;
+              cluster.markers.forEach(m => { if (m.map) m.map = null; });
+            }
+            if (cluster.marker.map !== map) cluster.marker.map = map;
+          });
+
+          // 不要になった旧クラスタは次フレームで削除(空白フレームを防ぐ)
+          const stale = [];
+          cache.forEach((gm, key) => { if (!usedKeys.has(key)) { stale.push(gm); cache.delete(key); } });
+          if (stale.length) requestAnimationFrame(() => stale.forEach(gm => { gm.map = null; }));
+
+          this.clusters = clusters;
+        }
+
       }
   map = new google.maps.Map(document.getElementById('map'), {
   center: {lat: 41.9028, lng: 12.4964},
@@ -669,13 +728,13 @@ marker.content.addEventListener("mouseleave", () => {
             allRegionsTotalCount += countUniqueIDsInRegion(region);
           });
 
-          // テスト版：表示範囲＋余白内のマーカーを対象にクラスタリングする。
+          // 表示範囲＋余白内のマーカーを対象にクラスタリングする。
           // maxZoom は元コードでも MarkerClusterer 直下では有効になっていなかったため、
           // 今回は実効値を変えず、アルゴリズムだけを切り替える。
           markerCluster = new StableMarkerClusterer({
   map,
   markers,
-  algorithm: new markerClusterer.SuperClusterViewportAlgorithm({}),
+  algorithm: new markerClusterer.SuperClusterViewportAlgorithm({ viewportPadding: 300 }),
   onClusterClick: (event) => {
     // ★クラスタクリック完全無効化
     event.stop();
