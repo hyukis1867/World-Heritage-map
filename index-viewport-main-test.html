@@ -687,7 +687,15 @@ clustererMarkers = new Set(markers);
 lastClusterZoom = map.getZoom();
 
 function updateMarkers() {
-  if (isSearchMode) return;
+  if (isSearchMode) {
+    // 検索中はマーカー集合(絞り込み)は変えず、
+    // 移動後の表示範囲に合わせてクラスタだけ再計算する
+    if (map.getBounds()) {
+      markerCluster.render();
+      lastClusterZoom = map.getZoom();
+    }
+    return;
+  }
 
   const bounds = map.getBounds();
   if (!bounds) return;
