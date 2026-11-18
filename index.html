@@ -429,9 +429,9 @@ render() {
       mapTypeButton.addEventListener('click', () => {
         const isSatellite = map.getMapTypeId() === 'satellite';
         map.setMapTypeId(isSatellite ? 'roadmap' : 'satellite');
-        mapTypeButton.textContent = isSatellite ? '航空写真' : '通常地図';
-        mapTypeButton.setAttribute('aria-label', isSatellite ? '航空写真に切り替え' : '通常地図に切り替え');
-        mapTypeButton.title = isSatellite ? '航空写真に切り替え' : '通常地図に切り替え';
+        mapTypeButton.textContent = isSatellite ? '航空写真' : '地図';
+        mapTypeButton.setAttribute('aria-label', isSatellite ? '航空写真に切り替え' : '地図に切り替え');
+        mapTypeButton.title = isSatellite ? '航空写真に切り替え' : '地図に切り替え';
       });
       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(mapTypeButton);
 
