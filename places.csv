@@ -991,7 +991,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 3,欧州,マルタ共和国,マルタの巨石神殿群,35.9207,14.3777,文化遺産,1992,マルタ島,スコルバ神殿,,,Megalithic Temples of Malta<br>Skorba,,MT_03_Skorba_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),,,,5,マルタの巨石神殿群,,0
 3,欧州,マルタ共和国,マルタの巨石神殿群,35.8692,14.5120,文化遺産,1992,マルタ島,タルシーン神殿,,,Megalithic Temples of Malta<br>Tarxien Temple,,MT_03_Tarxien_Temple_01.jpg,,Photo by Georg Karl Ell (CC BY-SA 4.0),,,,6,マルタの巨石神殿群,,0
 1,欧州,キプロス共和国,パフォス,34.7582,32.4055,文化遺産,1980,パフォス地区,カト・パフォス市における<br>アフロディーテの聖地,,,Paphos<br>Aphrodite's Sacred City at Kato Paphos Town,1,CY_01_Aphrodite_Sacred__Kato_Paphos_01.jpg,,Photo by greglaskiewicz (CC BY-SA 3.0),,,,1,パフォス,,0
-1,欧州,キプロス共和国,パフォス,34.7749,32.4069,文化遺産,1980,パフォス地区,カト・パフォスのネクロポリス（王墓群）,,,Paphos<br>Kato Paphos necropolis (Tafoi ton Vasileon),,CY_01_Paphos_necropolis_01.jpg,,Photo by Nikodem Nijaki (CC BY-SA 3.0),,,,2,パフォス,,0
+1,欧州,キプロス共和国,パフォス,34.7749,32.4069,文化遺産,1980,パフォス地区,カト・パフォスのネクロポリス（王墓群）,,,Paphos<br>Kato Paphos necropolis (Tafoi ton Vasileon),,CY_01_Paphos_necropolis_01.jpg,,Photo by Nikodem Nijaki (CC BY-SA 3.0),,カト・パフォスの<br>ネクロポリス（王墓群）,,2,パフォス,,0
 1,欧州,キプロス共和国,パフォス,34.7085,32.5733,文化遺産,1980,パフォス地区,クークリア村のアフロディーテの聖域<br>（パラエ・パフォスあるいは<br>オールド・パフォス）,,,"Paphos<br>Aphrodite's Sanctuary at Kouklia village<br>(""Palaepaphos"" or Old Pahpos)",,CY_01_Aphrodite_Sanctuary_Kouklia_01.jpg,,Photo by Carole Raddato (CC BY-SA 2.0),,クークリア村の<br>アフロディーテの聖域<br>（パラエ・パフォスあるいは<br>オールド・パフォス）,,3,パフォス,,0
 2,欧州,キプロス共和国,トロードス地方の壁画教会群,34.9772,32.8895,文化遺産,1985,ニコシア地区,アイオス・ニコラオス<br>（聖ニコラオス）・<br>ティス・ステイス聖堂,,,Painted Churches in the Troodos Region<br>Church of Ayios Nikolaos (St. Nicholas)<br>tis Steyis,1,CY_02_Ayios_Nikolaos_01.jpg,,Photo by Zairon (CC BY-SA 4.0),トロードス地方の<br>壁画教会群,,,1,トロードス地方の壁画教会群,,0
 2,欧州,キプロス共和国,トロードス地方の壁画教会群,34.9923,32.8302,文化遺産,1985,ニコシア地区,アイオス・イオナニス（聖イオアン）・<br>ランバディスティス修道院,,,Painted Churches in the Troodos Region<br>Ayios Ionannis (St. John)<br>Lambadhistis Monastery,,,,,,アイオス・イオナニス<br>（聖イオアン）・<br>ランバディスティス修道院,,2,トロードス地方の壁画教会群,,0
@@ -1113,7 +1113,7 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 1,欧州,アルメニア共和国,ハフパット修道院と<br>サナヒン修道院,41.0938,44.7119,文化遺産,1996,ロリ州,ハフパット修道院,,,Monasteries of Haghpat and Sanahin<br>Monastery of Haghpat,,AM_01_Haghpat_01.jpg,,Photo by Diego Delso (CC BY-SA 4.0),ハフパット修道院と<br>サナヒン修道院,,,1,ハフパット修道院と<br>サナヒン修道院,,0
 1,欧州,アルメニア共和国,ハフパット修道院と<br>サナヒン修道院,41.0871,44.6660,文化遺産,1996,ロリ州,サナヒン修道院,,,Monasteries of Haghpat and Sanahin<br>Monastery of Sanahin,,AM_01_Sanahin_01.jpg,,Photo by Սարո Հովհաննիսյան (CC BY-SA 4.0),,,,2,ハフパット修道院と<br>サナヒン修道院,,0
 1,欧州,アルメニア共和国,ハフパット修道院と<br>サナヒン修道院,41.0989,44.6575,文化遺産,1996,ロリ州,サナヒン橋,,,Monasteries of Haghpat and Sanahin<br>Sanahin Bridge,,AM_01_Sanahin_Bridge_01.jpg,,Photo by Arman musikyan (CC BY-SA 3.0),,,,3,ハフパット修道院と<br>サナヒン修道院,,0
-2,欧州,アルメニア共和国,エチミアジンの大聖堂と教会群、<br>およびズヴァルトノツの考古遺跡,40.1618,44.2911,文化遺産,2000,アルマヴィル州 エチミジアン,主聖堂と周辺の関連建造物群,,,Cathedral and Churches of Echmiatsin and<br>the Archaeological Site of Zvartnots<br>Mother Cathedral of Echmiatsin<br>and surrounding constructions,2,AM_02_Cathedral_of_Echmiatsin_01.jpg,,Photo by Butcher (CC BY-SA 3.0),エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,,1,エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,0
+2,欧州,アルメニア共和国,エチミアジンの大聖堂と教会群、<br>およびズヴァルトノツの考古遺跡,40.1618,44.2911,文化遺産,2000,アルマヴィル州 エチミジアン,主聖堂と周辺の関連建造物群,,,Cathedral and Churches of Echmiatsin and<br>the Archaeological Site of Zvartnots<br>Mother Cathedral of Echmiatsin<br>and surrounding constructions,2,AM_02_Cathedral_of_Echmiatsin_01.jpg,,Photo by Butcher (CC BY-SA 3.0),エチミアジンの<br>大聖堂と教会群、および<br>ズヴァルトノツの考古遺跡,,,1,エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,0
 2,欧州,アルメニア共和国,エチミアジンの大聖堂と教会群、<br>およびズヴァルトノツの考古遺跡,40.1574,44.2918,文化遺産,2000,アルマヴィル州 エチミジアン,聖ガヤネ教会と周辺建造物群,,,Cathedral and Churches of Echmiatsin and<br>the Archaeological Site of Zvartnots<br>Church Saint Gayaneh and surrounding buildings,,AM_02_Church_St_Gayaneh_01.jpg,,Photo by Անժի92 (CC BY-SA 4.0),,,,2,エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,0
 2,欧州,アルメニア共和国,エチミアジンの大聖堂と教会群、<br>およびズヴァルトノツの考古遺跡,40.1591,44.2922,文化遺産,2000,アルマヴィル州 エチミジアン,修道会の墓地,,,Cemetery of Congregation,,,,,,,,3,エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,0
 2,欧州,アルメニア共和国,エチミアジンの大聖堂と教会群、<br>およびズヴァルトノツの考古遺跡,40.1669,44.3094,文化遺産,2000,アルマヴィル州 エチミジアン,聖リプシメ教会,,,Cathedral and Churches of Echmiatsin and<br>the Archaeological Site of Zvartnots<br>Saint Hripsimeh Church,,AM_02_St_Hripsimeh_01.jpg,,Photo by Matthias Süßen (CC BY-SA 4.0),,,,4,エチミアジンの大聖堂と<br>教会群、および<br>ズヴァルトノツの考古遺跡,,0
@@ -3267,12 +3267,14 @@ ID,地域,国名,遺産名（heritageName）,緯度,経度,タイプ,登録年,�
 12,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,タブリーズの歴史的バザール群,38.0813409399683,46.2931717546372,文化遺産,2010,東アーザルバーイジャーン州,バザール中心部,,,Tabriz Historic Bazaar Complex<br>Center,,,,,タブリーズの<br>歴史的バザール群,,,1,タブリーズの<br>歴史的バザール群,,0
 12,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,タブリーズの歴史的バザール群,38.0735029381142,46.3010432477256,文化遺産,2010,東アーザルバーイジャーン州,カブード・モスク（ブルーモスク）,,,Tabriz Historic Bazaar Complex<br>Kabood Mosque,,,,,,カブード・モスク<br>（ブルーモスク）,,2,タブリーズの<br>歴史的バザール群,,0
 12,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,タブリーズの歴史的バザール群,38.0847109136006,46.2980538417672,文化遺産,2010,東アーザルバーイジャーン州,ソルハーブ,,,Tabriz Historic Bazaar Complex<br>Sorkhab,,,,,,,,3,タブリーズの<br>歴史的バザール群,,0
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,30.2020395074163,53.1786543520697,文化遺産,2011,ファールス州 パサルガダエ,パサルガダエの古代庭園,,,The Persian Garden<br>Ancient Garden of Pasargadae,,,,,,,,1,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,29.6359902965389,52.526234222683,文化遺産,2011,ファールス州 シーラーズ,エラム庭園,,,The Persian Garden<br>Bagh-e Eram,,,,,,,,2,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,32.6575470150527,51.6724247558211,文化遺産,2011,イスファハーン州 イスファハーン,チェヘル・ソトゥーン庭園,,,The Persian Garden<br>Bagh-e Chehel Sotun,,,,,,,,3,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,33.9462615861633,51.3724699700881,文化遺産,2011,イスファハーン州 カーシャーン,フィーン庭園,,,The Persian Garden<br>Bagh-e Fin,,,,,,,,4,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,36.6638601647512,53.5938929514276,文化遺産,2011,マーザンダラーン州 ベフシャフル,アッバース・アーバード庭園,,,The Persian Garden<br>Bagh-e Abas Abad,,,,,,,,5,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,30.0240928224892,57.2822599746861,文化遺産,2011,ケルマーン州 マーハーン,シャーザデ庭園,,,The Persian Garden<br>Bagh-e Shahzadeh,,,,,,,,6,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,31.9031378541613,54.3520409427421,文化遺産,2011,ヤズド州 ヤズド,ドウラト・アーバード庭園,,,The Persian Garden<br>Bagh-e Dolat Abad,,,,,,,,7,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,31.560054130355,54.4404790922767,文化遺産,2011,ヤズド州 メフリーズ,パフラヴァーンプール庭園,,,The Persian Garden<br>Bagh-e Pahlavanpur,,,,,,,,8,ペルシア庭園,,
-13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,32.8527732302705,59.2281147480414,文化遺産,2011,南ホラーサーン州 ビールジャンド,アクバリーイェ庭園,,,The Persian Garden<br>Bagh-e Akbariyeh,,,,,,,,9,ペルシア庭園,,
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,30.2020395074163,53.1786543520697,文化遺産,2011,ファールス州 パサルガダエ,パサルガダエの古代庭園,,,The Persian Garden<br>Ancient Garden of Pasargadae,,,,,,,,1,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,29.6359902965389,52.526234222683,文化遺産,2011,ファールス州 シーラーズ,エラム庭園,,,The Persian Garden<br>Bagh-e Eram,,,,,,,,2,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,32.6575470150527,51.6724247558211,文化遺産,2011,イスファハーン州 イスファハーン,チェヘル・ソトゥーン庭園,,,The Persian Garden<br>Bagh-e Chehel Sotun,,,,,,,,3,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,33.9462615861633,51.3724699700881,文化遺産,2011,イスファハーン州 カーシャーン,フィーン庭園,,,The Persian Garden<br>Bagh-e Fin,,,,,,,,4,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,36.6638601647512,53.5938929514276,文化遺産,2011,マーザンダラーン州 ベフシャフル,アッバース・アーバード庭園,,,The Persian Garden<br>Bagh-e Abas Abad,,,,,,,,5,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,30.0240928224892,57.2822599746861,文化遺産,2011,ケルマーン州 マーハーン,シャーザデ庭園,,,The Persian Garden<br>Bagh-e Shahzadeh,,,,,,,,6,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,31.9031378541613,54.3520409427421,文化遺産,2011,ヤズド州 ヤズド,ドウラト・アーバード庭園,,,The Persian Garden<br>Bagh-e Dolat Abad,,,,,,,,7,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,31.560054130355,54.4404790922767,文化遺産,2011,ヤズド州 メフリーズ,パフラヴァーンプール庭園,,,The Persian Garden<br>Bagh-e Pahlavanpur,,,,,,,,8,ペルシア庭園,,0
+13,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ペルシア庭園,32.8527732302705,59.2281147480414,文化遺産,2011,南ホラーサーン州 ビールジャンド,アクバリーイェ庭園,,,The Persian Garden<br>Bagh-e Akbariyeh,,,,,,,,9,ペルシア庭園,,0
+14,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,ゴンバデ・カーブース,37.257982923078,55.1690184287875,文化遺産,2012,ゴレスターン州,,,,Gonbad-e Qābus,,,,,,,,,ゴンバデ・カーブース,,0
+15,中東,ｲﾗﾝ・ｲｽﾗﾑ共和国,イスファハーンのマスジェデ・ジャーメ,32.6696193256056,51.6851301750273,文化遺産,2012,イスファハーン,,,,Masjed-e Jāmé of Isfahan,,,,,イスファハーンの<br>マスジェデ・ジャーメ,,,,イスファハーンの<br>マスジェデ・ジャーメ,,0
