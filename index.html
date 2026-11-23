@@ -41,12 +41,16 @@
   </div>
 
   <div id="dropdown-container">
-    <div id="region-box" style="margin-bottom: 2px;">
-      <div class="dd-wrap" id="region-dd">
-        <div class="dd-selected" id="region-selected">-- 地域を選択 --</div>
-        <div class="dd-list" id="region-list"></div>
-      </div>
-    </div>
+    <div id="region-box" style="margin-bottom: 2px; display:flex; gap:4px; align-items:stretch;">
+  <div class="dd-wrap" id="region-dd">
+    <div class="dd-selected" id="region-selected">-- 地域を選択 --</div>
+    <div class="dd-list" id="region-list"></div>
+  </div>
+  <div class="dd-wrap" id="category-dd">
+    <div class="dd-selected" id="category-selected">-- 分類選択 --</div>
+    <div class="dd-list" id="category-list"></div>
+  </div>
+</div>
     <div id="country-box" style="display: none; margin-bottom: 2px;">
       <div class="dd-wrap" id="country-dd">
         <div class="dd-selected" id="country-selected">-- 国を選択 --</div>
@@ -116,17 +120,23 @@
     const countryReadingMap = {};
 
     // カスタムドロップダウン状態（グローバル）
-    const ddState = { region: '', country: '', heritage: '' };
+    const ddState = { region: '', country: '', heritage: '', category: '' };
     let selectedGrade = '-';
     function getDDRegion()  { return ddState.region; }
     function getDDCountry() { return ddState.country; }
+    function matchesCategory(d) {
+  const c = ddState.category;
+  if (!c) return true;
+  if (c === '危機遺産') return d.danger === '1';
+  return d.type === c;
+}
 
     // 遺産マップと級カラー（グローバル）
     let countryHeritageMap = {};
     const gradeColors = { '1':'#a0d8ef', '2':'#C8E86A', '3':'#fff3b8', '4':'#E8440A' };
 
     function ddOpen(listId) {
-      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+      ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
         if (id !== listId) {
           const el = document.getElementById(id);
           if (el) el.style.display = 'none';
@@ -137,7 +147,7 @@
     }
 
     function ddClose() {
-      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+      ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -768,8 +778,9 @@ function updateMarkers() {
   // パンのたびに登録マーカー集合を変える必要はない。
   // 地域・国の絞り込みだけを反映し、パン時の不要なrenderを防ぐ。
   const targetMarkers = markers.filter(marker => {
-    if (selectedRegion && marker.customData.region !== selectedRegion) return false;
+        if (selectedRegion && marker.customData.region !== selectedRegion) return false;
     if (selectedCountry && marker.customData.country !== selectedCountry) return false;
+    if (!matchesCategory(marker.customData)) return false;
     return true;
   });
 
@@ -800,6 +811,7 @@ map.addListener('idle', () => {
 
           // 地域ドロップダウンのクリック
           document.getElementById('region-selected').addEventListener('click', () => ddOpen('region-list'));
+          document.getElementById('category-selected').addEventListener('click', () => ddOpen('category-list'));
           document.getElementById('country-selected').addEventListener('click', () => {
             if (!ddState.region) return;
             ddOpen('country-list');
@@ -870,7 +882,7 @@ map.addListener('idle', () => {
             document.getElementById('country-box').style.display  = region ? 'block' : 'none';
             document.getElementById('heritage-box').style.display = 'none';
 
-            syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+            syncClusterMarkers(markers.filter(m => (!region || m.customData.region === region) && matchesCategory(m.customData)));
             buildCountryList(region);
           }
 
@@ -917,9 +929,9 @@ map.addListener('idle', () => {
             document.getElementById('heritage-box').style.display = country ? 'block' : 'none';
 
             if (country) {
-              syncClusterMarkers(markers.filter(m => m.customData.country === country));
+              syncClusterMarkers(markers.filter(m => m.customData.country === country && matchesCategory(m.customData)));
             } else {
-              syncClusterMarkers(markers.filter(m => !region || m.customData.region === region));
+              syncClusterMarkers(markers.filter(m => (!region || m.customData.region === region) && matchesCategory(m.customData)));
             }
 
             buildHeritageList(country);
@@ -932,8 +944,49 @@ map.addListener('idle', () => {
 
           // 遺産リスト構築
           // updateMarkersで使うdd値取得（グローバルに移動済み）
+          // 分類リスト構築
+function buildCategoryList() {
+  const labels = ['文化遺産', '自然遺産', '複合遺産', '危機遺産'];
+  const list = document.getElementById('category-list');
+  list.innerHTML = '';
 
+  const allItem = document.createElement('div');
+  allItem.className = 'dd-item';
+  allItem.textContent = '-- 分類選択 --';
+  allItem.addEventListener('click', () => onCategorySelect(''));
+  list.appendChild(allItem);
+
+  labels.forEach(label => {
+    const item = document.createElement('div');
+    item.className = 'dd-item';
+    item.textContent = label;
+    item.addEventListener('click', () => onCategorySelect(label));
+    list.appendChild(item);
+  });
+}
+
+// 分類選択（地域・国の選択状態は維持したまま絞り込む）
+function onCategorySelect(category) {
+  ddClose();
+  if (infoWindow) { infoWindow.close(); infoWindow = null; }
+  lastOpenedMarker = null;
+  ddState.category = category;
+  ddState.heritage = '';
+
+  document.getElementById('category-selected').textContent = category || '-- 分類選択 --';
+  document.getElementById('heritage-selected').textContent = '-- 遺産を選択 --';
+
+  const region  = ddState.region;
+  const country = ddState.country;
+  syncClusterMarkers(markers.filter(m =>
+    (!region  || m.customData.region  === region) &&
+    (!country || m.customData.country === country) &&
+    matchesCategory(m.customData)
+  ));
+  buildHeritageList(country);
+}
           buildRegionList();
+
 
           const urlParams = new URLSearchParams(window.location.search);
           const urlLat = parseFloat(urlParams.get('lat'));
@@ -945,7 +998,9 @@ map.addListener('idle', () => {
             map.setZoom(urlZoom);
           }
 
-         
+        buildCategoryList();
+          
+
 // 検索機能
 const searchInput = document.getElementById('search-input');
 const clearBtn    = document.getElementById('search-clear');
@@ -1120,11 +1175,11 @@ searchInput.addEventListener('input', () => {
     const selectedRegion  = getDDRegion();
     const selectedCountry = getDDCountry();
     syncClusterMarkers(markers.filter(m => {
-      if (selectedCountry) return m.customData.country === selectedCountry;
-      if (selectedRegion) return m.customData.region === selectedRegion;
-      return true;
-    }));
-    return;
+  if (!matchesCategory(m.customData)) return false;
+  if (selectedCountry) return m.customData.country === selectedCountry;
+  if (selectedRegion) return m.customData.region === selectedRegion;
+  return true;
+}));
   }
   showSuggests(keyword);
 });
@@ -1149,7 +1204,8 @@ searchInput.addEventListener('keydown', (e) => {
       list.innerHTML = '';
       if (!country || !countryHeritageMap[country]) return;
       const heritages = Object.values(countryHeritageMap[country])
-        .sort((a, b) => Number(a.id) - Number(b.id));
+  .filter(h => matchesCategory(h))
+  .sort((a, b) => Number(a.id) - Number(b.id));
       heritages.forEach(({ id, heritageName, grade, ddName, type, danger }) => {
         const displayName = ddName
           ? ddName
@@ -1170,7 +1226,7 @@ list.appendChild(item);
 
     function onHeritageSelect(value) {
       const listEl = document.getElementById('region-list');
-      ['region-list','country-list','heritage-list','grade-list'].forEach(id => {
+      ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -1191,7 +1247,7 @@ list.appendChild(item);
       if (infoWindow) { infoWindow.close(); infoWindow = null; }
       lastOpenedMarker = null;
 
-      syncClusterMarkers(markers.filter(m => m.customData.country === country));
+      syncClusterMarkers(markers.filter(m => m.customData.country === country && matchesCategory(m.customData)));
 
       const latLng  = targetMarker.position;
       const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
@@ -1312,7 +1368,8 @@ list.appendChild(item);
       lastOpenedMarker = null;
       const selectedRegion  = getDDRegion();
       const selectedCountry = getDDCountry();
-      syncClusterMarkers(markers.filter(m => {
+            syncClusterMarkers(markers.filter(m => {
+        if (!matchesCategory(m.customData)) return false;
         if (selectedCountry) return m.customData.country === selectedCountry;
         if (selectedRegion) return m.customData.region === selectedRegion;
         return true;
