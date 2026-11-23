@@ -724,11 +724,24 @@ marker.content.addEventListener("mouseleave", () => {
             }
           }
 
+                    // 国ごとの件数（現在の分類で絞り込み）
+          function countCountryIDs(region, country) {
+            const ids = regionCountryIDsMap[region]?.[country];
+            if (!ids) return 0;
+            let n = 0;
+            ids.forEach(id => {
+              const h = countryHeritageMap[country]?.[id];
+              if (h && matchesCategory(h)) n++;
+            });
+            return n;
+          }
+
+          // 地域ごとの件数（現在の分類で絞り込み）
           function countUniqueIDsInRegion(region) {
             if (!regionCountryIDsMap[region]) return 0;
             let sum = 0;
-            Object.values(regionCountryIDsMap[region]).forEach(countrySet => {
-              sum += countrySet.size;
+            Object.keys(regionCountryIDsMap[region]).forEach(country => {
+              sum += countCountryIDs(region, country);
             });
             return sum;
           }
@@ -778,7 +791,7 @@ function updateMarkers() {
   // パンのたびに登録マーカー集合を変える必要はない。
   // 地域・国の絞り込みだけを反映し、パン時の不要なrenderを防ぐ。
   const targetMarkers = markers.filter(marker => {
-        if (selectedRegion && marker.customData.region !== selectedRegion) return false;
+    if (selectedRegion && marker.customData.region !== selectedRegion) return false;
     if (selectedCountry && marker.customData.country !== selectedCountry) return false;
     if (!matchesCategory(marker.customData)) return false;
     return true;
@@ -901,7 +914,7 @@ map.addListener('idle', () => {
 
   Array.from(regionCountryMap[region]).forEach(country => {
               if (!country || !country.trim()) return;
-              const idCount = regionCountryIDsMap[region][country]?.size || 0;
+              const idCount = countCountryIDs(region, country);
               const item = document.createElement('div');
               item.className = 'dd-item';
               const dispName = countryDisplayMap[country] || country;
@@ -921,7 +934,7 @@ map.addListener('idle', () => {
             ddState.heritage = '';
 
             const region = ddState.region;
-            const idCount = regionCountryIDsMap[region][country]?.size || 0;
+            const idCount = countCountryIDs(region, country);
             document.getElementById('country-selected').textContent = country
               ? `${getFlagEmojiFromName(country)} ${country} (${idCount})`
               : '-- 国を選択 --';
@@ -983,6 +996,20 @@ function onCategorySelect(category) {
     (!country || m.customData.country === country) &&
     matchesCategory(m.customData)
   ));
+
+  // 地域・国リストと選択中表示の（）内の件数を、分類に合わせて更新
+  buildRegionList();
+  buildCountryList(region);
+  const regionNameMap = { "欧州": "ヨーロッパ" };
+  if (region) {
+    document.getElementById('region-selected').textContent =
+      `${regionNameMap[region] || region} (${countUniqueIDsInRegion(region)})`;
+  }
+  if (country) {
+    document.getElementById('country-selected').textContent =
+      `${getFlagEmojiFromName(country)} ${country} (${countCountryIDs(region, country)})`;
+  }
+
   buildHeritageList(country);
 }
           buildRegionList();
