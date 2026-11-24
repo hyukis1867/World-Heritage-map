@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <div id="search-box" style="margin-top:6px; position:relative; width:200px;">
+    <div id="search-box" style="margin-top:2px; position:relative; width:200px;">
       <input
         type="text"
         id="search-input"
@@ -111,10 +111,12 @@
     function getDDRegion()  { return ddState.region; }
     function getDDCountry() { return ddState.country; }
     // 級の表記ゆれ（全角数字・「級」付き）を吸収して比較用に揃える
-    function normGrade(g) {
+        function normGrade(g) {
       return String(g).trim()
         .replace(/級/g, '')
-        .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+        .replace(/[０-９Ａ-Ｚａ-ｚ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+        .replace(/^準/, 'P')
+        .toUpperCase();
     }
     // 分類＋級の絞り込み判定（マーカー・遺産リスト・件数カウントの共通条件）
     function matchesCategory(d) {
@@ -1293,7 +1295,7 @@ list.appendChild(item);
       { label: '4級',   value: '4'   },
       { label: '3級',   value: '3'   },
       { label: '2級',   value: '2'   },
-      { label: '準1級', value: '準1' },
+      { label: '準1級', value: 'P1' },
       { label: '1級',   value: '1'   }
     ];
     let gradeStepIndex = 0;

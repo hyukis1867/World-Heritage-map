@@ -393,7 +393,7 @@ html, body, #map {
 /* 級ボタン（文字検索の下・左寄せ） */
 .grade-toggle {
   display: block;
-  margin: 6px 0 0 0;
+  margin: 2px 0 0 0;
   min-width: 58px;
   text-align: center;
   white-space: nowrap;
