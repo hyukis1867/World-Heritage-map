@@ -309,6 +309,28 @@ function removeCircleNumber(str) {
       lastOpenedMarker = marker;
     }
 
+    // 地図を一定時間かけてなめらかに移動する（標準の panTo より遅くしたいとき用）
+    const PAN_DURATION_MS = 700;   // ← 大きいほどゆっくり動く
+    let panAnimationId = null;
+
+    function slowPanTo(target, duration = PAN_DURATION_MS) {
+      if (panAnimationId) cancelAnimationFrame(panAnimationId);
+      const t = (typeof target.lat === 'function') ? { lat: target.lat(), lng: target.lng() } : target;
+      const c = map.getCenter();
+      const sLat = c.lat(), sLng = c.lng();
+      const dLat = t.lat - sLat;
+      const dLng = ((t.lng - sLng + 540) % 360) - 180;   // 日付変更線をまたぐ場合も近い方向へ
+      const t0 = performance.now();
+      const ease = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      function step(now) {
+        const p = Math.min((now - t0) / duration, 1);
+        const e = ease(p);
+        map.setCenter({ lat: sLat + dLat * e, lng: sLng + dLng * e });
+        panAnimationId = p < 1 ? requestAnimationFrame(step) : null;
+      }
+      panAnimationId = requestAnimationFrame(step);
+    }
+
     // マーカーを、遺産プルダウン選択時と同じ位置（マーカーが中央より下に来る位置）へ移動する
     function panToMarkerWithOffset(marker) {
       const projection = map.getProjection();
@@ -319,7 +341,7 @@ function removeCircleNumber(str) {
       const newCenter = projection.fromPointToLatLng(
         new google.maps.Point(world.x, world.y - offsetY / scale)
       );
-      map.panTo(newCenter);
+      slowPanTo(newCenter);
     }
 
     // ============================================================
@@ -439,6 +461,11 @@ render() {
     strictBounds: true
   }
 });
+
+      // 手動で地図をドラッグしたら、移動アニメーションを中断する
+      map.addListener('dragstart', () => {
+        if (panAnimationId) { cancelAnimationFrame(panAnimationId); panAnimationId = null; }
+      });
 
       // 小さな地図／航空写真切り替えボタン
       const mapTypeButton = document.createElement('button');
