@@ -63,7 +63,6 @@
           <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
           <div class="dd-list" id="heritage-list"></div>
         </div>
-                <button type="button" id="grade-toggle" class="map-type-toggle grade-toggle">Grade</button>
       </div>
     </div>
     <div id="search-box" style="margin-top:6px; position:relative; width:200px;">
@@ -83,6 +82,9 @@
         padding:2px 4px;">×</button>
       <div id="search-suggest"></div>
     </div>
+      <div id="search-suggest"></div>
+    </div>
+    <button type="button" id="grade-toggle" class="map-type-toggle grade-toggle">Grade</button>
 
   <script>
     // ============================================================
@@ -117,9 +119,8 @@
   return d.type === c;
 }
 
-    // 遺産マップと級カラー（グローバル）
+    // 遺産マップ（グローバル）
     let countryHeritageMap = {};
-    const gradeColors = { '1':'#a0d8ef', '2':'#C8E86A', '3':'#fff3b8', '4':'#E8440A' };
 
     function ddOpen(listId) {
       ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
@@ -1223,15 +1224,12 @@ searchInput.addEventListener('keydown', (e) => {
         const displayName = ddName
           ? ddName
           : removeCircleNumber(heritageName.replace(/<br\s*\/?>/gi, ''));
-        const grades = grade ? grade.split(',') : [];
         const item = document.createElement('div');
         item.className = 'dd-item';
 if (ddState.heritage === `${country}.${id}`) item.classList.add('active');
 item.dataset.value = `${country}.${id}`;
 const badgeColor = iconColors[type] || 'gray';
-const nameBg = (selectedGrade !== '-' && grades.includes(selectedGrade))
-  ? `style="background:${gradeColors[selectedGrade]}; flex:1; padding:0 2px;"` : `style="flex:1;"`;
-item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; border:${danger === "1" ? "2px solid #D32F2F" : "none"}; box-sizing:border-box; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name" ${nameBg}>${displayName}</span>`;
+item.innerHTML = `<span class="dd-item-badge" style="background:${badgeColor}; border:${danger === "1" ? "2px solid #D32F2F" : "none"}; box-sizing:border-box; display:inline-flex; vertical-align:middle;">${id}</span><span class="dd-item-name">${displayName}</span>`;
 item.addEventListener('click', () => onHeritageSelect(`${country}.${id}`));
 list.appendChild(item);
       });
