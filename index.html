@@ -119,12 +119,15 @@
         .toUpperCase();
     }
     // 分類＋級の絞り込み判定（マーカー・遺産リスト・件数カウントの共通条件）
-    function matchesCategory(d) {
+      function matchesCategory(d) {
+      // マーカー（CSV1行＝1マーカー）は、同じ遺産IDの行をまとめた遺産単位の情報で判定する。
+      // 2つ目以降のマーカーの級が空欄でも、遺産全体の級が適用され、全マーカーが表示される。
+      const h = countryHeritageMap[d.country]?.[d.id] || d;
       const c = ddState.category;
-      if (c === '危機遺産' && d.danger !== '1') return false;
-      if (c && c !== '危機遺産' && d.type !== c) return false;
+      if (c === '危機遺産' && h.danger !== '1') return false;
+      if (c && c !== '危機遺産' && h.type !== c) return false;
       if (selectedGrade !== '-') {
-        const grades = d.grade ? d.grade.split(',').map(normGrade) : [];
+        const grades = h.grade ? h.grade.split(',').map(normGrade) : [];
         if (!grades.includes(selectedGrade)) return false;
       }
       return true;
