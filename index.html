@@ -864,7 +864,8 @@ map.addListener('idle', () => {
             allItem.addEventListener('click', () => onRegionSelect(''));
             list.appendChild(allItem);
 
-            Object.keys(regionCountryMap).forEach(region => {
+                        Object.keys(regionCountryMap).forEach(region => {
+              if (countUniqueIDsInRegion(region) === 0) return;  // 絞り込みで対象外の地域は非表示
               const item = document.createElement('div');
               item.className = 'dd-item';
               item.textContent = `${regionNameMap[region] || region} (${countUniqueIDsInRegion(region)})`;
@@ -913,6 +914,7 @@ map.addListener('idle', () => {
   Array.from(regionCountryMap[region]).forEach(country => {
               if (!country || !country.trim()) return;
               const idCount = countCountryIDs(region, country);
+              if (idCount === 0) return;  // 絞り込みで対象外の国は非表示
               const item = document.createElement('div');
               item.className = 'dd-item';
               const dispName = countryDisplayMap[country] || country;
@@ -984,6 +986,19 @@ function applyFilterChange() {
   lastOpenedMarker = null;
   ddState.heritage = '';
   document.getElementById('heritage-selected').textContent = '-- 遺産を選択 --';
+
+  // 選択中の地域・国が絞り込みで0件になる場合は、選択を解除する
+  if (ddState.region && countUniqueIDsInRegion(ddState.region) === 0) {
+    ddState.region  = '';
+    ddState.country = '';
+    document.getElementById('country-selected').textContent = '-- 国を選択 --';
+    document.getElementById('country-box').style.display  = 'none';
+    document.getElementById('heritage-box').style.display = 'none';
+  } else if (ddState.country && countCountryIDs(ddState.region, ddState.country) === 0) {
+    ddState.country = '';
+    document.getElementById('country-selected').textContent = '-- 国を選択 --';
+    document.getElementById('heritage-box').style.display = 'none';
+  }
 
   const region  = ddState.region;
   const country = ddState.country;
