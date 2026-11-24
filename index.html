@@ -309,6 +309,19 @@ function removeCircleNumber(str) {
       lastOpenedMarker = marker;
     }
 
+    // マーカーを、遺産プルダウン選択時と同じ位置（マーカーが中央より下に来る位置）へ移動する
+    function panToMarkerWithOffset(marker) {
+      const projection = map.getProjection();
+      if (!projection) return;
+      const offsetY = window.matchMedia('(max-width: 768px)').matches ? 250 : 150;
+      const scale   = Math.pow(2, map.getZoom());
+      const world   = projection.fromLatLngToPoint(marker.position);
+      const newCenter = projection.fromPointToLatLng(
+        new google.maps.Point(world.x, world.y - offsetY / scale)
+      );
+      map.panTo(newCenter);
+    }
+
     // ============================================================
     // CSVパーサー
     // ============================================================
@@ -679,6 +692,7 @@ marker.customData = {
     }
   } else {
     showInfo(marker, true); // ← クリックは固定
+    panToMarkerWithOffset(marker);  // プルダウン選択時と同じ位置へ移動
   }
 });
 
