@@ -149,7 +149,7 @@ html, body, #map {
   width: 200px;  /* 地域・国はそのまま200px */
 }
 #category-dd {
-  width: 120px;
+  width: 90px;
   flex-shrink: 0;
 }
 .dd-selected {

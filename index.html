@@ -47,7 +47,7 @@
     <div class="dd-list" id="region-list"></div>
   </div>
   <div class="dd-wrap" id="category-dd">
-    <div class="dd-selected" id="category-selected">-- 分類選択 --</div>
+    <div class="dd-selected" id="category-selected">-- 分類 --</div>
     <div class="dd-list" id="category-list"></div>
   </div>
 </div>
@@ -1009,7 +1009,7 @@ function buildCategoryList() {
 
   const allItem = document.createElement('div');
   allItem.className = 'dd-item';
-  allItem.textContent = '-- 分類選択 --';
+  allItem.textContent = '-- 分類 --';
   allItem.addEventListener('click', () => onCategorySelect(''));
   list.appendChild(allItem);
 
@@ -1072,7 +1072,7 @@ window.applyFilterChange = applyFilterChange;  // 級ボタン（外側のスク
 // 分類選択（地域・国・級の選択状態は維持したまま絞り込む）
 function onCategorySelect(category) {
   ddState.category = category;
-  document.getElementById('category-selected').textContent = category || '-- 分類選択 --';
+  document.getElementById('category-selected').textContent = category || '-- 分類 --';
   applyFilterChange();
 }
           buildRegionList();
