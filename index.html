@@ -110,12 +110,23 @@
     let selectedGrade = '-';
     function getDDRegion()  { return ddState.region; }
     function getDDCountry() { return ddState.country; }
+    // 級の表記ゆれ（全角数字・「級」付き）を吸収して比較用に揃える
+    function normGrade(g) {
+      return String(g).trim()
+        .replace(/級/g, '')
+        .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+    }
+    // 分類＋級の絞り込み判定（マーカー・遺産リスト・件数カウントの共通条件）
     function matchesCategory(d) {
-  const c = ddState.category;
-  if (!c) return true;
-  if (c === '危機遺産') return d.danger === '1';
-  return d.type === c;
-}
+      const c = ddState.category;
+      if (c === '危機遺産' && d.danger !== '1') return false;
+      if (c && c !== '危機遺産' && d.type !== c) return false;
+      if (selectedGrade !== '-') {
+        const grades = d.grade ? d.grade.split(',').map(normGrade) : [];
+        if (!grades.includes(selectedGrade)) return false;
+      }
+      return true;
+    }
 
     // 遺産マップ（グローバル）
     let countryHeritageMap = {};
@@ -964,14 +975,12 @@ function buildCategoryList() {
 }
 
 // 分類選択（地域・国の選択状態は維持したまま絞り込む）
-function onCategorySelect(category) {
+// 分類・級の変更を画面に反映（マーカー・各リスト・（）内の件数）
+function applyFilterChange() {
   ddClose();
   if (infoWindow) { infoWindow.close(); infoWindow = null; }
   lastOpenedMarker = null;
-  ddState.category = category;
   ddState.heritage = '';
-
-  document.getElementById('category-selected').textContent = category || '-- 分類選択 --';
   document.getElementById('heritage-selected').textContent = '-- 遺産を選択 --';
 
   const region  = ddState.region;
@@ -982,7 +991,7 @@ function onCategorySelect(category) {
     matchesCategory(m.customData)
   ));
 
-  // 地域・国リストと選択中表示の（）内の件数を、分類に合わせて更新
+  // 地域・国リストと選択中表示の（）内の件数を、現在の絞り込みに合わせて更新
   buildRegionList();
   buildCountryList(region);
   const regionNameMap = { "欧州": "ヨーロッパ" };
@@ -996,6 +1005,14 @@ function onCategorySelect(category) {
   }
 
   buildHeritageList(country);
+}
+window.applyFilterChange = applyFilterChange;  // 級ボタン（外側のスクリプト）から呼ぶため公開
+
+// 分類選択（地域・国・級の選択状態は維持したまま絞り込む）
+function onCategorySelect(category) {
+  ddState.category = category;
+  document.getElementById('category-selected').textContent = category || '-- 分類選択 --';
+  applyFilterChange();
 }
           buildRegionList();
 
@@ -1288,8 +1305,7 @@ list.appendChild(item);
       const btn = document.getElementById('grade-toggle');
       btn.textContent = step.label;
       btn.setAttribute('aria-label', `級の絞り込み: ${step.label}`);
-      const country = getDDCountry();
-      if (country) buildHeritageList(country);
+      if (typeof window.applyFilterChange === 'function') window.applyFilterChange();
     }
     document.getElementById('grade-toggle').addEventListener('click', onGradeToggle);
 
