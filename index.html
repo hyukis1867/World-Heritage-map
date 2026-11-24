@@ -63,21 +63,7 @@
           <div class="dd-selected" id="heritage-selected">-- 遺産を選択 --</div>
           <div class="dd-list" id="heritage-list"></div>
         </div>
-        <div class="grade-box">
-          <div class="grade-dd-wrap" id="grade-dd">
-            <div class="grade-num-btn" id="grade-selected">
-              <span id="grade-num">-</span>
-            </div>
-            <div class="grade-list" id="grade-list">
-              <div class="grade-list-item active" data-grade="-">-</div>
-              <div class="grade-list-item" data-grade="1">1</div>
-              <div class="grade-list-item" data-grade="2">2</div>
-              <div class="grade-list-item" data-grade="3">3</div>
-              <div class="grade-list-item" data-grade="4">4</div> 
-            </div>
-          </div>
-          <div class="grade-fixed">級</div>
-        </div>
+                <button type="button" id="grade-toggle" class="map-type-toggle grade-toggle">Grade</button>
       </div>
     </div>
     <div id="search-box" style="margin-top:6px; position:relative; width:200px;">
@@ -147,7 +133,7 @@
     }
 
     function ddClose() {
-      ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
+      ['region-list','category-list','country-list','heritage-list'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -835,7 +821,7 @@ map.addListener('idle', () => {
           });
 
           document.addEventListener('click', e => {
-  if (!e.target.closest('.dd-wrap') && !e.target.closest('.grade-box') && !e.target.closest('#image-modal') && !e.target.closest('#search-box')) ddClose();
+  if (!e.target.closest('.dd-wrap') && !e.target.closest('#image-modal') && !e.target.closest('#search-box')) ddClose();
   if (!e.target.closest('#search-box')) {
     suggestBox.style.display = 'none';
   }
@@ -1253,7 +1239,7 @@ list.appendChild(item);
 
     function onHeritageSelect(value) {
       const listEl = document.getElementById('region-list');
-      ['region-list','category-list','country-list','heritage-list','grade-list'].forEach(id => {
+      ['region-list','category-list','country-list','heritage-list'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -1288,38 +1274,28 @@ list.appendChild(item);
       setTimeout(() => { showInfo(targetMarker, true); }, 200);
     }
 
-    function toggleGradeDD() {
-      const list  = document.getElementById('grade-list');
-      const hList = document.getElementById('heritage-list');
-      hList.style.display = 'none';
-      list.style.display  = list.style.display === 'block' ? 'none' : 'block';
-    }
+        // 級ボタン（押すたびに Grade → 4級 → 3級 → 2級 → 準1級 → 1級 → Grade の順に切り替え）
+    const gradeSteps = [
+      { label: 'Grade', value: '-'   },
+      { label: '4級',   value: '4'   },
+      { label: '3級',   value: '3'   },
+      { label: '2級',   value: '2'   },
+      { label: '準1級', value: '準1' },
+      { label: '1級',   value: '1'   }
+    ];
+    let gradeStepIndex = 0;
 
-    function onGradeSelect(grade) {
-      selectedGrade = grade;
-      document.getElementById('grade-num').textContent = grade;
-      document.getElementById('grade-list').style.display = 'none';
-      document.querySelectorAll('.grade-list-item').forEach(el => {
-        el.classList.toggle('active', el.dataset.grade === grade);
-      });
+    function onGradeToggle() {
+      gradeStepIndex = (gradeStepIndex + 1) % gradeSteps.length;
+      const step = gradeSteps[gradeStepIndex];
+      selectedGrade = step.value;
+      const btn = document.getElementById('grade-toggle');
+      btn.textContent = step.label;
+      btn.setAttribute('aria-label', `級の絞り込み: ${step.label}`);
       const country = getDDCountry();
       if (country) buildHeritageList(country);
     }
-
-    // 級ボタンのイベントを直接登録
-    document.getElementById('grade-selected').addEventListener('click', e => {
-      e.stopPropagation();
-      const list = document.getElementById('grade-list');
-      const hList = document.getElementById('heritage-list');
-      if (hList) hList.style.display = 'none';
-      list.style.display = list.style.display === 'block' ? 'none' : 'block';
-    });
-    document.querySelectorAll('.grade-list-item').forEach(el => {
-      el.addEventListener('click', e => {
-        e.stopPropagation();
-        onGradeSelect(el.dataset.grade);
-      });
-    });
+    document.getElementById('grade-toggle').addEventListener('click', onGradeToggle);
 
     function openImageModal(src) {
       const modal    = document.getElementById("image-modal");

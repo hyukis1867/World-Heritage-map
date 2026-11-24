@@ -389,3 +389,13 @@ html, body, #map {
 #search-input {
   font-size: 16px !important;
 }
+
+/* 級ボタン（遺産プルダウンの右横） */
+.grade-toggle {
+  margin: 0;
+  flex-shrink: 0;
+  min-width: 58px;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
