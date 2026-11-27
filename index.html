@@ -12,10 +12,13 @@
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
  
 <link rel="stylesheet" href="style.css">
+<script>
+  // iOSのホーム画面アプリとして起動しているときだけ印を付ける
+  if (window.navigator.standalone === true) document.documentElement.classList.add('ios-standalone');
+</script>
 
 </head>
 <body>
-  <div id="ios-top-band" aria-hidden="true"></div>
   <div id="map"></div>
 
   <div id="image-modal" style="

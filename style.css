@@ -400,20 +400,11 @@ html, body, #map {
   box-sizing: border-box;
 }
 
-/* iOS 26以降のホーム画面アプリで、上端のぼかしを出さないための帯 */
-#ios-top-band { display: none; }
-@media (display-mode: standalone) {
-  @supports (-webkit-touch-callout: none) {
-    #ios-top-band {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 12px;
-      background: #ffffff;
-      pointer-events: none;
-      z-index: 10;
-    }
-  }
+/* iOS 26以降のホーム画面アプリ：上端のぼかし帯（約40pt）に地図やボタンが入らないよう、その分だけ下げる */
+.ios-standalone #map {
+  margin-top: 44px;
+  height: calc(100dvh - 44px);
+}
+.ios-standalone #dropdown-container {
+  top: calc(env(safe-area-inset-top, 0px) + 44px + 10px);
 }
