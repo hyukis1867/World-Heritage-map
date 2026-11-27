@@ -401,6 +401,22 @@ html, body, #map {
 }
 
 /* iOS 26以降のホーム画面アプリ：上端のぼかし帯（約40pt）に地図やボタンが入らないよう、その分だけ下げる */
+.ios-standalone #map {
+  margin-top: 44px;
+  height: calc(100dvh - 44px);
+}
 .ios-standalone #dropdown-container {
   top: calc(env(safe-area-inset-top, 0px) + 44px + 10px);
+}
+
+.ios-pwa-blur-fix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 11px; /* 6px〜10px超の高さが必要 */
+  background-color: rgba(255, 255, 255, 0.01); /* 完全な透明(transparent)だと判定から外れるためごくわずかに不透明度を持たせる */
+  opacity: 0.1; /* 肉眼で白っぽく見えるのを防ぐ */
+  pointer-events: none; /* 下にある検索バーや地図のタップを邪魔しない */
+  z-index: 9999;
 }
